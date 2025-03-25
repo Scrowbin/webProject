@@ -1,0 +1,145 @@
+* {
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none; 
+    color: inherit;       
+}
+
+/* Logo */
+.logo-img {
+    height: 40px;
+    width: auto;
+}
+
+/* Navbar */
+.navbar-nav .nav-item {
+    display: flex;
+    align-items: center;
+}
+
+/* Manga Card */
+.manga-card {
+    display: flex;
+    background: #f4f4f4;
+    border-radius: 10px;
+    padding: 10px;
+    width: 100%;
+    min-width: 400px;
+    max-width: 1200px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 auto 10px;
+    font-family: Arial, sans-serif;
+    margin-bottom: 15px;
+}
+
+/* Manga Cover */
+.manga-cover img {
+    width: 150px;
+    height: 200px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+/* Manga Details */
+.manga-details {
+    width: 100%;
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Manga Header */
+.manga-header {
+    display: flex;
+    gap: 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Divider */
+hr {
+    margin: 5px 0;
+    border: none;
+    border-top: 1px solid #ccc;
+}
+
+/* Manga Info */
+.manga-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 12px;
+    color: #666;
+    width: 100%;
+}
+
+/* Chapter Title */
+.manga-chapter {
+    font-size: 14px;
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+/* Scanlation Group */
+.scan-group {
+    font-size: 12px;
+    color: #444;
+}
+
+/* Icons */
+.flag, .icon {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    background-size: cover;
+}
+
+/* Chapter Info Grid */
+.chapter-info {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+}
+
+/* Info Sections */
+.info-left {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 5px;
+}
+
+.info-middle {
+    min-width: 150px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-left: auto;
+}
+
+.info-right {
+    display: flex;
+    flex-direction: column;
+    min-width: 70px;
+    gap: 5px;
+}
+
+/* Elements inside middle and right */
+.time, .uploader, .views, .comments {
+    display: flex;
+    gap: 5px;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .manga-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .manga-details {
+        padding-left: 0;
+    }
+}
