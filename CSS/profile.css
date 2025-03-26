@@ -1,0 +1,19 @@
+.modal-backdrop {
+    background: rgba(0, 0, 0, 0.5);
+}
+.avatar {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 2px solid #ddd;
+}
+/* Center cropping image inside modal */
+.crop-container {
+    max-width: 100%;
+    max-height: 300px;
+    overflow: hidden;
+}
+.banner{
+    width: 400px;
+    height: 250px;
+}
