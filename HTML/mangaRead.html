@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/mangaRead.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+    <script src="../JS/mangaRead.js"></script>
+
+    <title>mangaRead</title>
+</head>
+<body>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="rightSidebar">
+        <div class="offcanvas-header">
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+            <h5 class="offcanvas-title">Sidebar Menu</h5>
+        </div>
+        <div class="offcanvas-body">
+            <!-- Page Selector -->
+            <div class="d-flex align-items-center mb-2">
+                <button class="btn btn-page align-items-center"><i class="bi bi-chevron-left "></i></button>
+                <div class="position-relative w-100 page-container">
+                    <label class="page-label">Page</label>
+                    <select class="form-select form-select-sm page-dropdown mx-5 p-1" name="page">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="9">9</option>
+                    </select>
+                </div>
+                <button class="btn btn-page align-items-center"><i class="bi bi-chevron-right"></i></button>
+            </div>
+    
+            <!-- Chapter Selector -->
+            <div class="d-flex align-items-center mb-2">
+                <button class="btn btn-page align-items-center"><i class="bi bi-chevron-left"></i></button>
+                <div class="position-relative w-100 page-container">
+                    <label class="page-label">Chapter</label>
+                    <select class="form-select form-select-sm page-dropdown mx-5" name="chapter">
+                        <option value="1">Chapter 1</option>
+                        <option value="2">Chapter 2</option>
+                        <option value="3">Chapter 3</option>
+                        <option value="9">Chapter 9</option>
+                    </select>
+                </div>
+                <button class="btn btn-page align-items-center"><i class="bi bi-chevron-right"></i></button>
+            </div>
+    
+            
+    
+            <!-- Report Chapter -->
+            <button class="btn mb-3">Report Chapter</button>
+    
+            <!-- Comments -->
+            <button class="btn mb-3">
+                <i class="bi bi-chat-left"></i> 22 comments
+            </button>
+    
+            <!-- Uploaded By -->
+            <div class="mb-3">
+                <p class="mb-1">Uploaded By</p>
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-person"></i>
+                    <span class="ms-2">Rithar_scans</span>
+                </div>
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-person"></i>
+                    <a href="#" class="ms-2 text-primary">Rithar</a>
+                </div>
+            </div>
+    
+            <hr>
+    
+            <!-- Reader Settings -->
+            <button class="btn mb-2"></i> Long Strip</button>
+            <div class="d-flex settings-btn mb-2">
+                <button  id="toggleFit" class="btn flex-grow-1 w-100"><i class="bi bi-arrows-fullscreen"></i> Fit Width</button>
+                <!-- <button class="btn "><i class="bi bi-gear"></i></button> -->
+            </div>
+            <button class="btn mb-2"><i class="bi bi-arrow-right"></i> Left To Right</button>
+            <button class="btn mb-2 "><i class="bi bi-eye-slash"></i> Header Hidden</button>
+            <div class="d-flex settings-btn mb-2">
+                <button class="btn text-nowrap align-items-center" name ="thing">
+                    <i class="bi bi-list"></i> Normal Progress
+                </button>
+                <!-- <button class="btn thing"><i class="bi bi-gear"></i></button> -->
+            </div>
+            
+            <button class="btn"><i class="bi bi-gear"></i> Reader Settings</button>
+        </div>
+    </div>
+
+    <!-- include navbar, topbar -->
+     <div class ="container-fluid">
+        <div class="chapter"><strong>Chapter 4</strong></div>
+        <div>
+            <a class="mangaInfo" href="#.html">
+                Zeikin de Katta Hon
+            </a>
+        </div>
+        
+        <div class="row d-flex gap-1">
+            <div class="col d-flex justify-content-center flex-grow-1 bg-light p-2">
+                <span class="badge ">Vol. 1, Ch. 4</span>
+            </div>
+            <div class="col d-flex justify-content-center flex-grow-1 bg-light p-2">
+                <span class="badge ">Pg. 1/22</span>
+            </div>
+            <button class="col d-flex justify-content-center flex-grow-1 bg-light p-2
+            btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#rightSidebar" name="menu">
+            Menu
+            </button>
+        </div>
+     </div>
+        <div class="page w-100 text-center">
+            <img src="../IMG/pg1.png" class="img-fluid " alt="">
+            <img src="../IMG/pg2.png" class="img-fluid " alt="">
+            <img src="../IMG/pg3.png" class="img-fluid " alt="">
+            <img src="../IMG/pg4.png" class="img-fluid " alt="">
+            <img src="../IMG/pg5.png" class="img-fluid " alt="">
+            <img src="../IMG/pg6.png" class="img-fluid " alt="">
+        </div>
+        <!-- <div class="page w-100">
+            <img src="../IMG/pg1.png"  alt="">
+            <img src="../IMG/pg2.png"  alt="">
+            <img src="../IMG/pg3.png"  alt="">
+            <img src="../IMG/pg4.png"  alt="">
+            <img src="../IMG/pg5.png"  alt="">
+            <img src="../IMG/pg6.png"  alt="">
+        </div> -->
+</body>
+</html>
