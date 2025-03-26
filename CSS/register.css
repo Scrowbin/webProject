@@ -1,57 +1,27 @@
-/* reset cơ bản nếu cần
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, font, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font: inherit;
-    font-size: 100%;
-    vertical-align: baseline;
-}
-*/
-
-/* Font và nền tổng thể */
 body {
     background-color: #000;
     color: #fff;
-    font-family: 'Roboto', sans-serif; /* Font hiện đại */
-    margin: 0;
-    padding: 0;
+    font-family: 'Roboto', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-image: url('/IMG/loginBG.png'); /* Background phía bên phải */
+    background-image: url('/IMG/loginBG.png');
     background-position: right;
     background-repeat: no-repeat;
     background-size: auto 100%;
 }
-
-.login-pf-page {
+.login-page {
+    max-width: 400px;
     width: 100%;
-    max-width: 400px; /* Giới hạn chiều rộng form */
     margin: 20px;
 }
 
-/* Header */
-.login-pf-page-header {
+.page-header {
     background-color: #000;
-    text-align: center;
-    padding: 20px 0;
 }
 
-.kc-logo-text {
+.logo-container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -60,7 +30,7 @@ body {
 #md-logo {
     width: 40px;
     height: 40px;
-    background: url('/IMG/cat.jpg') no-repeat center; /* Thay bằng đường dẫn logo thực tế */
+    background: url('/IMG/cat.jpg') no-repeat center;
     background-size: contain;
     margin-right: 10px;
 }
@@ -71,98 +41,75 @@ body {
     color: #fff;
 }
 
-#md-wordmark::after {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 2px;
-    background-color: #F28C38;
-    margin-top: 5px;
-}
-
-/* Card Form */
-.card-pf {
+.login-form-container {
     background-color: #2A2F3A;
-    border-top: 2px solid #F28C38;
-    border-radius: 5px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-top: 2px solid #FF6740;
 }
 
-.login-pf-header {
-    position: relative;
-}
-
-.login-pf-header h1 {
+.form-header h1 {
     font-size: 24px;
-    text-align: center;
-    margin-bottom: 10px;
 }
 
-/* Form Elements */
-.form-group {
-    margin-bottom: 20px;
-}
-
-.pf-c-form__label-text {
-    font-size: 14px;
-    display: block;
-    margin-bottom: 5px;
-}
-
-.required {
-    color: #F28C38;
+.form-label {
     font-size: 14px;
 }
 
-.pf-c-form-control {
-    width: 100%;
-    height: 40px;
+.form-input {
     background-color: #3A404A;
     border: 1px solid #555;
-    border-radius: 4px;
-    color: #fff;
-    padding: 0 10px;
-    box-sizing: border-box;
+    color: #ffffff !important;
 }
 
-.pf-c-form-control:focus {
-    outline: none;
-    border-color: #F28C38;
+.form-input:focus {
+    border-color: #FF6740;
+    border-width: 2px;
+    box-shadow: none;
+    background-color: #3A404A;
 }
 
-/* Nút Register */
-.pf-c-button.pf-m-primary {
-    background-color: #F28C38;
-    color: #fff;
-    width: 100%;
-    height: 45px;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.pf-c-button.pf-m-primary:hover {
-    background-color: #ffaa66;
-}
-
-.buttons-container {
-    display: flex;
-    flex-direction: column; 
-    align-items: flex-start; /* canh bắt đầu (bên trái) */
-}
-
-.back-to-login {
-    color: #F28C38;         /* màu cam như nút */
+a {
+    color: #FF6740;
     text-decoration: none;
-    margin-bottom: 10px;    /* cách nút Register 1 chút */
-    font-size: 14px;
-    cursor: pointer;
 }
 
-.back-to-login:hover {
+a:hover {
     color: #ffaa66;
     text-decoration: underline;
 }
+
+.submit-btn {
+    background-color: #FF6740;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+}
+
+.submit-btn:hover {
+    background-color: #ffaa66;
+}
+
+.required {
+    color: #FF6740;
+}
+
+.back-to-login {
+    font-size: 14px;
+}
+
+.error-message {
+    color: #FF6740 !important;
+    font-size: 12px;
+    margin-top: 4px;
+    display: none;
+}
+
+.error-message.active {
+    display: block;
+}
+
+.input-error {
+    background-color: #6C3C3C !important;
+    border-color: #FF6740 !important;
+}
+
