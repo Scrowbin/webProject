@@ -78,10 +78,17 @@ a{
     align-items: flex-start;
     margin-bottom: 8px;
     width: 100%;
+    background-color: #f0f0f0;
+
 }
+.chapter-container:hover{
+    background-color: #f0f0f0;
 
+}
 /* Scanlation Group */
-
+.scan-group{
+    width: fit-content;
+}
 /* Icons */
 .flag, .icon {
     width: 24px;
@@ -96,7 +103,6 @@ a{
     width: 100%;
     gap: 10px;
     font-size: 12px;
-    background-color: #f0f1f2;
     border-radius: 1px;
 
 }
