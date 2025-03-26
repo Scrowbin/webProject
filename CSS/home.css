@@ -1,0 +1,177 @@
+/* Reset default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+/* Body */
+body {
+  background: #000;
+  font-family: Arial, sans-serif;
+}
+
+/* Navbar */
+.navbar {
+  background: transparent;
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+.navbar.scrolled {
+  background: #000 !important;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  border-bottom: 2px solid #FF6740;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+}
+
+.search-box {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0.3rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.search-box:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.search-box input {
+  background: transparent;
+  border: none;
+  color: white;
+}
+
+.search-box input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.shortcut-key {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+/* Main Content */
+.content-section {
+  padding: 120px 0 60px;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #1a1a1a 0%, #000 100%);
+}
+
+.section-heading {
+  color: #FFF;
+  font-size: 2.2rem;
+  margin-bottom: 2.5rem;
+  position: relative;
+  padding-left: 20px;
+}
+
+.section-heading::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 80%;
+  width: 5px;
+  background: #FF6740;
+}
+
+/* Carousel */
+.carousel-item {
+  padding: 20px;
+}
+
+.manga-title {
+  color: #FFF;
+  font-size: 1.8rem;
+  line-height: 1.3;
+  margin-bottom: 1.5rem;
+}
+
+.badge {
+  background: #FF6740 !important;
+  color: #000 !important;
+  font-size: 0.8rem;
+  padding: 0.5em 1em;
+  margin-right: 0.5rem;
+  border-radius: 20px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.description-box {
+  color: #EEE;
+  line-height: 1.7;
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 15px;
+}
+
+.description-box::-webkit-scrollbar {
+  width: 6px;
+}
+
+.description-box::-webkit-scrollbar-thumb {
+  background: #FF6740;
+  border-radius: 3px;
+}
+
+/* Carousel Controls */
+.custom-prev,
+.custom-next {
+  bottom: 10px;
+  top: auto;
+  width: 40px;
+  height: 40px;
+}
+
+.custom-prev {
+  right: 60px;
+  left: auto;
+}
+
+.custom-next {
+  right: 10px;
+}
+
+.manga-list {
+  background: #1a1a1a;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.manga-item {
+  background: #000;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.manga-title {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.text-white-50 {
+  color: #AAA;
+}
+
+.content-section {
+  padding: 2rem 0;
+}
+
+.section-heading {
+  margin-bottom: 1.5rem;
+}
+.content-section {
+  padding: 100px;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #1a1a1a 0%, #000 100%);
+}
+
