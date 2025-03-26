@@ -1,16 +1,13 @@
-/* Reset default styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-/* Body */
 body {
   background: #000;
   font-family: Arial, sans-serif;
 }
 
-/* Navbar */
 .navbar {
   background: transparent;
   padding: 1rem;
@@ -57,7 +54,6 @@ body {
   font-size: 0.8rem;
 }
 
-/* Main Content */
 .content-section {
   padding: 120px 0 60px;
   min-height: 100vh;
@@ -83,7 +79,6 @@ body {
   background: #FF6740;
 }
 
-/* Carousel */
 .carousel-item {
   padding: 20px;
 }
@@ -123,7 +118,7 @@ body {
   border-radius: 3px;
 }
 
-/* Carousel Controls */
+
 .custom-prev,
 .custom-next {
   bottom: 10px;
@@ -174,4 +169,3 @@ body {
   min-height: 100vh;
   background: linear-gradient(180deg, #1a1a1a 0%, #000 100%);
 }
-
