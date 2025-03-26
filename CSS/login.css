@@ -2,29 +2,32 @@
 body {
     background-color: #000;
     color: #fff;
-    font-family: 'Roboto', sans-serif; /* Font hiện đại */
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    background-image: url('/IMG/loginBG.png');
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
 }
 
-.login-pf-page {
+.login-page {
     width: 100%;
-    max-width: 400px; /* Giới hạn chiều rộng form */
+    max-width: 400px;
     margin: 20px;
 }
 
-/* Header */
-.login-pf-page-header {
+.page-header {
     background-color: #000;
     text-align: center;
     padding: 20px 0;
 }
 
-.kc-logo-text {
+.logo-container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -33,7 +36,7 @@ body {
 #md-logo {
     width: 40px;
     height: 40px;
-    background: url('logo.png') no-repeat center; /* Thay bằng đường dẫn logo thực tế */
+    background: url('/IMG/cat.jpg') no-repeat center;
     background-size: contain;
     margin-right: 10px;
 }
@@ -53,8 +56,7 @@ body {
     margin-top: 5px;
 }
 
-/* Card Form */
-.card-pf {
+.login-form-container {
     background-color: #2A2F3A;
     border-top: 2px solid #F28C38;
     border-radius: 5px;
@@ -62,24 +64,23 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.login-pf-header h1 {
+.form-header h1 {
     font-size: 24px;
     text-align: center;
     margin-bottom: 20px;
 }
 
-/* Form Elements */
 .form-group {
     margin-bottom: 20px;
 }
 
-.pf-c-form__label-text {
+.form-label {
     font-size: 14px;
     display: block;
     margin-bottom: 5px;
 }
 
-.pf-c-form-control {
+.form-input {
     width: 100%;
     height: 40px;
     background-color: #3A404A;
@@ -90,13 +91,12 @@ body {
     box-sizing: border-box;
 }
 
-.pf-c-form-control:focus {
+.form-input:focus {
     outline: none;
     border-color: #F28C38;
 }
 
-/* Checkbox và Forgot Password */
-.login-pf-settings {
+.form-options {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -122,8 +122,7 @@ a:hover {
     color: #ffaa66;
 }
 
-/* Nút Sign In */
-.pf-c-button.pf-m-primary {
+.submit-btn {
     background-color: #F28C38;
     color: #fff;
     width: 100%;
@@ -135,23 +134,11 @@ a:hover {
     cursor: pointer;
 }
 
-.pf-c-button.pf-m-primary:hover {
+.submit-btn:hover {
     background-color: #ffaa66;
 }
 
-/* Try Another Way và Register */
-#kc-select-try-another-way-form, .login-pf-signup {
+.try-another-way-form, .signup-link {
     text-align: center;
     margin-top: 15px;
-}
-
-#kc-info-wrapper span {
-    font-size: 14px;
-}
-
-body {
-    background-image: url('/IMG/loginBG.png');
-    background-position: right;
-    background-repeat: no-repeat;
-    background-size: auto 100%;
 }

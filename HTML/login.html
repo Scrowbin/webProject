@@ -8,78 +8,64 @@
     <link rel="stylesheet" href="/CSS/login.css">
 </head>
 <body>
-    <div class="login-pf-page">
+    <div class="login-page">
         <!-- Header -->
-        <div id="kc-header" class="login-pf-page-header">
-            <div id="kc-header-wrapper">
-                <a href="https://mangadex.org" rel="nofollow">
-                    <div class="kc-logo-text">
-                        <span id="md-logo"></span>
-                        <span id="md-wordmark">MangaDax</span>
-                    </div>
-                </a>
-            </div>
+        <div class="page-header">
+            <a href="https://mangadex.org" rel="nofollow">
+                <div class="logo-container">
+                    <span id="md-logo"></span>
+                    <span id="md-wordmark">MangaDax</span>
+                </div>
+            </a>
         </div>
 
         <!-- Form đăng nhập -->
-        <div class="card-pf">
-            <header class="login-pf-header">
-                <h1 id="kc-page-title">Sign in to your account</h1>
+        <div class="login-form-container">
+            <header class="form-header">
+                <h1>Sign in to your account</h1>
             </header>
-            <div id="kc-content">
-                <div id="kc-content-wrapper">
-                    <div id="kc-form">
-                        <div id="kc-form-wrapper">
-                            <form id="kc-form-login" action="#" method="post">
-                                <!-- Trường Username or email -->
-                                <div class="form-group">
-                                    <label for="username" class="pf-c-form__label pf-c-form__label-text">Username or email</label>
-                                    <input tabindex="1" id="username" class="pf-c-form-control" name="username" type="text" autofocus autocomplete="off">
-                                </div>
-
-                                <!-- Trường Password -->
-                                <div class="form-group">
-                                    <label for="password" class="pf-c-form__label pf-c-form__label-text">Password</label>
-                                    <input tabindex="2" id="password" class="pf-c-form-control" name="password" type="password" autocomplete="off">
-                                </div>
-
-                                <!-- Tùy chọn Remember me và Forgot Password -->
-                                <div class="form-group login-pf-settings">
-                                    <div id="kc-form-options">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input tabindex="3" id="rememberMe" name="rememberMe" type="checkbox"> Remember me
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <span><a tabindex="5" href="#">Forgot Password?</a></span>
-                                    </div>
-                                </div>
-
-                                <!-- Nút Sign In -->
-                                <div id="kc-form-buttons" class="form-group">
-                                    <input tabindex="4" class="pf-c-button pf-m-primary pf-m-block btn-lg" name="login" id="kc-login" type="submit" value="Sign in">
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                    <!-- Liên kết Try Another Way -->
-                    <form id="kc-select-try-another-way-form" action="#" method="post">
+            <div class="form-content">
+                <div class="login-form">
+                    <form class="login-form" action="#" method="post">
+                        <!-- Trường Username or email -->
                         <div class="form-group">
-                            <a href="#" id="try-another-way">Try another way</a>
+                            <label for="username" class="form-label">Username or email</label>
+                            <input tabindex="1" id="username" class="form-input" name="username" type="text" autofocus autocomplete="off">
+                        </div>
+
+                        <!-- Trường Password -->
+                        <div class="form-group">
+                            <label for="password" class="form-label">Password</label>
+                            <input tabindex="2" id="password" class="form-input" name="password" type="password" autocomplete="off">
+                        </div>
+
+                        <!-- Tùy chọn -->
+                        <div class="form-options">
+                            <div class="checkbox">
+                                <label>
+                                    <input tabindex="3" id="rememberMe" name="rememberMe" type="checkbox"> Remember me
+                                </label>
+                            </div>
+                            <span><a tabindex="5" href="#">Forgot Password?</a></span>
+                        </div>
+
+                        <!-- Nút Sign In -->
+                        <div class="form-buttons">
+                            <input tabindex="4" class="submit-btn" name="login" type="submit" value="Sign in">
                         </div>
                     </form>
+                </div>
 
-                    <!-- Liên kết Register -->
-                    <div id="kc-info" class="login-pf-signup">
-                        <div id="kc-info-wrapper">
-                            <div id="kc-registration">
-                                <span>New user? <a tabindex="6" href="#">Register</a></span>
-                            </div>
-                        </div>
+                <!-- Liên kết Try Another Way -->
+                <form class="try-another-way-form" action="#" method="post">
+                    <div class="form-group">
+                        <a href="#" id="try-another-way">Try another way</a>
                     </div>
+                </form>
+
+                <!-- Liên kết Register -->
+                <div class="signup-link">
+                    <span>New user? <a tabindex="6" href="register.html">Register</a></span>
                 </div>
             </div>
         </div>
