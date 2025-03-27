@@ -82,7 +82,8 @@ a{
 
 }
 .chapter-container:hover{
-    background-color: #f0f0f0;
+    background-color: #c2c0c0;
+    cursor: pointer;
 
 }
 /* Scanlation Group */

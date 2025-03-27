@@ -104,10 +104,26 @@ a{
 .img-fit-height {
     height: 100vh; 
     width: auto;
-    object-fit: cover; 
+    object-fit: contain;
+
 }
 .img-fit-both {
-    width: 100%;
-    height: 100vh; 
-    object-fit: cover;
+    max-width: 100vw;  /* Maximum width is viewport width */
+    max-height: 100vh; /* Maximum height is viewport height */
+    width: auto;       
+    height: auto; 
+}
+.active{
+    display: block;
+}
+.hidden{
+    display: none;
+}
+.clickable {
+    cursor: pointer; 
+}
+
+.navbar-brand.active {
+    background-color: #ff6740;
+    font-weight: bold; /*make it stand out */
 }

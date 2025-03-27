@@ -14,25 +14,30 @@
     <title>mangaRead</title>
 </head>
 <body>
+    
     <div class="offcanvas offcanvas-end" tabindex="-1" id="rightSidebar">
         <div class="offcanvas-header">
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-            <h5 class="offcanvas-title">Sidebar Menu</h5>
+            <button type="button" class="btn offcanvas-title"><i class="bi bi-pin"></i>
+            </button>
         </div>
         <div class="offcanvas-body">
             <!-- Page Selector -->
             <div class="d-flex align-items-center mb-2">
-                <button class="btn btn-page align-items-center"><i class="bi bi-chevron-left "></i></button>
+                <button class="btn btn-page align-items-center" id = "prevPageBtn"><i class="bi bi-chevron-left "></i></button>
                 <div class="position-relative w-100 page-container">
                     <label class="page-label">Page</label>
                     <select class="form-select form-select-sm page-dropdown mx-5 p-1" name="page">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
-                        <option value="9">9</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+
                     </select>
                 </div>
-                <button class="btn btn-page align-items-center"><i class="bi bi-chevron-right"></i></button>
+                <button class="btn btn-page align-items-center" id = "nextPageBtn"><i class="bi bi-chevron-right"></i></button>
             </div>
     
             <!-- Chapter Selector -->
@@ -76,12 +81,11 @@
             <hr>
     
             <!-- Reader Settings -->
-            <button class="btn mb-2"></i> Long Strip</button>
+            <button class="btn mb-2" id = "readMethod"></i> Long Strip</button>
             <div class="d-flex settings-btn mb-2">
                 <button  id="toggleFit" class="btn flex-grow-1 w-100"><i class="bi bi-arrows-fullscreen"></i> Fit Width</button>
                 <!-- <button class="btn "><i class="bi bi-gear"></i></button> -->
             </div>
-            <button class="btn mb-2"><i class="bi bi-arrow-right"></i> Left To Right</button>
             <button class="btn mb-2 "><i class="bi bi-eye-slash"></i> Header Hidden</button>
             <div class="d-flex settings-btn mb-2">
                 <button class="btn text-nowrap align-items-center" name ="thing">
@@ -116,14 +120,48 @@
             </button>
         </div>
      </div>
-        <div class="page w-100 text-center">
-            <img src="../IMG/pg1.png" class="img-fluid " alt="">
-            <img src="../IMG/pg2.png" class="img-fluid " alt="">
-            <img src="../IMG/pg3.png" class="img-fluid " alt="">
-            <img src="../IMG/pg4.png" class="img-fluid " alt="">
-            <img src="../IMG/pg5.png" class="img-fluid " alt="">
-            <img src="../IMG/pg6.png" class="img-fluid " alt="">
-        </div>
+     <div class="page w-100 d-flex flex-column align-items-center position-relative" id="page-container"
+      data-bs-target="#progress-bar" data-bs-offset="0" tabindex="0">
+     <a href="#page-2">
+        <img src="../IMG/pg1.png" class="img-fluid" id="page-1" alt="Page 1">
+    </a>
+    <a href="#page-3">
+        <img src="../IMG/pg2.png" class="img-fluid" id="page-2" alt="Page 2">
+    </a>
+    <a href="#page-4">
+        <img src="../IMG/pg3.png" class="img-fluid" id="page-3" alt="Page 3">
+    </a>
+    <a href="#page-5">
+        <img src="../IMG/pg4.png" class="img-fluid" id="page-4" alt="Page 4">
+    </a>
+    <a href="#page-6">
+        <img src="../IMG/pg5.png" class="img-fluid" id="page-5" alt="Page 5">
+    </a>
+    <a href="#page-1">
+        <img src="../IMG/pg6.png" class="img-fluid" id="page-6" alt="Page 6">
+    </a>
+ </div>
+ 
+ <nav class="navbar fixed-bottom navbar-light bg-light" id="progress-bar">
+     <div class="container-fluid d-flex flex-wrap-nowrap justify-content-between gap-0">
+         <a class="navbar-brand flex-grow-1 d-flex justify-content-center" href="#page-1">1</a>
+         <a class="navbar-brand flex-grow-1 d-flex justify-content-center" href="#page-2">2</a>
+         <a class="navbar-brand flex-grow-1 d-flex justify-content-center" href="#page-3">3</a>
+         <a class="navbar-brand flex-grow-1 d-flex justify-content-center" href="#page-4">4</a>
+         <a class="navbar-brand flex-grow-1 d-flex justify-content-center" href="#page-5">5</a>
+         <a class="navbar-brand flex-grow-1 d-flex justify-content-center" href="#page-6">6</a>
+     </div>
+ </nav>
+ <!-- <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        new bootstrap.ScrollSpy(document.getElementById("page-container"), {
+            target: "#progress-bar",
+            offset: 0
+        });
+    });
+</script> -->
+
     <!-- missing next chapter button -->
 </body>
+  
 </html>
