@@ -38,7 +38,7 @@ function validInput() {
     }
 
     else if (cfPassword.value !== password.value) {
-        cfPasswordErr.textContent = 'Passwords do not match.';
+        cfPasswordErr.textContent = 'Passwords do NOT match.';
         showError(cfPassword, cfPasswordErr);
     }
 

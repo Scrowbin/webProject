@@ -1,0 +1,1 @@
+document.querySelector("#__nuxt > div.flex.flex-grow.text-color > div.flex.flex-col.flex-grow > div.md-content.flex-grow > div.page-container.wide.\\!-mt-16.sm\\:\\!-mt-8.space-y-8 > div:nth-child(2)")
