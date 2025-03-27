@@ -1,6 +1,10 @@
 #rightSidebar {
     --bs-offcanvas-width: 300px;
 }
+body{
+    display: grid;
+    grid-template-columns: auto;
+}
 a{
     text-decoration: none;
     color: inherit;

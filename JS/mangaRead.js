@@ -132,6 +132,7 @@ document.addEventListener("DOMContentLoaded", function () {
             images.forEach(img => img.classList.add("clickable"));
             images.forEach(img => img.addEventListener("click", nextImage));
             showImage(currentIndex);
+            pageDropdown.value = currentIndex + 1; // Sync dropdown to match current image
 
             
             navbarLinks.forEach((link, index) => {
@@ -148,6 +149,14 @@ document.addEventListener("DOMContentLoaded", function () {
             readMethodButton.innerHTML = "Long Strip";
             images.forEach(img => img.classList.remove("clickable", "active", "hidden"));
             images.forEach(img => img.removeEventListener("click", nextImage));
+
+            // 🔥 Force update `currentIndex` to match the scroll position
+            let activeImageIndex = Array.from(images).findIndex(img => img.getBoundingClientRect().top >= 0);
+            if (activeImageIndex !== -1) {
+                currentIndex = activeImageIndex;
+            }
+
+            pageDropdown.value = currentIndex + 1;
 
             navbarLinks.forEach(link => {
                 link.replaceWith(link.cloneNode(true)); // This removes old event listeners
