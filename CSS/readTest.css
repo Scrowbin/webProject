@@ -1,0 +1,259 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    margin-bottom: 2px;
+}
+
+body{
+    display: grid;
+    grid-template-columns: 1fr auto;
+}
+
+html{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.5rem;
+}
+html, body {
+    min-width: 320px; 
+    overflow-x: auto; 
+}
+/* evil floating menu */
+#menu-sticky {
+    width: 50px;
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid black;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#menu-sticky.sticky{
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+}
+
+/* topReaderbar */
+.row{
+    display: flex;
+    gap: 5px;
+}
+
+.row div, button[name="menu"]{
+    color: #242424;
+    font-size: 18px;
+    font-family: sans-serif;
+    display: flex;
+    border-radius: 1px;
+    background: #f0f1f2;
+    border: none;
+    width: 33.333%;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+}
+
+button[name="menu"]:hover {
+    cursor: pointer;
+    background: #f8f4f4;
+}
+
+/* RightSidebar */
+#rightSidebar{
+    width: 300px;
+    height: 100vh;
+    padding: 5px 1em;
+    transition: 300ms ease-in-out;
+    overflow: hidden;
+    text-wrap: nowrap;
+    position: sticky;
+    background: #ffffff;
+    top: 0;
+    right: 0;
+    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.05);
+}
+
+#rightSidebar.sticky{
+    position: fixed;
+    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+    #rightSidebar { position: fixed; }
+}
+
+#rightSidebar.close{
+    padding: 5px;
+    width: 0;
+    transform: translateX(100%);
+    box-shadow: none;
+}
+
+.hidden { display: none; }
+.rightSidebar-header{
+    display: flex;
+    justify-content: space-between;
+}
+.offcanvas-body button{
+    width: 100%;
+    height: 40px;
+}
+
+/* Page/chapter label */
+.page-label {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 10px;
+    font-size: 14px;
+    color: #666;
+}
+
+.dropdown {
+    display: flex;
+    border: none;
+    background: transparent;
+    font-size: 18px;
+    outline: none;
+    width: 100%;
+    padding-left: 10px;
+    color: #242424;
+    cursor: pointer;
+}
+.dropdown option{
+    color: #130c0c;
+    font-size: 18px;
+    padding: 10px 10px;
+    font-family: sans-serif;
+    background-color: #f8f4f4;
+    border: 3px solid black;
+}
+.dropdown option:hover{
+    background-color: #c8c4c4;
+
+}
+.dropdown:focus {
+    outline: none;
+    box-shadow: none;
+    border-color: transparent;
+}
+
+.page-selector, .chapter-selector{
+    display: flex;
+    gap: 5px;
+    margin-bottom: 10px;
+    height: 50px;
+}
+
+.page-selector .btn, .chapter-selector .btn {
+    height: 100%;
+    width: 50px;
+    color: #242424;
+    font-size: 18px;
+    font-family: sans-serif;
+    background: #f8f4f4;
+    border: none;
+}
+
+.page-selector .btn:hover, .chapter-selector .btn:hover{
+    cursor: pointer;
+}
+
+.dropdown-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #f5f5f5;
+    border-radius: 5px;
+}
+
+#report-btn, #comment-btn{
+    width: 100%;
+    padding: 5px;
+    font-size: 18px;
+    font-family: sans-serif;
+    background: #f8f4f4;
+    border: none;
+    color: #242424;
+}
+
+#report-btn:hover, #comment-btn:hover{
+    cursor: pointer;
+    background: #c8c4c4;
+}
+
+hr{ margin: 20px auto; }
+
+/* Comments and shit */
+#comment-btn{ margin-bottom: 10px; }
+
+#uploader-info{
+    font-size: 18px;
+    font-family: sans-serif;
+}
+
+#uploader-info div, p{
+    margin-bottom: 5px;
+}
+
+/* reader buttons */
+.reader-btn{
+    width: 100%;
+    height: 40px;
+    display: flex;
+    gap: 1em;
+    align-items: center;
+    padding-left: 5px;
+    margin-bottom: 0.5em;
+    color: #242424;
+    font-size: 18px;
+    font-family: sans-serif;
+    background: #f8f4f4;
+    border: none;
+}
+
+.reader-btn:hover{
+    cursor: pointer;
+    background: #c8c4c4;
+}
+
+/*  */
+/* image related css */
+/*  */
+.img-fit-width{
+    max-width: 100%;
+    height: auto;
+}
+.img-fit-height {
+    height: 100vh; 
+    width: auto;
+    object-fit: contain;
+
+}
+.img-fit-both {
+    max-width: 100vw;  /* Maximum width is viewport width */
+    max-height: 100vh; /* Maximum height is viewport height */
+    width: auto;       
+    height: auto; 
+}
+img:hover{
+    cursor: pointer;
+}
+
+/* .active{
+    display: block;
+} */
+
+/*  */
+/* Manga Container */
+/*  */
+#page-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+
+}
