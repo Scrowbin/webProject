@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const toggleFit = document.getElementById("toggleFit");
     const images = document.querySelectorAll("#page-container img");
     const readMethod = document.getElementById("readMethod");
-
+    const pageDropdown = document.getElementById("page-dropdown")
     let currentIndex= 0;
     let  isInLongStrip = true; // default is inlongstrip
 
@@ -88,6 +88,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (index!=currentIndex)
                     img.classList.add("hidden");
             });
+            document.addEventListener()
+
         }
         else{//switchback to long page
             images.forEach((img) => {
@@ -99,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
         toggleReadModeIcon();
         isInLongStrip = !isInLongStrip;
     });
-    // functions to serve one page
+    // functions to show the pages
     function showImage(goToPage){
         if (isInLongStrip){
             
@@ -109,16 +111,27 @@ document.addEventListener("DOMContentLoaded", () => {
             images[goToPage].classList.remove("hidden");
         }
         currentIndex= goToPage;
+        pageDropdown.value = currentIndex +1;
     }
 
     // add each teleport to each image
     images.forEach((img, index) => {
-        if (index < images.length - 1) { // Ensure it's not the last image
-            img.addEventListener("click", () => {
-                images[index + 1].scrollIntoView({ block: "start", behavior: "instant" });
-            });
-        }
+        img.addEventListener("click", function(event) {
+            const clickX = event.offsetX; // X coordinate of the click inside the image
+            const imgWidth = img.clientWidth; // Image width
+        
+            if (clickX < imgWidth / 2) {
+                if (index > 0) { // Ensure we don't go below 0
+                    showImage(index - 1); 
+                }
+            } else {
+                if (index < images.length - 1) { // Ensure it's not the last image
+                    showImage(index + 1);
+                }
+            }    
+        });
     });
+    
     window.toggleSidebar = toggleSidebar; // ✅ Makes it globally accessible
 
 });

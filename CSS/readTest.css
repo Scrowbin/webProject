@@ -254,3 +254,23 @@ img:hover{
     align-items: center;
 
 }
+#progress-bar{
+    display: flex;
+    justify-content: space-evenly; 
+    align-items: center; 
+    width: 100%; /* Ensure it spans the full width */
+    background: #f0f0f0;
+    bottom: 0;
+    position: sticky;
+}
+#nextChapterBtn{
+    background-color: #ff6444;
+    color: white;
+    padding: 10px;
+    font-size: 18px;
+    font-family: sans-serif;
+    width: 100%;
+    border: none;
+    margin-bottom: 0;
+    
+}
