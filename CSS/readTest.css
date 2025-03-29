@@ -14,10 +14,7 @@ html{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.5rem;
 }
-html, body {
-    min-width: 320px; 
-    overflow-x: auto; 
-}
+
 /* evil floating menu */
 #menu-sticky {
     width: 50px;
