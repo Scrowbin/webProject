@@ -34,8 +34,7 @@
             </div>
         </div>
         
-        <div class="page w-100 d-flex flex-column align-items-center position-relative" id="page-container"
-      data-bs-target="#progress-bar" data-bs-offset="0" tabindex="0">
+        <div class="" id="page-container">
             <!-- <a href="#page-2">
                 <img src="../IMG/pg1.png" class="img-fit-width" id="page-1" alt="Page 1">
             </a>
@@ -62,15 +61,17 @@
             <img src="../IMG/pg6.png" class="img-fit-width" id="page-6" alt="Page 6">
 
         </div>
-        <nav id = "progress-bar">
-            <div class ="progressBarButton">1</div>
-            <div class ="progressBarButton">2</div>
-            <div class ="progressBarButton">3</div>
-            <div class ="progressBarButton">4</div>
-            <div class ="progressBarButton">5</div>
-            <div class ="progressBarButton">6</div>
+        <nav id = "progress-bar" class="">
+            <div class="p-bar-number hidden" id = "p-bar-number-low">1</div>
+            <div class ="progressBarButton"><div class="color-part"></div><div class="floating-number">1</div></div>
+            <div class ="progressBarButton"><div class="color-part"></div><div class="floating-number">2</div></div>
+            <div class ="progressBarButton"><div class="color-part"></div><div class="floating-number">3</div></div>
+            <div class ="progressBarButton"><div class="color-part"></div><div class="floating-number">4</div></div>
+            <div class ="progressBarButton"><div class="color-part"></div><div class="floating-number">5</div></div>
+            <div class ="progressBarButton"><div class="color-part"></div><div class="floating-number">6</div></div>
+            <div class="p-bar-number hidden" id = 'p-bar-number-high'>2</div>
         </nav>
-        <button id="nextChapterBtn">Next Page</button>
+        <button id="next-chapter">Next Chapter</button>
 
     </main>
     <!-- class = "" -->
@@ -145,7 +146,7 @@
                 <button class="btn reader-btn" id = "readMethod"><i class = "bi bi-files"></i> Long Strip</button>
                 <button  id="toggleFit" class="btn reader-btn"><i class="bi bi-arrows-fullscreen"></i> Fit Width</button>
                 <button class="btn reader-btn"><i class="bi bi-eye-slash"></i> Header Hidden</button>
-                <button class="btn reader-btn" name ="thing">
+                <button class="btn reader-btn" id = "progress-setting">
                     <i class="bi bi-list"></i> Normal Progress
                 </button>
                 <button class="btn reader-btn"><i class="bi bi-gear"></i> Reader Settings</button>

@@ -9,8 +9,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const images = document.querySelectorAll("#page-container img");
     const readMethod = document.getElementById("readMethod");
     const pageDropdown = document.getElementById("page-dropdown")
+    const progressBar = document.getElementById("progress-bar")
+    const nextChapter = document.getElementById("next-chapter")
     let currentIndex= 0;
     let  isInLongStrip = true; // default is inlongstrip
+     
 
     closeButton.addEventListener("click", toggleSidebar);
     pinButton.addEventListener("click", toggleSticky);
@@ -19,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Sidebar or Close Button not found!");
         return;
     }
-
+    window.toggleSidebar = toggleSidebar; 
     function toggleSidebar() {
         console.log("Toggling sidebar...");
         sideBar.classList.toggle("close");
@@ -82,14 +85,22 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         
     }
+
+    readMethod.addEventListener("click", toggleObservers);
+
     readMethod.addEventListener("click",()=>{
         if (isInLongStrip){ //switch to one page
+            if (currentIndex!=images.length-1){
+                if (!nextChapter.classList.contains("hidden"))
+                    nextChapter.classList.add("hidden")
+            }else{
+                nextChapter.classList.remove("hidden")
+            }
             images.forEach((img, index) => {
                 if (index!=currentIndex)
                     img.classList.add("hidden");
             });
-            document.addEventListener()
-
+            //
         }
         else{//switchback to long page
             images.forEach((img) => {
@@ -98,22 +109,37 @@ document.addEventListener("DOMContentLoaded", () => {
             images[currentIndex].scrollIntoView({ block: "start", behavior: "instant" });
         }
 
+        //make progressbar fixed 
+        progressBar.classList.toggle("fixed");    
         toggleReadModeIcon();
+        showImage(currentIndex);
         isInLongStrip = !isInLongStrip;
     });
     // functions to show the pages
     function showImage(goToPage){
+        if (goToPage<0 ||goToPage+1>images.length) return;
         if (isInLongStrip){
             
-            images[goToPage].scrollIntoView({ block: "start", behavior: "instant" });
         }else{
             images[currentIndex].classList.add("hidden");
             images[goToPage].classList.remove("hidden");
+            if (goToPage!=images.length-1){
+                if (!nextChapter.classList.contains("hidden"))
+                    nextChapter.classList.add("hidden")
+            }else{
+                nextChapter.classList.remove("hidden")
+            }
+            
         }
+        changeButtonsManual(goToPage);
         currentIndex= goToPage;
+        images[goToPage].scrollIntoView({ block: "start", behavior: "instant" });
+
         pageDropdown.value = currentIndex +1;
     }
-
+    //
+    //  adding event listeners
+    //  
     // add each teleport to each image
     images.forEach((img, index) => {
         img.addEventListener("click", function(event) {
@@ -122,16 +148,175 @@ document.addEventListener("DOMContentLoaded", () => {
         
             if (clickX < imgWidth / 2) {
                 if (index > 0) { // Ensure we don't go below 0
-                    showImage(index - 1); 
+                    showImage(currentIndex-1);
                 }
             } else {
                 if (index < images.length - 1) { // Ensure it's not the last image
-                    showImage(index + 1);
+                    showImage(currentIndex+1);
                 }
             }    
         });
     });
-    
-    window.toggleSidebar = toggleSidebar; // ✅ Makes it globally accessible
 
+
+    //add pagedropdown teleport
+    pageDropdown.addEventListener("change",function(){
+        showImage(pageDropdown.value-1);
+
+    })
+
+    //added keychange to switchImage
+    document.addEventListener("keydown", (event) => {
+        switch (event.key) {
+            case "ArrowLeft":
+                // Left pressed
+                showImage(currentIndex-1);
+                break;
+            case "ArrowRight":
+                showImage(currentIndex+1);
+                break;
+        }
+    });
+    
+
+    //added showimage to the buttons next to dropdown
+    document.getElementById("prevPageBtn").addEventListener("click",function(){
+        showImage(currentIndex-1);
+    })
+    document.getElementById("nextPageBtn").addEventListener("click",function(){
+        showImage(currentIndex+1);
+    })
+
+    //added 
+        // progressSetting = document.getElementById("progress-setting");
+        // progressSetting.addEventListener("click",function(){
+        //     progressBar.classList.toggle("hidden");
+        //     if(progressSetting.innerHTML == "Normal Progress")
+        //         progressSetting.innerHTML = "Progress bar hidden";
+        //     else progressSetting.innerHTML = "Normal Progress"
+        // });
+    
+    //show progress bar when mouse is close enough 
+    let barNumberLow = document.getElementById("p-bar-number-low");
+    let barNumberHigh = document.getElementById("p-bar-number-high");
+    let isExpanded = false;
+    let isAtBottom = false;
+    document.addEventListener("mousemove", (event) => {
+        const triggerHeight = window.innerHeight - 100; // Adjust threshold
+    
+        // Check if mouse is near the bottom
+        if (event.clientY > triggerHeight && !isExpanded && !isAtBottom) {
+            expandProgressBar();
+            isExpanded = true;
+        } 
+        // Collapse only if the user isn't at the bottom
+        else if (event.clientY <= triggerHeight && isExpanded && !isAtBottom) {
+            collapseProgressBar();
+            isExpanded = false;
+        }
+    });
+    
+    function expandProgressBar() {
+        progressBar.classList.add("expanded");
+        barNumberLow.classList.remove("hidden");
+        barNumberHigh.classList.remove("hidden");
+    }
+    
+    // Helper function to collapse the progress bar
+    function collapseProgressBar() {
+        progressBar.classList.remove("expanded");
+        barNumberLow.classList.add("hidden");
+        barNumberHigh.classList.add("hidden");
+    }
+
+    //function which detects scroll postion
+    // progressBarButton
+    let observersActive = true;
+    const imageObservers = [];
+    const bottomButtons = [];
+    let originalColor = "#e0e4e6";
+    let litUpColor = '#ff6740';
+    bottomButtons.push(...Array.from(document.querySelectorAll('.progressBarButton')));
+    
+    //helper function to manually change the buttons colors 
+    function changeButtonsManual (index) {
+        if (index >= currentIndex) {
+            for (let i = 0; i <= index; i++) {
+                bottomButtons[i].style.backgroundColor = litUpColor;
+            }
+        } else if (index < currentIndex) {
+            for (let i = images.length-1; i > index; i--) { // Corrected loop direction
+                bottomButtons[i].style.backgroundColor = originalColor;
+            }
+        }
+
+    }
+    // Move to the new image
+    bottomButtons.forEach((button, index) => {
+        button.addEventListener("click", function () {
+            showImage(index);
+        });
+    });
+   
+    // add observers to each image to make the progress bar 
+    
+    images.forEach((img, index) => {
+        const observer = new IntersectionObserver((entries) => {
+          if (!observersActive) return;
+          
+          const target = bottomButtons[index];
+          if (!target) return;
+          
+          entries.forEach(entry => {
+            const isVisible = entry.isIntersecting;
+            const isPast = entry.boundingClientRect.top < 0 && !isVisible;
+            
+            // if (isVisible || isPast) {
+            if (isVisible || isPast) {
+              // Same color for both entering and passing
+              target.style.backgroundColor = litUpColor;
+              target.style.color = "white";
+              if (currentIndex<index){
+                pageDropdown.value = index +1;
+                currentIndex = index;
+              }
+            } else {
+              // Reset when neither in view nor past
+              target.style.backgroundColor = originalColor;
+              target.style.color = 'black';
+              if (index<=currentIndex){
+                pageDropdown.value = index;
+                currentIndex = index-1;
+              }
+            }
+          });
+        });
+    
+        observer.observe(img);
+        imageObservers.push(observer);
+      });
+    function toggleObservers() {
+        observersActive = !observersActive;
+        
+        
+        if (observersActive) {
+          // Restore proper colors based on current scroll position
+         images.forEach((img, index) => {
+            const rect = img.getBoundingClientRect();
+            const target = bottomButtons[index];
+            if (!target) return;
+            
+            if (rect.top < window.innerHeight * 0.7 && rect.bottom > 0) {
+              target.style.backgroundColor = litUpColor;
+            } else {
+              target.style.backgroundColor = originalColor;
+            }
+          });
+        } else {
+          // Reset all to original colors
+            bottomButtons.forEach((el) => {
+            el.style.backgroundColor = originalColor;
+          });
+        }
+    }
 });
