@@ -13,7 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const nextChapter = document.getElementById("next-chapter")
     let currentIndex= 0;
     let  isInLongStrip = true; // default is inlongstrip
-     
+    const barNumberLow = document.getElementById("p-bar-number-low");
+    const barNumberHigh = document.getElementById("p-bar-number-high");
 
     closeButton.addEventListener("click", toggleSidebar);
     pinButton.addEventListener("click", toggleSticky);
@@ -24,11 +25,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     window.toggleSidebar = toggleSidebar; 
     function toggleSidebar() {
-        console.log("Toggling sidebar...");
         sideBar.classList.toggle("close");
         if (pinIcon.classList.contains("bi-pin-angle")) {
         menuOpen.classList.toggle("hidden");
         }
+        sideBar.addEventListener("transitionend", function updateWidth() {
+            progressBar.style.width = getComputedStyle(progressBar.parentElement).width;
+            sideBar.removeEventListener("transitionend", updateWidth); // Cleanup
+        });
     }
 
     function toggleSticky(){
@@ -39,6 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             pinIcon.classList.replace("bi-pin-angle", "bi-pin"); // Change back to normal pin
         }
+        progressBar.style.width = getComputedStyle(progressBar.parentElement).width;
 
     }
     
@@ -90,27 +95,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     readMethod.addEventListener("click",()=>{
         if (isInLongStrip){ //switch to one page
-            if (currentIndex!=images.length-1){
-                if (!nextChapter.classList.contains("hidden"))
-                    nextChapter.classList.add("hidden")
-            }else{
-                nextChapter.classList.remove("hidden")
-            }
             images.forEach((img, index) => {
                 if (index!=currentIndex)
                     img.classList.add("hidden");
             });
-            //
+            
         }
         else{//switchback to long page
             images.forEach((img) => {
                 img.classList.remove("hidden");
             });
             images[currentIndex].scrollIntoView({ block: "start", behavior: "instant" });
-        }
 
-        //make progressbar fixed 
-        progressBar.classList.toggle("fixed");    
+        }
+        nextChapter.classList.toggle("hidden");
         toggleReadModeIcon();
         showImage(currentIndex);
         isInLongStrip = !isInLongStrip;
@@ -123,18 +121,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }else{
             images[currentIndex].classList.add("hidden");
             images[goToPage].classList.remove("hidden");
-            if (goToPage!=images.length-1){
-                if (!nextChapter.classList.contains("hidden"))
-                    nextChapter.classList.add("hidden")
-            }else{
-                nextChapter.classList.remove("hidden")
-            }
             
         }
         changeButtonsManual(goToPage);
         currentIndex= goToPage;
         images[goToPage].scrollIntoView({ block: "start", behavior: "instant" });
-
+        barNumberLow.innerHTML = (currentIndex + 1).toString();
         pageDropdown.value = currentIndex +1;
     }
     //
@@ -187,18 +179,40 @@ document.addEventListener("DOMContentLoaded", () => {
         showImage(currentIndex+1);
     })
 
-    //added 
-        // progressSetting = document.getElementById("progress-setting");
-        // progressSetting.addEventListener("click",function(){
-        //     progressBar.classList.toggle("hidden");
-        //     if(progressSetting.innerHTML == "Normal Progress")
-        //         progressSetting.innerHTML = "Progress bar hidden";
-        //     else progressSetting.innerHTML = "Normal Progress"
-        // });
+    //fix height of progressbar dynamically
+    function getVisibleHeight(element) {
+        let rect = element.getBoundingClientRect();
     
-    //show progress bar when mouse is close enough 
-    let barNumberLow = document.getElementById("p-bar-number-low");
-    let barNumberHigh = document.getElementById("p-bar-number-high");
+        // Calculate visible height
+        const visibleHeight = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
+        return visibleHeight;
+    }
+
+    document.addEventListener("scroll",function(){
+        if (isInLongStrip)
+        {
+            let height = Math.max(getVisibleHeight(nextChapter),0);
+            progressBar.style.bottom = height + "px";
+        }
+    })
+
+   
+
+    // added progress setting
+        progressSetting = document.getElementById("progress-setting");
+        progressSetting.addEventListener("click",function(){
+            if(progressSetting.innerHTML == '<i class="bi bi-list"></i> Normal Progress')
+                progressSetting.innerHTML = '<i class="bi bi-ban"></i>Progress bar hidden';
+            
+            else progressSetting.innerHTML = '<i class="bi bi-list"></i> Normal Progress'
+            if (progressBar.style.display == "none")
+                progressBar.style.display = "flex";
+            else (progressBar.style.display = "none")
+
+        });
+    
+    // show progress bar when mouse is close enough 
+    
     let isExpanded = false;
     let isAtBottom = false;
     document.addEventListener("mousemove", (event) => {
@@ -278,7 +292,10 @@ document.addEventListener("DOMContentLoaded", () => {
               target.style.color = "white";
               if (currentIndex<index){
                 pageDropdown.value = index +1;
+                
                 currentIndex = index;
+                barNumberLow.innerHTML = (currentIndex + 1).toString();
+
               }
             } else {
               // Reset when neither in view nor past
@@ -287,6 +304,8 @@ document.addEventListener("DOMContentLoaded", () => {
               if (index<=currentIndex){
                 pageDropdown.value = index;
                 currentIndex = index-1;
+                barNumberLow.innerHTML = (currentIndex + 1).toString();
+
               }
             }
           });
