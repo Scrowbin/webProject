@@ -1,281 +1,1439 @@
+/* ==========================================================================
+   GLOBAL & BASE STYLES
+   ========================================================================== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 body {
-  background: #000;
-  font-family: Arial, sans-serif;
+  background-color: #111;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  color: #e0e0e0;
+  transition: padding-left 0.3s ease-in-out;
+  position: relative; /* Added for absolute positioning context if needed */
 }
 
+.page-wrapper {
+  /* Background set by JS, but keep fallback */
+  background-color: #111;
+}
+
+.container-xxl {
+  padding-top: 60px; /* Reverted: Only account for fixed navbar */
+  padding-bottom: 30px;
+  background-color: transparent;
+  position: relative;
+  z-index: 2;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  /* REMOVE large padding/margin added previously */
+  /* padding-top: calc(60px + 390px); */ 
+}
+
+.section-container {
+  padding: 30px 20px; /* Adjust padding as needed */
+  position: relative; /* Needed for absolute positioning inside if any */
+  overflow: hidden; /* Add this to clip sliding items */
+}
+
+.section-heading {
+  position: relative;
+  z-index: 5;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.5rem;
+  color: #f0f0f0;
+}
+
+.section-heading h2 {
+  margin-bottom: 0;
+}
+
+.section-heading a {
+  color: #e0e0e0;
+  text-decoration: none;
+}
+
+.see-all {
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+.see-all:hover {
+  color: #fff;
+}
+
+.see-all-arrow {
+  font-size: 1.2rem;
+  color: #aaa;
+  padding: 0 0.25rem;
+  line-height: 1;
+}
+
+.see-all-arrow:hover {
+  color: #fff;
+}
+
+.content-below-featured {
+    background-color: #111;
+}
+
+/* Ensure links within sections generally don't have underline */
+.section-container a {
+  text-decoration: none;
+}
+
+/* ==========================================================================
+   NAVBAR & SEARCH
+   ========================================================================== */
 .navbar {
   background: transparent;
-  padding: 16px;
-  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.3s ease, border-bottom 0.3s ease, opacity 0.3s ease;
+  width: 100%;
+  height: 60px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1030;
 }
 
 .navbar.scrolled {
-  background: #000 !important;
-  padding: 0.5rem 1rem;
+  background: #1f1f1f !important;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  border-bottom: 2px solid #FF6740;
+  border-bottom: 1px solid #FF6740;
+}
+
+.navbar .container { /* Target container within navbar */
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .navbar-brand {
   font-size: 1.5rem;
 }
 
+.navbar-brand img {
+  margin-right: 0.5rem;
+}
+
 .search-box {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  padding: 4.8px 16px;
-  transition: all 0.3s ease;
-  width: 330px;
+  background: #383838;
+  border-radius: 4px;
+  padding: 6px 12px;
+  transition: background-color 0.3s ease, border-color 0.3s ease, width 0.3s ease;
+  width: 250px; 
+  height: 38px;
 }
 
 .search-box:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: #4a4a4a;
 }
 
 .search-box input {
   background: transparent;
-  background: rgba(255, 255, 255, 0);
   border: none;
   color: white;
   width: 100%;
+  font-size: 0.9rem;
+  height: 100%;
+}
+
+.search-box input::placeholder {
+  color: #b0b0b0 !important;
 }
 
 .search-box input:focus {
-  background: rgba(255, 255, 255, 0);
+  background: transparent;
   color: #FFF;
   box-shadow: none;
   outline: none;
 }
 
 .search-box:focus-within {
-  width: 800px;
+  width: 400px;
   border: 1px solid #FF6740;
-}
-
-.search-box:focus-within {
-  display: none;
+  display: flex;
 }
 
 .shortcut-key {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-size: 0.8rem;
+  background: #444;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.7rem;
+  color: #bbb;
 }
 
-.first-section {
-  padding: 100px 50px 0px 50px
+/* ==========================================================================
+   SIDEBAR
+   ========================================================================== */
+body.sidebar-open {
+  padding-left: 280px;
 }
 
-.content-section {
-
-  padding: 50px 50px 0px 50px
+body.sidebar-open .navbar .navbar-brand,
+body.sidebar-open #hamburger-btn {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.1s ease, visibility 0.1s ease;
 }
 
-/* .section-heading {
-  color: #FFF;
-  font-size: 2.2rem;
-  margin-bottom: 2.5rem;
-  position: relative;
-  padding-left: 20px;
-}
-
-.section-heading::before {
-  content: '';
-  position: absolute;
+#nav-sidebar {
+  background-color: #1f1f1f;
+  color: #e0e0e0;
+  width: 280px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
   left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  height: 80%;
-  width: 5px;
-  background: #FF6740;
-} */
-
-.carousel-item {
-  padding: 20px;
-}
-
-.manga-title {
-  color: #FFF;
-  font-size: 1.8rem;
-  line-height: 1.3;
-  margin-bottom: 1.5rem;
-}
-
-.badge {
-  background: rgba(255, 255, 255, 0.2) !important;
-  color: #fff !important;
-  font-size: 16px;
-  padding: 0.5em 1em;
-  margin-right: 0.5rem;
-  border-radius: 20px;
-  text-transform: uppercase;
-  font-weight: 700;
-}
-
-.description-box {
-  color: #EEE;
-  line-height: 1.7;
-  max-height: 250px;
+  z-index: 1040;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #333;
   overflow-y: auto;
-  padding-right: 15px;
+  scrollbar-width: thin;
+  scrollbar-color: #4F4F4F transparent;
 }
 
-.description-box::-webkit-scrollbar {
-  width: 6px;
+#nav-sidebar::-webkit-scrollbar {
+  width: 5px;
 }
-
-.description-box::-webkit-scrollbar-thumb {
-  background: #4F4F4F;
+#nav-sidebar::-webkit-scrollbar-thumb {
+  background-color: #4F4F4F;
   border-radius: 3px;
 }
-
-
-.custom-prev,
-.custom-next {
-  bottom: 10px;
-  top: auto;
-  width: 40px;
-  height: 40px;
+#nav-sidebar::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-.custom-prev {
-  right: 60px;
-  left: auto;
+body.sidebar-open #nav-sidebar {
+  transform: translateX(0);
 }
 
-.custom-next {
-  right: 10px;
-}
-
-.manga-list {
-  background: #1a1a1a;
-  padding: 1rem;
-  border-radius: 8px;
-}
-
-.manga-item {
-  background: #000;
-  padding: 1rem;
-  border-radius: 8px;
-}
-
-.manga-title {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-}
-
-.text-white-50 {
-  color: #AAA;
-}
-
-.section-heading {
-  margin-bottom: 1.5rem;
-}
-
-
-::placeholder {
-  color: #FFF !important;
-}
-
-.staff-picks {
-  margin: 20px;
-}
-
-.header {
+.sidebar-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
-}
-
-.header h2 {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.header a {
-  text-decoration: none;
-  color: #007bff;
-}
-
-.carousel {
-  display: flex;
-  overflow-x: auto;
-  gap: 20px;
-  padding-bottom: 10px;
-}
-
-.item {
-  position: relative;
-  width: 150px;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  height: 60px;
+  border-bottom: 1px solid #333;
   flex-shrink: 0;
 }
 
-.image-container {
-  position: relative;
+.close-btn {
+  padding: 0.5rem;
 }
 
-.image-container img:first-child {
-  width: 100%;
-  height: auto;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+.sidebar-nav {
+  padding: 1rem;
 }
 
-.flag {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  width: 24px;
-  height: 24px;
+.sidebar-nav .nav-link {
+  display: block;
+  color: #ccc;
+  text-decoration: none;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  margin-bottom: 0.25rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.item h3 {
-  margin-top: 10px;
-  font-size: 14px;
+.sidebar-nav .nav-link i {
+  margin-right: 0.75rem;
+  width: 20px;
   text-align: center;
 }
 
-.overlay {
+.sidebar-nav .nav-link:hover,
+.sidebar-nav .nav-link.active {
+  background-color: #FF6740;
+  color: #fff;
+}
+
+.sidebar-section {
+  margin-top: 1rem;
+  border-top: 1px solid #333;
+  padding-top: 1rem;
+}
+
+.sidebar-section .section-title {
+  font-weight: bold;
+  color: #e0e0e0;
+}
+
+.sidebar-section .section-title:hover {
+  background-color: transparent;
+  color: #fff;
+}
+
+.sidebar-section .sub-links {
+  padding-left: calc(1rem + 20px + 0.75rem);
+  margin-top: 0.5rem;
+}
+
+.sidebar-section .sub-links .nav-link {
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+  color: #aaa;
+  margin-bottom: 0.1rem;
+}
+
+.sidebar-section .sub-links .nav-link:hover {
+  background-color: transparent;
+  color: #fff;
+}
+
+.sidebar-footer {
+  padding: 1rem;
+  border-top: 1px solid #333;
+}
+
+.sidebar-footer .social-icons a {
+  color: #aaa;
+  margin: 0 0.5rem;
+  font-size: 1.2rem;
+  transition: color 0.2s ease;
+}
+
+.sidebar-footer .social-icons a:hover {
+  color: #fff;
+}
+
+#hamburger-btn {
+   transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* ==========================================================================
+   FEATURED MANGA CAROUSEL (#featuredMangaCarousel)
+   ========================================================================== */
+.featured-section {
+  /* Background set by JS, keep padding */
+  padding-top: 30px;
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+  border-radius: 5px;
+}
+
+/* Individual Slide */
+.featured-manga {
+  position: relative; 
+  background-color: transparent; /* Reverted */
+  overflow: hidden;
+  min-height: 350px; /* Reverted */
+  display: flex;
+  align-items: center; 
+  border-radius: 6px; 
+  /* Removed padding added previously */
+}
+
+/* Remove added background rules */
+/* .carousel-item:first-child .featured-manga { ... } removed */
+/* Add similar rules for :nth-child(2), :nth-child(3) etc. or use JS */
+
+.featured-manga .background-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
+  background: transparent; /* Changed from rgba(0, 0, 0, 0.6) */
+  z-index: 1; /* Place overlay behind content but above background image */
+  transition: background-color 0.3s ease;
+}
+
+.featured-manga-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;  /* Reverted */
+}
+
+.featured-cover-col {
+  position: relative; /* Reverted */
+  flex: 0 0 auto; /* Reverted */
+  width: 220px;
+  padding-left: 12px; /* Reverted */
+   /* Reverted */
+  /* Removed alignment/justify added previously */
+}
+
+.featured-cover {
+  box-shadow: 0 5px 15px rgba(0,0,0,0.4); /* Reverted */
+  max-width: 100%; /* Reverted */
+  display: block; /* Reverted */
+  margin: 0; /* Reverted */
+  border: 1px solid rgba(255,255,255,0.1); /* Reverted */
+  border-radius: 4px; /* Reverted */
+  /* Removed size limits, object-fit */
+}
+
+.featured-manga .flag.flag-featured { /* Use combined class */
+  position: absolute;
+  bottom: 8px; /* Reverted */
+  right: 8px; /* Reverted */
+  width: 24px;
+  border-radius: 2px; /* Reverted */
+  z-index: 5; /* Reverted */
+  height: auto;
+  /* Removed complex left positioning */
+}
+
+.featured-details {
+  color: #fff; /* Reverted */
+  display: flex;
+  flex-direction: column;
+  padding-left: 2.5rem; /* Reverted */
+  overflow: hidden; 
+  flex: 1 1 auto; /* Reverted */
+  /* Removed justify-content */
+}
+
+.featured-manga .title {
+  font-size: 1.8rem; /* Reverted */
+  font-weight: 700; /* Reverted */
+  margin-bottom: 0.75rem;
+  line-height: 1.2;
+  color: #f0f0f0; /* Reverted */
+   display: -webkit-box;
+   -webkit-line-clamp: 2; 
+   -webkit-box-orient: vertical;
+   overflow: hidden;
+   /* Removed text-overflow, min-height */
+}
+
+.featured-manga .genres {
+  display: flex; /* Reverted */
+  flex-wrap: wrap; /* Reverted */
+  gap: 6px; /* Reverted */
+  margin-bottom: 1rem; 
+}
+
+.featured-manga .genre-tag {
+  background: rgba(255, 255, 255, 0.1); /* Reverted */
+  color: #ccc; 
+  padding: 3px 8px; /* Reverted */
+  border-radius: 3px; /* Reverted */
+  font-size: 0.7rem; /* Reverted */
+  text-transform: uppercase;
+  font-weight: 600; /* Reverted */
+  /* Removed display, margins, border */
+}
+
+/* Featured Description Box (Using general .description-box styles) */
+.featured-manga .description-box {
+  font-size: 0.875rem; /* Specific font size for featured */
+  line-height: 1.5; 
+  width: 100%; /* Make width fixed relative to container */
+  height: 8rem; /* Set a fixed height for the box */
+  overflow-y: auto; /* Add vertical scrollbar when content exceeds max-height */
+  /* Removed display: -webkit-box; */
+  /* Removed -webkit-line-clamp: 6; */
+  margin-bottom: 1rem; 
+  color: inherit; 
+  padding-right: 8px; /* Add padding so scrollbar doesn't overlap text */
+  /* Simple scrollbar styling */
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: rgba(255, 255, 255, 0.3) rgba(0, 0, 0, 0.1); /* For Firefox */
+}
+
+/* Webkit scrollbar styling (Chrome, Safari, Edge) */
+.featured-manga .description-box::-webkit-scrollbar {
+  width: 6px; 
+}
+
+.featured-manga .description-box::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1); 
+  border-radius: 3px;
+}
+
+.featured-manga .description-box::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3); 
+  border-radius: 3px;
+}
+
+.featured-manga .description-box::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Featured Bottom row layout */
+.featured-bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Reverted */
+  margin-top: auto; /* Push to bottom */
+  padding-top: 0.5rem; /* Reverted */
+  /* Removed width */
+}
+
+.featured-details .author { /* Author specific to featured */
+  font-size: 0.85rem; /* Reverted */
+  color: #e0e0e0; /* Reverted */
+  font-weight: 500;
+  padding: 0; /* Reverted */
+  margin: 0; /* Reverted */
+}
+
+.featured-right-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem; /* Reverted */
+}
+
+.ranking-indicator {
+  color: #ccc; /* Reverted */
+  font-size: 0.85rem; /* Reverted */
+  font-weight: 700;
+  white-space: nowrap; /* Reverted */
+  /* Removed background, padding, border-radius, line-height */
+}
+
+/* Featured Carousel Arrows (inside right controls) */
+.featured-navigation-arrows {
+  display: flex;
+  gap: 10px;
+}
+
+.featured-navigation-arrows .featured-carousel-control {
+  position: static;
+  display: inline-flex;
+  width: 30px; /* Reverted */
+  height: 30px; /* Reverted */
+  background-color: transparent; /* Reverted */
+  border-radius: 50%;
+  opacity: 0.8;
+  padding: 0; /* Reverted */
+  transition: opacity 0.3s ease, background-color 0.3s ease; /* Reverted */
+  align-items: center;
+  justify-content: center;
+  border: none; /* Reverted */
+}
+
+.featured-navigation-arrows .featured-carousel-control:hover {
+  opacity: 1;
+  background-color: rgba(40, 40, 40, 0.8); /* Reverted */
+}
+
+.featured-navigation-arrows .featured-carousel-control .carousel-control-prev-icon,
+.featured-navigation-arrows .featured-carousel-control .carousel-control-next-icon {
+  width: 1.2em; /* Reverted */
+  height: 1.2em; /* Reverted */
+  background-size: contain;
+}
+
+/* Adjustments for Featured Banner Section - Renamed to popular-new-titles-section */
+.popular-new-titles-section { /* Renamed from .featured-banner-section */
+  padding-top: 0; 
+  padding-bottom: 1rem; 
+  margin-bottom: 2rem; 
+  position: relative; 
+  /* Removed styles that were here before the revert */
+}
+
+/* Ensure section heading inside popular-new-titles-section aligns with other headings */
+.popular-new-titles-section .section-heading {
+  padding-left: 20px; /* Match the padding used in .section-container */
+}
+
+/* Styles for the moved popular new titles section */
+.popular-new-titles-section.full-width-section { 
+  padding-top: 60px; /* Add padding to clear the fixed navbar */
+  padding-left: 0; /* Remove default section padding if needed */
+  padding-right: 0; /* Remove default section padding if needed */
+  padding-bottom: 1rem; /* Keep some bottom padding */
+  margin-bottom: 0; /* REMOVED margin-bottom */
+  position: relative; 
+  overflow: hidden; /* Clip background if needed */
+  background-size: cover;
+  background-position: center center;
+  /* Set initial background */
+  background-image: linear-gradient(rgba(17, 17, 17, 0.85), rgba(17, 17, 17, 0.95)), url('/home_frontend/sample_img/cover1.png'); 
+  transition: background-image 0.5s ease-in-out; /* Smooth transition */
+}
+
+/* Ensure the inner container within the full-width section has padding */
+.popular-new-titles-section.full-width-section > .container-xxl {
+  padding-top: 1rem; /* Add padding back for the content inside */
+  padding-bottom: 0.5rem; /* Reduced padding-bottom */
+  padding-left: 20px; /* MODIFIED: Match standard section padding for heading alignment */
+  padding-right: 1.5rem; /* Keep right padding for carousel spacing */
+  /* Reset margin/padding inherited from .container-xxl if needed */
+  margin-top: 0;
+  background-color: transparent; /* Ensure inner container is transparent */
+  position: relative; /* Keep content above background */
+  z-index: 1;
+}
+
+/* Reduce padding-top for the first section inside the main container */
+main.container-xxl > .section-container:first-child {
+  padding-top: 0; /* REMOVED padding-top */
+}
+
+/* ==========================================================================
+   STANDARD MANGA CAROUSELS (.manga-carousel)
+   (Staff Picks, Self Published, Featured Items)
+   ========================================================================== */
+
+/* --- Base Carousel Container --- */
+.manga-carousel,
+.swiper { /* Apply base styles to Swiper container too */
+  display: flex;
+  gap: 0.75rem; /* Swiper handles spacing with spaceBetween, but keep for non-swiper carousels if any */
+  overflow: hidden; /* ADDED - Let Swiper manage slide visibility */
+  padding-bottom: 1rem; /* Add padding for scrollbar/dots */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.manga-carousel::-webkit-scrollbar,
+.swiper::-webkit-scrollbar { /* Hide scrollbar for Swiper too */
+  display: none;
+}
+
+/* --- Base Item Styles --- */
+.manga-carousel .item,
+.swiper-slide { /* Apply item styles to swiper-slide */
+  position: relative;
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  /* width: calc((100% - 4 * 0.75rem) / 5.2); Removed for Swiper */
+  height: auto; /* Let Swiper manage height */
+  box-sizing: border-box; /* Ensure padding/border included in width */
+}
+
+/* --- Ensure Swiper wrapper takes full height if needed --- */
+.swiper-wrapper {
+  align-items: flex-start; /* Align items top */
+}
+
+/* --- Update Image Container for Swiper --- */
+.swiper-slide .image-container {
+  position: relative;
+  aspect-ratio: 2/3;
+  overflow: hidden;
+  border-radius: 5px;
+  background-color: #222;
+}
+
+.swiper-slide .image-container img:first-child { /* Cover image */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+  transition: transform 0.3s ease;
+}
+
+.swiper-slide:hover .image-container img:first-child {
+  transform: scale(1.05);
+}
+
+/* NEW: Default flag on image container */
+.swiper-slide .image-container .flag {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 20px;
+  height: auto;
+  border-radius: 2px;
+  z-index: 3; /* Above overlay background */
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.swiper-slide .item-title-link {
+  color: #e0e0e0;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.swiper-slide .item-title-link:hover {
+  color: #fff;
+}
+
+.swiper-slide .item-title {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  font-weight: 500;
+}
+
+/* --- Base Overlay Styles for Swiper --- */
+.swiper-slide .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   color: white;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-end;
+  align-items: stretch;
   opacity: 0;
-  transition: opacity 0.3s;
+  transition: opacity 0.3s ease, transform 0.3s ease;
   border-radius: 5px;
-  padding: 10px;
+  padding: 0.75rem;
   box-sizing: border-box;
+  text-align: left;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 40%, rgba(0,0,0,0) 100%);
+  z-index: 2; /* Below the default flag */
 }
 
-.item:hover .overlay {
+.swiper-slide:hover .overlay {
   opacity: 1;
 }
 
-.overlay p {
-  margin-bottom: 10px;
-  text-align: center;
+/* Overlay Actions Row (Buttons + Flag) */
+.swiper-slide .overlay-actions {
+  display: flex;
+  justify-content: flex-start; /* Align buttons to start */
+  align-items: center;
+  padding-top: 0.5rem;
+  flex-shrink: 0;
 }
 
-.read-button, .more-button {
-  margin: 5px;
-  padding: 5px 10px;
-  background: #007bff;
+.swiper-slide .overlay-buttons {
+  /* Wrapper for buttons */
+}
+
+/* Base Read Button */
+.swiper-slide .overlay .read-button {
+  background: #FF6740;
   color: white;
-  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-right: 0.5rem;
+  margin: 0;
+  margin-right: 0.5rem;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none !important;
+  transition: background-color 0.2s ease;
+}
+
+.swiper-slide .overlay .read-button i {
+  margin-right: 0.4rem;
+}
+
+.swiper-slide .overlay .read-button:hover {
+  background: #e65c3a;
+}
+
+/* Base More Button */
+.swiper-slide .overlay .more-button {
+  background: rgba(40, 40, 40, 0.8);
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 1rem;
+  margin: 0;
+  padding: 0;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none !important;
+  transition: background-color 0.2s ease;
+}
+
+.swiper-slide .overlay .more-button:hover {
+  background: rgba(60, 60, 60, 0.9);
+}
+
+/* --- Specific Styles for #staffPicksCarousel (Now .staff-picks-swiper) --- */
+.staff-picks-swiper {
+  /* Swiper handles gaps via spaceBetween, remove CSS gap */
+  /* gap: 0.75rem; */
+  padding-bottom: 2rem; /* Make space for pagination */
+}
+
+.staff-picks-swiper .swiper-slide {
+  /* width is now controlled by slidesPerView and spaceBetween */
+  /* flex: 0 0 calc((100% - 3rem) / 5); */
+  /* width: calc((100% - 3rem) / 5); */
+  /* Ensure no conflicting margins or padding */
+}
+
+/* Staff Picks Overlay slide-up effect */
+.staff-picks-swiper .swiper-slide .overlay {
+  justify-content: space-between;
+  transform: translateY(100%);
+  background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 60%, rgba(0,0,0,0) 100%);
+}
+
+.staff-picks-swiper .swiper-slide:hover .overlay {
+  transform: translateY(0);
+}
+
+/* Staff Picks Description Box */
+.staff-picks-swiper .overlay .description-box {
+  color: #c0c0c0;
+  font-size: 1rem;
+  line-height: 1.4;
+  overflow-y: auto;
+  max-height: 14.2rem;
+  scrollbar-width: thin;
+  scrollbar-color: #4F4F4F transparent;
+  flex-grow: 0;
+  min-height: 0;
+}
+
+.staff-picks-swiper .overlay .description-box::-webkit-scrollbar {
+  width: 5px;
+}
+.staff-picks-swiper .overlay .description-box::-webkit-scrollbar-thumb {
+  background: #444;
   border-radius: 3px;
 }
+
+/* Staff Picks Overlay Actions */
+.staff-picks-swiper .overlay-actions {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 0.2rem 0.2rem;
+}
+
+.staff-picks-swiper .overlay a {
+  /* Link styles specific to staff picks overlay if needed */
+}
+
+/* --- General Swiper Overlay Styles (for others like Self-Published, Featured Items, Recently Added) --- */
+.self-published-swiper .overlay .description-box,
+.featured-items-swiper .overlay .description-box,
+.recently-added-swiper .overlay .description-box {
+  color: #c0c0c0;
+  font-size: 0.8rem; /* Smaller font for these sections */
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Limit to 3 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 0.5rem; /* Add some space below description */
+  max-height: calc(0.8rem * 1.4 * 3); /* Match line clamp */
+}
+
+/* Ensure the self-published item width is handled by Swiper */
+/* #selfPublishedCarousel .item { ... } REMOVED */
+
+/* ==========================================================================
+   PAGINATION DOTS (Old & Swiper)
+   ========================================================================== */
+
+/* Swiper Pagination Styles (Applied to ALL Swiper paginations) */
+.swiper-pagination {
+  position: absolute;
+  bottom: 0px !important; /* Position at the very bottom */
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: auto !important; /* Let it size dynamically */
+  text-align: center;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.swiper-pagination-bullet {
+  width: 8px; /* Base size */
+  height: 8px; /* Base size */
+  background-color: #555; /* Base color for inactive */
+  opacity: 0.4; /* Start faded */
+  transform: scale(0.6); /* Start small */
+  transition: background-color 0.3s ease, opacity 0.3s ease, transform 0.3s ease !important;
+  margin: 0 5px !important; /* Spacing */
+  display: inline-block;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Main Active Bullet */
+.swiper-pagination-bullet-active-main,
+.swiper-pagination-bullet-active { /* Applied to all active bullets */
+  background-color: #FF6740; /* Active color */
+  opacity: 1;
+  transform: scale(1.4); /* Largest size */
+}
+
+/* Immediately Adjacent Bullets */
+.swiper-pagination-bullet-active-prev,
+.swiper-pagination-bullet-active-next { /* Applied to all */
+  transform: scale(1.0); /* Medium size */
+  opacity: 0.7; /* Slightly faded */
+  background-color: #555; /* Ensure inactive color */
+}
+
+/* Bullets Two Steps Away */
+.swiper-pagination-bullet-active-prev-prev,
+.swiper-pagination-bullet-active-next-next { /* Applied to all */
+  transform: scale(0.6); /* Small size */
+  opacity: 0.4; /* More faded */
+  background-color: #555;
+}
+
+/* Bullets Further Away */
+.swiper-pagination-bullet:not(.swiper-pagination-bullet-active-main):not(.swiper-pagination-bullet-active):not(.swiper-pagination-bullet-active-prev):not(.swiper-pagination-bullet-active-next):not(.swiper-pagination-bullet-active-prev-prev):not(.swiper-pagination-bullet-active-next-next) { /* Applied to all */
+  transform: scale(0.2); /* Make them very small */
+  opacity: 0.1; /* Make them very faint */
+  background-color: #555;
+  /* Optional: set width/height to 0 if scale(0) doesn't work */
+  /* width: 0;
+     height: 0; */
+}
+
+
+/* ==========================================================================
+   LATEST UPDATES
+   ========================================================================== */
+
+.latest-updates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.latest-updates-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background-color: #1a1a1a; /* Subtle background for columns */
+  padding: 1rem;
+  border-radius: 6px;
+}
+
+/* Hide columns 3 and 4 by default */
+.latest-updates-column:nth-child(n+3) {
+  display: none;
+}
+
+.latest-item {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+  color: inherit; /* Inherit color from parent */
+  text-decoration: none; /* Remove underline */
+  background-color: transparent; /* Start transparent */
+}
+
+.latest-item:hover {
+  background-color: #252525;
+}
+
+.latest-cover {
+  width: 45px;
+  height: 63px;
+  object-fit: cover;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.latest-details {
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.latest-title {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #e8e8e8;
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.latest-chapter,
+.latest-group {
+  font-size: 0.75rem;
+  color: #9a9a9a;
+  margin-bottom: 0.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  line-height: 1.3;
+}
+
+.latest-group {
+  color: #888888;
+}
+
+.latest-chapter .flag-icon {
+  vertical-align: baseline;
+  height: 10px;
+  margin-bottom: 1px;
+}
+
+.latest-group i {
+  margin-right: 4px;
+  font-size: 0.9em;
+  color: #888888;
+}
+
+.end-badge {
+  font-size: 0.6rem;
+  vertical-align: middle;
+  margin-left: 5px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background-color: #3a86ff;
+  color: #fff;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.latest-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  align-self: stretch;
+  flex-shrink: 0;
+  padding-left: 0.5rem;
+}
+
+.latest-comments {
+  font-size: 0.75rem;
+  color: #9a9a9a;
+  margin-bottom: auto;
+}
+
+.latest-comments i {
+   vertical-align: middle;
+}
+
+.latest-time {
+  font-size: 0.7rem;
+  color: #777;
+  white-space: nowrap;
+}
+
+/* Responsive column display */
+@media (min-width: 1400px) {
+  .latest-updates-column:nth-child(3) {
+    display: flex;
+  }
+}
+
+@media (min-width: 1800px) {
+  .latest-updates-column:nth-child(4) {
+    display: flex;
+  }
+}
+
+/* ==========================================================================
+   MODALS (User Modal)
+   ========================================================================== */
+
+.user-modal-dialog {
+  position: absolute; 
+  top: 55px; 
+  right: 10px; 
+  margin: 0; 
+  max-width: 280px;
+}
+
+.user-modal-content {
+  background-color: #262626; 
+  color: #e0e0e0; 
+  border: 1px solid #333;
+  border-radius: 6px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5); 
+  max-height: calc(100vh - 70px); 
+  display: flex; 
+  flex-direction: column; 
+}
+
+.user-modal-body {
+  padding: 0.75rem;
+  overflow-y: auto; 
+  scrollbar-width: thin;
+  scrollbar-color: #4F4F4F transparent;
+}
+
+.user-modal-body::-webkit-scrollbar {
+  width: 5px;
+}
+
+.user-modal-body::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 3px;
+}
+
+.user-modal-top-section {
+  background-color: #303030;
+  margin: -0.75rem -0.75rem 0;
+  padding: 1rem 0.75rem 0.75rem;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.user-modal-top-section i {
+  font-size: 3rem;
+  color: #ccc;
+}
+
+.user-modal-top-section h5 {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.user-modal-divider {
+  border-color: #444; 
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.user-modal-actions {
+  padding: 0 0.5rem;
+  margin-bottom: 0.75rem !important;
+}
+
+.user-modal-actions a {
+  color: #b0b0b0; 
+  font-size: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.user-modal-actions a i {
+  font-size: 1.1rem;
+}
+
+.user-modal-actions a:hover {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* General links within modal body */
+.user-modal-body > div:not(.user-modal-top-section):not(.user-modal-actions):not(.d-grid) > a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.5rem;
+  margin-bottom: 0.25rem;
+  border-radius: 4px;
+  color: #e0e0e0;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.user-modal-body > div:not(.user-modal-top-section):not(.user-modal-actions):not(.d-grid) > a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.user-modal-body > div:has(+ hr) > a {
+    margin-bottom: 0;
+}
+
+.beta-badge {
+  background-color: #ff9800 !important; 
+  color: #111 !important; 
+  font-weight: bold;
+  font-size: 0.6rem;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.all-badge {
+  background-color: #444 !important; 
+  color: #ccc !important; 
+  font-size: 0.6rem;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.d-grid.gap-2 {
+  padding: 0 0.5rem;
+}
+
+.sign-in-btn {
+  background-color: #FF6740 !important; 
+  border-color: #FF6740 !important;
+  font-weight: bold;
+  padding: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.sign-in-btn:hover {
+  background-color: #e65c3a !important; 
+  border-color: #e65c3a !important;
+}
+
+.user-modal-body .small {
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  display: inline-block;
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.user-modal-body .small:hover {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.modal-backdrop {
+  background-color: #000;
+}
+
+.modal-backdrop.show {
+  opacity: 0.75;
+}
+
+/* ==========================================================================
+   RESPONSIVE STYLES
+   ========================================================================== */
+
+/* --- 992px Breakpoint --- */
+@media (max-width: 992px) {
+  .search-box {
+    width: 200px;
+  }
+  .search-box:focus-within {
+    width: 300px;
+  }
+  .featured-details {
+    padding-left: 15px;
+  }
+  /* Remove featured style changes from previous edit */
+   .featured-manga {
+      min-height: 350px; /* Reverted */
+      padding: 0; /* Reverted */
+   }
+   .featured-manga .title {
+      font-size: 1.8rem; /* Keep this adjusted size? Or revert to 1.5rem? Reverting to 1.5 */
+      font-size: 1.5rem; /* Reverted */
+      min-height: unset; /* Reverted */
+   }
+   .featured-cover {
+       max-width: 100%; /* Reverted */
+   }
+   .featured-manga .flag.flag-featured {
+        left: auto; /* Reverted */
+        right: 8px; /* Reverted */
+        bottom: 8px; /* Reverted */
+        width: 24px; /* Reverted */
+   }
+   .featured-manga .description-box {
+        font-size: 0.875rem; /* Reverted */
+        -webkit-line-clamp: 6; /* Reverted */
+        max-height: calc(0.875rem * 1.5 * 6); /* Reverted */
+   }
+  .container-xxl {
+     padding-top: 60px; 
+  }
+  .popular-new-titles-section.full-width-section {
+     padding-top: 60px; /* Maintain navbar clearance */
+     /* Adjust background height or behavior if needed */
+  }
+}
+
+/* --- 768px Breakpoint --- */
+@media (max-width: 768px) {
+  .navbar-brand {
+    margin-right: auto;
+  }
+  .search-box {
+    width: 150px;
+    margin-left: 0.5rem !important;
+  }
+  .search-box:focus-within {
+    width: 200px;
+  }
+  .page-wrapper {
+     /* background-image: none; */
+  }
+
+  /* Featured Manga Mobile */
+  .featured-manga {
+     margin-left: 0; /* Reverted */
+     margin-right: 0; /* Reverted */
+     min-height: auto;
+     overflow: hidden; /* Reverted */
+     padding: 0; /* Reverted */
+     text-align: left; /* Reverted */
+  }
+  /* .featured-manga-content {
+     padding: 0px; 
+     flex-direction: column;
+     text-align: center; 
+     align-items: stretch; 
+     width: 100%; 
+  } */
+   .featured-cover-col {
+       padding-right: 0; 
+       margin: 0 auto 1rem; /* Reverted */
+       justify-content: flex-start; /* Reverted */
+       width: 150px; /* Reverted */
+       max-width: 150px; /* Reverted */
+   }
+   .featured-cover {
+       max-width: 100%;
+   }
+   .featured-manga .flag.flag-featured {
+      left: auto;
+      right: 8px; /* Reverted */
+      bottom: 8px; /* Reverted */
+      width: 24px; /* Reverted */
+      position: absolute; /* Reverted */
+   }
+  .featured-details {
+    padding-left: 0;
+    align-items: center;
+    width: auto; /* Reverted */
+  }
+  .featured-manga .title {
+    font-size: 1.5rem; /* Kept from previous edit, seems reasonable */
+    text-align: center;
+    min-height: unset; /* Reverted */
+    -webkit-line-clamp: 2; /* Kept */
+  }
+   .featured-manga .genres {
+      justify-content: center;
+   }
+   .featured-manga .description-box {
+      max-height: 80px; /* Reverted */
+      font-size: 0.8rem;
+      text-align: center;
+      -webkit-line-clamp: 4; /* Reverted - Check original? Assume 6 */
+      -webkit-line-clamp: 6; /* Reverted */
+   }
+   .featured-bottom-row {
+      margin-top: 0.5rem; /* Reverted */
+      padding-top: 0; /* Reverted */
+      flex-direction: row; /* Reverted */
+      align-items: center; /* Reverted */
+      gap: 1.5rem; /* Reverted */
+      justify-content: center; /* Reverted */
+   }
+   .featured-details .author {
+       position: static; /* Reverted */
+       width: auto; /* Reverted */
+       text-align: left; /* Reverted */
+       margin-top: 0; /* Reverted */
+       margin-bottom: 0; /* Reverted */
+       padding-bottom: 0; /* Reverted */
+       left: auto; /* Reverted */
+   }
+   .featured-right-controls {
+       /* Removed */
+   }
+
+  /* Latest Updates Mobile */
+  .latest-updates-grid {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .latest-updates-column:nth-child(1),
+  .latest-updates-column:nth-child(2) {
+    display: flex;
+  }
+  .container-xxl {
+     padding-top: 60px; 
+  }
+   .popular-new-titles-section.full-width-section {
+      padding-top: 60px; /* Maintain navbar clearance */
+      /* Potentially simplify background or layout */
+   }
+   .popular-new-titles-section.full-width-section > .container-xxl {
+      padding-left: 15px; /* Use standard container padding */
+      padding-right: 15px;
+   }
+}
+
+/* --- 576px Breakpoint --- */
+@media (max-width: 576px) {
+  .main-container {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+  }
+  .featured-manga {
+    margin-left: 0;
+    margin-right: 0;
+  }
+   .featured-manga-content {
+    padding: 1rem 0.5rem;
+  }
+  .section-container {
+    padding: 20px 10px;
+  }
+
+  /* Carousel Items Mobile */
+  .manga-carousel .item {
+    /* Adjust width to show ~3 items */
+    width: calc((100% - 2 * 0.75rem) / 3.1);
+  }
+
+  .section-heading {
+    font-size: 1rem;
+  }
+  .featured-manga .title {
+    font-size: 1.3rem;
+    min-height: unset; /* Reverted */
+  }
+  /* Remove reverted style changes */
+   .featured-manga .genre-tag {
+        /* Keep as is */
+   }
+   .featured-manga .description-box {
+      font-size: 0.8rem; /* Reverted */
+      max-height: 80px; /* Reverted */
+      -webkit-line-clamp: 6; /* Reverted */
+   }
+   .ranking-indicator {
+       font-size: 0.85rem; /* Reverted */
+   }
+   .featured-navigation-arrows .featured-carousel-control {
+       width: 30px; /* Reverted */
+       height: 30px; /* Reverted */
+   }
+
+  /* User Modal Mobile */
+  .user-modal-dialog {
+    right: 5px;
+    left: 5px;
+    max-width: none;
+    width: auto;
+  }
+}
+
+/* Remove added background rules */
+/* .carousel-item:nth-child(2) .featured-manga { ... } removed */
+/* .carousel-item:nth-child(3) .featured-manga { ... } removed */
+/* Add more :nth-child rules as needed or implement dynamic JS solution */
+
+/* Fix potential duplicate rule */
+#featuredMangaCarousel .carousel-item:first-child .ranking-indicator {
+  color: #FF6740; 
+}
+
+/* New styles for the full-width background area */
+/* .featured-area-wrapper { ... } */
+/* .featured-background { ... } */
 

@@ -5,433 +5,1467 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>MangaDax - High Quality Images, No Ads</title>
   
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"/>
-  <link rel="stylesheet" href="../CSS/home.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+  <link rel="stylesheet" href="/CSS/home.css" />
 </head>
 <body>
+  <!-- Navigation Bar -->
   <nav class="navbar navbar-expand-lg fixed-top">
-      <button class="btn text-white me-3" type="button">
+    <div class="container">
+      <button class="btn text-white ps-0 me-2" type="button" id="hamburger-btn">
         <i class="bi bi-list fs-3"></i>
       </button>
-      <a class="navbar-brand text-white fw-bold" href="#">MangaDax</a>
+      <a class="navbar-brand text-white fw-bold d-flex align-items-center" href="homepage.html">
+         MangaDax
+      </a>
       
       <div class="search-box d-flex align-items-center ms-auto me-3">
         <input type="text" class="form-control border-0" placeholder="Search"/>
-        <span class="shortcut-key text-white-50 ms-2">Ctrl</span>
-        <span class="shortcut-key text-white-50 ms-2">K</span>
-        <i class="bi bi-search text-white" style="padding-left: 10px;"></i>
+        <span class="shortcut-key text-white-50 ms-2 d-none d-md-inline">Ctrl</span>
+        <span class="shortcut-key text-white-50 ms-2 d-none d-md-inline">K</span>
+        <i class="bi bi-search text-white ms-2"></i>
       </div>
-      <button class="btn text-white" type="button">
+      <button class="btn text-white p-0" type="button" id="user-avatar-btn">
         <i class="bi bi-person-circle fs-3"></i>
       </button>
     </div>
   </nav>
 
-  <div class="container-fluid first-section">
-    <h2 class="section-heading text-white fw-bold">Popular New Titles</h2>
-
-    <div id="mangaCarousel" class="carousel slide" data-bs-ride="false">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <div class="row align-items-start">
-            <div class="col-md-4">
-              <img src="https://placehold.co/300x400?text=Manga+Cover+1" alt="Manga Cover 1" class="img-fluid rounded"/>
-            </div>
-            <div class="col-md-8">
-              <h3 class="manga-title text-white fw-bold mb-3">
-                Manga 1
-              </h3>
-              <div class="mb-3">
-                <span class="badge bg-success me-1">Action</span>
-                <span class="badge bg-success me-1">Adventure</span>
-                <span class="badge bg-success me-1">Comedy</span>
-                <span class="badge bg-success me-1">Fantasy</span>
-                <span class="badge bg-success me-1">Isekai</span>
-              </div>
-              <div class="description-box">
-                "How can my past self get so excited doing all those embarrassing things!?"
-
-When he was in the third year of middle school, Hizaki Shiou was summoned to another world to save it. After defeating the Demon King, he was forcibly returned back to the present day. Yet another three years later, he is summoned to the other world once again, this time to stop the rampage of the secret society "Helheim."
-
-That organization was supposedly actually the one that he had founded during his chuunibyou phase, where he called himself the "Corpse King"—a dark past too embarrassing to remember!
-
-Someone seems to be impersonating the name of "Helheim" and tarnishing its reputation. To uncover the truth behind this mystery and clear the organization's name, the Corpse King reunites with his former subordinates, the "Hakkai," who once made Helheim the strongest it had ever been. While agonizing over his dark past, he begins to take action in the other world once again.
-
-Their first stop is the Steel City of Gagiul—rescue the city struggling through famine as well as the pale-looking count's daughter in distress. "How can my past self get so excited doing all those embarrassing things!?"
-
-When he was in the third year of middle school, Hizaki Shiou was summoned to another world to save it. After defeating the Demon King, he was forcibly returned back to the present day. Yet another three years later, he is summoned to the other world once again, this time to stop the rampage of the secret society "Helheim."
-
-That organization was supposedly actually the one that he had founded during his chuunibyou phase, where he called himself the "Corpse King"—a dark past too embarrassing to remember!
-
-Someone seems to be impersonating the name of "Helheim" and tarnishing its reputation. To uncover the truth behind this mystery and clear the organization's name, the Corpse King reunites with his former subordinates, the "Hakkai," who once made Helheim the strongest it had ever been. While agonizing over his dark past, he begins to take action in the other world once again.
-
-Their first stop is the Steel City of Gagiul—rescue the city struggling through famine as well as the pale-looking count's daughter in distress.
-              </div>
-            </div>
-          </div>
-        </div>
-    
-        <div class="carousel-item">
-          <div class="row align-items-start">
-            <div class="col-md-4">
-              <img src="https://placehold.co/300x400?text=Manga+Cover+2" alt="Manga Cover 2" class="img-fluid rounded"/>
-            </div>
-            <div class="col-md-8">
-              <h3 class="manga-title text-white fw-bold mb-3">
-                MANGA'S NAME 2
-              </h3>
-              <div class="mb-3">
-                <span class="badge bg-success me-1">Action</span>
-                <span class="badge bg-success me-1">Fantasy</span>
-                <span class="badge bg-success me-1">Adventure</span>
-                <span class="badge bg-success me-1">Isekai</span>
-              </div>
-              <div class="description-box">
-                Description for Manga 2. You can add more content here...
-              </div>
-            </div>
-          </div>
-        </div>
-    
-        <div class="carousel-item">
-          <div class="row align-items-start">
-            <div class="col-md-4">
-              <img src="https://placehold.co/300x400?text=Manga+Cover+3" alt="Manga Cover 3" class="img-fluid rounded"/>
-            </div>
-            <div class="col-md-8">
-              <h3 class="manga-title text-white fw-bold mb-3">
-                MANGA'S NAME 3
-              </h3>
-              <div class="mb-3">
-                <span class="badge bg-success me-1">Drama</span>
-                <span class="badge bg-success me-1">Romance</span>
-                <span class="badge bg-success me-1">School Life</span>
-              </div>
-              <div class="description-box">
-                Description for Manga 3
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="carousel-item">
-          <div class="row align-items-start">
-            <div class="col-md-4">
-              <img src="https://placehold.co/300x400?text=Manga+Cover+4" alt="Manga Cover 4" class="img-fluid rounded"/>
-            </div>
-            <div class="col-md-8">
-              <h3 class="manga-title text-white fw-bold mb-3">
-                MANGA'S NAME 4
-              </h3>
-              <div class="mb-3">
-                <span class="badge bg-success me-1">Horror</span>
-                <span class="badge bg-success me-1">Mystery</span>
-                <span class="badge bg-success me-1">Supernatural</span>
-              </div>
-              <div class="description-box">
-                Description for Manga 4.
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="carousel-item">
-          <div class="row align-items-start">
-            <div class="col-md-4">
-              <img src="https://placehold.co/300x400?text=Manga+Cover+5" alt="Manga Cover 5" class="img-fluid rounded"/>
-            </div>
-            <div class="col-md-8">
-              <h3 class="manga-title text-white fw-bold mb-3">
-                MANGA'S NAME 5
-              </h3>
-              <div class="mb-3">
-                <span class="badge bg-success me-1">Sports</span>
-                <span class="badge bg-success me-1">Slice of Life</span>
-                <span class="badge bg-success me-1">Drama</span>
-              </div>
-              <div class="description-box">
-                Description for Manga 5.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <!-- Carousel Controls -->
-      <button class="carousel-control-prev custom-prev" type="button" data-bs-target="#mangaCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      </button>
-      <button class="carousel-control-next custom-next" type="button" data-bs-target="#mangaCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+  <!-- Sidebar - moved to be direct child of body -->
+  <aside id="nav-sidebar">
+    <div class="sidebar-header">
+      <a class="navbar-brand text-white fw-bold d-flex align-items-center sidebar-logo" href="homepage.html">
+         MangaDax
+      </a>
+      <button class="btn text-white close-btn" type="button">
+        <i class="bi bi-x-lg fs-4"></i>
       </button>
     </div>
-  </div>
-
-  <div class="container-fluid content-section">
-    <h2 class="section-heading text-white fw-bold">Latest Updates</h2>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="manga-list">
-          <div class="manga-item mb-3">
-            <div class="row">
-              <div class="col-3">
-                <img src="https://placehold.co/100x150?text=Doraemon" alt="Under Ninja" class="img-fluid rounded"/>
-              </div>
-              <div class="col-9">
-                <h5 class="manga-title text-white">Under Ninja</h5>
-                <p class="text-white-50">Vol. 1 Ch. 6 -</p>
-                <p class="text-white-50">Published by Zhunta</p>
-                <p class="text-white-50">1 minute ago</p>
-              </div>
-            </div>
-          </div>
-          <div class="manga-item mb-3">
-            <div class="row">
-              <div class="col-3">
-                <img src="https://placehold.co/100x150?text=Qiang+Jin+Jiu" alt="Qiang Jin Jiu" class="img-fluid rounded"/>
-              </div>
-              <div class="col-9">
-                <h5 class="manga-title text-white">Qiang Jin Jiu (2024)</h5>
-                <p class="text-white-50">Ch. 25</p>
-                <p class="text-white-50">Published by Dracena</p>
-                <p class="text-white-50">6 minutes ago</p>
-              </div>
-            </div>
-          </div>
-          <div class="manga-item mb-3">
-            <div class="row">
-              <div class="col-3">
-                <img src="https://placehold.co/100x150?text=Demon+Academy" alt="Demon Academy" class="img-fluid rounded"/>
-              </div>
-              <div class="col-9">
-                <h5 class="manga-title text-white">Demon Academy</h5>
-                <p class="text-white-50">Vol. 6 Ch. 52 - The Second Ray Gun</p>
-                <p class="text-white-50">Published by Hokuto no Gun</p>
-                <p class="text-white-50">8 minutes ago</p>
-              </div>
-            </div>
-          </div>
-          <div class="manga-item mb-3">
-            <div class="row">
-              <div class="col-3">
-                <img src="https://placehold.co/100x150?text=Vampire+Knight" alt="Vampire Knight" class="img-fluid rounded"/>
-              </div>
-              <div class="col-9">
-                <h5 class="manga-title text-white">Vampire Knight</h5>
-                <p class="text-white-50">Vol. 2 Ch. 9 - فارغ</p>
-                <p class="text-white-50">Published by BloodyRoz</p>
-                <p class="text-white-50">16 minutes ago</p>
-              </div>
-            </div>
-          </div>
-          <div class="manga-item mb-3">
-            <div class="row">
-              <div class="col-3">
-                <img src="https://placehold.co/100x150?text=Web+Game+Wife" alt="Web Game Wife" class="img-fluid rounded"/>
-              </div>
-              <div class="col-9">
-                <h5 class="manga-title text-white">My Web Game Wife Is a Popular Idol IRL</h5>
-                <p class="text-white-50">Vol. 2 Ch. 28 - Pinky Promise</p>
-                <p class="text-white-50">Published by Pinky</p>
-                <p class="text-white-50">20 minutes ago</p>
-              </div>
-            </div>
-          </div>
-          <div class="manga-item mb-3">
-            <div class="row">
-              <div class="col-3">
-                <img src="https://placehold.co/100x150?text=Manga+6" alt="yugioh" class="img-fluid rounded"/>
-              </div>
-              <div class="col-9">
-                <h5 class="manga-title text-white">Yu-Gi-Oh! GX</h5>
-                <p class="text-white-50">Vol. 1 Ch. 1 - Tiêu đề chương</p>
-                <p class="text-white-50">Published by Nhóm dịch</p>
-                <p class="text-white-50">25 minutes ago</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="manga-list">
-          <div class="manga-item mb-3">
-            <div class="row">
-              <div class="col-3">
-                <img src="https://placehold.co/100x150?text=Doraemon" alt="Under Ninja" class="img-fluid rounded"/>
-              </div>
-              <div class="col-9">
-                <h5 class="manga-title text-white">Under Ninja</h5>
-                <p class="text-white-50">Vol. 1 Ch. 6 -</p>
-                <p class="text-white-50">Published by Zhunta</p>
-                <p class="text-white-50">1 minute ago</p>
-              </div>
-            </div>
-          </div>
-          <div class="manga-item mb-3">
-            <div class="row">
-              <div class="col-3">
-                <img src="https://placehold.co/100x150?text=Qiang+Jin+Jiu" alt="Qiang Jin Jiu" class="img-fluid rounded"/>
-              </div>
-              <div class="col-9">
-                <h5 class="manga-title text-white">Qiang Jin Jiu (2024)</h5>
-                <p class="text-white-50">Ch. 25</p>
-                <p class="text-white-50">Published by Dracena</p>
-                <p class="text-white-50">6 minutes ago</p>
-              </div>
-            </div>
-          </div>
-          <div class="manga-item mb-3">
-            <div class="row">
-              <div class="col-3">
-                <img src="https://placehold.co/100x150?text=Demon+Academy" alt="Demon Academy" class="img-fluid rounded"/>
-              </div>
-              <div class="col-9">
-                <h5 class="manga-title text-white">Demon Academy</h5>
-                <p class="text-white-50">Vol. 6 Ch. 52 - The Second Ray Gun</p>
-                <p class="text-white-50">Published by Hokuto no Gun</p>
-                <p class="text-white-50">8 minutes ago</p>
-              </div>
-            </div>
-          </div>
-          <div class="manga-item mb-3">
-            <div class="row">
-              <div class="col-3">
-                <img src="https://placehold.co/100x150?text=Vampire+Knight" alt="Vampire Knight" class="img-fluid rounded"/>
-              </div>
-              <div class="col-9">
-                <h5 class="manga-title text-white">Vampire Knight</h5>
-                <p class="text-white-50">Vol. 2 Ch. 9 - فارغ</p>
-                <p class="text-white-50">Published by BloodyRoz</p>
-                <p class="text-white-50">16 minutes ago</p>
-              </div>
-            </div>
-          </div>
-          <div class="manga-item mb-3">
-            <div class="row">
-              <div class="col-3">
-                <img src="https://placehold.co/100x150?text=Web+Game+Wife" alt="Web Game Wife" class="img-fluid rounded"/>
-              </div>
-              <div class="col-9">
-                <h5 class="manga-title text-white">My Web Game Wife Is a Popular Idol IRL</h5>
-                <p class="text-white-50">Vol. 2 Ch. 28 - Pinky Promise</p>
-                <p class="text-white-50">Published by Pinky</p>
-                <p class="text-white-50">20 minutes ago</p>
-              </div>
-            </div>
-          </div>
-          <div class="manga-item mb-3">
-            <div class="row">
-              <div class="col-3">
-                <img src="https://placehold.co/100x150?text=Manga+6" alt="yugioh" class="img-fluid rounded"/>
-              </div>
-              <div class="col-9">
-                <h5 class="manga-title text-white">Yu-Gi-Oh! GX</h5>
-                <p class="text-white-50">Vol. 1 Ch. 1 - Tiêu đề chương</p>
-                <p class="text-white-50">Published by Nhóm dịch</p>
-                <p class="text-white-50">25 minutes ago</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="container-fluid content-section">
-    <div class="staff-picks">
-      <div class="header">
-        <h2>
-          <a href="#">Staff Pick</a>
-        </h2>
+    <nav class="sidebar-nav">
+        <a href="#" class="nav-link active"><i class="bi bi-house-door-fill"></i> Home</a>
+        <a href="#" class="nav-link"><i class="bi bi-bookmark-fill"></i> Follows</a>
+        <a href="#" class="nav-link"><i class="bi bi-arrow-repeat"></i> Updates</a>
+        <a href="#" class="nav-link"><i class="bi bi-collection-fill"></i> Library</a>
+        <a href="#" class="nav-link"><i class="bi bi-list-ul"></i> MDLists</a>
+        <a href="#" class="nav-link"><i class="bi bi-people-fill"></i> My Groups</a>
+        <a href="#" class="nav-link"><i class="bi bi-clock-history"></i> Reading History</a>
         
+        <div class="sidebar-section">
+            <a href="#" class="nav-link section-title"><i class="bi bi-book-fill"></i> Titles <i class="bi bi-plus-lg float-end"></i></a>
+            <div class="sub-links">
+                <a href="#" class="nav-link">Advanced Search</a>
+                <a href="#" class="nav-link">Recently Added</a>
+                <a href="#" class="nav-link">Latest Updates</a>
+                <a href="#" class="nav-link">Random</a>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+            <a href="#" class="nav-link section-title"><i class="bi bi-chat-dots-fill"></i> Community <i class="bi bi-plus-lg float-end"></i></a>
+             <div class="sub-links">
+                <a href="#" class="nav-link">Forums</a>
+                <a href="#" class="nav-link">Groups</a>
+                <a href="#" class="nav-link">Users</a>
+            </div>
+        </div>
+
+         <div class="sidebar-section">
+            <a href="#" class="nav-link section-title"><i class="bi bi-speedometer2"></i> MangaDex</a>
+             <div class="sub-links">
+                <a href="#" class="nav-link">Site Rules</a>
+                <a href="#" class="nav-link">Announcements</a>
+                <a href="#" class="nav-link">About Us</a>
+                <a href="#" class="nav-link">Contact</a>
+             </div>
+        </div>
+    </nav>
+    <div class="sidebar-footer">
+         <div class="support-placeholder my-3 text-center">
+        </div>
+        <div class="social-icons text-center mb-2">
+            <a href="#"><i class="bi bi-discord"></i></a>
+            <a href="#"><i class="bi bi-twitter-x"></i></a>
+            <a href="#"><i class="bi bi-reddit"></i></a>
+            <a href="#"><i class="bi bi-activity"></i></a>
+        </div>
+        <div class="text-center text-muted small">
+            © MangaDex 2025
+        </div>
+    </div>
+  </aside>
+
+  <!-- INSERT BLOCK BEFORE main -->
+  <!-- Popular New Titles Section - Moved OUTSIDE main container -->
+  <section class="section-container popular-new-titles-section full-width-section">
+    <!-- Add inner container for content alignment -->
+    <div class="container-xxl">
+      <div class="section-heading">
+        <h2 class="text-white fw-bold">Popular New Titles</h2>
       </div>
-      <div class="carousel">
-        <div class="item">
+
+      <!-- Featured Manga Carousel (Stays within the inner container) -->
+      <div id="featuredMangaCarousel" class="carousel slide">
+        <div class="carousel-inner">
+          <!-- Slide 1 (Original Item) -->
+          <div class="carousel-item active">
+             <!-- data-bg-src still needed for dynamic background on the section -->
+            <div class="featured-manga" data-bg-src="/IMG/cover1.png">
+              <div class="background-overlay"></div>
+              <div class="featured-manga-content row g-0">
+                <div class="col-md-3 featured-cover-col">
+                  <img src="/IMG/cover1.png" alt="Featured Manga Cover 1" class="img-fluid rounded featured-cover">
+                  <img class="flag flag-featured" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
+                </div>
+                <div class="col-md-9 featured-details">
+                  <h3 class="title">Shio no Kikan ~Moto Yuusha no Ore, Jibun ga Soshiki Shita Chuunibyou Himitsu Kessha o Tomeru Tame ni...</h3>
+                  <div class="genres mb-3">
+                    <span class="genre-tag">ACTION</span>
+                    <span class="genre-tag">ADVENTURE</span>
+                    <span class="genre-tag">COMEDY</span>
+                    <span class="genre-tag">FANTASY</span>
+                    <span class="genre-tag">ISEKAI</span>
+                  </div>
+                  <div class="description-box mb-3">
+                    When he was in the third year of middle school, Hizaki Shiou was summoned to another world to save it. After defeating the Demon King, he was forcibly returned back to the present day. Yet another three years later, he is summoned to the other world once again, this time to stop the rampage of the secret society "Helheim."
+                    That organization was supposedly actually the one that he had founded during his chuunibyou phase, where he called himself the "Corpse King"—a dark past too embarrassing to remember!
+                    Someone seems to be impersonating the name of "Helheim" and tarnishing its reputation. To uncover the truth behind this mystery and clear the organization's name, the Corpse King reunites with his former subordinates—the "Undead Knights," who once made Helheim the strongest it had ever been.
+                  </div>
+                  <div class="featured-bottom-row">
+                  <div class="author">Adashino Sotova, Sty</div>
+                    <div class="featured-right-controls">
+                      <div class="ranking-indicator">NO. 1</div>
+                      <div class="featured-navigation-arrows">
+                        <button class="carousel-control-prev featured-carousel-control" type="button" data-bs-target="#featuredMangaCarousel" data-bs-slide="prev">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next featured-carousel-control" type="button" data-bs-target="#featuredMangaCarousel" data-bs-slide="next">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Next</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 2 (Update content/images) -->
+          <div class="carousel-item">
+             <!-- Use the cover image as background, or specify a different one if available -->
+            <div class="featured-manga" data-bg-src="/IMG/cover2.jpg">
+              <div class="background-overlay"></div>
+              <div class="featured-manga-content row g-0">
+                <div class="col-md-3 featured-cover-col">
+                  <!-- Use the .512.jpg version for the cover -->
+                  <img src="/IMG/cover2.jpg" alt="Akuyaku Reijou no Oyome-sama Cover" class="img-fluid rounded featured-cover">
+                  <img class="flag flag-featured" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
+                </div>
+                <div class="col-md-9 featured-details d-flex flex-column"> <!-- Make this a flex column -->
+                  <div> <!-- Wrapper for top content -->
+                    <h3 class="title">Akuyaku Reijou no Oyome-sama</h3>
+                    <div class="genres mb-3">
+                      <span class="genre-tag genre-suggestive">SUGGESTIVE</span> <!-- Added specific class for potential styling -->
+                      <span class="genre-tag">DRAMA</span>
+                      <span class="genre-tag">FANTASY</span>
+                      <span class="genre-tag">GIRLS' LOVE</span>
+                      <span class="genre-tag">ROMANCE</span>
+                    </div>
+                  </div>
+                  <div class="description-box mb-3 flex-grow-1"> <!-- Allow description to grow -->
+                    One day, Karina, a lady who has been groomed to be queen, suddenly has her engagement broken by her fiancé, the prince. Now he is sending Karina into exile while standing beside her sister, Aurora, instead. Exiled to the far north, where monsters are said to dwell, Karina ventures out to investigate the identity of a disturbing sound and has a fateful encounter in the snow...? A predatory love fantasy between a lady sworn to revenge and a strange girl seeking love.
+                  </div>
+                  <div class="featured-bottom-row mt-auto"> <!-- Use mt-auto as fallback, flex-grow above should push it -->
+                    <div class="author">Kawano Akiko</div>
+                      <div class="featured-right-controls">
+                        <div class="ranking-indicator">NO. 2</div>
+                        <div class="featured-navigation-arrows">
+                          <button class="carousel-control-prev featured-carousel-control" type="button" data-bs-target="#featuredMangaCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                          </button>
+                          <button class="carousel-control-next featured-carousel-control" type="button" data-bs-target="#featuredMangaCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 3 (Update content/images) -->
+          <div class="carousel-item">
+            <div class="featured-manga" data-bg-src="https://placehold.co/1200x450/444/ccc?text=Slide+3+BG">
+              <div class="background-overlay"></div>
+              <div class="featured-manga-content row g-0">
+                <div class="col-md-3 featured-cover-col">
+                  <img src="https://placehold.co/250x350/1e1e1e/cccccc?text=Featured+3" alt="Featured Manga Cover 3" class="img-fluid rounded featured-cover">
+                  <img class="flag flag-featured" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
+                </div>
+                <div class="col-md-9 featured-details">
+                  <h3 class="title">Custom Title for Slide 3</h3>
+                  <div class="genres mb-3">
+                    <span class="genre-tag">COMEDY</span>
+                    <span class="genre-tag">FANTASY</span>
+                    <span class="genre-tag">ROMANCE</span>
+                  </div>
+                  <div class="description-box mb-3">
+                    Here is the updated description for the third slide in the popular new titles carousel. Add relevant details here.
+                  </div>
+                  <div class="featured-bottom-row">
+                  <div class="author">Author Name 3</div>
+                    <div class="featured-right-controls">
+                      <div class="ranking-indicator">NO. 3</div>
+                      <div class="featured-navigation-arrows">
+                        <button class="carousel-control-prev featured-carousel-control" type="button" data-bs-target="#featuredMangaCarousel" data-bs-slide="prev">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next featured-carousel-control" type="button" data-bs-target="#featuredMangaCarousel" data-bs-slide="next">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Next</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 4 (Update content/images) -->
+          <div class="carousel-item">
+            <div class="featured-manga" data-bg-src="https://placehold.co/1200x450/555/ccc?text=Slide+4+BG">
+              <div class="background-overlay"></div>
+              <div class="featured-manga-content row g-0">
+                <div class="col-md-3 featured-cover-col">
+                  <img src="https://placehold.co/250x350/1e1e1e/cccccc?text=Featured+4" alt="Featured Manga Cover 4" class="img-fluid rounded featured-cover">
+                  <img class="flag flag-featured" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
+                </div>
+                <div class="col-md-9 featured-details">
+                  <h3 class="title">Custom Title for Slide 4</h3>
+                  <div class="genres mb-3">
+                    <span class="genre-tag">COMEDY</span>
+                    <span class="genre-tag">DRAMA</span>
+                    <span class="genre-tag">ROMANCE</span>
+                  </div>
+                  <div class="description-box mb-3">
+                    Description for slide four goes here. Adjust content as needed for demonstration purposes.
+                  </div>
+                  <div class="featured-bottom-row">
+                  <div class="author">Another Author</div>
+                    <div class="featured-right-controls">
+                      <div class="ranking-indicator">NO. 4</div>
+                      <div class="featured-navigation-arrows">
+                        <button class="carousel-control-prev featured-carousel-control" type="button" data-bs-target="#featuredMangaCarousel" data-bs-slide="prev">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next featured-carousel-control" type="button" data-bs-target="#featuredMangaCarousel" data-bs-slide="next">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Next</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Add more slides as needed -->
+        </div>
+      </div>
+    </div> <!-- End inner container -->
+  </section>
+
+  <!-- Main content - Starts BELOW the featured section -->
+  <main class="container-xxl">
+    <!-- NEW Latest Updates Section -->
+    <section class="section-container latest-updates-section">
+      <div class="section-heading">
+        <h2 class="text-white fw-bold">Latest Updates</h2>
+        <a href="#" class="see-all see-all-arrow">
+          <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+      
+      <div class="latest-updates-grid">
+        <!-- Column 1 (Visible by default) -->
+        <div class="latest-updates-column">
+          <!-- Item 1 -->
+          <a href="#" class="latest-item">
+            <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
+            <div class="latest-details">
+              <div class="latest-title">Sono Bisque Doll wa Koi o Suru</div>
+              <div class="latest-chapter"><img src="https://mangadex.org/img/flags/ru.svg" class="flag-icon" alt="RU"> Ch. 116 - Епилог</div>
+              <div class="latest-group"><i class="bi bi-people-fill"></i> Vendetta</div>
+              </div>
+            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">2 minutes ago</span></div>
+          </a>
+          <!-- Item 2 -->
+          <a href="#" class="latest-item">
+            <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
+            <div class="latest-details">
+              <div class="latest-title">Hyakumanjou Labyrinth</div>
+              <div class="latest-chapter"><img src="https://mangadex.org/img/flags/vn.svg" class="flag-icon" alt="VN"> Vol. 1 Ch. 11</div>
+              <div class="latest-group"><i class="bi bi-people-fill"></i> Dịch giả tập sự GTSCHUNDER</div>
+              </div>
+            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">14 minutes ago</span></div>
+          </a>
+          <!-- Item 3 -->
+          <a href="#" class="latest-item">
+            <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
+            <div class="latest-details">
+              <div class="latest-title">Albus Changes the World</div>
+              <div class="latest-chapter"><img src="https://mangadex.org/img/flags/vn.svg" class="flag-icon" alt="VN"> Vol. 2 Ch. 14 – Thợ rèn</div>
+              <div class="latest-group"><i class="bi bi-people-fill"></i> Mahiro solo dịch truyện</div>
+              </div>
+            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">18 minutes ago</span></div>
+          </a>
+          <!-- Item 4 -->
+          <a href="#" class="latest-item">
+            <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
+            <div class="latest-details">
+              <div class="latest-title">I Became the Genius Bastard of a Noble Dark Clan</div>
+              <div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Ch. 4</div>
+              <div class="latest-group"><i class="bi bi-people-fill"></i> Reaper_Scans</div>
+            </div>
+            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">24 minutes ago</span></div>
+          </a>
+          <!-- Item 5 -->
+           <a href="#" class="latest-item">
+            <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
+            <div class="latest-details">
+              <div class="latest-title">Cool na Megami-sama to Issho ni Sundara, Amayakashi Sug...</div>
+              <div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Vol. 2 Ch. 5.1</div>
+              <div class="latest-group"><i class="bi bi-people-fill"></i> O TRANSLATIONS</div>
+          </div>
+            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">25 minutes ago</span></div>
+          </a>
+          <!-- Item 6 -->
+           <a href="#" class="latest-item">
+            <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
+            <div class="latest-details">
+              <div class="latest-title">Boss In My House</div>
+              <div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Ch. 2</div>
+              <div class="latest-group"><i class="bi bi-people-fill"></i> Honey.BeexScans</div>
+              </div>
+            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">35 minutes ago</span></div>
+          </a>
+        </div> <!-- End Column 1 -->
+
+        <!-- Column 2 (Visible by default) -->
+        <div class="latest-updates-column">
+          <!-- Item 7 -->
+          <a href="#" class="latest-item">
+            <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
+            <div class="latest-details">
+              <div class="latest-title">Super Girl UFO</div>
+              <div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Vol. 1 Ch. 3 - Goodbye, And Hello... <span class="badge bg-primary end-badge">END</span></div>
+              <div class="latest-group"><i class="bi bi-people-fill"></i> AndroidLB</div>
+              </div>
+            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">41 minutes ago</span></div>
+          </a>
+          <!-- Item 8 -->
+          <a href="#" class="latest-item">
+            <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
+            <div class="latest-details">
+              <div class="latest-title">Dorei Shounin shika Sentakushi ga Nai desu yo? Harem? Nani...</div>
+              <div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Vol. 8 Ch. 50</div>
+              <div class="latest-group"><i class="bi bi-people-fill"></i> SilasMeanQuite</div>
+              </div>
+            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">49 minutes ago</span></div>
+          </a>
+          <!-- Item 9 -->
+          <a href="#" class="latest-item">
+            <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
+            <div class="latest-details">
+              <div class="latest-title">Yuurei to Tsukareta Kaishain</div>
+              <div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Ch. 386 – Where She Wanted To Go</div>
+              <div class="latest-group"><i class="bi bi-people-fill"></i> Irrelevant Scans</div>
+              </div>
+            <div class="latest-meta"><span class="latest-comments">1 <i class="bi bi-chat-square"></i></span><span class="latest-time">58 minutes ago</span></div>
+          </a>
+          <!-- Item 10 -->
+          <a href="#" class="latest-item">
+            <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
+            <div class="latest-details">
+              <div class="latest-title">Digimon 04: Infinite Zone</div>
+              <div class="latest-chapter"><img src="https://mangadex.org/img/flags/pl.svg" class="flag-icon" alt="PL"> Vol. 1 Ch. 7 - Opowieść o 4 okrutnych Digimonach!</div>
+              <div class="latest-group"><i class="bi bi-people-fill"></i> ARTURAP89</div>
+            </div>
+            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">1 hour ago</span></div>
+          </a>
+          <!-- Item 11 -->
+          <a href="#" class="latest-item">
+            <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
+            <div class="latest-details">
+              <div class="latest-title">Naniwa Tomoare</div>
+              <div class="latest-chapter"><img src="https://mangadex.org/img/flags/vn.svg" class="flag-icon" alt="VN"> Vol. 6 Ch. 52 - Phẩm chất khỉ vui vẻ</div>
+              <div class="latest-group"><i class="bi bi-people-fill"></i> To Another Reality</div>
+          </div>
+            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">1 hour ago</span></div>
+          </a>
+          <!-- Item 12 -->
+          <a href="#" class="latest-item">
+            <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
+            <div class="latest-details">
+              <div class="latest-title">Tensei Shite Inaka de Slow Life wo Okuritai</div>
+              <div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Ch. 74</div>
+              <div class="latest-group"><i class="bi bi-people-fill"></i> Nerissa's Barely Competent Jailbird Scans</div>
+              </div>
+            <div class="latest-meta"><span class="latest-comments">8 <i class="bi bi-chat-square"></i></span><span class="latest-time">2 hours ago</span></div>
+          </a>
+        </div> <!-- End Column 2 -->
+
+        <!-- Column 3 (Hidden by default) -->
+        <div class="latest-updates-column">
+          <!-- Item 13 -->
+          <a href="#" class="latest-item">
+            <img src="https://placehold.co/45x63/1e1e1e/cccccc?text=13" alt="Cover" class="latest-cover">
+            <div class="latest-details"><div class="latest-title">The Baby Fairy is a Villain</div><div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Ch. 5</div><div class="latest-group"><i class="bi bi-people-fill"></i> RRScans</div></div>
+            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">2 hours ago</span></div>
+          </a>
+          <!-- Item 14 -->
+          <a href="#" class="latest-item">
+            <img src="https://placehold.co/45x63/1e1e1e/cccccc?text=14" alt="Cover" class="latest-cover">
+            <div class="latest-details"><div class="latest-title">Wind Breaker</div><div class="latest-chapter"><img src="https://mangadex.org/img/flags/vn.svg" class="flag-icon" alt="VN"> Vol. 22 Ch. 174 - Thăm tám</div><div class="latest-group"><i class="bi bi-people-fill"></i> WindBreaker_manga</div></div>
+            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">2 hours ago</span></div>
+          </a>
+          <!-- Item 15 -->
+          <a href="#" class="latest-item">
+            <img src="https://placehold.co/45x63/1e1e1e/cccccc?text=15" alt="Cover" class="latest-cover">
+            <div class="latest-details"><div class="latest-title">Katekyo Hitman Reborn!</div><div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Vol. 8 Ch. 69</div><div class="latest-group"><i class="bi bi-people-fill"></i> MTOZT</div></div>
+            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">2 hours ago</span></div>
+          </a>
+          <!-- Item 16 -->
+          <a href="#" class="latest-item">
+            <img src="https://placehold.co/45x63/1e1e1e/cccccc?text=16" alt="Cover" class="latest-cover">
+            <div class="latest-details"><div class="latest-title">The Ride-On King</div><div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Ch. 79 - The President and the...</div><div class="latest-group"><i class="bi bi-people-fill"></i> Burning Love Scans</div></div>
+            <div class="latest-meta"><span class="latest-comments">2 <i class="bi bi-chat-square"></i></span><span class="latest-time">2 hours ago</span></div>
+          </a>
+          <!-- Item 17 -->
+          <a href="#" class="latest-item">
+            <img src="https://placehold.co/45x63/1e1e1e/cccccc?text=17" alt="Cover" class="latest-cover">
+            <div class="latest-details"><div class="latest-title">My First Friend Was A Zombie</div><div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Vol. 1 Ch. 1</div><div class="latest-group"><i class="bi bi-people-fill"></i> RRScans</div></div>
+            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">1 hour ago</span></div>
+          </a>
+          <!-- Item 18 -->
+          <a href="#" class="latest-item">
+            <img src="https://placehold.co/45x63/1e1e1e/cccccc?text=18" alt="Cover" class="latest-cover">
+            <div class="latest-details"><div class="latest-title">Boku wa Isekai de Fuyo Mahou to Shouka...</div><div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Vol. 5 Ch. 34</div><div class="latest-group"><i class="bi bi-people-fill"></i> Tenuous Scans</div></div>
+            <div class="latest-meta"><span class="latest-comments">6 <i class="bi bi-chat-square"></i></span><span class="latest-time">2 hours ago</span></div>
+          </a>
+        </div> <!-- End Column 3 -->
+
+        <!-- Column 4 (Hidden by default) -->
+        <div class="latest-updates-column">
+          <!-- Item 19 -->
+          <a href="#" class="latest-item">
+            <img src="https://placehold.co/45x63/1e1e1e/cccccc?text=19" alt="Cover" class="latest-cover">
+            <div class="latest-details"><div class="latest-title">It's Over! Empress' Husband...</div><div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Ch. 243 - Surname ZI,...</div><div class="latest-group"><i class="bi bi-people-fill"></i> ffftizzy</div></div>
+            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">2 hours ago</span></div>
+          </a>
+          <!-- Item 20 -->
+          <a href="#" class="latest-item">
+            <img src="https://placehold.co/45x63/1e1e1e/cccccc?text=20" alt="Cover" class="latest-cover">
+            <div class="latest-details"><div class="latest-title">Kazure Doushin</div><div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Vol. 1 Ch. 5 - Episode...</div><div class="latest-group"><i class="bi bi-people-fill"></i> Stiletto Heels</div></div>
+            <div class="latest-meta"><span class="latest-comments">1 <i class="bi bi-chat-square"></i></span><span class="latest-time">3 hours ago</span></div>
+          </a>
+          <!-- Item 21 -->
+          <a href="#" class="latest-item">
+            <img src="https://placehold.co/45x63/1e1e1e/cccccc?text=21" alt="Cover" class="latest-cover">
+            <div class="latest-details"><div class="latest-title">Youheidan no Ryouriban</div><div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Vol. 3 Ch. 71</div><div class="latest-group"><i class="bi bi-people-fill"></i> TripolarsNotBipol...</div></div>
+            <div class="latest-meta"><span class="latest-comments">7 <i class="bi bi-chat-square"></i></span><span class="latest-time">3 hours ago</span></div>
+          </a>
+          <!-- Item 22 -->
+          <a href="#" class="latest-item">
+            <img src="https://placehold.co/45x63/1e1e1e/cccccc?text=22" alt="Cover" class="latest-cover">
+            <div class="latest-details"><div class="latest-title">Will You Clean This For Me?</div><div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Vol. 6 Ch. 36 - This...</div><div class="latest-group"><i class="bi bi-people-fill"></i> Koin Randorii</div></div>
+            <div class="latest-meta"><span class="latest-comments">4 <i class="bi bi-chat-square"></i></span><span class="latest-time">3 hours ago</span></div>
+          </a>
+          <!-- Item 23 -->
+          <a href="#" class="latest-item">
+            <img src="https://placehold.co/45x63/1e1e1e/cccccc?text=23" alt="Cover" class="latest-cover">
+            <div class="latest-details"><div class="latest-title">Wakarase ♥ Dekamaid-ch...</div><div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Vol. 3 Ch. 22.5</div><div class="latest-group"><i class="bi bi-people-fill"></i> beeg scans</div></div>
+            <div class="latest-meta"><span class="latest-comments">4 <i class="bi bi-chat-square"></i></span><span class="latest-time">3 hours ago</span></div>
+          </a>
+          <!-- Item 24 -->
+          <a href="#" class="latest-item">
+            <img src="https://placehold.co/45x63/1e1e1e/cccccc?text=24" alt="Cover" class="latest-cover">
+            <div class="latest-details"><div class="latest-title">I Thought My Time Was Up!</div><div class="latest-chapter"><img src="https://mangadex.org/img/flags/pl.svg" class="flag-icon" alt="PL"> Vol. 2 Ch. 86</div><div class="latest-group"><i class="bi bi-people-fill"></i> Racuchy</div></div>
+            <div class="latest-meta"><span class="latest-comments">3 <i class="bi bi-chat-square"></i></span><span class="latest-time">3 hours ago</span></div>
+          </a>
+        </div> <!-- End Column 4 -->
+
+      </div> <!-- End latest-updates-grid -->
+    </section>
+
+    <!-- Staff Picks Section -->
+    <section class="section-container staff-picks-section">
+      <div class="section-heading">
+        <a href="#" class="text-white text-decoration-none"><h2 class="text-white fw-bold mb-0">Staff Picks</h2></a>
+        <a href="#" class="see-all see-all-arrow staff-picks-next"> <!-- Changed class for Swiper navigation -->
+          <i class="bi bi-arrow-right"></i>
+        </a>
+          </div>
+          
+      <!-- Swiper Container -->
+      <div class="swiper staff-picks-swiper">
+        <div class="swiper-wrapper">
+          <!-- Staff Picks Manga Items - Now Swiper Slides -->
+          <div class="swiper-slide item"> <!-- Changed class -->
           <a href="#">
             <div class="image-container">
-              <img src="https://placehold.co/150x210" alt="Manga 1">
-              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="Nhật Bản">
+              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+1" alt="Manga 1 Cover">
+              <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB"> 
+              <div class="overlay">
+                 <div class="description-box">
+                  Despite being from a prestigious noble family, Bridget, a failed daughter who made a contract with the weakest spirit, one day had her engagement broken off by the third prince, Joseph.
+
+However, no one sympathized with her, who was acting as a proud daughter at the behest of Joseph... At that time, Bridget meets the Duke's son Yuri, who is feared by those around him because of his overwhelming ability and cold personality.
+
+Two people who hate each other and repel each other. However, the encounter gradually changes their destinies. This is the story of a villainess who is despised for being incompetent and a villain who is shunned for being a genius who eventually fall in love.
+
+Despite her noble status, Brigitte contracts with the weakest type of spirit—and on that very same day, the prince publicly breaks off their engagement. No one shows much sympathy towards the once haughty young lady—except for the duke's son, Yuri, who attends the same magic academy. Yuri is feared for his incredible abilities and icy personality, but with him on her side, her fortunes might have changed…
+              </div>
+                 <div class="overlay-actions"> 
+                   <div class="overlay-buttons">
+                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                     <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+              </div>
+                   <!-- Removed flag-overlay img -->
+              </div>
+            </div>
             </div>
           </a>
+           <a href="#" class="item-title-link"><h3 class="item-title">Manga 1</h3></a> 
+          </div>
+
+        <!-- Item 2 -->
+            <div class="swiper-slide item"> <!-- Changed class -->
           <a href="#">
-            <h3>Tiêu Đề Manga 1</h3>
+            <div class="image-container">
+              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+2" alt="Manga 2 Cover">
+              <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB"> 
+               <div class="overlay">
+                 <div class="description-box">
+                  Despite being from a prestigious noble family, Bridget, a failed daughter who made a contract with the weakest spirit, one day had her engagement broken off by the third prince, Joseph.
+
+                  However, no one sympathized with her, who was acting as a proud daughter at the behest of Joseph... At that time, Bridget meets the Duke's son Yuri, who is feared by those around him because of his overwhelming ability and cold personality.
+                  
+                  Two people who hate each other and repel each other. However, the encounter gradually changes their destinies. This is the story of a villainess who is despised for being incompetent and a villain who is shunned for being a genius who eventually fall in love.
+                  
+                  Despite her noble status, Brigitte contracts with the weakest type of spirit—and on that very same day, the prince publicly breaks off their engagement. No one shows much sympathy towards the once haughty young lady—except for the duke's son, Yuri, who attends the same magic academy. Yuri is feared for his incredible abilities and icy personality, but with him on her side, her fortunes might have changed… 
+                  Despite being from a prestigious noble family, Bridget, a failed daughter who made a contract with the weakest spirit, one day had her engagement broken off by the third prince, Joseph.
+
+However, no one sympathized with her, who was acting as a proud daughter at the behest of Joseph... At that time, Bridget meets the Duke's son Yuri, who is feared by those around him because of his overwhelming ability and cold personality.
+
+Two people who hate each other and repel each other. However, the encounter gradually changes their destinies. This is the story of a villainess who is despised for being incompetent and a villain who is shunned for being a genius who eventually fall in love.
+
+Despite her noble status, Brigitte contracts with the weakest type of spirit—and on that very same day, the prince publicly breaks off their engagement. No one shows much sympathy towards the once haughty young lady—except for the duke's son, Yuri, who attends the same magic academy. Yuri is feared for his incredible abilities and icy personality, but with him on her side, her fortunes might have changed…
+              </div>
+                 <div class="overlay-actions"> 
+                   <div class="overlay-buttons">
+                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                     <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+              </div>
+                    <!-- Removed flag-overlay img -->
+              </div>
+            </div>
+          </div>
           </a>
-          <div class="overlay">
-            <p>Mô tả Manga 1. Đây là tóm tắt ngắn.</p>
-            <a href="#" class="read-button">Đọc</a>
-            <a href="#" class="more-button">Xem Thêm</a>
+           <a href="#" class="item-title-link"><h3 class="item-title">Manga 2</h3></a> 
+              </div>
+        <!-- Item 3 -->
+          <div class="swiper-slide item"> <!-- Changed class -->
+          <a href="#">
+            <div class="image-container">
+              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+3" alt="Manga 3 Cover">
+               <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB"> 
+               <div class="overlay">
+                 <div class="description-box">
+                   This is a placeholder description for Manga 3.
+              </div>
+                 <div class="overlay-actions"> 
+                   <div class="overlay-buttons">
+                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                     <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+              </div>
+                    <!-- Removed flag-overlay img -->
+            </div>
+          </div>
+              </div>
+          </a>
+           <a href="#" class="item-title-link"><h3 class="item-title">Manga 3</h3></a> 
+              </div>
+         <!-- Item 4 -->
+          <div class="swiper-slide item"> <!-- Changed class -->
+          <a href="#">
+            <div class="image-container">
+              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+4" alt="Manga 4 Cover">
+               <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB"> 
+               <div class="overlay">
+                 <div class="description-box">
+                    This is a placeholder description for Manga 4.
+              </div>
+                 <div class="overlay-actions"> 
+                   <div class="overlay-buttons">
+                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                     <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+            </div>
+                    <!-- Removed flag-overlay img -->
+          </div>
+              </div>
+              </div>
+          </a>
+           <a href="#" class="item-title-link"><h3 class="item-title">Manga 4</h3></a> 
+              </div>
+         <!-- Item 5 -->
+          <div class="swiper-slide item"> <!-- Changed class -->
+          <a href="#">
+            <div class="image-container">
+              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+5" alt="Manga 5 Cover">
+               <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB"> 
+               <div class="overlay">
+                 <div class="description-box">
+                    This is a placeholder description for Manga 5.
+            </div>
+                 <div class="overlay-actions"> 
+                   <div class="overlay-buttons">
+                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                     <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+          </div>
+                    <!-- Removed flag-overlay img -->
+              </div>
+              </div>
+              </div>
+          </a>
+           <a href="#" class="item-title-link"><h3 class="item-title">Manga 5</h3></a> 
+            </div>
+        <!-- Item 6 -->
+          <div class="swiper-slide item"> <!-- Changed class -->
+           <a href="#">
+            <div class="image-container">
+               <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+6" alt="Manga 6 Cover">
+               <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB"> 
+               <div class="overlay">
+                 <div class="description-box">
+                   This is a placeholder description for Manga 6.
+          </div>
+                 <div class="overlay-actions"> 
+                   <div class="overlay-buttons">
+                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                     <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+              </div>
+                    <!-- Removed flag-overlay img -->
+              </div>
+              </div>
+            </div>
+           </a>
+           <a href="#" class="item-title-link"><h3 class="item-title">Manga 6</h3></a> 
+      </div>
+        <!-- Item 7 -->
+          <div class="swiper-slide item"> <!-- Changed class -->
+           <a href="#">
+          <div class="image-container">
+               <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+7" alt="Manga 7 Cover">
+               <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB"> 
+            <div class="overlay">
+                 <div class="description-box">
+                   This is a placeholder description for Manga 7.
+            </div>
+                 <div class="overlay-actions"> 
+                   <div class="overlay-buttons">
+                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                     <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+          </div>
+                    <!-- Removed flag-overlay img -->
+        </div>
+               </div>
+            </div>
+           </a>
+           <a href="#" class="item-title-link"><h3 class="item-title">Manga 7</h3></a> 
+        </div>
+        <!-- Item 8 -->
+        <div class="swiper-slide item"> <!-- Changed class -->
+           <a href="#">
+          <div class="image-container">
+               <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+8" alt="Manga 8 Cover">
+            <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
+             <div class="overlay">
+                 <div class="description-box">
+                   This is a placeholder description for Manga 8.
+            </div>
+                 <div class="overlay-actions"> 
+                   <div class="overlay-buttons">
+                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                     <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+          </div>
+                    <!-- Removed flag-overlay img -->
+        </div>
+               </div>
+            </div>
+           </a>
+           <a href="#" class="item-title-link"><h3 class="item-title">Manga 8</h3></a> 
+        </div>
+        <!-- Item 9 -->
+        <div class="swiper-slide item"> <!-- Changed class -->
+           <a href="#">
+          <div class="image-container">
+               <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+9" alt="Manga 9 Cover">
+            <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
+            <div class="overlay">
+                 <div class="description-box">
+                   This is a placeholder description for Manga 9.
+                 </div>
+                 <div class="overlay-actions"> 
+                   <div class="overlay-buttons">
+              <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+              <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+            </div>
+                    <!-- Removed flag-overlay img -->
           </div>
         </div>
-        <div class="item">
+            </div>
+           </a>
+           <a href="#" class="item-title-link"><h3 class="item-title">Manga 9</h3></a> 
+        </div>
+        <!-- Item 10 -->
+        <div class="swiper-slide item"> <!-- Changed class -->
+           <a href="#">
+          <div class="image-container">
+               <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+10" alt="Manga 10 Cover">
+               <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB"> 
+             <div class="overlay">
+                 <div class="description-box">
+                   This is a placeholder description for Manga 10.
+            </div>
+                 <div class="overlay-actions"> 
+                   <div class="overlay-buttons">
+                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                     <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+          </div>
+                   <!-- Removed flag-overlay img -->
+        </div>
+            </div>
+          </div>
+           </a>
+           <a href="#" class="item-title-link"><h3 class="item-title">Manga 10</h3></a> 
+        </div>
+
+        </div> <!-- End swiper-wrapper -->
+
+        <!-- Add Pagination -->
+        <div class="swiper-pagination staff-picks-pagination"></div>
+
+        <!-- Add Navigation Buttons (Hidden initially, controlled by Swiper) -->
+        <!-- We'll use the existing arrow in the header as the 'next' button -->
+        <!-- Add a 'prev' button if needed, or handle looping differently -->
+        <!-- <div class="swiper-button-prev"></div> -->
+        <!-- <div class="swiper-button-next"></div> -->
+
+      </div> <!-- End swiper container -->
+    </section>
+
+    <!-- Self-Published Section -->
+    <section class="section-container self-published-section">
+      <div class="section-heading">
+         <a href="#" class="text-white text-decoration-none"><h2 class="text-white fw-bold mb-0">Self-Published</h2></a>
+        <a href="#" class="see-all see-all-arrow self-published-next"> <!-- Swiper Nav -->
+          <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+      
+      <div class="swiper self-published-swiper"> <!-- Swiper Container -->
+        <div class="swiper-wrapper">
+        <!-- Self-Published Manga Items -->
+          <div class="swiper-slide item"> <!-- Swiper Slide -->
           <a href="#">
             <div class="image-container">
-              <img src="https://placehold.co/150x210" alt="Manga 2">
-              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="Nhật Bản">
+              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+1" alt="Self-Published 1">
+              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
+                <div class="overlay">
+                   <div class="description-box"> <!-- Changed p to div.description-box -->
+                     Short manga description here
+                   </div>
+                   <div class="overlay-actions">
+                     <div class="overlay-buttons">
+                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                     </div>
+                   </div>
+                 </div>
             </div>
           </a>
-          <a href="#">
-            <h3>Tiêu Đề Manga 2</h3>
+           <a href="#" class="item-title-link">
+              <h3 class="item-title">Manga 1</h3> <!-- Use h3 and class -->
           </a>
+        </div>
+        
+          <div class="swiper-slide item"> <!-- Swiper Slide -->
+          <a href="#">
+            <div class="image-container">
+              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+2" alt="Self-Published 2">
+              <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="EN">
+                <div class="overlay">
+                   <div class="description-box"> <!-- Changed p to div.description-box -->
+                     Short manga description here
+                   </div>
+                   <div class="overlay-actions">
+                     <div class="overlay-buttons">
+                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                     </div>
+                   </div>
+                 </div>
+            </div>
+          </a>
+           <a href="#" class="item-title-link">
+              <h3 class="item-title">Manga 2</h3> <!-- Use h3 and class -->
+          </a>
+        </div>
+
+          <div class="swiper-slide item"> <!-- Swiper Slide -->
+          <a href="#">
+            <div class="image-container">
+              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+3" alt="Self-Published 3">
+              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
+                <div class="overlay">
+                   <div class="description-box"> <!-- Changed p to div.description-box -->
+                     Short manga description here
+                   </div>
+                   <div class="overlay-actions">
+                     <div class="overlay-buttons">
+                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                     </div>
+                   </div>
+                 </div>
+            </div>
+          </a>
+           <a href="#" class="item-title-link">
+              <h3 class="item-title">Manga 3</h3> <!-- Use h3 and class -->
+          </a>
+        </div>
+
+           <div class="swiper-slide item"> <!-- Swiper Slide -->
+          <a href="#">
+            <div class="image-container">
+              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+4" alt="Self-Published 4">
+              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
+                <div class="overlay">
+                   <div class="description-box"> <!-- Changed p to div.description-box -->
+                     Short manga description here
+                   </div>
+                   <div class="overlay-actions">
+                     <div class="overlay-buttons">
+                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                     </div>
+                   </div>
+                 </div>
+            </div>
+          </a>
+           <a href="#" class="item-title-link">
+              <h3 class="item-title">Manga 4</h3> <!-- Use h3 and class -->
+          </a>
+        </div>
+
+           <div class="swiper-slide item"> <!-- Swiper Slide -->
+          <a href="#">
+            <div class="image-container">
+              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+5" alt="Self-Published 5">
+              <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="EN">
+                 <div class="overlay">
+                   <div class="description-box"> <!-- Changed p to div.description-box -->
+                     Short manga description here
+                   </div>
+                   <div class="overlay-actions">
+                     <div class="overlay-buttons">
+                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                     </div>
+                   </div>
+                 </div>
+            </div>
+          </a>
+           <a href="#" class="item-title-link">
+              <h3 class="item-title">Manga 5</h3> <!-- Use h3 and class -->
+          </a>
+        </div>
+        
+        <!-- Item 6 -->
+          <div class="swiper-slide item"> <!-- Swiper Slide -->
+            <a href="#">
+             <div class="image-container"><img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+6" alt="Manga 6 Cover"><img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
+               <div class="overlay">
+                 <div class="description-box">Generic description for the manga goes here, maybe a few lines long.</div>
+                 <div class="overlay-actions">
+                   <div class="overlay-buttons">
+                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a><a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                   </div>
+                 </div>
+               </div>
+             </div>
+            </a>
+          <a href="#" class="item-title-link"><h3 class="item-title">Manga 6</h3></a>
+        </div>
+        <!-- Item 7 -->
+          <div class="swiper-slide item"> <!-- Swiper Slide -->
+             <a href="#">
+              <div class="image-container"><img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+7" alt="Manga 7 Cover"><img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
+               <div class="overlay">
+                 <div class="description-box">Generic description for the manga goes here, maybe a few lines long.</div>
+                 <div class="overlay-actions">
+                   <div class="overlay-buttons">
+                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a><a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                   </div>
+                 </div>
+                </div>
+              </div>
+             </a>
+          <a href="#" class="item-title-link"><h3 class="item-title">Manga 7</h3></a>
+        </div>
+        <!-- Item 8 -->
+          <div class="swiper-slide item"> <!-- Swiper Slide -->
+            <a href="#">
+             <div class="image-container"><img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+8" alt="Manga 8 Cover"><img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
+               <div class="overlay">
+                 <div class="description-box">Generic description for the manga goes here, maybe a few lines long.</div>
+                  <div class="overlay-actions">
+                    <div class="overlay-buttons">
+                      <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a><a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                    </div>
+                  </div>
+               </div>
+             </div>
+            </a>
+          <a href="#" class="item-title-link"><h3 class="item-title">Manga 8</h3></a>
+        </div>
+        <!-- Item 9 -->
+          <div class="swiper-slide item"> <!-- Swiper Slide -->
+            <a href="#">
+             <div class="image-container"><img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+9" alt="Manga 9 Cover"><img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
+               <div class="overlay">
+                 <div class="description-box">Generic description for the manga goes here, maybe a few lines long.</div>
+                  <div class="overlay-actions">
+                    <div class="overlay-buttons">
+                      <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a><a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+             </div>
+            </a>
+          <a href="#" class="item-title-link"><h3 class="item-title">Manga 9</h3></a>
+        </div>
+        <!-- Item 10 -->
+          <div class="swiper-slide item"> <!-- Swiper Slide -->
+            <a href="#">
+              <div class="image-container"><img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+10" alt="Manga 10 Cover"><img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
+               <div class="overlay">
+                 <div class="description-box">Generic description for the manga goes here, maybe a few lines long.</div>
+                 <div class="overlay-actions">
+                   <div class="overlay-buttons">
+                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a><a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                   </div>
+                 </div>
+                </div>
+              </div>
+            </a>
+          <a href="#" class="item-title-link"><h3 class="item-title">Manga 10</h3></a>
+      </div>
+      
+        </div> <!-- End swiper-wrapper -->
+
+        <!-- Add Pagination -->
+        <div class="swiper-pagination self-published-pagination"></div> <!-- Swiper Pagination -->
+
+      </div> <!-- End swiper container -->
+
+      <!-- Removed old pagination dots -->
+      <!-- <div class="pagination-dots" id="selfPublishedDots"> ... </div> -->
+    </section>
+
+    <!-- Featured and Seasonal Section -->
+    <section class="section-container featured-items-section">
+      <div class="section-heading">
+         <a href="#" class="text-white text-decoration-none"><h2 class="text-white fw-bold mb-0">Featured</h2></a>
+        <a href="#" class="see-all see-all-arrow featured-items-next"> <!-- Swiper Nav -->
+          <i class="bi bi-arrow-right"></i> Seasonal: Spring 2025
+        </a>
+      </div>
+      
+      <div class="swiper featured-items-swiper"> <!-- Swiper Container -->
+        <div class="swiper-wrapper">
+        <!-- Featured Manga Items -->
+          <div class="swiper-slide item"> <!-- Swiper Slide -->
+          <a href="#">
+            <div class="image-container">
+              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+1" alt="Featured 1">
+              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
+                 <div class="overlay">
+                   <div class="description-box">
+                     Short manga description here
+                   </div>
+                   <div class="overlay-actions">
+                     <div class="overlay-buttons">
+                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                     </div>
+                   </div>
+                 </div>
+            </div>
+          </a>
+           <a href="#" class="item-title-link">
+              <h3 class="item-title">Manga 1</h3> <!-- Use h3 and class -->
+          </a>
+        </div>
+
+           <div class="swiper-slide item"> <!-- Swiper Slide -->
+          <a href="#">
+            <div class="image-container">
+              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+2" alt="Featured 2">
+              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
+                 <div class="overlay">
+                   <div class="description-box">
+                     Short manga description here
+                   </div>
+                   <div class="overlay-actions">
+                     <div class="overlay-buttons">
+                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                     </div>
+                   </div>
+                 </div>
+            </div>
+          </a>
+           <a href="#" class="item-title-link">
+              <h3 class="item-title">Manga 2</h3> <!-- Use h3 and class -->
+          </a>
+        </div>
+
+          <div class="swiper-slide item"> <!-- Swiper Slide -->
+          <a href="#">
+            <div class="image-container">
+              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+3" alt="Featured 3">
+              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
+                 <div class="overlay">
+                   <div class="description-box">
+                     Short manga description here
+                   </div>
+                   <div class="overlay-actions">
+                     <div class="overlay-buttons">
+                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                     </div>
+                   </div>
+                 </div>
+            </div>
+          </a>
+           <a href="#" class="item-title-link">
+              <h3 class="item-title">Manga 3</h3> <!-- Use h3 and class -->
+          </a>
+        </div>
+
+          <div class="swiper-slide item"> <!-- Swiper Slide -->
+          <a href="#">
+            <div class="image-container">
+              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+4" alt="Featured 4">
+              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
+                 <div class="overlay">
+                   <div class="description-box">
+                     Short manga description here
+                   </div>
+                   <div class="overlay-actions">
+                     <div class="overlay-buttons">
+                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                     </div>
+                   </div>
+                 </div>
+            </div>
+          </a>
+           <a href="#" class="item-title-link">
+              <h3 class="item-title">Manga 4</h3> <!-- Use h3 and class -->
+          </a>
+        </div>
+
+           <div class="swiper-slide item"> <!-- Swiper Slide -->
+          <a href="#">
+            <div class="image-container">
+              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+5" alt="Featured 5">
+              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
+                 <div class="overlay">
+                   <div class="description-box">
+                     Short manga description here
+                   </div>
+                   <div class="overlay-actions">
+                     <div class="overlay-buttons">
+                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                     </div>
+                   </div>
+                 </div>
+            </div>
+          </a>
+           <a href="#" class="item-title-link">
+              <h3 class="item-title">Manga 5</h3> <!-- Use h3 and class -->
+          </a>
+        </div>
+
+           <div class="swiper-slide item"> <!-- Swiper Slide -->
+          <a href="#">
+            <div class="image-container">
+              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+6" alt="Featured 6">
+              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
+                 <div class="overlay">
+                   <div class="description-box">
+                     Short manga description here
+                   </div>
+                   <div class="overlay-actions">
+                     <div class="overlay-buttons">
+                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                     </div>
+                   </div>
+                 </div>
+            </div>
+          </a>
+           <a href="#" class="item-title-link">
+              <h3 class="item-title">Manga 6</h3> <!-- Use h3 and class -->
+          </a>
+        </div>
+        
+        <!-- Item 7 -->
+          <div class="swiper-slide item"> <!-- Swiper Slide -->
+             <a href="#">
+              <div class="image-container"><img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+7" alt="Manga 7 Cover"><img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
+                <div class="overlay">
+                  <div class="description-box">Generic description for the manga goes here, maybe a few lines long.</div>
+                  <div class="overlay-actions">
+                    <div class="overlay-buttons">
+                      <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a><a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+             </a>
+          <a href="#" class="item-title-link"><h3 class="item-title">Manga 7</h3></a>
+        </div>
+        <!-- Item 8 -->
+          <div class="swiper-slide item"> <!-- Swiper Slide -->
+            <a href="#">
+             <div class="image-container"><img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+8" alt="Manga 8 Cover"><img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
+               <div class="overlay">
+                 <div class="description-box">Generic description for the manga goes here, maybe a few lines long.</div>
+                  <div class="overlay-actions">
+                    <div class="overlay-buttons">
+                      <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a><a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                    </div>
+                  </div>
+               </div>
+             </div>
+            </a>
+          <a href="#" class="item-title-link"><h3 class="item-title">Manga 8</h3></a>
+        </div>
+        <!-- Item 9 -->
+          <div class="swiper-slide item"> <!-- Swiper Slide -->
+            <a href="#">
+             <div class="image-container"><img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+9" alt="Manga 9 Cover"><img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
+               <div class="overlay">
+                 <div class="description-box">Generic description for the manga goes here, maybe a few lines long.</div>
+                  <div class="overlay-actions">
+                    <div class="overlay-buttons">
+                      <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a><a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+             </div>
+            </a>
+          <a href="#" class="item-title-link"><h3 class="item-title">Manga 9</h3></a>
+        </div>
+        <!-- Item 10 -->
+          <div class="swiper-slide item"> <!-- Swiper Slide -->
+            <a href="#">
+             <div class="image-container"><img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+10" alt="Manga 10 Cover"><img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
+               <div class="overlay">
+                 <div class="description-box">Generic description for the manga goes here, maybe a few lines long.</div>
+                  <div class="overlay-actions">
+                    <div class="overlay-buttons">
+                      <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a><a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          <a href="#" class="item-title-link"><h3 class="item-title">Manga 10</h3></a>
+      </div>
+      
+        </div> <!-- End swiper-wrapper -->
+
+        <!-- Add Pagination -->
+        <div class="swiper-pagination featured-items-pagination"></div> <!-- Swiper Pagination -->
+
+      </div> <!-- End swiper container -->
+
+      <!-- Removed old pagination dots -->
+      <!-- <div class="pagination-dots" id="featuredDots"> ... </div> -->
+    </section>
+
+    <!-- Recently Added Section -->
+    <section class="section-container recently-added-section">
+      <div class="section-heading">
+        <a href="#" class="text-white text-decoration-none"><h2 class="text-white fw-bold mb-0">Recently Added</h2></a>
+        <a href="#" class="see-all see-all-arrow recently-added-next"> <!-- Swiper Nav -->
+          <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+      
+      <div class="swiper recently-added-swiper"> <!-- Swiper Container -->
+        <div class="swiper-wrapper">
+        <!-- Recently Added Manga Items -->
+          <div class="swiper-slide item"> <!-- Swiper Slide -->
+          <a href="#">
+            <div class="image-container">
+              <img src="https://placehold.co/150x210/1a1a1a/cccccc?text=Cover" alt="Recent 1">
+              <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="EN">
+                 <div class="overlay">
+                   <div class="description-box">
+                     Short manga description here
+                   </div>
+                   <div class="overlay-actions">
+                     <div class="overlay-buttons">
+                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                     </div>
+                   </div>
+                 </div>
+            </div>
+          </a>
+           <a href="#" class="item-title-link">
+              <h3 class="item-title">April Fool's Collection 2025</h3> <!-- Use h3 and class -->
+          </a>
+        </div>
+
+           <div class="swiper-slide item"> <!-- Swiper Slide -->
+          <a href="#">
+            <div class="image-container">
+              <img src="https://placehold.co/150x210/1a1a1a/cccccc?text=Cover" alt="Recent 2">
+              <img class="flag" src="https://mangadex.org/img/flags/kr.svg" alt="KR">
+                 <div class="overlay">
+                   <div class="description-box">
+                     Short manga description here
+                   </div>
+                   <div class="overlay-actions">
+                     <div class="overlay-buttons">
+                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                     </div>
+                   </div>
+                 </div>
+            </div>
+          </a>
+           <a href="#" class="item-title-link">
+              <h3 class="item-title">Martial Evolution: Start by...</h3> <!-- Use h3 and class -->
+          </a>
+        </div>
+
+           <div class="swiper-slide item"> <!-- Swiper Slide -->
+          <a href="#">
+            <div class="image-container">
+              <img src="https://placehold.co/150x210/1a1a1a/cccccc?text=Cover" alt="Recent 3">
+              <img class="flag" src="https://mangadex.org/img/flags/kr.svg" alt="KR">
+                 <div class="overlay">
+                   <div class="description-box">
+                     Short manga description here
+                   </div>
+                   <div class="overlay-actions">
+                     <div class="overlay-buttons">
+                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                     </div>
+                   </div>
+                 </div>
+            </div>
+          </a>
+           <a href="#" class="item-title-link">
+              <h3 class="item-title">Murim's Youngest Miracle Demon...</h3> <!-- Use h3 and class -->
+          </a>
+        </div>
+
+           <div class="swiper-slide item"> <!-- Swiper Slide -->
+          <a href="#">
+            <div class="image-container">
+              <img src="https://placehold.co/150x210/1a1a1a/cccccc?text=Cover" alt="Recent 4">
+              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
+                 <div class="overlay">
+                   <div class="description-box">
+                     Short manga description here
+                   </div>
+                   <div class="overlay-actions">
+                     <div class="overlay-buttons">
+                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                     </div>
+                   </div>
+                 </div>
+            </div>
+          </a>
+           <a href="#" class="item-title-link">
+              <h3 class="item-title">Touhou - I Can't Do Anything</h3> <!-- Use h3 and class -->
+          </a>
+        </div>
+
+           <div class="swiper-slide item"> <!-- Swiper Slide -->
+          <a href="#">
+            <div class="image-container">
+              <img src="https://placehold.co/150x210/1a1a1a/cccccc?text=Cover" alt="Recent 5">
+              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
+                 <div class="overlay">
+                   <div class="description-box">
+                     Short manga description here
+                   </div>
+                   <div class="overlay-actions">
+                     <div class="overlay-buttons">
+                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                     </div>
+                   </div>
+                 </div>
+            </div>
+          </a>
+           <a href="#" class="item-title-link">
+              <h3 class="item-title">Meito Ruten - Rakujo no Fu</h3> <!-- Use h3 and class -->
+            </a>
+          </div>
+
+        <!-- Add more items here following the pattern -->
+          <div class="swiper-slide item"> <!-- Swiper Slide -->
+            <a href="#">
+             <div class="image-container"><img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+6" alt="Manga 6 Cover"><img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
           <div class="overlay">
-            <p>Mô tả Manga 2. Tóm tắt khác ở đây.</p>
-            <a href="#" class="read-button">Đọc</a>
-            <a href="#" class="more-button">Xem Thêm</a>
+                 <div class="description-box">Generic description for the manga goes here, maybe a few lines long.</div>
+                 <div class="overlay-actions">
+                   <div class="overlay-buttons">
+                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a><a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
           </div>
         </div>
-        <div class="item">
-          <a href="#">
-            <div class="image-container">
-              <img src="https://placehold.co/150x210" alt="Manga 2">
-              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="Nhật Bản">
-            </div>
-          </a>
-          <a href="#">
-            <h3>Tiêu Đề Manga 2</h3>
-          </a>
-          <div class="overlay">
-            <p>Mô tả Manga 2. Tóm tắt khác ở đây.</p>
-            <a href="#" class="read-button">Đọc</a>
-            <a href="#" class="more-button">Xem Thêm</a>
+               </div>
+             </div>
+            </a>
+            <a href="#" class="item-title-link"><h3 class="item-title">Manga 6</h3></a>
           </div>
+          <div class="swiper-slide item"> <!-- Swiper Slide -->
+             <a href="#">
+              <div class="image-container"><img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+7" alt="Manga 7 Cover"><img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
+               <div class="overlay">
+                 <div class="description-box">Generic description for the manga goes here, maybe a few lines long.</div>
+                 <div class="overlay-actions">
+                   <div class="overlay-buttons">
+                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a><a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                   </div>
+                 </div>
+                </div>
+              </div>
+             </a>
+            <a href="#" class="item-title-link"><h3 class="item-title">Manga 7</h3></a>
+          </div>
+          <div class="swiper-slide item"> <!-- Swiper Slide -->
+            <a href="#">
+             <div class="image-container"><img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+8" alt="Manga 8 Cover"><img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
+              <div class="overlay">
+                <div class="description-box">Generic description for the manga goes here, maybe a few lines long.</div>
+                 <div class="overlay-actions">
+                   <div class="overlay-buttons">
+                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a><a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                   </div>
+                 </div>
+              </div>
+             </div>
+            </a>
+            <a href="#" class="item-title-link"><h3 class="item-title">Manga 8</h3></a>
+          </div>
+          <div class="swiper-slide item"> <!-- Swiper Slide -->
+            <a href="#">
+             <div class="image-container"><img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+9" alt="Manga 9 Cover"><img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
+               <div class="overlay">
+                 <div class="description-box">Generic description for the manga goes here, maybe a few lines long.</div>
+                 <div class="overlay-actions">
+                   <div class="overlay-buttons">
+                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a><a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                   </div>
+                 </div>
+               </div>
+              </div>
+            </a>
+            <a href="#" class="item-title-link"><h3 class="item-title">Manga 9</h3></a>
+          </div>
+          <div class="swiper-slide item"> <!-- Swiper Slide -->
+            <a href="#">
+              <div class="image-container"><img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+10" alt="Manga 10 Cover"><img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
+               <div class="overlay">
+                 <div class="description-box">Generic description for the manga goes here, maybe a few lines long.</div>
+                 <div class="overlay-actions">
+                   <div class="overlay-buttons">
+                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a><a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                   </div>
+                 </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="item-title-link"><h3 class="item-title">Manga 10</h3></a>
+      </div>
+      
+        </div> <!-- End swiper-wrapper -->
+
+        <!-- Add Pagination -->
+        <div class="swiper-pagination recently-added-pagination"></div> <!-- Swiper Pagination -->
+
+      </div> <!-- End swiper container -->
+
+    </section>
+  </main>
+
+  <!-- User Modal -->
+  <div class="modal fade" id="user-modal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm user-modal-dialog">
+    <div class="modal-content user-modal-content">
+      <div class="modal-body user-modal-body">
+        <div class="text-center mb-3">
+          <i class="bi bi-person-circle display-4 text-white"></i>
+          <h5 class="mt-2 mb-3 text-white">Guest</h5>
+          <hr class="user-modal-divider">
         </div>
-        <div class="item">
-          <a href="#">
-            <div class="image-container">
-              <img src="https://placehold.co/150x210" alt="Manga 2">
-              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="Nhật Bản">
-            </div>
-          </a>
-          <a href="#">
-            <h3>Tiêu Đề Manga 2</h3>
-          </a>
-          <div class="overlay">
-            <p>Mô tả Manga 2. Tóm tắt khác ở đây.</p>
-            <a href="#" class="read-button">Đọc</a>
-            <a href="#" class="more-button">Xem Thêm</a>
-          </div>
+        <div class="d-flex justify-content-between mb-3 user-modal-actions">
+          <a href="#" class="text-decoration-none text-white d-flex align-items-center"><i class="bi bi-gear-fill me-2"></i> Settings</a>
+          <a href="#" class="text-decoration-none text-white d-flex align-items-center"><i class="bi bi-droplet-half me-2"></i> Theme</a>
         </div>
-        <div class="item">
-          <a href="#">
-            <div class="image-container">
-              <img src="https://placehold.co/150x210" alt="Manga 2">
-              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="Nhật Bản">
-            </div>
-          </a>
-          <a href="#">
-            <h3>Tiêu Đề Manga 2</h3>
-          </a>
-          <div class="overlay">
-            <p>Mô tả Manga 2. Tóm tắt khác ở đây.</p>
-            <a href="#" class="read-button">Đọc</a>
-            <a href="#" class="more-button">Xem Thêm</a>
-          </div>
+        <div class="mb-2"><a href="#" class="text-decoration-none text-white d-flex justify-content-between align-items-center">Interface Language <span class="badge bg-warning text-dark beta-badge">BETA</span></a></div>
+        <div class="mb-2"><a href="#" class="text-decoration-none text-white d-flex justify-content-between align-items-center">Chapter Languages <span class="badge bg-secondary all-badge">All</span></a></div>
+        <div class="mb-3"><a href="#" class="text-decoration-none text-white">Content Filter</a></div>
+        <hr class="user-modal-divider mb-3">
+        <div class="d-grid gap-2">
+          <button class="btn btn-primary btn-user-action sign-in-btn" type="button">Sign In</button>
+          <a href="#" class="text-center text-white-50 text-decoration-none small">Register</a>
         </div>
       </div>
     </div>
   </div>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="../JS/home.js"></script>
+</div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="/JS/home.js"></script>
 </body>
 </html>
