@@ -13,6 +13,7 @@ body {
   color: #e0e0e0;
   transition: padding-left 0.3s ease-in-out;
   position: relative; /* Added for absolute positioning context if needed */
+  padding-top: 0 !important; /* Override any conflicting padding */
 }
 
 .page-wrapper {
@@ -21,7 +22,7 @@ body {
 }
 
 .container-xxl {
-  padding-top: 60px; /* Reverted: Only account for fixed navbar */
+  /* padding-top: 60px; */ /* REMOVED - No longer needed for fixed navbar */
   padding-bottom: 30px;
   background-color: transparent;
   position: relative;
@@ -91,233 +92,9 @@ body {
 }
 
 /* ==========================================================================
-   NAVBAR & SEARCH
-   ========================================================================== */
-.navbar {
-  background: transparent;
-  padding: 0.5rem 1rem;
-  transition: background-color 0.3s ease, border-bottom 0.3s ease, opacity 0.3s ease;
-  width: 100%;
-  height: 60px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1030;
-}
-
-.navbar.scrolled {
-  background: #1f1f1f !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  border-bottom: 1px solid #FF6740;
-}
-
-.navbar .container { /* Target container within navbar */
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-.navbar-brand {
-  font-size: 1.5rem;
-}
-
-.navbar-brand img {
-  margin-right: 0.5rem;
-}
-
-.search-box {
-  background: #383838;
-  border-radius: 4px;
-  padding: 6px 12px;
-  transition: background-color 0.3s ease, border-color 0.3s ease, width 0.3s ease;
-  width: 250px; 
-  height: 38px;
-}
-
-.search-box:hover {
-  background: #4a4a4a;
-}
-
-.search-box input {
-  background: transparent;
-  border: none;
-  color: white;
-  width: 100%;
-  font-size: 0.9rem;
-  height: 100%;
-}
-
-.search-box input::placeholder {
-  color: #b0b0b0 !important;
-}
-
-.search-box input:focus {
-  background: transparent;
-  color: #FFF;
-  box-shadow: none;
-  outline: none;
-}
-
-.search-box:focus-within {
-  width: 400px;
-  border: 1px solid #FF6740;
-  display: flex;
-}
-
-.shortcut-key {
-  background: #444;
-  padding: 2px 6px;
-  border-radius: 3px;
-  font-size: 0.7rem;
-  color: #bbb;
-}
-
-/* ==========================================================================
-   SIDEBAR
-   ========================================================================== */
-body.sidebar-open {
-  padding-left: 280px;
-}
-
-body.sidebar-open .navbar .navbar-brand,
-body.sidebar-open #hamburger-btn {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.1s ease, visibility 0.1s ease;
-}
-
-#nav-sidebar {
-  background-color: #1f1f1f;
-  color: #e0e0e0;
-  width: 280px;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1040;
-  transform: translateX(-100%);
-  transition: transform 0.3s ease-in-out;
-  display: flex;
-  flex-direction: column;
-  border-right: 1px solid #333;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #4F4F4F transparent;
-}
-
-#nav-sidebar::-webkit-scrollbar {
-  width: 5px;
-}
-#nav-sidebar::-webkit-scrollbar-thumb {
-  background-color: #4F4F4F;
-  border-radius: 3px;
-}
-#nav-sidebar::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-body.sidebar-open #nav-sidebar {
-  transform: translateX(0);
-}
-
-.sidebar-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.5rem 1rem;
-  height: 60px;
-  border-bottom: 1px solid #333;
-  flex-shrink: 0;
-}
-
-.close-btn {
-  padding: 0.5rem;
-}
-
-.sidebar-nav {
-  padding: 1rem;
-}
-
-.sidebar-nav .nav-link {
-  display: block;
-  color: #ccc;
-  text-decoration: none;
-  padding: 0.75rem 1rem;
-  border-radius: 4px;
-  margin-bottom: 0.25rem;
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.sidebar-nav .nav-link i {
-  margin-right: 0.75rem;
-  width: 20px;
-  text-align: center;
-}
-
-.sidebar-nav .nav-link:hover,
-.sidebar-nav .nav-link.active {
-  background-color: #FF6740;
-  color: #fff;
-}
-
-.sidebar-section {
-  margin-top: 1rem;
-  border-top: 1px solid #333;
-  padding-top: 1rem;
-}
-
-.sidebar-section .section-title {
-  font-weight: bold;
-  color: #e0e0e0;
-}
-
-.sidebar-section .section-title:hover {
-  background-color: transparent;
-  color: #fff;
-}
-
-.sidebar-section .sub-links {
-  padding-left: calc(1rem + 20px + 0.75rem);
-  margin-top: 0.5rem;
-}
-
-.sidebar-section .sub-links .nav-link {
-  padding: 0.5rem 0;
-  font-size: 0.9rem;
-  color: #aaa;
-  margin-bottom: 0.1rem;
-}
-
-.sidebar-section .sub-links .nav-link:hover {
-  background-color: transparent;
-  color: #fff;
-}
-
-.sidebar-footer {
-  padding: 1rem;
-  border-top: 1px solid #333;
-}
-
-.sidebar-footer .social-icons a {
-  color: #aaa;
-  margin: 0 0.5rem;
-  font-size: 1.2rem;
-  transition: color 0.2s ease;
-}
-
-.sidebar-footer .social-icons a:hover {
-  color: #fff;
-}
-
-#hamburger-btn {
-   transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-
-/* ==========================================================================
    FEATURED MANGA CAROUSEL (#featuredMangaCarousel)
    ========================================================================== */
 .featured-section {
-  /* Background set by JS, keep padding */
-  padding-top: 30px;
   padding-bottom: 30px;
   margin-bottom: 30px;
   border-radius: 5px;
@@ -543,37 +320,58 @@ body.sidebar-open #nav-sidebar {
 }
 
 /* Styles for the moved popular new titles section */
-.popular-new-titles-section.full-width-section { 
-  padding-top: 60px; /* Add padding to clear the fixed navbar */
-  padding-left: 0; /* Remove default section padding if needed */
-  padding-right: 0; /* Remove default section padding if needed */
-  padding-bottom: 1rem; /* Keep some bottom padding */
-  margin-bottom: 0; /* REMOVED margin-bottom */
-  position: relative; 
-  overflow: hidden; /* Clip background if needed */
-  background-size: cover;
+.popular-new-titles-section.full-width-section { /* Renamed from .featured-banner-section */
+  /* Make section full width */
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  width: 100vw;
+  padding-top: 0; /* Remove any top padding */
+  padding-bottom: 0; /* Remove any bottom padding if needed */
+  margin-bottom: 0; /* Remove bottom margin if needed */
+  margin-top: -60px; /* Pull the section up behind the navbar */
+  /* Adjust background properties if they were previously set here */
   background-position: center center;
-  /* Set initial background */
-  background-image: linear-gradient(rgba(17, 17, 17, 0.85), rgba(17, 17, 17, 0.95)), url('/home_frontend/sample_img/cover1.png'); 
-  transition: background-image 0.5s ease-in-out; /* Smooth transition */
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 450px; /* Ensure it has height */
+  position: relative; /* Keep for potential absolute children */
+  z-index: 1; /* Ensure it's behind the navbar (navbar is z-index 1030) */
 }
 
 /* Ensure the inner container within the full-width section has padding */
 .popular-new-titles-section.full-width-section > .container-xxl {
-  padding-top: 1rem; /* Add padding back for the content inside */
-  padding-bottom: 0.5rem; /* Reduced padding-bottom */
-  padding-left: 20px; /* MODIFIED: Match standard section padding for heading alignment */
-  padding-right: 1.5rem; /* Keep right padding for carousel spacing */
-  /* Reset margin/padding inherited from .container-xxl if needed */
-  margin-top: 0;
-  background-color: transparent; /* Ensure inner container is transparent */
-  position: relative; /* Keep content above background */
-  z-index: 1;
+  /* Content within the full-width section should still respect container bounds */
+  max-width: 1400px; /* Or your desired max-width */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px; /* Example padding, adjust as needed */
+  padding-right: 20px; /* Example padding, adjust as needed */
+  /* Add padding top equal to navbar height + desired spacing */
+  padding-top: calc(60px + 30px); /* Navbar height + original top padding */
+  padding-bottom: 30px; /* Original bottom padding */
+   position: relative; /* Keep for z-index */
+   z-index: 5; /* Ensure content is above the section's background */
+   background-color: transparent !important; /* Ensure inner container isn't opaque */
 }
 
-/* Reduce padding-top for the first section inside the main container */
-main.container-xxl > .section-container:first-child {
-  padding-top: 0; /* REMOVED padding-top */
+/* Remove padding-top from the main container itself if it exists */
+/* main.container-xxl {
+  padding-top: 0; 
+} */
+
+/* Adjust the padding for the *first* section *inside* the main container */
+main.container-xxl > .section-container:first-child,
+.content-below-featured > .section-container:first-child /* Add if applicable */
+{
+  /* This rule might be redundant if the popular section is completely outside main */
+  /* Check HTML structure. If popular titles is outside main, adjust .content-below-featured */
+   padding-top: 30px; /* Revert to original padding IF popular section is outside main */
+}
+
+/* If .content-below-featured immediately follows the popular-titles section */
+.content-below-featured {
+    padding-top: 30px; /* Add spacing below the popular section */
+    background-color: #111;
 }
 
 /* ==========================================================================
@@ -1036,174 +834,6 @@ main.container-xxl > .section-container:first-child {
   .latest-updates-column:nth-child(4) {
     display: flex;
   }
-}
-
-/* ==========================================================================
-   MODALS (User Modal)
-   ========================================================================== */
-
-.user-modal-dialog {
-  position: absolute; 
-  top: 55px; 
-  right: 10px; 
-  margin: 0; 
-  max-width: 280px;
-}
-
-.user-modal-content {
-  background-color: #262626; 
-  color: #e0e0e0; 
-  border: 1px solid #333;
-  border-radius: 6px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.5); 
-  max-height: calc(100vh - 70px); 
-  display: flex; 
-  flex-direction: column; 
-}
-
-.user-modal-body {
-  padding: 0.75rem;
-  overflow-y: auto; 
-  scrollbar-width: thin;
-  scrollbar-color: #4F4F4F transparent;
-}
-
-.user-modal-body::-webkit-scrollbar {
-  width: 5px;
-}
-
-.user-modal-body::-webkit-scrollbar-thumb {
-  background: #444;
-  border-radius: 3px;
-}
-
-.user-modal-top-section {
-  background-color: #303030;
-  margin: -0.75rem -0.75rem 0;
-  padding: 1rem 0.75rem 0.75rem;
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
-}
-
-.user-modal-top-section i {
-  font-size: 3rem;
-  color: #ccc;
-}
-
-.user-modal-top-section h5 {
-  font-weight: 600;
-  font-size: 1.1rem;
-}
-
-.user-modal-divider {
-  border-color: #444; 
-  margin-top: 0.75rem;
-  margin-bottom: 0.75rem;
-}
-
-.user-modal-actions {
-  padding: 0 0.5rem;
-  margin-bottom: 0.75rem !important;
-}
-
-.user-modal-actions a {
-  color: #b0b0b0; 
-  font-size: 0.85rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  padding: 0.25rem;
-  border-radius: 4px;
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.user-modal-actions a i {
-  font-size: 1.1rem;
-}
-
-.user-modal-actions a:hover {
-  color: #fff;
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-/* General links within modal body */
-.user-modal-body > div:not(.user-modal-top-section):not(.user-modal-actions):not(.d-grid) > a {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 0.5rem;
-  margin-bottom: 0.25rem;
-  border-radius: 4px;
-  color: #e0e0e0;
-  text-decoration: none;
-  font-size: 0.9rem;
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.user-modal-body > div:not(.user-modal-top-section):not(.user-modal-actions):not(.d-grid) > a:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #fff;
-}
-
-.user-modal-body > div:has(+ hr) > a {
-    margin-bottom: 0;
-}
-
-.beta-badge {
-  background-color: #ff9800 !important; 
-  color: #111 !important; 
-  font-weight: bold;
-  font-size: 0.6rem;
-  padding: 2px 4px;
-  border-radius: 3px;
-}
-
-.all-badge {
-  background-color: #444 !important; 
-  color: #ccc !important; 
-  font-size: 0.6rem;
-  padding: 2px 4px;
-  border-radius: 3px;
-}
-
-.d-grid.gap-2 {
-  padding: 0 0.5rem;
-}
-
-.sign-in-btn {
-  background-color: #FF6740 !important; 
-  border-color: #FF6740 !important;
-  font-weight: bold;
-  padding: 0.5rem;
-  font-size: 0.95rem;
-}
-
-.sign-in-btn:hover {
-  background-color: #e65c3a !important; 
-  border-color: #e65c3a !important;
-}
-
-.user-modal-body .small {
-  font-size: 0.8rem;
-  margin-top: 0.5rem;
-  display: inline-block;
-  padding: 0.25rem;
-  border-radius: 4px;
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.user-modal-body .small:hover {
-  color: #fff;
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.modal-backdrop {
-  background-color: #000;
-}
-
-.modal-backdrop.show {
-  opacity: 0.75;
 }
 
 /* ==========================================================================

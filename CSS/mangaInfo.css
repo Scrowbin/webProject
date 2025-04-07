@@ -208,3 +208,25 @@ a{
     display: inline; /* Show when expanded */
 }
 /*  */
+/* Responsive */
+@media (max-width: 700px) {
+    .info-middle {
+        min-width: 70px;
+        gap: 2px;
+    }
+    
+    .info-right {
+        min-width: 50px;
+        gap: 2px;
+    }
+    .manga-cover img {
+        width: 150px;
+        height: 200px;
+    }
+}
+@media (max-width: 500px) {
+    .manga-cover img {
+        width: 75px;
+        height: 100px;
+    }
+}

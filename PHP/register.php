@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register MangaDax</title>
+    <link rel="icon" href="favicon.ico">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/register.css">
+</head>
+<body>
+    <div class="container login-page">
+        <div class="page-header text-center py-4">
+            <a href="homepage.php" rel="nofollow">
+                <div class="logo-container d-flex align-items-center justify-content-center">
+                    <span id="md-logo" class="me-2"></span>
+                    <span id="md-wordmark">MangaDax</span>
+                </div>
+            </a>
+        </div>
+        <div class="login-form-container p-4 rounded shadow">
+            <header class="form-header text-center mb-4">
+                <h1>Create an Account</h1>
+            </header>
+            <div class="form-content">
+                <form novalidate onsubmit="return validInput()" action="" method="post">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username <span class="required">*</span></label>
+                        <input tabindex="1" id="username" class="form-control form-input" name="username" type="text" required autocomplete="off">
+                        <div class="error-message my-3" id="username-error">Please specify user name</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password <span class="required">*</span></label>
+                        <input tabindex="2" id="password" class="form-control form-input" name="password" type="password" required autocomplete="off">
+                        <div class="error-message my-3" id="pwd-error">Please specify password</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cf_password" class="form-label">Confirm Password <span class="required">*</span></label>
+                        <input tabindex="3" id="cf_password" class="form-control form-input" name="cf_password" type="password" required autocomplete="off">
+                        <div class="error-message my-3" id="cfpwd-error"> Password not match</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email <span class="required">*</span></label>
+                        <input tabindex="4" id="email" class="form-control form-input" name="email" type="email" required autocomplete="off">
+                        <div class="error-message my-3" id="email-error">Please specify email</div>
+                    </div>
+                    <div class="mb-3">
+                        <a href="login.php" class="back-to-login">&laquo; Back to Login</a>
+                    </div>
+                    <div class="form-buttons">
+                        <button tabindex="5" class="btn submit-btn w-100" name="register" type="submit">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="../JS/register.js"></script>
+</body>
+</html>
