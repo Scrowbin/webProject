@@ -1,88 +1,130 @@
-// import Cropper from "cropperjs";
-// import "cropperjs/dist/cropper.min.css"; // Import the styles
+const avatarInput = document.getElementById("avatarInput");
+const previewAvatar = document.getElementById("previewAvatar");
+const avatar = document.getElementById("avatar");
+const saveAvatar = document.getElementById("saveAvatar");
+const avatarModal = document.getElementById("avatarModal");
+const cropAvatarBtn = document.getElementById("cropAvatarBtn");
+const bannerInput = document.getElementById("bannerInput");
+const previewBanner = document.getElementById("previewBanner");
+const banner = document.getElementById("banner");
+const saveBanner = document.getElementById("saveBanner");
+const bannerModal = document.getElementById("bannerModal");
+const cropBannerBtn = document.getElementById("cropBannerBtn");
 
-// let cropper;
-// const imageInput = document.getElementById("imageInput");
-// const cropImage = document.getElementById("cropImage");
-// const avatar = document.getElementById("avatar");
-// const cropBtn = document.getElementById("cropBtn");
+let cropper;
 
-// imageInput.addEventListener("change", function (event) {
-//     const file = event.target.files[0];
-//     if (file) {
-//         const reader = new FileReader();
-//         reader.onload = function (e) {
-//             cropImage.src = e.target.result;
+// Function to initialize Cropper
+function initCropper(imageElement, aspectRatio = null) {
+    if (cropper) {
+        cropper.destroy();
+    }
+    const options = {
+        viewMode: 1,
+        scalable: false,
+        zoomable: false,
+        movable: false,
+        autoCropArea: 1,
+        cropBoxResizable: true,
+    };
+    if (aspectRatio) {
+        options.aspectRatio = aspectRatio;
+    }
+    cropper = new Cropper(imageElement, options);
+}
 
-//             // Wait for the image to load before initializing Cropper.js
-//             setTimeout(() => {
-//                 if (cropper) {
-//                     cropper.destroy(); // Remove any previous Cropper instance
-//                 }
-//                 cropper = new Cropper(cropImage, {
-//                     aspectRatio: 1,
-//                     viewMode: 2,
-//                     autoCropArea: 1
-//                 });
+// Initialize avatar preview with current avatar
+previewAvatar.src = avatar.src;
 
-//                 // Show cropping modal
-//                 const cropModal = new bootstrap.Modal(document.getElementById("cropModal"));
-//                 cropModal.show();
-//             }, 500);
-//         };
-//         reader.readAsDataURL(file);
-//     }
-// });
+// Initialize banner preview with current banner
+previewBanner.src = banner.src;
 
-// cropBtn.addEventListener("click", function () {
-//     const croppedCanvas = cropper.getCroppedCanvas({
-//         width: 150,
-//         height: 150
-//     });
-//     avatar.src = croppedCanvas.toDataURL("image/png");
-
-//     // Close the cropping modal
-//     const cropModal = bootstrap.Modal.getInstance(document.getElementById("cropModal"));
-//     cropModal.hide();
-// });
-
-document.getElementById("avatarInput").addEventListener("change", function(event) {
+// Handle avatar image selection
+avatarInput.addEventListener("change", function (event) {
     const file = event.target.files[0];
     if (file) {
         const reader = new FileReader();
-        reader.onload = function(e) {
-            document.getElementById("preview").src = e.target.result;
+        reader.onload = function (e) {
+            previewAvatar.src = e.target.result;
+            cropAvatarBtn.style.display = "block";
+            if (cropper) {
+                cropper.destroy();
+            }
+            initCropper(previewAvatar, 1);
         };
         reader.readAsDataURL(file);
+    } else {
+        previewAvatar.src = avatar.src; // Reset to original avatar if no file
+        if (cropper) {
+            cropper.destroy();
+            cropper = null;
+        }
     }
 });
 
-document.getElementById("saveAvatar").addEventListener("click", function() {
-    document.getElementById("avatar").src = document.getElementById("preview").src;
-    
-    // Close the modal using Bootstrap’s Modal API
-    let modalElement = document.getElementById("avatarModal");
-    let modalInstance = bootstrap.Modal.getInstance(modalElement);
-    modalInstance.hide(); // Properly hides the modal
+// Handle clicking the Crop button for avatar
+cropAvatarBtn.addEventListener("click", function () {
+    initCropper(previewAvatar, 1);
+    saveAvatar.style.display = "block";
 });
 
+// Handle saving the cropped avatar
+saveAvatar.addEventListener("click", function () {
+    if (cropper) {
+        const croppedCanvas = cropper.getCroppedCanvas({
+            width: 150,
+            height: 150,
+        });
+        avatar.src = croppedCanvas.toDataURL("image/png");
+        previewAvatar.src = croppedCanvas.toDataURL("image/png"); // Update preview
+        cropper.destroy();
+        cropper = null;
+        saveAvatar.style.display = "none";
+        let modalElement = document.getElementById("avatarModal");
+        let modalInstance = bootstrap.Modal.getInstance(modalElement);
+        modalInstance.hide();
+    }
+});
 
-document.getElementById("bannerInput").addEventListener("change", function(event) {
+// Handle banner image selection
+bannerInput.addEventListener("change", function (event) {
     const file = event.target.files[0];
     if (file) {
         const reader = new FileReader();
-        reader.onload = function(e) {
-            document.getElementById("preview2").src = e.target.result;
+        reader.onload = function (e) {
+            previewBanner.src = e.target.result;
+            cropBannerBtn.style.display = "block";
+            if (cropper) {
+                cropper.destroy();
+            }
+            initCropper(previewBanner);
         };
         reader.readAsDataURL(file);
+    } else {
+        previewBanner.src = banner.src; // Reset to original banner if no file
+        if (cropper) {
+            cropper.destroy();
+            cropper = null;
+        }
     }
 });
 
-document.getElementById("saveBanner").addEventListener("click", function() {
-    document.getElementById("banner").src = document.getElementById("preview2").src;
-    
-    // Close the modal using Bootstrap’s Modal API
-    let modalElement = document.getElementById("bannerModal");
-    let modalInstance = bootstrap.Modal.getInstance(modalElement);
-    modalInstance.hide(); // Properly hides the modal
+// Handle clicking the Crop button for banner
+cropBannerBtn.addEventListener("click", function () {
+    initCropper(previewBanner);
+    saveBanner.style.display = "block";
+});
+
+// Handle saving the cropped banner
+saveBanner.addEventListener("click", function () {
+    if (cropper) {
+        const croppedCanvas = cropper.getCroppedCanvas();
+        banner.src = croppedCanvas.toDataURL("image/png");
+        previewBanner.src = croppedCanvas.toDataURL("image/png"); // Update preview
+        cropper.destroy();
+        cropper = null;
+        saveBanner.style.display = "none";
+        let modalElement = document.getElementById("bannerModal");
+        let modalInstance = bootstrap.Modal.getInstance(modalElement);
+        modalInstance.hide();
+    }
 });
