@@ -194,6 +194,9 @@ document.addEventListener("DOMContentLoaded", () => {
             let height = Math.max(getVisibleHeight(nextChapter),0);
             progressBar.style.bottom = height + "px";
         }
+        else{
+            progressBar.style.bottom =0;
+        }
     })
 
    
