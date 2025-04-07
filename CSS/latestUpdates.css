@@ -81,7 +81,10 @@ hr {
     font-weight: bold;
     margin: 5px 0;
 }
-
+.chapter-title{
+    font-weight: 700;
+    color: black;
+}
 /* Scanlation Group */
 .scan-group {
     font-size: 12px;
@@ -124,6 +127,8 @@ hr {
     flex-direction: column;
     min-width: 70px;
     gap: 5px;
+    margin-left: auto;
+
 }
 
 /* Elements inside middle and right */
@@ -133,13 +138,24 @@ hr {
 }
 
 /* Responsive */
-@media (max-width: 480px) {
-    .manga-card {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
+@media (max-width: 700px) {
+    .info-middle {
+        min-width: 70px;
+        gap: 2px;
     }
-    .manga-details {
-        padding-left: 0;
+    
+    .info-right {
+        min-width: 50px;
+        gap: 2px;
+    }
+    .manga-cover img {
+        width: 150px;
+        height: 200px;
+    }
+}
+@media (max-width: 500px) {
+    .manga-cover img {
+        width: 75px;
+        height: 100px;
     }
 }
