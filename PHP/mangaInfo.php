@@ -86,18 +86,11 @@
         </div>
     </div>
 
-    <div class = "manga-disc container mt-3 mb-3">
-        Ishidaira is a delinquent who visited the library for the first time since elementary school. But then, he was pointed out by Hayasemaru and Shirai, who works at the library, that he has not returned a book that he borrowed ten years ago. A manga about how Ishidaira went from trying to borrow a book from a library to working there instead.
-        <span class="collapse" id="moreText">
-            A manga about how Ishidaira went from trying to borrow a book from a library to working 
-            at one as part of his punishment. A heartwarming story with a slice-of-life feel.
-        </span>
-        <!-- thêm mấy cục cứt khác vô đây nữa, ts so tuuff -->
-        <div class="text-center">
-            <button class="btn btn-orange" type="button" data-bs-toggle="collapse" data-bs-target="#moreText" aria-expanded="false" aria-controls="moreText" name="seeMore">
-                <i class="bi bi-chevron-down"></i> <span>see more</span> <i class="bi bi-chevron-down"></i>
-            </button>
+    <div class = "manga-disc container mt-3 mb-3 d-flex flex-column">
+        <div class="manga-description">
+            <p class="description-text">Ishidaira is a delinquent who visited the library for the first time since elementary school. But then, he was pointed out by Hayasemaru and Shirai, who works at the library, that he has not returned a book that he borrowed ten years ago. A manga about how Ishidaira went from trying to borrow a book from a library to working there instead.</p>
         </div>
+        <button class="see-more-btn">See More</button>
     </div>
 
 
@@ -471,6 +464,28 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script> -->
     <script src="../JS/navbar.js"></script> <!-- JS for Navbar/Sidebar -->
     <!-- JS riêng của trang (nếu có) -->
+    <script>
+        window.onload = function() {
+        const descriptionText = document.querySelector('.description-text');
+        const seeMoreBtn = document.querySelector('.see-more-btn');
+
+        // Check if the description is overflowing
+        if (descriptionText.scrollHeight > descriptionText.clientHeight) {
+            descriptionText.parentElement.classList.add('overflow');
+        }
+
+        // Toggle full description on "See More" button click
+        seeMoreBtn.addEventListener('click', function() {
+            if (descriptionText.style.webkitLineClamp === "3") {
+                descriptionText.style.webkitLineClamp = "unset"; // Show full text
+                seeMoreBtn.innerText = "See Less"; // Change button text
+            } else {
+                descriptionText.style.webkitLineClamp = "3"; // Truncate text
+                seeMoreBtn.innerText = "See More"; // Change button text back
+            }
+        });
+        }
+    </script>
     <!-- <script src="../JS/mangaInfo.js"></script> -->
 
 </body>

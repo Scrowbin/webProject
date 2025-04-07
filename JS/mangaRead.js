@@ -192,7 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (isInLongStrip)
         {
             let height = Math.max(getVisibleHeight(nextChapter),0);
-            progressBar.style.bottom = height + "px";
+            progressBar.style.bottom = height+1 + "px";
         }
         else{
             progressBar.style.bottom =0;

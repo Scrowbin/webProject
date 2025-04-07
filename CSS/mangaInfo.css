@@ -178,34 +178,45 @@ a{
     padding: 8px 16px;
     border: none;
 }
-#seeMore {
-    background-color: #ff6b35;
-    color: white;
-    border-radius: 20px;
-    padding: 6px 14px;
-    font-size: 14px;
-    border: none;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
+
 
 .btn-orange:hover {
     background-color: #e65c30;
 }
 
-.short-text {
+.manga-description {
+    max-width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.description-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Limit to 3 lines */
+    -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
-.collapse {
-    display: none; /* Hide initially */
+.see-more-btn {
+    display: none; /* Hidden by default */
+    background-color: #ff6b35;
+    color: white;
+    border-radius: 5px;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    align-self: center;
 }
 
-.collapse.show {
-    display: inline; /* Show when expanded */
+/* Detect when the description overflows */
+.manga-disc .manga-description.overflow {
+    display: block;
+}
+
+/* Show "See More" button if description overflows */
+.manga-disc .manga-description.overflow + .see-more-btn {
+    display: inline-block;
 }
 /*  */
 /* Responsive */

@@ -9,150 +9,157 @@
     <link rel="stylesheet" href="../CSS/mangaRead.css">
 
 </head>
+
 <body>
-    <button type="button" class="btn sticky hidden" id="menu-sticky" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
-
-    <main>
-        <div id = "topReadBar" class = "">
-            <div class="chapter"><strong>Chapter 4</strong></div>
-            <div>
-                <a class="mangaInfo" href="#.html">
-                    Zeikin de Katta Hon
+    <div class="layout">
+        <header>
+            aaasd
+        </header>
+        <button type="button" class="btn sticky hidden" id="menu-sticky" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
+    
+        <main>
+            <div id = "topReadBar" class = "">
+                <div class="chapter"><strong>Chapter 4</strong></div>
+                <div>
+                    <a class="mangaInfo" href="#.html">
+                        Zeikin de Katta Hon
+                    </a>
+                </div>
+                
+                <div class="row">
+                    <div class="">
+                        <span class="">Vol. 1, Ch. 4</span>
+                    </div>
+                    <div class="">
+                        <span class="">Pg. 1/22</span>
+                    </div>
+                    <button onclick="toggleSidebar()" class="" name="menu">
+                    Menu
+                    </button>
+                </div>
+            </div>
+            
+            <div class="" id="page-container">
+                <!-- <a href="#page-2">
+                    <img src="../IMG/pg1.png" class="img-fit-width" id="page-1" alt="Page 1">
                 </a>
-            </div>
-            
-            <div class="row">
-                <div class="">
-                    <span class="">Vol. 1, Ch. 4</span>
-                </div>
-                <div class="">
-                    <span class="">Pg. 1/22</span>
-                </div>
-                <button onclick="toggleSidebar()" class="" name="menu">
-                Menu
-                </button>
-            </div>
-        </div>
-        
-        <div class="" id="page-container">
-            <!-- <a href="#page-2">
+                <a href="#page-3">
+                    <img src="../IMG/pg2.png" class="img-fit-width" id="page-2" alt="Page 2">
+                </a>
+                <a href="#page-4">
+                    <img src="../IMG/pg3.png" class="img-fit-width" id="page-3" alt="Page 3">
+                </a>
+                <a href="#page-5">
+                    <img src="../IMG/pg4.png" class="img-fit-width" id="page-4" alt="Page 4">
+                </a>
+                <a href="#page-6">
+                    <img src="../IMG/pg5.png" class="img-fit-width" id="page-5" alt="Page 5">
+                </a>
+                <a href="#page-1">
+                    <img src="../IMG/pg6.png" class="img-fit-width" id="page-6" alt="Page 6">
+                </a> -->
                 <img src="../IMG/pg1.png" class="img-fit-width" id="page-1" alt="Page 1">
-            </a>
-            <a href="#page-3">
                 <img src="../IMG/pg2.png" class="img-fit-width" id="page-2" alt="Page 2">
-            </a>
-            <a href="#page-4">
                 <img src="../IMG/pg3.png" class="img-fit-width" id="page-3" alt="Page 3">
-            </a>
-            <a href="#page-5">
                 <img src="../IMG/pg4.png" class="img-fit-width" id="page-4" alt="Page 4">
-            </a>
-            <a href="#page-6">
                 <img src="../IMG/pg5.png" class="img-fit-width" id="page-5" alt="Page 5">
-            </a>
-            <a href="#page-1">
                 <img src="../IMG/pg6.png" class="img-fit-width" id="page-6" alt="Page 6">
-            </a> -->
-            <img src="../IMG/pg1.png" class="img-fit-width" id="page-1" alt="Page 1">
-            <img src="../IMG/pg2.png" class="img-fit-width" id="page-2" alt="Page 2">
-            <img src="../IMG/pg3.png" class="img-fit-width" id="page-3" alt="Page 3">
-            <img src="../IMG/pg4.png" class="img-fit-width" id="page-4" alt="Page 4">
-            <img src="../IMG/pg5.png" class="img-fit-width" id="page-5" alt="Page 5">
-            <img src="../IMG/pg6.png" class="img-fit-width" id="page-6" alt="Page 6">
-
-        </div>
-        <nav id = "progress-bar" class="">
-            <div class="p-bar-number hidden" id = "p-bar-number-low">1</div>
-            <div class ="progressBarButton"><div class="color-part"></div><div class="floating-number">1</div></div>
-            <div class ="progressBarButton"><div class="color-part"></div><div class="floating-number">2</div></div>
-            <div class ="progressBarButton"><div class="color-part"></div><div class="floating-number">3</div></div>
-            <div class ="progressBarButton"><div class="color-part"></div><div class="floating-number">4</div></div>
-            <div class ="progressBarButton"><div class="color-part"></div><div class="floating-number">5</div></div>
-            <div class ="progressBarButton"><div class="color-part"></div><div class="floating-number">6</div></div>
-            <div class="p-bar-number hidden" id = 'p-bar-number-high'>6</div>
-        </nav>
-        <button id="next-chapter" class="">Next Chapter</button>
-
-    </main>
-    <!-- class = "" -->
-    <aside id="rightSidebar" class="sticky close">
-        <div class="rightSidebar-header">
-            <button type="button" class="btn" id="close-btn" ><i class ="bi bi-x"></i></button>
-            <button type="button" class="btn" id="pin-btn"><i class="bi bi-pin"></i></button>
-        </div>
-        <div class="rightSidebar-body">
-            <!-- Page Selector -->
-            <div class="page-selector">
-                <button class="btn" id = "prevPageBtn"><i class="bi bi-chevron-left "></i></button>
-                <div class="dropdown-container">
-                    <label class="page-label" id ="page-label">Page</label>
-                    <select class="dropdown" name="page" id ="page-dropdown">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-
-                    </select>
-                </div>
-                <button class="btn" id = "nextPageBtn"><i class="bi bi-chevron-right"></i></button>
+    
             </div>
+            <nav id = "progress-bar" class="">
+                <div class="p-bar-number hidden" id = "p-bar-number-low">1</div>
+                <div class ="progressBarButton"><div class="color-part"></div><div class="floating-number">1</div></div>
+                <div class ="progressBarButton"><div class="color-part"></div><div class="floating-number">2</div></div>
+                <div class ="progressBarButton"><div class="color-part"></div><div class="floating-number">3</div></div>
+                <div class ="progressBarButton"><div class="color-part"></div><div class="floating-number">4</div></div>
+                <div class ="progressBarButton"><div class="color-part"></div><div class="floating-number">5</div></div>
+                <div class ="progressBarButton"><div class="color-part"></div><div class="floating-number">6</div></div>
+                <div class="p-bar-number hidden" id = 'p-bar-number-high'>6</div>
+            </nav>
+            <button id="next-chapter" class="">Next Chapter</button>
     
-            <!-- Chapter Selector -->
-            <div class="chapter-selector">
-                <button class="btn btn-page"><i class="bi bi-chevron-left"></i></button>
-                <div class="position-relative w-100 dropdown-container">
-                    <label class="page-label" id = "chapter-label">Chapter</label>
-                    <select class="dropdown" name="chapter" id = "chapter-dropdown">
-                        <option value="1">Chapter 1</option>
-                        <option value="2">Chapter 2</option>
-                        <option value="3">Chapter 3</option>
-                        <option value="9">Chapter 9</option>
-                    </select>
-                </div>
-                <button class="btn btn-page"><i class="bi bi-chevron-right"></i></button>
+        </main>
+        <!-- class = "" -->
+        <aside id="rightSidebar" class="sticky close">
+            <div class="rightSidebar-header">
+                <button type="button" class="btn" id="close-btn" ><i class ="bi bi-x"></i></button>
+                <button type="button" class="btn" id="pin-btn"><i class="bi bi-pin"></i></button>
             </div>
+            <div class="rightSidebar-body">
+                <!-- Page Selector -->
+                <div class="page-selector">
+                    <button class="btn" id = "prevPageBtn"><i class="bi bi-chevron-left "></i></button>
+                    <div class="dropdown-container">
+                        <label class="page-label" id ="page-label">Page</label>
+                        <select class="dropdown" name="page" id ="page-dropdown">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
     
-            
-    
-            <!-- Report Chapter -->
-            <button class="btn"id = "report-btn">Report Chapter</button>
-
-            <hr>
-
-            <!-- Comments -->
-            <button class="btn" id = "comment-btn">
-                <i class="bi bi-chat-left"></i> 22 comments
-            </button>
-    
-            <!-- Uploaded By -->
-            <div class="mb-3" id = "uploader-info">
-                <p class="mb-1">Uploaded By</p>
-                <div class="d-flex align-items-center">
-                    <i class="bi bi-person"></i>
-                    <span class="ms-2">Rithar_scans</span>
+                        </select>
+                    </div>
+                    <button class="btn" id = "nextPageBtn"><i class="bi bi-chevron-right"></i></button>
                 </div>
-                <div class="d-flex align-items-center">
-                    <i class="bi bi-person"></i>
-                    <a href="#" class="ms-2 text-primary">Rithar</a>
+        
+                <!-- Chapter Selector -->
+                <div class="chapter-selector">
+                    <button class="btn btn-page"><i class="bi bi-chevron-left"></i></button>
+                    <div class="position-relative w-100 dropdown-container">
+                        <label class="page-label" id = "chapter-label">Chapter</label>
+                        <select class="dropdown" name="chapter" id = "chapter-dropdown">
+                            <option value="1">Chapter 1</option>
+                            <option value="2">Chapter 2</option>
+                            <option value="3">Chapter 3</option>
+                            <option value="9">Chapter 9</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-page"><i class="bi bi-chevron-right"></i></button>
                 </div>
-            </div>
+        
+                
+        
+                <!-- Report Chapter -->
+                <button class="btn"id = "report-btn">Report Chapter</button>
     
-            <hr>
+                <hr>
     
-            <!-- Reader Settings -->
-            <div id = "reader-settings">
-                <button class="btn reader-btn" id = "readMethod"><i class = "bi bi-files"></i> Long Strip</button>
-                <button  id="toggleFit" class="btn reader-btn"><i class="bi bi-arrows-fullscreen"></i> Fit Width</button>
-                <button class="btn reader-btn"><i class="bi bi-eye-slash"></i> Header Hidden</button>
-                <button class="btn reader-btn" id = "progress-setting"><i class="bi bi-list"></i> Normal Progress</button>
-                <button class="btn reader-btn"><i class="bi bi-gear"></i> Reader Settings</button>
-
+                <!-- Comments -->
+                <button class="btn" id = "comment-btn">
+                    <i class="bi bi-chat-left"></i> 22 comments
+                </button>
+        
+                <!-- Uploaded By -->
+                <div class="mb-3" id = "uploader-info">
+                    <p class="mb-1">Uploaded By</p>
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-person"></i>
+                        <span class="ms-2">Rithar_scans</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-person"></i>
+                        <a href="#" class="ms-2 text-primary">Rithar</a>
+                    </div>
+                </div>
+        
+                <hr>
+        
+                <!-- Reader Settings -->
+                <div id = "reader-settings">
+                    <button class="btn reader-btn" id = "readMethod"><i class = "bi bi-files"></i> Long Strip</button>
+                    <button  id="toggleFit" class="btn reader-btn"><i class="bi bi-arrows-fullscreen"></i> Fit Width</button>
+                    <button class="btn reader-btn"><i class="bi bi-eye-slash"></i> Header Hidden</button>
+                    <button class="btn reader-btn" id = "progress-setting"><i class="bi bi-list"></i> Normal Progress</button>
+                    <button class="btn reader-btn"><i class="bi bi-gear"></i> Reader Settings</button>
+    
+                </div>
+                
             </div>
-            
-        </div>
-    </aside>
+        </aside>
+    </div>
+    
 </body>
 <script src="../JS/mangaRead.js"></script>
 
