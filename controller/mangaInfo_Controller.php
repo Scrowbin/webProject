@@ -1,8 +1,14 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require('../db/mangaInfoPdo.php');
 
 $userID = $_SESSION['userID'] ?? null;
+$isLoggedIn = false;
+if ($userID !=null){
+    $isLoggedIn =true;
+}
 $mangaID = $_GET['MangaID'] ?? null;
 
 if (!$mangaID) {
@@ -19,18 +25,25 @@ $artistsRaw = getMangaArtists($mangaID);
 $tags = getTags($mangaID); 
 $chapters = getChapters($mangaID);
 
+$counts = getCommentCountsPerChapter($mangaID);
+$countsMap = [];
+foreach ($counts as $row) {
+    $countsMap[$row['ChapterID']] = $row['NumOfComments'];
+}
+var_dump($countsMap);
+
 // Group chapters by volume
 $grouped = [];
 foreach ($chapters as $chapter) {
     $vol = $chapter['Volume'];
+    $chapter['NumOfComments'] = $countsMap[$chapter['ChapterID']] ?? 0;
     $grouped[$vol][] = $chapter;
 }
 
-$hasRated = false;
+$userRating = 0;
 if ($userID) {
-    $hasRated = hasUserRatedManga($userID, $mangaID);
+    $userRating = getRating($userID, $mangaID);
 }
 
-echo json_encode(['rated' => $hasRated, 'loggedIn' => $userID !== null]);
 include('../PHP/mangaInfo.php');
 ?>
