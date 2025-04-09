@@ -6,10 +6,10 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-image: url('../');
-    background-position: right;
+    background-image: url('../IMG/loginBG.png');
+    background-position: center;
     background-repeat: no-repeat;
-    background-size: auto 100%;
+    background-size: cover;
 }
 
 .login-page {
@@ -31,9 +31,10 @@ body {
 #md-logo {
     width: 40px;
     height: 40px;
-    background: url('../IMG/loginBG.png') no-repeat center;
     background-size: contain;
     margin-right: 10px;
+    background-color: #ff6740;
+    border-radius: 5px;
 }
 
 #md-wordmark {

@@ -1,3 +1,7 @@
+<?php // require_once 'includes/db_config.php'; // Old path, session/db handled by navbar include now
+// No direct database operations needed here unless fetching specific homepage content
+// Ensure navbar.php (which includes db config and starts session) is included below
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

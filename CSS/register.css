@@ -113,3 +113,21 @@ a:hover {
     border-color: #FF6740 !important;
 }
 
+/* Custom styling for forgot password success notice */
+.forgot-password-notice {
+    background-color: #2a3f2a; /* Dark green-gray background */
+    color: #ffffff; /* White text */
+    border: none; /* Remove other borders */
+    border-top: 2px solid #4caf50; /* Thinner light green top border */
+    padding: 1rem;
+    border-radius: 0; /* Sharp corners */
+    font-size: 14px;
+    width: 100%; /* Ensure it takes full width */
+    box-sizing: border-box;
+}
+
+.forgot-password-notice .bi-check-circle-fill {
+    color: #aaa; /* Grey icon */
+    /* vertical-align: middle; Optional: adjust vertical alignment if needed */
+}
+
