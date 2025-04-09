@@ -4,10 +4,10 @@
     }
 
     require_once('pdo.php');
-    $isLoggedIn = isset($_SESSION['userID']);
+    // $isLoggedIn = isset($_SESSION['userID']); // This might be better handled in controller
 
     function getMangaInfo($mangaID){
-        $mangaInfo= pdo_query_one('select * from manga where mangaID = ?',$mangaID);
+        $mangaInfo= pdo_query_one('select * from manga where mangaID = ?', $mangaID);
         return $mangaInfo;
     }
     function getMangaAuthors($mangaID) {
@@ -22,7 +22,7 @@
                           WHERE manga_artist.mangaID = ?', $mangaID);
     }
     function getTags($mangaID){
-        $tags = pdo_query('SELECT tag.TagName FROM tag join manga_tag on tag.TagID = manga_tag.TagID where manga_tag.MangaID=?',$mangaID);
+        $tags = pdo_query('SELECT tag.TagName FROM tag join manga_tag on tag.TagID = manga_tag.TagID where manga_tag.MangaID=?', $mangaID);
         
         $tagNames = [];
         foreach ($tags as $tag) {
@@ -31,14 +31,16 @@
         return $tagNames;
     }
     function getChapters($mangaID){
-        $chapters = pdo_query('SELECT * FROM chapter Where MangaID =? ORDER BY ChapterNumber DESC',$mangaID);
+        $chapters = pdo_query('SELECT * FROM chapter Where MangaID =? ORDER BY ChapterNumber DESC', $mangaID);
         return $chapters;
     }
+    /* Remove duplicate function definition - defined in LibraryAndRating.php
     function getRating($userID,$mangaID){
-        $rating = pdo_query_one('SELECT Rating FROM rating where UserID = ? and MangaID = ?',$userID,$mangaID);
+        $rating = pdo_query_one('SELECT Rating FROM rating where UserID = ? and MangaID = ?', $userID, $mangaID);
         if ($rating==null) return 0;
         return $rating['Rating'];
     }
+    */
 
     function getCommentCountsPerChapter($mangaID){
         return pdo_query(
@@ -46,10 +48,31 @@
             $mangaID
         );
     }
-    function isBookmarked($mangaID, $userID) {
-        $sql = 'SELECT 1 FROM bookmark WHERE MangaID = ? AND UserID = ?';
-        $row = pdo_query_one($sql, $mangaID, $userID);
+    /* Remove duplicate function definition - defined in LibraryAndRating.php
+    function isBookmarked($userID, $mangaID) { // Swapped order for consistency
+        $sql = 'SELECT 1 FROM bookmark WHERE UserID = ? AND MangaID = ?'; // Corrected order
+        $row = pdo_query_one($sql, $userID, $mangaID); // Corrected order
         return !empty($row);
+    }
+    */
+    
+    // New function to get comprehensive details for homepage/featured display
+    function get_manga_details_for_homepage($mangaID) {
+        $mangaInfo = getMangaInfo($mangaID);
+        if (!$mangaInfo) {
+            return null;
+        }
+
+        $authors = getMangaAuthors($mangaID);
+        $artists = getMangaArtists($mangaID);
+        $tags = getTags($mangaID);
+
+        // Combine author/artist names into simple arrays of names
+        $mangaInfo['authors'] = $authors ? array_column($authors, 'AuthorName') : [];
+        $mangaInfo['artists'] = $artists ? array_column($artists, 'ArtistName') : [];
+        $mangaInfo['tags'] = $tags; // getTags already returns an array of names
+
+        return $mangaInfo;
     }
     
 ?>

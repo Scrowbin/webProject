@@ -31,32 +31,22 @@ $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
     <?php include 'includes/sidebar.php'; ?>
     <div class="container mt-3 ">
         <div class = "manga-container">
-            <div class="bg-image">
-                <style>
-                    .bg-image{
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        right: 0;
-                        bottom: 0;
-                        z-index: -1;
-
-                        background: linear-gradient(to right,  
-                        rgba(0, 0, 0, 0.7) 10%, 
-                        rgba(0, 0, 0, 0.45) 50%,   /* Midpoint transition */
-                        rgba(0, 0, 0, 0) 90%),   /* Fully transparent near the right */
-                        url("../IMG/<?=$mangaID?>/<?=$image?>");  /* Background image */    
-                        background-position: center 20%; 
-                        background-repeat: no-repeat;
-                        background-size: cover;
-                        filter: blur(2.5px);            
-                    }
-                </style>
+            <?php 
+                // Construct the background style string
+                $bgImageUrl = "/phpCode/webProject/IMG/{$mangaID}/{$image}"; // Use absolute path
+                $bgStyle = sprintf(
+                    'background: linear-gradient(to right, rgba(0, 0, 0, 0.7) 10%%, rgba(0, 0, 0, 0.45) 50%%, rgba(0, 0, 0, 0) 90%%), url("%s");', 
+                    htmlspecialchars($bgImageUrl) // Escape the URL for safety
+                );
+            ?>
+            <div class="bg-image" style="<?= $bgStyle ?>">
+                <?php /* Style block removed, styles are now in CSS/mangaInfo.css */ ?>
             </div>
             <div class="manga-card">
                 <!-- Left: Cover Image -->
                 <div class="manga-cover">
-                        <img src="../IMG/<?=$mangaID?>/<?=$image?>" alt="Manga Cover">
+                       <?php // Use absolute path for cover image too ?>
+                       <img src="/phpCode/webProject/IMG/<?= $mangaID ?>/<?= $image ?>" alt="Manga Cover">
                 </div>
         
                 <!-- Right: Details -->

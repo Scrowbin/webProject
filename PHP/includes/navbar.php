@@ -16,9 +16,8 @@ $user_avatar = 'IMG/avatar_default.png'; // Path relative to index.php
       <i class="bi bi-list fs-3"></i>
     </button>
     <?php // Link to index.php (homepage controller) ?>
-    <a class="navbar-brand text-white fw-bold d-flex align-items-center" href="index.php">
-       <?php // Corrected path for logo ?>
-       <img src="IMG/logo.png" alt="Logo" style="height: 30px; margin-right: 8px;"> 
+    <a class="navbar-brand text-white fw-bold d-flex align-items-center" href="/phpCode/webProject/index.php">
+       <img src="/phpCode/webProject/IMG/logo.png" alt="Logo" style="height: 30px; margin-right: 8px;"> 
        MangaDax
     </a>
     

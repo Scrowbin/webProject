@@ -5,26 +5,24 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Include necessary base files if needed
-// require_once __DIR__ . '/db/pdo.php';
+// Include necessary base files
+require_once __DIR__ . '/db/pdo.php'; 
+require_once __DIR__ . '/db/mangaInfoPdo.php'; // Contains get_manga_basic_info
 
-// --- Data Fetching for Homepage (Placeholder) ---
+// --- Data Fetching for Homepage ---
+$pdo = pdo_get_connection(); 
+$featuredManga = get_manga_details_for_homepage(1); // Use the new function to get all details
 
-// Example: Fetch popular new titles data
-// $popular_titles = get_popular_new_titles(); // Placeholder for a future model function
-
-// Example: Fetch latest updates data
-// $latest_updates = get_latest_updates(); // Placeholder for a future model function
-
-// --- Prepare View Data (Placeholder) ---
-
-// $viewData = [
-//     'popular_titles' => $popular_titles ?? [],
-//     'latest_updates' => $latest_updates ?? [],
-//     'page_title' => 'MangaDax Home'
-// ];
+// --- Prepare View Data (Example, you might pass more) ---
+$viewData = [
+    'featuredManga' => $featuredManga ?? null // Pass featured manga to the view
+];
 
 // --- Include the Homepage View ---
+// Make viewData available to the included file
+if (isset($viewData)) {
+    extract($viewData);
+}
 include __DIR__ . '/PHP/homepage.php';
 
 ?>
