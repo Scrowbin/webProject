@@ -67,11 +67,25 @@ a{
     display: flex;
     flex-direction: column;
 
-    color: rgb(255, 255, 255);
+    color: rgb(201, 201, 201);
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
 }
-
-
+.dropdown-item.active {
+    background-color: #c9c9c9 !important;
+    color: white!important;
+  }
+.dropdown-item:active {
+    background-color: #c9c9c9 !important; /* Same as your active style */
+    color: white !important;
+}
+  
+.dropdown-item:hover {
+    background-color: #c9c9c9;
+    color: black;
+  }
+.no-caret::after {
+    display: none !important;
+}
 
 .chapter-container {
     display: flex;

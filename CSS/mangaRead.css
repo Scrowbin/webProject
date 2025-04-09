@@ -5,14 +5,34 @@
     margin-bottom: 2px;
 }
 
-body{
-    background-color: #ffffff;
-}
 html{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.5rem;
 }
-
+.layout {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "header header"
+      "main aside";
+    height: 100%; 
+  }
+  header {
+      grid-area: header header ;
+      width: 100%;
+      padding: 10px;
+      position: sticky;
+    }
+    
+    main {
+      grid-area: main;
+      background: #ffffff;;
+    }
+    
+    aside {
+      grid-area:aside;
+    }
 /* evil floating menu */
 #menu-sticky {
     width: 50px;
@@ -244,6 +264,11 @@ img:hover{
 /*  */
 /* Manga Container */
 /*  */
+.mangaInfo{
+    text-decoration: none !important; 
+    color: inherit !important;
+}
+
 #page-container{
     display: flex;
     flex-direction: column;
@@ -331,28 +356,3 @@ img:hover{
     cursor: pointer;
 }
 .hidden { display: none; }
-.layout {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-rows: auto 1fr;
-  grid-template-areas:
-    "header header"
-    "main aside";
-  height: 100vh; /* 👈 This limits the scrollable height */
-}
-header {
-    grid-area: header;
-    width: 100%;
-    padding: 10px;
-    /* position: sticky; */
-  }
-  
-  main {
-    grid-area: main;
-    background: #eee;
-  }
-  
-  aside {
-    grid-area: aside;
-    background: #ddd;
-  }

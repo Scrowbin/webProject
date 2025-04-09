@@ -291,8 +291,10 @@ document.addEventListener("DOMContentLoaded", () => {
             // if (isVisible || isPast) {
             if (isVisible || isPast) {
               // Same color for both entering and passing
-              target.style.backgroundColor = litUpColor;
-              target.style.color = "white";
+              for (i = 0; i<=index; i++){
+                bottomButtons[i].style.backgroundColor = litUpColor;
+                bottomButtons[i].style.color = "white";
+              }
               if (currentIndex<index){
                 pageDropdown.value = index +1;
                 
@@ -302,14 +304,16 @@ document.addEventListener("DOMContentLoaded", () => {
               }
             } else {
               // Reset when neither in view nor past
-              target.style.backgroundColor = originalColor;
-              target.style.color = 'black';
+              
               if (index<=currentIndex){
                 pageDropdown.value = index;
                 currentIndex = index-1;
                 barNumberLow.innerHTML = (currentIndex + 1).toString();
-
               }
+              for (i = images.length-1; i>=index; i--){
+                bottomButtons[i].style.backgroundColor = originalColor;
+                bottomButtons[i].style.color = 'black';
+                }
             }
           });
         });
