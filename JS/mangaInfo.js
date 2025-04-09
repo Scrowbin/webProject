@@ -23,64 +23,52 @@ seeMoreBtn.addEventListener('click', function() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-const form = document.getElementById('rating-form');
-const isLoggedIn = form.dataset.loggedIn === "true";
-const toastElement = document.getElementById('loginToast');
-const toast = new bootstrap.Toast(toastElement);
+    let ratingForm = document.getElementById('rating-form');
+    let addForm = document.getElementById('add-form');
+    let isLoggedIn = ratingForm?.dataset.loggedIn === "true"; // Safely access logged-in flag
+    let toastElement = document.getElementById('loginToast');
+    let toast = new bootstrap.Toast(toastElement);
 
-document.querySelectorAll('.dropdown-item').forEach(item => {
-    item.addEventListener('click', function (e) {
-        e.preventDefault();
+    // Handle rating dropdown
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+        item.addEventListener('click', function (e) {
+            e.preventDefault();
 
-        if (!isLoggedIn) {
-            toast.show(); // Show toast if not logged in
-            return;
-        }
+            if (!isLoggedIn) {
+                toast.show(); // Show toast if not logged in
+                return;
+            }
 
-        // Set rating value in hidden input
-        const ratingValue = this.dataset.value;
-        document.getElementById('rating-input').value = ratingValue;
+            // Set rating value in hidden input
+            const ratingValue = this.dataset.value;
+            document.getElementById('rating-input').value = ratingValue;
 
-        // Optional: update button text (UI feedback)
-        const label = this.textContent.trim();
-        document.querySelector('.dropdown button span').textContent = label;
+            // Optional: update button text
+            const label = this.textContent.trim();
+            document.querySelector('.dropdown button span').textContent = label;
 
-        form.submit();
+            ratingForm.submit();
+        });
     });
-});
 
-// Redundant, but safe fallback in case the form is submitted some other way
-form.addEventListener('submit', function (e) {
-    if (!isLoggedIn) {
-        e.preventDefault();
-        toast.show();
+    // Prevent rating form submission if not logged in
+    if (ratingForm) {
+        ratingForm.addEventListener('submit', function (e) {
+            if (!isLoggedIn) {
+                e.preventDefault();
+                toast.show();
+            }
+        });
     }
-    });
-});
 
-document.addEventListener('DOMContentLoaded', () => {
-const form = document.getElementById('add-form');
-const isLoggedIn = form.dataset.loggedIn === "true";
-const toastElement = document.getElementById('loginToast');
-const toast = new bootstrap.Toast(toastElement);
-
-document.querySelectorAll('.dropdown-item').forEach(item => {
-    item.addEventListener('click', function (e) {
-        e.preventDefault();
-
-        if (!isLoggedIn) {
-            toast.show(); // Show toast if not logged in
-            return;
-        }
-        form.submit();
-    });
-});
-
-// Redundant, but safe fallback in case the form is submitted some other way
-form.addEventListener('submit', function (e) {
-    if (!isLoggedIn) {
-        e.preventDefault();
-        toast.show();
+    // Prevent add-form submission if not logged in
+    if (addForm) {
+        addForm.addEventListener('submit', function (e) {
+            if (!isLoggedIn) {
+                e.preventDefault();
+                toast.show();
+            }
+        });
     }
-    });
+
 });

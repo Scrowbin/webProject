@@ -5,15 +5,23 @@ if (session_status() === PHP_SESSION_NONE) {
 require('../db/mangaInfoPdo.php');
 
 $userID = $_SESSION['userID'] ?? null;
+$username = $_SESSION['username'] ?? null;
 $isLoggedIn = false;
-if ($userID !=null){
+if ($userID !=null || $username!= null){
     $isLoggedIn =true;
 }
+
+
+
 $mangaID = $_GET['MangaID'] ?? null;
 
 if (!$mangaID) {
     die("Missing MangaID.");
 }
+
+if ($userID && $mangaID)
+$isBookmarked = isBookmarked($mangaID,$userID);
+else $isBookmarked = false;
 
 $mangaInfo = getMangaInfo($mangaID);
 if (!$mangaInfo) {
@@ -30,7 +38,6 @@ $countsMap = [];
 foreach ($counts as $row) {
     $countsMap[$row['ChapterID']] = $row['NumOfComments'];
 }
-var_dump($countsMap);
 
 // Group chapters by volume
 $grouped = [];

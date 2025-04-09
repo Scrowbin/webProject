@@ -1,6 +1,7 @@
 <?php
     require_once('helper.php');
     //Chapter info
+    $chapterID = $_GET['chapterID'] ?? null;
     $chapterName = $chapterInfo['ChapterName'];
     $chapterVolume = truncateNumber($chapterInfo['Volume']);
     $chapterNumber = truncateNumber($chapterInfo['ChapterNumber']);
@@ -77,7 +78,7 @@
                     
                     for($i=0;$i<count($pages);$i++){
                         ?>
-                        <img src="../IMG/<?=$pageLinks[$i]?>" class="img-fit-width" id="page-<?=$i+1?>" alt="Page <?=$i+1?>">
+                        <img src="../IMG/<?=$mangaID?>/<?=$chapterID?>/<?=$pageLinks[$i]?>" class="img-fit-width" id="page-<?=$i+1?>" alt="Page <?=$i+1?>">
                         <?php        
                     }
                     ?>    
@@ -94,7 +95,13 @@
                 ?>
                 <div class="p-bar-number hidden" id = 'p-bar-number-high'><?=$lastPageNumber?></div>
             </nav>
-            <button id="next-chapter" class="">Next Chapter</button>
+            <?php
+                if ($nextChapterID) {
+                    echo "<button id='next-chapter' onclick=\"location.href='mangaRead_Controller.php?chapterID=$nextChapterID'\">Next Chapter</button>";
+                } else {
+                    echo "<button id='next-chapter' onclick=\"location.href='mangaInfo_Controller.php?MangaID=$mangaID'\">Back to Info</button>";
+                }
+            ?>
     
         </main>
         <!-- class = "" -->
@@ -125,20 +132,22 @@
         
                 <!-- Chapter Selector -->
                 <div class="chapter-selector">
-                    <button class="btn btn-page"><i class="bi bi-chevron-left"></i></button>
+                    <button class='btn btn-page' id='prevCh-btn'><i class='bi bi-chevron-left'></i></button>
                     <div class="position-relative w-100 dropdown-container">
-                        <label class="page-label" id = "chapter-label">Chapter</label>
+                        <label class="page-label" id="chapter-label">Chapter</label>
                         <select class="dropdown" name="chapter" id="chapter-dropdown">
                             <?php
-                                $defaultChapter = $chapterNumber; 
-                                foreach ($chapterDropdownValues as $val) {
-                                    $selected = ($val == $defaultChapter) ? 'selected' : '';
-                                    echo "<option value=\"$val\" $selected>$val</option>";
-                                }
+                            foreach ($chapters as $chapter) {
+                                $val = $chapter['ChapterID'];
+                                $display = truncateNumber($chapter['ChapterNumber']);
+                                $selected = ($val == $chapterID) ? 'selected' : '';
+                                echo "<option value=\"$val\" $selected>Chapter $display</option>";
+                            }
                             ?>
                         </select>
                     </div>
-                    <button class="btn btn-page"><i class="bi bi-chevron-right"></i></button>
+                    <button class='btn btn-page' id='nextCh-btn'><i class='bi bi-chevron-right'></i></button>
+                    
                 </div>
         
                 
@@ -149,10 +158,13 @@
                 <hr>
     
                 <!-- Comments -->
-                <button class="btn" id = "comment-btn">
-                    <i class="bi bi-chat-left"></i> 22 comments
-                </button>
-        
+                <a href="commentSection.php?commentSectionID=<?=$commentSection['CommentSectionID']?>">
+                    <button class="btn" id = "comment-btn">
+                        <i class="bi bi-chat-left"></i> <?=$commentSection['NumOfComments']?> Comments
+                    </button>
+                </a>
+                
+                
                 <!-- Uploaded By -->
                 <div class="mb-3" id = "uploader-info">
                     <p class="mb-1">Uploaded By</p>
@@ -183,6 +195,10 @@
     </div>
     
 </body>
+<script>
+    const mangaID = <?= json_encode($mangaID) ?>;
+    const prevChapterID = <?= json_encode($prevChapterID) ?>;
+    const nextChapterID = <?= json_encode($nextChapterID) ?>;
+</script>
 <script src="../JS/mangaRead.js"></script>
-
 </html>

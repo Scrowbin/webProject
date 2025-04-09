@@ -46,5 +46,10 @@
             $mangaID
         );
     }
-
+    function isBookmarked($mangaID, $userID) {
+        $sql = 'SELECT 1 FROM bookmark WHERE MangaID = ? AND UserID = ?';
+        $row = pdo_query_one($sql, $mangaID, $userID);
+        return !empty($row);
+    }
+    
 ?>

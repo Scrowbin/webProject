@@ -11,6 +11,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const pageDropdown = document.getElementById("page-dropdown")
     const progressBar = document.getElementById("progress-bar")
     const nextChapter = document.getElementById("next-chapter")
+    const nextChButton = document.getElementById("nextCh-btn");
+    const prevChButton = document.getElementById("prevCh-btn");
+
     let currentIndex= 0;
     let  isInLongStrip = true; // default is inlongstrip
     const barNumberLow = document.getElementById("p-bar-number-low");
@@ -77,6 +80,18 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         updateToggleButton();
     });
+
+    //
+    //chapter dropdwown change redirect
+    //
+    document.getElementById("chapter-dropdown").addEventListener("change", function () {
+        const selectedChapterID = this.value;
+        const url = new URL(window.location.href);
+        url.searchParams.set("chapterID", selectedChapterID);
+        window.location.href = url.toString();
+    });
+
+
     // 
     // readMode
     // 
@@ -115,7 +130,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     // functions to show the pages
     function showImage(goToPage){
-        if (goToPage<0 ||goToPage+1>images.length) return;
+        if (goToPage < 0) {
+            if (prevChapterID)
+                window.location.href = "mangaRead_Controller.php?chapterID=" + prevChapterID;
+            else 
+                window.location.href = "mangaInfo_Controller.php?MangaID=" + mangaID;
+            return;
+        } else if (goToPage >= images.length) {
+            if (nextChapterID)
+                window.location.href = "mangaRead_Controller.php?chapterID=" + nextChapterID;
+            else 
+                window.location.href = "mangaInfo_Controller.php?MangaID=" + mangaID;
+            return;
+        }
+    
         if (isInLongStrip){
             
         }else{
@@ -131,7 +159,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     //
     //  adding event listeners
-    //  
+    //
+    
+    nextChButton.addEventListener('click',()=>showImage(images.length));
+    prevChButton.addEventListener('click',()=>showImage(-1));
+
     // add each teleport to each image
     images.forEach((img, index) => {
         img.addEventListener("click", function(event) {
@@ -139,11 +171,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const imgWidth = img.clientWidth; // Image width
         
             if (clickX < imgWidth / 2) {
-                if (index > 0) { // Ensure we don't go below 0
+                if (index >= 0) { // Ensure we don't go below 0
                     showImage(currentIndex-1);
                 }
             } else {
-                if (index < images.length - 1) { // Ensure it's not the last image
+                if (index <= images.length - 1) { // Ensure it's not the last image
                     showImage(currentIndex+1);
                 }
             }    

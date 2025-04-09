@@ -1,16 +1,23 @@
 <?php
 session_start();
-require_once('../db/mangaInfoPdo.php');
+require_once('../db/LibraryAndRating.php');
 if (!isset($_SESSION['userID'])) {
-    die("User not logged in");
+    $userID = getUserID($_SESSION['username']);
+    if ($userID==null)
+        die("User not logged in");    
+    $_SESSION['userID'] = $userID;
+    
 }
 
 $userID = $_SESSION['userID'];
 $mangaID = $_POST['mangaID'] ?? null;
 
 if ($mangaID) {
-    // addToLibrary($userID, $mangaID);
-    header("Location: mangaInfo.php?MangaID=$mangaID");
+    if (!isBookmarked($mangaID,$userID))
+        addToLibrary($mangaID,$userID);
+    else    
+        removeBookmark($mangaID,$userID);
+    header("Location: ../controller/mangaInfo_Controller.php?MangaID=$mangaID");
     exit;
 } else {
     die("Invalid request");

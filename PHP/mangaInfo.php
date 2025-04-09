@@ -32,11 +32,31 @@ $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
     <div class="container mt-3 ">
         <div class = "manga-container">
             <div class="bg-image">
+                <style>
+                    .bg-image{
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        z-index: -1;
+
+                        background: linear-gradient(to right,  
+                        rgba(0, 0, 0, 0.7) 10%, 
+                        rgba(0, 0, 0, 0.45) 50%,   /* Midpoint transition */
+                        rgba(0, 0, 0, 0) 90%),   /* Fully transparent near the right */
+                        url("../IMG/<?=$mangaID?>/<?=$image?>");  /* Background image */    
+                        background-position: center 20%; 
+                        background-repeat: no-repeat;
+                        background-size: cover;
+                        filter: blur(2.5px);            
+                    }
+                </style>
             </div>
             <div class="manga-card">
                 <!-- Left: Cover Image -->
                 <div class="manga-cover">
-                        <img src="../IMG/<?=$image?>" alt="Manga Cover">
+                        <img src="../IMG/<?=$mangaID?>/<?=$image?>" alt="Manga Cover">
                 </div>
         
                 <!-- Right: Details -->
@@ -63,13 +83,23 @@ $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
         <div class="d-flex align-items-center gap-2 flex-wrap">
             <!-- Add to Library -->
             <div class="btn-wrapper">
-                <form method="POST" action="../controller/addToLibrary.php" class="m-0" id = "add-form" data-logged-in="<?= $isLoggedIn ? 'true' : 'false' ?>">
-                    <input type="hidden" name="mangaID" value="<?=$mangaID?>">
-                    <button type="submit" class="btn btn-orange d-flex align-items-center">
-                        <i class="bi bi-bookmark me-2"></i>
-                        <span class="d-none d-md-inline">Add To Library</span>
-                    </button>
-                </form>
+                <?php if (!$isBookmarked): ?>
+                    <form method="POST" action="../controller/addToLibrary.php" class="m-0" id="add-form" data-logged-in="<?= $isLoggedIn ? 'true' : 'false' ?>">
+                        <input type="hidden" name="mangaID" value="<?= $mangaID ?>">
+                        <button type="submit" class="btn btn-orange d-flex align-items-center">
+                            <i class="bi bi-bookmark me-2"></i>
+                            <span class="d-none d-md-inline">Add To Library</span>
+                        </button>
+                    </form>
+                <?php else: ?>
+                    <form method="POST" action="../controller/addToLibrary.php" class="m-0" id="add-form" data-logged-in="<?= $isLoggedIn ? 'true' : 'false' ?>">
+                        <input type="hidden" name="mangaID" value="<?= $mangaID ?>">
+                        <button type="submit" class="btn btn-orange d-flex align-items-center">
+                            <i class="bi bi-check2 me-2"></i>
+                            <span class="d-none d-md-inline">Added to Library</span>
+                        </button>
+                    </form>
+                <?php endif; ?>
             </div>
 
             <!-- Rate -->
@@ -78,13 +108,13 @@ $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
                     <input type="hidden" name="rating" id="rating-input" value="">
                     <input type="hidden" name="mangaID" value="<?= $mangaID ?>">
                     <div class="dropdown">
-                        <button class="btn btn-outline-secondary d-flex align-items-center justify-content-center no-caret" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn btn-orange d-flex align-items-center justify-content-center no-caret" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-star me-2"></i>
                             <?php
                             if ($userRating === 0) {
                                 echo "<span class='d-none d-md-inline'>Rate</span>";
                             }
-                            else echo "<span class='d-none d-md-inline'>$userRating</span>";
+                            else echo "<span class='d-none d-md-inline'>($userRating)</span>";
                             ?>
                             
                         </button>
@@ -100,7 +130,7 @@ $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
                                 echo "<li><a class='dropdown-item' href='#' data-value='$val'>($val) $label</a></li>";
                             }
 
-                            if ($userRating === 0) {
+                            if ($userRating != 0) {
                                 echo "<li><a class='dropdown-item' href='#' data-value='0'>Remove Rating</a></li>";
                             }
                             ?>
@@ -214,7 +244,7 @@ $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
                                 <img class="icon" src="../IMG/eye.svg">
                                 <strong>N/A</strong>
                             </span>
-                            <a href="commentSection.php?=<?=$chapters['CommentSectionID']?>" class="comments"> 
+                            <a href="commentSectionID.php?=<?=$chapters['CommentSectionID']?>" class="comments"> 
                             <!-- <a href="#" class="comments"> -->
                                 <img src="../IMG/comment.svg" alt="">
                                 <strong><?=$chapters['NumOfComments']?></strong>
