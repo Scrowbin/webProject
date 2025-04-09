@@ -1,34 +1,15 @@
 <?php
-// require_once 'includes/db_config.php'; // Old path
-require_once __DIR__ . '/../db/account_db.php'; // Includes db_config and $pdo
-require_once __DIR__ . '/../db/account_db.php'; // Include the new account functions
+// Include the controller and call the handler function
+require_once __DIR__ . '/../controller/auth_controller.php';
 
-$message = '';
-$message_type = 'danger'; // Default to error
-$token = $_GET['token'] ?? '';
+// The handleActivate function returns message data for the view.
+$viewData = handleActivate();
 
-if (empty($token)) {
-    $message = 'Activation token is missing.';
-} else {
-    // Use the new function to find the user by token
-    $user = account_find_by_token($pdo, $token);
+// Extract variables for easier access in the view
+$message = $viewData['message'];
+$message_type = $viewData['message_type'];
 
-    if (!$user) {
-        $message = 'Invalid or expired activation token.';
-    } elseif ($user['activated']) {
-        $message = 'Account already activated.';
-        $message_type = 'warning';
-    } else {
-        // Use the new function to activate the account
-        if (account_activate($pdo, $token)) {
-            $message = 'Account successfully activated! You can now log in.';
-            $message_type = 'success';
-        } else {
-            $message = 'Failed to activate account. Please try again or contact support.';
-            // Keep $message_type as default 'danger'
-        }
-    }
-}
+// --- The rest of the file is the View ---
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -36,28 +17,27 @@ if (empty($token)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Activation</title>
-    <link rel="icon" href="favicon.ico">
+    <link rel="icon" href="../IMG/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../CSS/login.css"> <!-- Reuse login CSS or create a specific one -->
+    <link rel="stylesheet" href="../CSS/register.css"> <!-- Reuse styling -->
     <style>
-        /* Minimal styling for activation page */
         body { background-color: #f8f9fa; }
-        .activation-container { max-width: 500px; margin: 50px auto; padding: 30px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; }
-        .logo-container span { color: #ff6740; /* Example color */ font-size: 1.8rem; font-weight: bold; }
+        .activation-container { max-width: 500px; margin: 50px auto; padding: 30px; background-color: #1F2229; /* Match form bg */ border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; border-top: 2px solid #FF6740; /* Match form border */}
+        /* Use CSS from register.css for logo */
     </style>
 </head>
 <body>
     <div class="container activation-container">
-        <div class="page-header text-center py-4">
+        <div class="page-header text-center py-4 mb-4">
             <a href="homepage.php" rel="nofollow">
                 <div class="logo-container d-flex align-items-center justify-content-center">
-                    <!-- You might want a logo here -->
+                    <img src="../IMG/logo.png" alt="MangaDax Logo" style="height: 40px; margin-right: 10px;">
                     <span id="md-wordmark">MangaDax</span>
                 </div>
             </a>
         </div>
 
-        <h2 class="mb-4">Account Activation</h2>
+        <h2 class="mb-4 text-white">Account Activation</h2>
 
         <?php if (!empty($message)): ?>
             <div class="alert alert-<?php echo htmlspecialchars($message_type); ?>" role="alert">

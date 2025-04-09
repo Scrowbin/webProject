@@ -2,7 +2,7 @@
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root'); // Default XAMPP username
 define('DB_PASS', '');    // Default XAMPP password
-define('DB_NAME', 'mangadaxlogin');
+define('DB_NAME', 'manga');
 define('DB_CHARSET', 'utf8mb4');
 
 

@@ -1,81 +1,16 @@
 <?php
-// require_once 'includes/db_config.php'; // Old path
-require_once __DIR__ . '/../db/account_db.php'; // Includes db_config and $pdo
-require_once __DIR__ . '/../db/account_db.php'; // Include the new account functions
+// Include the controller and call the handler function
+require_once __DIR__ . '/../controller/auth_controller.php';
 
-// Check for success message from forgot password page
-$forgot_password_success = null;
-if (isset($_SESSION['forgot_password_message'])) {
-    $forgot_password_success = $_SESSION['forgot_password_message'];
-    unset($_SESSION['forgot_password_message']); // Clear the message after displaying it once
-}
+// The handleLogin function will either redirect (on success/already logged in)
+// or return data needed for the view.
+$viewData = handleLogin();
 
-// Redirect if already logged in
-if (isset($_SESSION['username'])) {
-    header('Location: homepage.php');
-    exit;
-}
+// Extract variables for easier access in the view
+$errors = $viewData['errors'];
+$forgot_password_success = $viewData['forgot_password_success'];
 
-$errors = [];
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
-    $usernameOrEmail = trim($_POST['username'] ?? '');
-    $password = $_POST['password'] ?? '';
-    // $rememberMe = isset($_POST['rememberMe']); // Handle later if implementing remember me
-
-    // Basic validation
-    if (empty($usernameOrEmail)) {
-        $errors['credentials'] = 'Please enter username or email.';
-    } elseif (empty($password)) {
-        $errors['credentials'] = 'Please enter password.';
-    }
-
-    if (empty($errors)) {
-        // Use the new function to find the user
-        $user = account_find_by_username_or_email($pdo, $usernameOrEmail);
-
-        if ($user) {
-            // Verify password
-            if (password_verify($password, $user['password'])) {
-                // Check if account is activated
-                if ($user['activated']) {
-                    // Login successful
-                    $_SESSION['username'] = $user['username'];
-                    // Regenerate session ID for security
-                    session_regenerate_id(true);
-
-                    // Handle "Remember Me" - Simple example using cookies (needs more robust implementation for production)
-                    /*
-                    if ($rememberMe) {
-                        $cookie_name = 'remember_user';
-                        $cookie_value = base64_encode($user['username']); // Basic encoding
-                        $expiry = time() + (86400 * 30); // 30 days
-                        setcookie($cookie_name, $cookie_value, $expiry, "/"); // Set cookie for the whole domain
-                    } else {
-                        // Clear cookie if exists
-                        if (isset($_COOKIE['remember_user'])) {
-                            setcookie('remember_user', '', time() - 3600, "/");
-                        }
-                    }
-                    */
-
-                    header('Location: homepage.php');
-                    exit;
-                } else {
-                    $errors['credentials'] = 'Account not activated. Please check your email.';
-                }
-            } else {
-                // Invalid password
-                $errors['credentials'] = 'Invalid username/email or password.';
-            }
-        } else {
-            // User not found or DB error in function
-            // The function logs errors, so just show generic message
-            $errors['credentials'] = 'Invalid username/email or password.';
-        }
-    }
-}
-
+// --- The rest of the file is the View ---
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -111,37 +46,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
                 </div>
             <?php endif; ?>
 
-            <?php if (!empty($errors)):
-                // commented out original error div
-                /*
-                <div class="alert alert-danger mb-3">
-                    <?php 
-                        // Display the first error found
-                        echo htmlspecialchars(reset($errors)); 
-                    ?>
-                </div>
-                */
-            ?>
+            <?php /* Display login errors using custom style */ ?>
+            <?php if (!empty($errors)): ?>
+                <?php /* Note: error message div is now inside the form below password field */ ?>
             <?php endif; ?>
 
             <div class="form-content">
-                <form novalidate /* removed onsubmit="return validInput()" */ class="login-form" action="login.php" method="post">
+                 <?php // Point form action to the current file (which includes the controller) ?>
+                <form novalidate class="login-form" action="login.php" method="post">
                     <!-- username-->
                     <div class="mb-3">
                         <label for="username" class="form-label">Username or email</label>
+                        <?php // Add error class and retain value ?>
                         <input tabindex="1" id="username" class="form-control form-input <?php echo !empty($errors) ? 'input-error' : ''; ?>" name="username" type="text" autofocus autocomplete="off" value="<?php echo isset($_POST['username']) ? htmlspecialchars($_POST['username']) : ''; ?>">
-                        <!-- Removed client-side validation div -->
                     </div>
 
                     <!-- password -->
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
+                         <?php // Add error class ?>
                         <input tabindex="2" id="password" class="form-control form-input <?php echo !empty($errors) ? 'input-error' : ''; ?>" name="password" type="password" autocomplete="off">
-                         <!-- Add PHP error message display here -->
+                        <?php // Display error message using custom style ?>
                         <div class="error-message <?php echo !empty($errors) ? 'active' : ''; ?>" id="login-error" style="margin-top: 4px;">
-                            <?php 
+                            <?php
                             if (!empty($errors)) {
-                                echo htmlspecialchars(reset($errors)); // Display the first error found
+                                echo htmlspecialchars(reset($errors)); // Display the first error
                             }
                             ?>
                         </div>
@@ -169,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
 
                 <!-- register -->
                 <div class="text-center mt-3 signup-link">
-                    <span>New user? <a tabindex="6" href="../PHP/register.php">Register</a></span>
+                    <span>New user? <a tabindex="6" href="register.php">Register</a></span>
                 </div>
             </div>
         </div>
