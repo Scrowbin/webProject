@@ -1,6 +1,4 @@
-<?php // require_once 'includes/db_config.php'; // Old path, session/db handled by navbar include now
-// No direct database operations needed here unless fetching specific homepage content
-// Ensure navbar.php (which includes db config and starts session) is included below
+<?php 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,8 +10,9 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-  <link rel="stylesheet" href="../CSS/navbar.css"> <!-- Navbar/Sidebar CSS -->
-  <link rel="stylesheet" href="../CSS/home.css" />
+  <?php /* Corrected CSS paths relative to index.php */ ?>
+  <link rel="stylesheet" href="CSS/navbar.css"> 
+  <link rel="stylesheet" href="CSS/home.css" />
 </head>
 <body>
   <?php include 'includes/navbar.php'; ?>
@@ -34,12 +33,13 @@
         <div class="carousel-inner">
           <!-- Slide 1 (Original Item) -->
           <div class="carousel-item active">
-             <!-- data-bg-src still needed for dynamic background on the section -->
-            <div class="featured-manga" data-bg-src="../IMG/cover1.png">
+             <?php /* Corrected image path relative to index.php */ ?>
+            <div class="featured-manga" data-bg-src="IMG/cover1.png">
               <div class="background-overlay"></div>
               <div class="featured-manga-content row g-0">
                 <div class="col-md-3 featured-cover-col">
-                  <img src="../IMG/cover1.png" alt="Featured Manga Cover 1" class="img-fluid rounded featured-cover">
+                  <?php /* Corrected image path relative to index.php */ ?>
+                  <img src="IMG/cover1.png" alt="Featured Manga Cover 1" class="img-fluid rounded featured-cover">
                   <img class="flag flag-featured" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
                 </div>
                 <div class="col-md-9 featured-details">
@@ -79,13 +79,13 @@
 
           <!-- Slide 2 (Update content/images) -->
           <div class="carousel-item">
-             <!-- Use the cover image as background, or specify a different one if available -->
-            <div class="featured-manga" data-bg-src="../IMG/cover2.jpg">
+             <?php /* Corrected image path relative to index.php */ ?>
+            <div class="featured-manga" data-bg-src="IMG/cover2.jpg">
               <div class="background-overlay"></div>
               <div class="featured-manga-content row g-0">
                 <div class="col-md-3 featured-cover-col">
-                  <!-- Use the .512.jpg version for the cover -->
-                  <img src="../IMG/cover2.jpg" alt="Akuyaku Reijou no Oyome-sama Cover" class="img-fluid rounded featured-cover">
+                  <?php /* Corrected image path relative to index.php */ ?>
+                  <img src="IMG/cover2.jpg" alt="Akuyaku Reijou no Oyome-sama Cover" class="img-fluid rounded featured-cover">
                   <img class="flag flag-featured" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
                 </div>
                 <div class="col-md-9 featured-details d-flex flex-column"> <!-- Make this a flex column -->
@@ -126,10 +126,12 @@
 
           <!-- Slide 3 (Update content/images) -->
           <div class="carousel-item">
+            <?php /* Using placeholder, path would be IMG/ if it existed */ ?>
             <div class="featured-manga" data-bg-src="https://placehold.co/1200x450/444/ccc?text=Slide+3+BG">
               <div class="background-overlay"></div>
               <div class="featured-manga-content row g-0">
                 <div class="col-md-3 featured-cover-col">
+                   <?php /* Using placeholder, path would be IMG/ if it existed */ ?>
                   <img src="https://placehold.co/250x350/1e1e1e/cccccc?text=Featured+3" alt="Featured Manga Cover 3" class="img-fluid rounded featured-cover">
                   <img class="flag flag-featured" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
                 </div>
@@ -166,10 +168,12 @@
 
           <!-- Slide 4 (Update content/images) -->
           <div class="carousel-item">
+             <?php /* Using placeholder, path would be IMG/ if it existed */ ?>
             <div class="featured-manga" data-bg-src="https://placehold.co/1200x450/555/ccc?text=Slide+4+BG">
               <div class="background-overlay"></div>
               <div class="featured-manga-content row g-0">
                 <div class="col-md-3 featured-cover-col">
+                   <?php /* Using placeholder, path would be IMG/ if it existed */ ?>
                   <img src="https://placehold.co/250x350/1e1e1e/cccccc?text=Featured+4" alt="Featured Manga Cover 4" class="img-fluid rounded featured-cover">
                   <img class="flag flag-featured" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
                 </div>
@@ -225,6 +229,7 @@
         <div class="latest-updates-column">
           <!-- Item 1 -->
           <a href="#" class="latest-item">
+             <?php /* Placeholders, paths would be IMG/ if exist */ ?>
             <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
             <div class="latest-details">
               <div class="latest-title">Sono Bisque Doll wa Koi o Suru</div>
@@ -235,6 +240,7 @@
           </a>
           <!-- Item 2 -->
           <a href="#" class="latest-item">
+             <?php /* Placeholders, paths would be IMG/ if exist */ ?>
             <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
             <div class="latest-details">
               <div class="latest-title">Hyakumanjou Labyrinth</div>
@@ -245,6 +251,7 @@
           </a>
           <!-- Item 3 -->
           <a href="#" class="latest-item">
+             <?php /* Placeholders, paths would be IMG/ if exist */ ?>
             <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
             <div class="latest-details">
               <div class="latest-title">Albus Changes the World</div>
@@ -255,6 +262,7 @@
           </a>
           <!-- Item 4 -->
           <a href="#" class="latest-item">
+             <?php /* Placeholders, paths would be IMG/ if exist */ ?>
             <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
             <div class="latest-details">
               <div class="latest-title">I Became the Genius Bastard of a Noble Dark Clan</div>
@@ -1358,17 +1366,11 @@ Despite her noble status, Brigitte contracts with the weakest type of spirit—a
     </section>
   </main>
 
-  <!-- User Modal -->
-  <!-- REMOVED - Moved to includes/navbar.php -->
-  <!-- <div class="modal fade" id="user-modal" ...>
-    ... modal content ... 
-  </div> -->
-
-  <!-- Scripts -->
+  <!-- Bootstrap JS, Swiper JS, Custom JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Swiper JS -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <script src="../JS/navbar.js"></script> <!-- Navbar/Sidebar JS -->
-  <script src="../JS/home.js"></script>
+  <?php /* Corrected JS paths relative to index.php */ ?>
+  <script src="JS/navbar.js"></script> 
+  <script src="JS/home.js"></script>
 </body>
 </html>

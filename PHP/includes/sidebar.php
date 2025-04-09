@@ -1,6 +1,6 @@
 <aside id="nav-sidebar">
   <div class="sidebar-header">
-    <a class="navbar-brand text-white fw-bold d-flex align-items-center sidebar-logo" href="homepage.html">
+    <a class="navbar-brand text-white fw-bold d-flex align-items-center sidebar-logo" href="index.php">
        MangaDax
     </a>
     <button class="btn text-white close-btn" type="button">
@@ -8,7 +8,7 @@
     </button>
   </div>
   <nav class="sidebar-nav">
-      <a href="#" class="nav-link active"><i class="bi bi-house-door-fill"></i> Home</a>
+      <a href="index.php" class="nav-link active"><i class="bi bi-house-door-fill"></i> Home</a>
       <a href="#" class="nav-link"><i class="bi bi-bookmark-fill"></i> Follows</a>
       <a href="#" class="nav-link"><i class="bi bi-arrow-repeat"></i> Updates</a>
       <a href="#" class="nav-link"><i class="bi bi-collection-fill"></i> Library</a>

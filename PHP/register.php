@@ -1,16 +1,9 @@
 <?php
-// Include the controller and call the handler function
-require_once __DIR__ . '/../controller/auth_controller.php';
-
-// The handleRegister function will return data needed for the view.
-$viewData = handleRegister();
-
-// Extract variables for easier access in the view
-$errors = $viewData['errors'];
-$success_data = $viewData['success_data']; // Contains message and activation_link_html on success
-// $post_data = $viewData['post_data'] ?? []; // Use this if you want to repopulate form on error
-
-// --- The rest of the file is the View ---
+// Expects $errors, $success_data, $post_data from controller.
+$errors = $errors ?? [];
+$success_data = $success_data ?? null;
+$post_data = $post_data ?? [];
+$is_success = !empty($success_data);
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -25,7 +18,7 @@ $success_data = $viewData['success_data']; // Contains message and activation_li
 <body>
     <div class="container login-page">
         <div class="page-header text-center py-4">
-            <a href="homepage.php" rel="nofollow">
+            <a href="../index.php" rel="nofollow">
                 <div class="logo-container d-flex align-items-center justify-content-center">
                      <img src="../IMG/logo.png" alt="MangaDax Logo" style="height: 40px; margin-right: 10px;">
                     <span id="md-wordmark">MangaDax</span>
@@ -37,57 +30,53 @@ $success_data = $viewData['success_data']; // Contains message and activation_li
                 <h1>Create an Account</h1>
             </header>
 
-            <?php if ($success_data): ?>
+            <?php if ($is_success): ?>
                 <div class="alert alert-success">
                     <?php echo htmlspecialchars($success_data['message']); ?><br>
-                    <?php echo $success_data['activation_link_html']; // Display activation link/token for testing ?>
+                    <?php echo $success_data['activation_link_html']; ?>
                 </div>
                  <div class="text-center mt-3">
-                     <a href="login.php" class="btn btn-primary">Proceed to Login</a>
+                     <a href="../controller/auth_controller.php?action=login" class="btn btn-primary">Proceed to Login</a>
                  </div>
-            <?php else: // Only show form if no success message ?>
+            <?php else: ?>
             <div class="form-content">
-                <form novalidate action="register.php" method="post">
-                    <?php // Display generic DB error ?>
+                <form novalidate action="../controller/auth_controller.php?action=register" method="post">
                     <?php if (!empty($errors['db'])): ?>
                         <div class="mb-3 error-message active" style="text-align: center;"><?php echo htmlspecialchars($errors['db']); ?></div>
                     <?php endif; ?>
 
                     <div class="mb-3">
                         <label for="username" class="form-label">Username <span class="required">*</span></label>
-                        <?php // Add error class, retain value using $post_data if needed ?>
-                        <input tabindex="1" id="username" class="form-control form-input <?php echo isset($errors['username']) ? 'input-error' : ''; ?>" name="username" type="text" required autocomplete="off" value="<?php echo isset($_POST['username']) ? htmlspecialchars($_POST['username']) : ''; /* Or use $post_data */ ?>">
-                        <div class="error-message <?php echo isset($errors['username']) ? 'active' : ''; ?>" id="username-error"><?php echo $errors['username'] ?? ''; ?></div>
+                        <input tabindex="1" id="username" class="form-control form-input <?php echo isset($errors['username']) ? 'input-error' : ''; ?>" name="username" type="text" required autocomplete="off" value="<?php echo isset($post_data['username']) ? htmlspecialchars($post_data['username']) : ''; ?>">
+                        <div class="error-message <?php echo isset($errors['username']) ? 'active' : ''; ?>" id="username-error"><?php echo htmlspecialchars($errors['username'] ?? ''); ?></div>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password <span class="required">*</span></label>
-                         <?php // Add error class ?>
                         <input tabindex="2" id="password" class="form-control form-input <?php echo isset($errors['password']) ? 'input-error' : ''; ?>" name="password" type="password" required autocomplete="off">
-                        <div class="error-message <?php echo isset($errors['password']) ? 'active' : ''; ?>" id="pwd-error"><?php echo $errors['password'] ?? ''; ?></div>
+                        <div class="error-message <?php echo isset($errors['password']) ? 'active' : ''; ?>" id="pwd-error"><?php echo htmlspecialchars($errors['password'] ?? ''); ?></div>
                     </div>
                     <div class="mb-3">
                         <label for="cf_password" class="form-label">Confirm Password <span class="required">*</span></label>
-                        <?php // Add error class ?>
                         <input tabindex="3" id="cf_password" class="form-control form-input <?php echo isset($errors['cf_password']) ? 'input-error' : ''; ?>" name="cf_password" type="password" required autocomplete="off">
-                        <div class="error-message <?php echo isset($errors['cf_password']) ? 'active' : ''; ?>" id="cfpwd-error"><?php echo $errors['cf_password'] ?? ''; ?></div>
+                        <div class="error-message <?php echo isset($errors['cf_password']) ? 'active' : ''; ?>" id="cfpwd-error"><?php echo htmlspecialchars($errors['cf_password'] ?? ''); ?></div>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email <span class="required">*</span></label>
-                         <?php // Add error class, retain value ?>
-                        <input tabindex="4" id="email" class="form-control form-input <?php echo isset($errors['email']) ? 'input-error' : ''; ?>" name="email" type="email" required autocomplete="off" value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; /* Or use $post_data */?>">
-                        <div class="error-message <?php echo isset($errors['email']) ? 'active' : ''; ?>" id="email-error"><?php echo $errors['email'] ?? ''; ?></div>
+                        <input tabindex="4" id="email" class="form-control form-input <?php echo isset($errors['email']) ? 'input-error' : ''; ?>" name="email" type="email" required autocomplete="off" value="<?php echo isset($post_data['email']) ? htmlspecialchars($post_data['email']) : '';?>">
+                        <div class="error-message <?php echo isset($errors['email']) ? 'active' : ''; ?>" id="email-error"><?php echo htmlspecialchars($errors['email'] ?? ''); ?></div>
                     </div>
                     <div class="mb-3">
-                        <a href="login.php" class="back-to-login">&laquo; Back to Login</a>
+                        <a href="../controller/auth_controller.php?action=login" class="back-to-login">&laquo; Back to Login</a>
                     </div>
                     <div class="form-buttons">
                         <button tabindex="5" class="btn submit-btn w-100" name="register" type="submit">Register</button>
                     </div>
                 </form>
             </div>
-            <?php endif; // End hiding form on success ?>
+            <?php endif; ?>
         </div>
     </div>
-    <?php /* Removed register.js script link - Server side validation is primary */ ?>
+    <!-- Server side validation is primary -->
 </body>
 </html>
+
