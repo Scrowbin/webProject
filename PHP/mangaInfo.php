@@ -32,11 +32,31 @@ $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
     <div class="container mt-3 ">
         <div class = "manga-container">
             <div class="bg-image">
+                <style>
+                    .bg-image{
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        z-index: -1;
+
+                        background: linear-gradient(to right,  
+                        rgba(0, 0, 0, 0.7) 10%, 
+                        rgba(0, 0, 0, 0.45) 50%,   /* Midpoint transition */
+                        rgba(0, 0, 0, 0) 90%),   /* Fully transparent near the right */
+                        url("../IMG/<?=$mangaID?>/<?=$image?>");  /* Background image */    
+                        background-position: center 20%; 
+                        background-repeat: no-repeat;
+                        background-size: cover;
+                        filter: blur(2.5px);            
+                    }
+                </style>
             </div>
             <div class="manga-card">
                 <!-- Left: Cover Image -->
                 <div class="manga-cover">
-                        <img src="../IMG/<?=$image?>" alt="Manga Cover">
+                        <img src="../IMG/<?=$mangaID?>/<?=$image?>" alt="Manga Cover">
                 </div>
         
                 <!-- Right: Details -->
@@ -63,36 +83,57 @@ $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
         <div class="d-flex align-items-center gap-2 flex-wrap">
             <!-- Add to Library -->
             <div class="btn-wrapper">
-                <form method="POST" action="addToLibrary.php" class="m-0">
-                    <input type="hidden" name="mangaID" value="<?=$mangaID?>">
-                    <button type="submit" class="btn btn-orange d-flex align-items-center">
-                        <i class="bi bi-bookmark me-2"></i>
-                        <span class="d-none d-md-inline">Add To Library</span>
-                    </button>
-                </form>
+                <?php if (!$isBookmarked): ?>
+                    <form method="POST" action="../controller/addToLibrary.php" class="m-0" id="add-form" data-logged-in="<?= $isLoggedIn ? 'true' : 'false' ?>">
+                        <input type="hidden" name="mangaID" value="<?= $mangaID ?>">
+                        <button type="submit" class="btn btn-orange d-flex align-items-center">
+                            <i class="bi bi-bookmark me-2"></i>
+                            <span class="d-none d-md-inline">Add To Library</span>
+                        </button>
+                    </form>
+                <?php else: ?>
+                    <form method="POST" action="../controller/addToLibrary.php" class="m-0" id="add-form" data-logged-in="<?= $isLoggedIn ? 'true' : 'false' ?>">
+                        <input type="hidden" name="mangaID" value="<?= $mangaID ?>">
+                        <button type="submit" class="btn btn-orange d-flex align-items-center">
+                            <i class="bi bi-check2 me-2"></i>
+                            <span class="d-none d-md-inline">Added to Library</span>
+                        </button>
+                    </form>
+                <?php endif; ?>
             </div>
 
             <!-- Rate -->
             <div class="btn-wrapper">
                 <form action="../controller/submitRating.php" method="POST" id="rating-form" class="m-0" data-logged-in="<?= $isLoggedIn ? 'true' : 'false' ?>">
                     <input type="hidden" name="rating" id="rating-input" value="">
-                    <input type="hidden" name="mangaID" value="<?=$mangaID?>">
+                    <input type="hidden" name="mangaID" value="<?= $mangaID ?>">
                     <div class="dropdown">
-                        <button class="btn btn-outline-secondary d-flex align-items-center justify-content-center no-caret" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn btn-orange d-flex align-items-center justify-content-center no-caret" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-star me-2"></i>
-                            <span class="d-none d-md-inline">Rate</span>
+                            <?php
+                            if ($userRating === 0) {
+                                echo "<span class='d-none d-md-inline'>Rate</span>";
+                            }
+                            else echo "<span class='d-none d-md-inline'>($userRating)</span>";
+                            ?>
+                            
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#" data-value="10">(10) Masterpiece</a></li>
-                            <li><a class="dropdown-item" href="#" data-value="9">(9) Great</a></li>
-                            <li><a class="dropdown-item" href="#" data-value="8">(8) Very Good</a></li>
-                            <li><a class="dropdown-item" href="#" data-value="7">(7) Good</a></li>
-                            <li><a class="dropdown-item" href="#" data-value="6">(6) Fine</a></li>
-                            <li><a class="dropdown-item" href="#" data-value="5">(5) Average</a></li>
-                            <li><a class="dropdown-item" href="#" data-value="4">(4) Bad</a></li>
-                            <li><a class="dropdown-item" href="#" data-value="3">(3) Very Bad</a></li>
-                            <li><a class="dropdown-item" href="#" data-value="2">(2) Horrible</a></li>
-                            <li><a class="dropdown-item" href="#" data-value="1">(1) Appalling</a></li>
+                            <?php
+                            $ratings = [
+                                10 => "Masterpiece", 9 => "Great", 8 => "Very Good", 7 => "Good",
+                                6 => "Fine", 5 => "Average", 4 => "Bad", 3 => "Very Bad",
+                                2 => "Horrible", 1 => "Appalling"
+                            ];
+
+                            foreach ($ratings as $val => $label) {
+                                echo "<li><a class='dropdown-item' href='#' data-value='$val'>($val) $label</a></li>";
+                            }
+
+                            if ($userRating != 0) {
+                                echo "<li><a class='dropdown-item' href='#' data-value='0'>Remove Rating</a></li>";
+                            }
+                            ?>
                         </ul>
                     </div>
                 </form>
@@ -203,10 +244,10 @@ $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
                                 <img class="icon" src="../IMG/eye.svg">
                                 <strong>N/A</strong>
                             </span>
-                            <!--<a href="commentSection.php?=<?=$chapters['CommentSectionID']?>" class="comments">  -->
-                            <a href="#" class="comments">
+                            <a href="commentSectionID.php?=<?=$chapters['CommentSectionID']?>" class="comments"> 
+                            <!-- <a href="#" class="comments"> -->
                                 <img src="../IMG/comment.svg" alt="">
-                                <!-- <strong></strong> -->
+                                <strong><?=$chapters['NumOfComments']?></strong>
                             </a>
                         </div>
                     </div>
@@ -227,7 +268,7 @@ $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
         data-bs-delay="3000" data-bs-autohide="true">
             <div class="d-flex">
                 <div class="toast-body">
-                    You must be logged in to rate.
+                    You must be logged in to do this.
                 </div>
                 <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
@@ -237,67 +278,7 @@ $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../JS/navbar.js"></script> <!-- JS for Navbar/Sidebar -->
 
-    <script>
-        document.querySelectorAll('.chapter-container a').forEach(link => {
-            link.addEventListener('click', e => e.stopPropagation());
-        });
-        window.onload = function() {
-        const descriptionText = document.querySelector('.description-text');
-        const seeMoreBtn = document.querySelector('.see-more-btn');
-
-        // Check if the description is overflowing
-        if (descriptionText.scrollHeight > descriptionText.clientHeight) {
-            descriptionText.parentElement.classList.add('overflow');
-        }
-
-        // Toggle full description on "See More" button click
-        seeMoreBtn.addEventListener('click', function() {
-            if (descriptionText.style.webkitLineClamp === "3") {
-                descriptionText.style.webkitLineClamp = "unset"; // Show full text
-                seeMoreBtn.innerText = "See Less"; // Change button text
-            } else {
-                descriptionText.style.webkitLineClamp = "3"; // Truncate text
-                seeMoreBtn.innerText = "See More"; // Change button text back
-            }
-        });
-        }
-        document.addEventListener('DOMContentLoaded', () => {
-        const form = document.getElementById('rating-form');
-        const isLoggedIn = form.dataset.loggedIn === "true";
-        const toastElement = document.getElementById('loginToast');
-        const toast = new bootstrap.Toast(toastElement);
-
-        document.querySelectorAll('.dropdown-item').forEach(item => {
-            item.addEventListener('click', function (e) {
-                e.preventDefault();
-
-                if (!isLoggedIn) {
-                    toast.show(); // Show toast if not logged in
-                    return;
-                }
-
-                // Set rating value in hidden input
-                const ratingValue = this.dataset.value;
-                document.getElementById('rating-input').value = ratingValue;
-
-                // Optional: update button text (UI feedback)
-                const label = this.textContent.trim();
-                document.querySelector('.dropdown button span').textContent = label;
-
-                form.submit();
-            });
-        });
-
-        // Redundant, but safe fallback in case the form is submitted some other way
-        form.addEventListener('submit', function (e) {
-            if (!isLoggedIn) {
-                e.preventDefault();
-                toast.show();
-            }
-            });
-        });
-
-    </script>
+    <script src="../JS/mangaInfo.js"></script>
 
 </body>
 </html>

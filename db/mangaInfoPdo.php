@@ -1,5 +1,7 @@
 <?php
-    session_start();
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
 
     require_once('pdo.php');
     $isLoggedIn = isset($_SESSION['userID']);
@@ -32,4 +34,22 @@
         $chapters = pdo_query('SELECT * FROM chapter Where MangaID =? ORDER BY ChapterNumber DESC',$mangaID);
         return $chapters;
     }
+    function getRating($userID,$mangaID){
+        $rating = pdo_query_one('SELECT Rating FROM rating where UserID = ? and MangaID = ?',$userID,$mangaID);
+        if ($rating==null) return 0;
+        return $rating['Rating'];
+    }
+
+    function getCommentCountsPerChapter($mangaID){
+        return pdo_query(
+            'SELECT c.ChapterID, cs.NumOfComments FROM chapter c join commentsection cs on c.CommentSectionID = cs.CommentSectionID where c.MangaID = ?',
+            $mangaID
+        );
+    }
+    function isBookmarked($mangaID, $userID) {
+        $sql = 'SELECT 1 FROM bookmark WHERE MangaID = ? AND UserID = ?';
+        $row = pdo_query_one($sql, $mangaID, $userID);
+        return !empty($row);
+    }
+    
 ?>

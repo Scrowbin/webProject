@@ -2,7 +2,7 @@
     require_once('../db/mangaReadPdo.php');
     $chapterID = $_GET['chapterID'] ?? null;
     if (!$chapterID) {
-        $chapterID = '1';
+        die('chapterID not found');
     }
     
     $pages = getPages($chapterID);
@@ -11,10 +11,13 @@
     }
 
     
+    $nextChapterID = getNextChapter($chapterID);
+    $prevChapterID = getPrevChapter($chapterID);
 
     $chapters = getChapters($chapterID);
     $mangaInfo = getMangaInfo($chapterID);
     $chapterInfo = getChapterInfo($chapterID);
+    $commentSection = getCommentSection($chapterID);
     $pageValues = [];
     $pageLinks = [];
     $i = 1;
