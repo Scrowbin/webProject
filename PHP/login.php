@@ -65,9 +65,7 @@ $post_data = $post_data ?? [];
                     </div>
                 </form>
 
-                <div style="left: auto; font-size: 14px;">
-                    <a href="#" id="try-another-way">Try Another Way</a>
-                </div>
+                
 
                 <div class="text-center mt-3 signup-link">
                     <span>New user? <a tabindex="6" href="../controller/auth_controller.php?action=register">Register</a></span>

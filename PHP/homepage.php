@@ -1,6 +1,4 @@
 <?php 
-  // Ensure $featuredManga exists and is not empty before using it
-  $hasFeaturedManga = isset($featuredManga) && !empty($featuredManga);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,66 +31,8 @@
       <!-- Featured Manga Carousel (Stays within the inner container) -->
       <div id="featuredMangaCarousel" class="carousel slide">
         <div class="carousel-inner">
-           <?php if ($hasFeaturedManga): 
-                // Combine authors and artists for display
-                $authorArtistList = array_merge($featuredManga['authors'] ?? [], $featuredManga['artists'] ?? []);
-                $authorDisplay = !empty($authorArtistList) ? implode(', ', $authorArtistList) : 'N/A';
-           ?>
-            <!-- Featured Manga Slide (Zeikin de Katta Hon) -->
-            <div class="carousel-item active"> <?php // Make this the first active item ?>
-              <?php /* Link the whole slide content */ ?>
-              <div class="featured-manga" data-bg-src="IMG/<?= htmlspecialchars($featuredManga['MangaID']) ?>/<?= htmlspecialchars($featuredManga['CoverLink']) ?>"> 
-                  <div class="background-overlay"></div>
-                  <div class="featured-manga-content row g-0">
-                    <div class="col-md-3 featured-cover-col">
-                      <a href="controller/mangaInfo_Controller.php?mangaID=<?= htmlspecialchars($featuredManga['MangaID']) ?>">
-                        <img src="IMG/<?= htmlspecialchars($featuredManga['MangaID']) ?>/<?= htmlspecialchars($featuredManga['CoverLink']) ?>" alt="<?= htmlspecialchars($featuredManga['MangaNameOG']) ?> Cover" class="img-fluid rounded featured-cover">
-                      </a>
-                      <?php /* Display flag if available */
-                         $langCode = strtolower(substr($featuredManga['OriginalLanguage'] ?? 'jp', 0, 2)); 
-                         $flagSrc = "https://mangadex.org/img/flags/{$langCode}.svg";
-                      ?>
-                      <img class="flag flag-featured" src="<?= $flagSrc ?>" alt="<?= strtoupper($langCode) ?>">
-                    </div>
-                    <div class="col-md-9 featured-details d-flex flex-column"> <?php // Use flex column for alignment ?>
-                      <div> <?php // Top content wrapper ?>
-                        <h3 class="title"><a href="controller/mangaInfo_Controller.php?mangaID=<?= htmlspecialchars($featuredManga['MangaID']) ?>" class="text-white text-decoration-none"><?= htmlspecialchars($featuredManga['MangaNameOG']) ?></a></h3>
-                        <div class="genres mb-3">
-                          <?php if (!empty($featuredManga['tags'])): ?>
-                              <?php foreach (array_slice($featuredManga['tags'], 0, 5) as $tag): // Limit tags shown ?>
-                                  <span class="genre-tag"><?= strtoupper(htmlspecialchars($tag)) ?></span>
-                              <?php endforeach; ?>
-                          <?php endif; ?>
-                        </div>
-                      </div>
-                      <div class="description-box mb-3 flex-grow-1"> <?php // Allow description to grow ?>
-                        <?= nl2br(htmlspecialchars(substr($featuredManga['MangaDiscription'] ?? 'No description available.', 0, 350))) ?>
-                        <?= (strlen($featuredManga['MangaDiscription'] ?? '') > 350) ? '...' : '' ?> <?php // Add ellipsis if truncated ?>
-                      </div>
-                      <div class="featured-bottom-row mt-auto"> <?php // Push to bottom ?>
-                        <div class="author"><?= htmlspecialchars($authorDisplay) ?></div>
-                        <div class="featured-right-controls">
-                          <?php /* <div class="ranking-indicator">NO. X</div> */ // Add ranking logic if needed ?>
-                          <div class="featured-navigation-arrows">
-                            <button class="carousel-control-prev featured-carousel-control" type="button" data-bs-target="#featuredMangaCarousel" data-bs-slide="prev">
-                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                              <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next featured-carousel-control" type="button" data-bs-target="#featuredMangaCarousel" data-bs-slide="next">
-                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                              <span class="visually-hidden">Next</span>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-              </div>
-            </div>
-          <?php endif; ?>
-
-          <!-- Slide 1 (Original Item - Should not be active if featured manga exists) -->
-          <div class="carousel-item <?php if (!$hasFeaturedManga) echo 'active'; ?>">
+          <!-- Slide 1 (Original Item) -->
+          <div class="carousel-item active">
              <?php /* Corrected image path relative to index.php */ ?>
             <div class="featured-manga" data-bg-src="IMG/cover1.png">
               <div class="background-overlay"></div>
@@ -287,17 +227,22 @@
       <div class="latest-updates-grid">
         <!-- Column 1 (Visible by default) -->
         <div class="latest-updates-column">
-          <?php if ($hasFeaturedManga): ?>
-          <!-- Featured Manga Item (Zeikin de Katta Hon) -->
-          <a href="controller/mangaInfo_Controller.php?mangaID=<?= htmlspecialchars($featuredManga['MangaID']) ?>" class="latest-item">
-             <img src="IMG/<?= htmlspecialchars($featuredManga['MangaID']) ?>/<?= htmlspecialchars($featuredManga['CoverLink']) ?>" alt="<?= htmlspecialchars($featuredManga['MangaNameOG']) ?> Cover" class="latest-cover">
+          <?php // Display Zeikin de Katta Hon first ?>
+          <?php if (isset($zeikinManga) && $zeikinManga): ?>
+          <a href="controller/mangaInfo_Controller.php?MangaID=<?= $zeikinManga['MangaID'] ?>" class="latest-item"> <?php /* Corrected parameter name */ ?>
+             <?php /* Corrected path using MangaID */ ?>
+            <img src="IMG/<?= $zeikinManga['MangaID'] ?>/<?= htmlspecialchars($zeikinManga['CoverLink']) ?>" alt="<?= htmlspecialchars($zeikinManga['MangaNameOG']) ?> Cover" class="latest-cover">
             <div class="latest-details">
-              <div class="latest-title"><?= htmlspecialchars($featuredManga['MangaNameOG']) ?></div>
-              <?php /* Add chapter/group info if available/needed */ ?>
+              <div class="latest-title"><?= htmlspecialchars($zeikinManga['MangaNameOG']) ?></div>
+              <?php /* Placeholder chapter/group - replace if you fetch latest chapter info */ ?>
+              <div class="latest-chapter"><img src="https://mangadex.org/img/flags/jp.svg" class="flag-icon" alt="JP"> Latest Ch. ?</div>
+              <div class="latest-group"><i class="bi bi-people-fill"></i> Group?</div> 
             </div>
-            <?php /* Add meta info if available/needed */ ?>
+            <?php /* Placeholder meta - replace if you fetch info */ ?>
+            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i> ?</span><span class="latest-time">? ago</span></div>
           </a>
           <?php endif; ?>
+          <?php // --- Original Hardcoded Items (for example) --- ?>
           <!-- Item 1 -->
           <a href="#" class="latest-item">
              <?php /* Placeholders, paths would be IMG/ if exist */ ?>
@@ -353,7 +298,7 @@
             <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">25 minutes ago</span></div>
           </a>
           <!-- Item 6 -->
-           <a href="#" class="latest-item">
+           <!-- <a href="#" class="latest-item">
             <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
             <div class="latest-details">
               <div class="latest-title">Boss In My House</div>
@@ -361,7 +306,7 @@
               <div class="latest-group"><i class="bi bi-people-fill"></i> Honey.BeexScans</div>
               </div>
             <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">35 minutes ago</span></div>
-          </a>
+          </a> -->
         </div> <!-- End Column 1 -->
 
         <!-- Column 2 (Visible by default) -->

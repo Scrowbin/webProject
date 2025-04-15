@@ -1,3 +1,7 @@
+body {
+    background-color: #1f1f1f;
+    color: #e0e0e0;
+}
 *{
     box-sizing: border-box;
 }
@@ -7,6 +11,11 @@ a{
 }
 /* Manga Info */
 
+.main-manga-info-container {
+    position: relative;
+    z-index: 1;
+}
+
 .manga-container{
     position: relative;
 
@@ -14,11 +23,9 @@ a{
 .manga-card {
     display: flex;
     padding: 10px;
-    font-family: Arial, sans-serif;
     margin-bottom: 15px;
     
 }
-
 
 .manga-cover img {
     width: 200px;
@@ -29,19 +36,18 @@ a{
 
 .manga-title{
     font-size: clamp(30px, 5vw, 65px);
-    color: aliceblue;
-
+    color: #ffffff;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
     font-family: sans-serif;
 }
 .manga-title-english{
-    color: aliceblue;
+    color: white;
     font-size: 20px;
     font-family: sans-serif;
 }
 .artist-name{
     margin-top: auto;
-    color: aliceblue;
-
+    color: white;
     font-size: 20px;
     font-family: sans-serif;
 }
@@ -51,23 +57,23 @@ a{
     padding-left: 10px;
     display: flex;
     flex-direction: column;
-
-    color: rgb(201, 201, 201);
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
+    color: white;
 }
-.dropdown-item.active {
-    background-color: #c9c9c9 !important;
-    color: white!important;
-  }
-.dropdown-item:active {
-    background-color: #c9c9c9 !important; /* Same as your active style */
+.dropdown-menu {
+    background-color: #2a2a2a;
+    border: 1px solid #333;
+}
+.dropdown-item {
+    color: white;
+}
+.dropdown-item.active, .dropdown-item:active {
+    background-color: #FF6740 !important;
     color: white !important;
 }
-  
 .dropdown-item:hover {
-    background-color: #c9c9c9;
-    color: black;
-  }
+    background-color: #3a3a3a;
+    color: #ffffff;
+}
 .no-caret::after {
     display: none !important;
 }
@@ -77,13 +83,15 @@ a{
     align-items: flex-start;
     margin-bottom: 8px;
     width: 100%;
-    background-color: #f0f0f0;
-
+    background-color: #2a2a2a;
+    border: 1px solid #333;
+    border-radius: 4px;
+    padding: 8px;
 }
 .chapter-container:hover{
-    background-color: #c2c0c0;
+    background-color: #3a3a3a;
     cursor: pointer;
-
+    border-color: #444;
 }
 /* Scanlation Group */
 .scan-group{
@@ -97,6 +105,30 @@ a{
     background-size: cover;
 }
 
+.icon  {
+    filter: brightness(0) invert(1);
+    -webkit-filter: brightness(0) invert(1);
+    color: white !important; /
+}
+
+.comments img {
+    color: #ffffff !important;
+    filter: brightness(0) invert(1);
+    -webkit-filter: brightness(0) invert(1);
+}
+
+/* .chapter-container:hover .icon {
+    filter: brightness(0) invert(1);
+    -webkit-filter: brightness(0) invert(1);
+} */
+
+/* .time i, .uploader i, .views i, .comments img {
+    color: #ffffff !important;
+    filter: brightness(0) invert(1);
+    -webkit-filter: brightness(0) invert(1);
+} */
+
+
 /* Chapter Info Grid */
 .chapter-info {
     display: flex;
@@ -104,31 +136,31 @@ a{
     gap: 10px;
     font-size: 12px;
     border-radius: 1px;
-
+    color: white;
 }
 
 /* Info Sections */
 .info-left,.info-middle,.info-right{
     display: flex;
     flex-direction: column;
-    color: black;
+    color: #ffffff;
     font-size: 15px;
 }
 .info-left {
-    
     flex: 1;
     gap: 5px;
 }
 
 .info-middle {
     min-width: 150px;
-
+    color: #ffffff;
     gap: 5px;
     margin-left: auto;
 }
 
 .info-right {
     min-width: 70px;
+    color: #ffffff;
     gap: 5px;
 }
 
@@ -136,6 +168,10 @@ a{
 .time, .uploader, .views, .comments {
     display: flex;
     gap: 5px;
+    align-items: center;
+}
+.time i, .uploader i, .views i, .comments i {
+    color: #ffffff;
 }
 
 
@@ -146,9 +182,8 @@ a{
     font-size: 14px;
     padding: 6px 10px;
     border-radius: 5px;
-    color: black;
-    background-color: #f0f1f2;
-    
+    color: #e0e0e0;
+    background-color: #383838;
 }
 
 .text-warning {
@@ -159,25 +194,21 @@ a{
 .d-flex span {
     font-size: 14px;
     font-weight: 500;
-    color: black;
+    color: white;
 }
 
 .manga-data span{
-    color: rgb(240, 248, 255);
+    color: #e0e0e0;
 }
 
-.btn-orange span{
-    color: aliceblue;
-}
-/* see more */
 .btn-orange {
-    background-color: #ff6b35;
+    background-color: #FF6740;
     color: white;
     border-radius: 5px;
     padding: 8px 16px;
     border: none;
+    transition: background-color 0.2s ease;
 }
-
 
 .btn-orange:hover {
     background-color: #e65c30;
@@ -191,21 +222,27 @@ a{
 
 .description-text {
     display: -webkit-box;
-    -webkit-line-clamp: 3; /* Limit to 3 lines */
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: white;
 }
 
 .see-more-btn {
-    display: none; /* Hidden by default */
-    background-color: #ff6b35;
+    display: none;
+    background-color: #FF6740;
     color: white;
     border-radius: 5px;
     padding: 8px 16px;
     border: none;
     cursor: pointer;
     align-self: center;
+    transition: background-color 0.2s ease;
+}
+
+.see-more-btn:hover {
+    background-color: #e65c30;
 }
 
 /* Detect when the description overflows */

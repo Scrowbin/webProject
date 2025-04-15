@@ -19,7 +19,7 @@ function handleLogin(): void
     }
 
     if (isset($_SESSION['username'])) { 
-        header('Location: ../PHP/homepage.php'); 
+        header('Location: ../index.php'); 
         exit;
     }
 
@@ -42,16 +42,29 @@ function handleLogin(): void
                     if ($user['activated']) {
                         $_SESSION['username'] = $user['username']; 
                         session_regenerate_id(true);
-                        header('Location: ../PHP/homepage.php'); 
+
+                        // --- Redirect back using session or fallback ---
+                        $redirectUrl = $_SESSION['login_return_url'] ?? '../index.php';
+                        unset($_SESSION['login_return_url']); // Clear after use
+                        
+                        // Basic check to prevent redirection loops to auth controller itself
+                        if (str_contains($redirectUrl, 'auth_controller.php')) {
+                             $redirectUrl = '../index.php';
+                        }
+                        header("Location: " . $redirectUrl); 
+                        // --- End Redirect logic ---
                         exit;
                     } else {
                         $errors['credentials'] = 'Account not activated. Please check your email.';
+                        unset($_SESSION['login_return_url']); // Clear on activation error
                     }
                 } else {
                     $errors['credentials'] = 'Invalid username/email or password.';
+                    unset($_SESSION['login_return_url']); // Clear on password error
                 }
             } else {
                 $errors['credentials'] = 'Invalid username/email or password.';
+                unset($_SESSION['login_return_url']); // Clear on user not found error
             }
         }
     }
@@ -257,7 +270,26 @@ $action = $_GET['action'] ?? 'login';
 
 switch ($action) {
     case 'login':
+        // --- Store return URL on GET request ---
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $referer = $_SERVER['HTTP_REFERER'] ?? null;
+            $host = $_SERVER['HTTP_HOST'];
+            if ($referer) {
+                $refererHost = parse_url($referer, PHP_URL_HOST);
+                $refererPath = parse_url($referer, PHP_URL_PATH) ?? '';
+                 // Check if referer is on the same host and not an auth page itself
+                if ($refererHost && $refererHost === $host && !str_contains($refererPath, 'auth_controller.php')) {
+                    $_SESSION['login_return_url'] = $referer;
+                    // error_log("Stored login return URL: " . $_SESSION['login_return_url']); // For debugging
+                }
+            }
+        }
+        // --- End Store return URL ---
         handleLogin();
+        // Clear return URL if login fails (errors exist)
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($errors)) {
+            unset($_SESSION['login_return_url']);
+        }
         include __DIR__ . '/../PHP/login.php';
         break;
     case 'register':
@@ -286,9 +318,28 @@ switch ($action) {
         include __DIR__ . '/../PHP/profile.php';
         break;
     case 'logout':
+        // --- Redirect back logic for logout ---
+        $referer = $_SERVER['HTTP_REFERER'] ?? null;
+        $fallbackUrl = '../index.php';
+        $host = $_SERVER['HTTP_HOST'];
+        $redirectUrl = $fallbackUrl;
+
+        if ($referer) {
+            $refererHost = parse_url($referer, PHP_URL_HOST);
+            if ($refererHost && $refererHost === $host) {
+                 // Avoid redirecting back to auth pages after logout
+                if (!str_contains(parse_url($referer, PHP_URL_PATH), 'auth_controller.php')) {
+                     $redirectUrl = $referer;
+                }
+            }
+        }
+        // Append logout message
+        $redirectUrl .= (str_contains($redirectUrl, '?') ? '&' : '?') . 'message=Logged+out';
+        // --- End Redirect logic ---
+
         session_unset();
         session_destroy();
-        header("Location: auth_controller.php?action=login&message=Logged+out");
+        header("Location: " . $redirectUrl); 
         exit;
     default:
         header("Location: auth_controller.php?action=login");

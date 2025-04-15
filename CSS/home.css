@@ -211,8 +211,7 @@ body {
   width: 100%; /* Make width fixed relative to container */
   height: 8rem; /* Set a fixed height for the box */
   overflow-y: auto; /* Add vertical scrollbar when content exceeds max-height */
-  /* Removed display: -webkit-box; */
-  /* Removed -webkit-line-clamp: 6; */
+ 
   margin-bottom: 1rem; 
   color: inherit; 
   padding-right: 8px; /* Add padding so scrollbar doesn't overlap text */
