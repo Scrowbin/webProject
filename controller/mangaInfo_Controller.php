@@ -43,8 +43,10 @@ $counts = getCommentCountsPerChapter($mangaID); // Removed $pdo
 
 // Process comment counts
 $countsMap = [];
+$commentSectionIDMap = [];
 foreach ($counts as $row) {
     $countsMap[$row['ChapterID']] = $row['NumOfComments'];
+    $commentSectionIDMap[$row['ChapterID']]=$row['CommentSectionID'] ; 
 }
 
 // Group chapters by volume and add comment counts
@@ -53,6 +55,7 @@ foreach ($chapters as $chapter) {
     $vol = $chapter['Volume'];
     // Add comment count to each chapter before grouping
     $chapter['NumOfComments'] = $countsMap[$chapter['ChapterID']] ?? 0;
+    $chapter['CommentSectionID'] = $commentSectionIDMap[$chapter['ChapterID']] ?? 0;
     $grouped[$vol][] = $chapter;
 }
 // Sort volumes numerically if needed (keys might be strings like "1.0")

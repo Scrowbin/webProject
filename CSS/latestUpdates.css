@@ -101,41 +101,28 @@ hr {
 
 /* Chapter Info Grid */
 .chapter-info {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
     width: 100%;
     gap: 10px;
 }
-
-/* Info Sections */
-.info-left {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    gap: 5px;
+.chapter-info:hover{
+    background-color: #ececec;
+    cursor: pointer;
 }
+
 
 .info-middle {
     min-width: 150px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    margin-left: auto;
 }
 
 .info-right {
-    display: flex;
-    flex-direction: column;
     min-width: 70px;
-    gap: 5px;
-    margin-left: auto;
-
+}
+.comments:hover{
+    background-color: #d1d1d1;
 }
 
-/* Elements inside middle and right */
-.time, .uploader, .views, .comments {
-    display: flex;
-    gap: 5px;
-}
 
 /* Responsive */
 @media (max-width: 700px) {

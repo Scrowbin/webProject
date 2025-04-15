@@ -52,8 +52,13 @@
         return $prev['ChapterID'] ?? null;
     }
 
-    function getCommentSection($chapterID){
-        $sql = 'SELECT * FROM commentsection cs JOIN chapter c on cs.CommentSectionID = c.CommentSectionID where c.ChapterID = ?';
+    function getCommentSection($chapterID) {
+        $sql = 'SELECT cs.CommentSectionID, COUNT(c.CommentID) AS NumOfComments
+                FROM commentsection cs
+                LEFT JOIN comment c ON cs.CommentSectionID = c.CommentSectionID
+                WHERE cs.ChapterID = ?
+                GROUP BY cs.CommentSectionID';
         return pdo_query_one($sql, $chapterID);
     }
+    
 ?>

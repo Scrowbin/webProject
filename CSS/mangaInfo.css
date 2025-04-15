@@ -81,9 +81,11 @@ a{
 
 }
 .chapter-container:hover{
-    background-color: #c2c0c0;
-    cursor: pointer;
-
+    background-color: #dbdbdb;
+    cursor: pointer;;
+}
+.comments:hover{
+    background-color: #cac9c9;
 }
 /* Scanlation Group */
 .scan-group{

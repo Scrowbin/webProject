@@ -1,6 +1,8 @@
 <?php
 require_once('helper.php');
 
+
+
 $image = $mangaInfo['CoverLink'];
 $pubStatus = $mangaInfo['PublicationStatus'];
 $pubYear = $mangaInfo['PublicationYear'];
@@ -10,7 +12,6 @@ $mangaDesc= $mangaInfo['MangaDiscription'];
 
 $authors = implode(', ', array_column($authorsRaw, 'AuthorName'));
 $artists = implode(', ', array_column($artistsRaw, 'ArtistName'));
-
 $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
 ?>
 <!DOCTYPE html>
@@ -234,7 +235,7 @@ $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
                                 <img class="icon" src="../IMG/eye.svg">
                                 <strong>N/A</strong>
                             </span>
-                            <a href="commentSectionID.php?=<?=$chapters['CommentSectionID']?>" class="comments"> 
+                            <a href="comments_controller.php?commentsID=<?=$chapters['CommentSectionID']?>" class="comments"> 
                             <!-- <a href="#" class="comments"> -->
                                 <img src="../IMG/comment.svg" alt="">
                                 <strong><?=$chapters['NumOfComments']?></strong>

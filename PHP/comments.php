@@ -1,5 +1,14 @@
 <?php
+require_once('helper.php');
+$mangaNameOG = $mangaInfo['MangaNameOG'];
+$mangaNameEN = $mangaInfo['MangaNameEN'];
+$mangaCover = $mangaInfo['CoverLink'];
 
+$authors = implode(', ', array_column($authorsRaw, 'AuthorName'));
+$artists = implode(', ', array_column($artistsRaw, 'ArtistName'));
+$mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
+
+$chapterNumber = truncateNumber($chapterNumber);
 
 ?>
 
@@ -15,135 +24,96 @@
 </head>
 <body class="p-4">
 
-<div class="container">
+<div class="container" id="comment-section">
     <div class = "manga-container">
-        <div class="bg-image">
-        </div>
-        <div class="manga-card">
-            <!-- Left: Cover Image -->
-            <div class="manga-cover">
-                    <img src="../IMG/1/m1.jpg" alt="Manga Cover">
+        <a href = "mangaRead_controller.php?chapterID=<?=$chapterID?>">
+            <div class="bg-image">
+                <style>
+                    .bg-image{
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        z-index: -1;
+
+                        background: linear-gradient(to right,  
+                        rgba(0, 0, 0, 0.7) 10%, 
+                        rgba(0, 0, 0, 0.45) 50%,   
+                        rgba(0, 0, 0, 0) 90%),   
+                        url("../IMG/<?=$mangaID?>/<?=$mangaCover?>");  
+                        background-position: center 20%; 
+                        background-repeat: no-repeat;
+                        background-size: cover;
+                        filter: blur(2.5px);
+                    }
+                </style>
             </div>
+            <div class="manga-card">
+                <!-- Left: Cover Image -->
+                <div class="manga-cover">
+                        <img src="../IMG/<?=$mangaID?>/<?=$mangaCover?>" alt="Manga Cover">
+                </div>
+        
+                <!-- Right: Details -->
+                <div class="manga-details">
+                    <div class="manga-header">
+                        <div class="manga-title"><strong><?=$mangaNameOG?></strong></div>
+                        <div class = "manga-title-english"><?=$mangaNameEN?></div>
+                    </div>
+                    <div class="artist-name">
+                        <?=$mangaAuthors?>
+                    </div>
+                    <div class="chapter">
+                        <strong>Ch. <?=$chapterNumber?> – <?=$chapterName?></strong>
+                    </div>
+                
+                </div>
+            </div>
+        </a>
+    </div>
+    <div id="comments-container">
+        
+    </div >
     
-            <!-- Right: Details -->
-            <div class="manga-details">
-                <div class="manga-header">
-                    <div class="manga-title"><strong>Zeikin de Katta Hon</strong></div>
-                    <div class = "manga-title-english">Books Bought With Taxes</div>
-                </div>
-                <div class="artist-name">
-                    Zuino, Keiyama Kei
-                </div>
-            
-            </div>
-        </div>
-    </div>
-    <!-- One Comment -->
-    <div class="comment rounded p-3 mb-4">
-        <div class="d-flex align-items-start mb-2">
-            <img src="https://via.placeholder.com/50" alt="User Avatar" class="rounded-circle me-3" width="50" height="50">
-            <div class="user-info flex-grow-1">
-                <div class="fw-bold text-warning">Floou</div>
-            </div>
-            <div class="text-end text-muted small">
-                <div>May 20, 2023</div>
-                <div>#2</div>
-            </div>
-        </div>
-
-        <!-- Comment Body -->
-        <div class="comment-body mb-3">
-            Wow, this is a really solid work. Enticing characters, good paneling, and entertaining dialog. It's not like this is the best comedy, but I'm probably going to read it all and enjoy it.
-        </div>
-
-        <!-- Actions -->
-        <div class="d-flex justify-content-between align-items-center">
-            <a href="#" class="text-danger small">⚠️ Report</a>
-            <div>
-                <a href="#" class="me-3 text-danger"><i class="bi bi-hand-thumbs-up me-1"></i>Like</a>
-                <a href="#" class="text-danger"><i class="bi bi-reply me-1"></i>Reply</a>
-            </div>
-        </div>
-
-        <!-- Reaction Bar -->
-    </div>
-    <!-- One Reply Comment -->
-    <div class="comment rounded p-3 mb-4">
-        <div class="d-flex align-items-start mb-2">
-            <img src="https://via.placeholder.com/50x75" alt="User Avatar" class="rounded me-3" width="50" height="75">
-            <div class="user-info flex-grow-1">
-                <div class="fw-bold text-warning">pab101</div>
-            </div>
-            <div class="text-end text-muted small">
-                <div>May 5, 2024</div>
-                <div>#8</div>
-            </div>
-        </div>
-
-       
-       
-        <!-- Comment Body -->
-        <div class="comment-body mb-3">
-            the manga wouldve been good if the plot wasn't VERY FORCED, i mean really? she remembered him from his first name even after he changed his last name? took her a minute to find what he owed from 10 years ago? mc just changes moods from joking to serious and the others go along with it at a moment's notice, and how tf did the buff guy know mc wanna know something from literally ZERO CLUE
-        </div>
-
-        <!-- Actions -->
-        <div class="d-flex justify-content-between align-items-center">
-            <a href="#" class="text-danger small">⚠️ Report</a>
-            <div>
-                <a href="#" class="me-3 text-danger"><i class="bi bi-hand-thumbs-up me-1"></i>Like</a>
-                <a href="#" class="text-danger"><i class="bi bi-reply me-1"></i>Reply</a>
-            </div>
-        </div>
-    </div>
-     <!-- One Reply Comment -->
-     <div class="comment rounded p-3 mb-4">
-        <div class="d-flex align-items-start mb-2">
-            <img src="https://via.placeholder.com/50x75" alt="User Avatar" class="rounded me-3" width="50" height="75">
-            <div class="user-info flex-grow-1">
-                <div class="fw-bold text-warning">dzeef</div>
-            </div>
-            <div class="text-end text-muted small">
-                <div>May 5, 2024</div>
-                <div>#8</div>
-            </div>
-        </div>
-
-        <!-- Quoted Message -->
-        <div class="quote">
-            <div class="quote-author">pab001 said:</div>
-            <div>she remembered him from his first name even after he changed his last name?
-            </div>
-        </div>
-        <!-- Comment Body -->
-        <div class="comment-body mb-3">
-            It's in the computer, she look it up in the computer. You can see that she's even confused when she sees someone with the same first name.
-        </div>
-
-        <!-- Actions -->
-        <div class="d-flex justify-content-between align-items-center">
-            <a href="#" class="text-danger small">⚠️ Report</a>
-            <div>
-                <a href="#" class="me-3 text-danger"><i class="bi bi-hand-thumbs-up me-1"></i>Like</a>
-                <a href="#" class="text-danger"><i class="bi bi-reply me-1"></i>Reply</a>
-            </div>
-        </div>
-    </div>
-
     <!-- Comment Form -->
     <div class="comment rounded p-3">
-        <form method="POST" action="submitComment.php">
-            <div class="mb-3">
+        <form method="POST" action="../controller/submitComment.php" data-logged-in="<?= $isLoggedIn ? 'true' : 'false' ?>"
+            id = "comment-form">
+            <div class="mb-3" id = "post-comment">
                 <label for="commentText" class="form-label fw-bold text-light">Post a Reply</label>
+                <div id="reply-preview" class="mb-2"></div>
+                
+
+                <input type="hidden" name="CommentSectionID" value="<?= $commentsID ?>">
+                <input type="hidden" name="replyID" id="replyID" value ="0">
                 <textarea class="form-control" id="commentText" name="commentText" rows="4" placeholder="Write your reply here..." required></textarea>
             </div>
             <button type="submit" class="btn btn-orange"><i class="bi bi-send me-1"></i>Post Comment</button>
         </form>
     </div>
 
+    <div id="pagination" class = "d-flex align-items-center justify-content-center"></div>
+        
+    <!-- Toast Container -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1080">
+        <div id="loginToast" class="toast align-items-center text-bg-danger border-0" 
+            role="alert" aria-live="assertive" aria-atomic="true"
+            data-bs-delay="3000" data-bs-autohide="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    You must be logged in to do this.
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
 </div>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const commentsID = <?=json_encode($commentsID)?>;
+</script>
+<script src="../JS/comments.JS"></script>
 </body>
 </html>

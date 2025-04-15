@@ -20,9 +20,9 @@
     } 
     function displayNameOrChapter($name,$number){
         if ($name === '' || $name === null){
-            return "<div class='chapter'><strong>Chapter $number</strong></div>";
+            return "<div class='chapter'>Chapter $number</div>";
         }
-        else return "<div class='chapter'><strong>$name</strong></div>";
+        else return "<div class='chapter'>$name</div>";
     }
     function displayTitle($name,$number){
         if ($name === '' || $name === null){
@@ -56,7 +56,7 @@
                 <?php echo displayNameOrChapter($chapterName,$chapterNumber)?>
                 <div>
                     <a class="mangaInfo" href="mangaInfo_Controller.php?MangaID=<?=$mangaID?>">
-                        <?=$mangaName?>
+                        <strong><?=$mangaName?></strong>
                     </a>
                 </div>
                 
@@ -78,7 +78,7 @@
                     
                     for($i=0;$i<count($pages);$i++){
                         ?>
-                        <img src="../IMG/<?=$mangaID?>/<?=$chapterID?>/<?=$pageLinks[$i]?>" class="img-fit-width" id="page-<?=$i+1?>" alt="Page <?=$i+1?>">
+                        <img src="../IMG/<?=$mangaID?>/<?=$chapterNumber?>/<?=$pageLinks[$i]?>" class="img-fit-width" id="page-<?=$i+1?>" alt="Page <?=$i+1?>">
                         <?php        
                     }
                     ?>    
@@ -158,7 +158,7 @@
                 <hr>
     
                 <!-- Comments -->
-                <a href="commentSection.php?commentSectionID=<?=$commentSection['CommentSectionID']?>">
+                <a href="comments_controller.php?commentsID=<?=$commentSection['CommentSectionID']?>">
                     <button class="btn" id = "comment-btn">
                         <i class="bi bi-chat-left"></i> <?=$commentSection['NumOfComments']?> Comments
                     </button>

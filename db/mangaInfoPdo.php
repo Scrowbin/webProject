@@ -40,14 +40,34 @@
         if ($rating==null) return 0;
         return $rating['Rating'];
     }
-    */
 
+    // function getCommentCountsPerChapter($mangaID){
+    //     return pdo_query(
+    //         'SELECT cs.CommentSectionID, c.ChapterID, cs.NumOfComments FROM chapter c join commentsection cs on c.ChapterID = cs.ChapterID where c.MangaID = ?',
+    //         $mangaID
+    //     );
+    // }
     function getCommentCountsPerChapter($mangaID){
         return pdo_query(
-            'SELECT c.ChapterID, cs.NumOfComments FROM chapter c join commentsection cs on c.CommentSectionID = cs.CommentSectionID where c.MangaID = ?',
+            '    SELECT 
+  cs.CommentSectionID, 
+  c.ChapterID, 
+  COUNT(cm.CommentID) AS NumOfComments
+FROM 
+  chapter c
+JOIN 
+  commentsection cs ON c.ChapterID = cs.ChapterID
+LEFT JOIN 
+  comment cm ON cm.CommentSectionID = cs.CommentSectionID
+WHERE 
+  c.MangaID = ?
+GROUP BY 
+  cs.CommentSectionID, c.ChapterID;',
             $mangaID
         );
     }
+
+
     /* Remove duplicate function definition - defined in LibraryAndRating.php
     function isBookmarked($userID, $mangaID) { // Swapped order for consistency
         $sql = 'SELECT 1 FROM bookmark WHERE UserID = ? AND MangaID = ?'; // Corrected order
