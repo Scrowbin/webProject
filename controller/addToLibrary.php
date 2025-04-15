@@ -3,7 +3,7 @@ session_start();
 require_once('../db/LibraryAndRating.php');
 if (!isset($_SESSION['userID'])) {
     $userID = getUserID($_SESSION['username']);
-    if ($userID==null)
+    if (!$userID)
         die("User not logged in");    
     $_SESSION['userID'] = $userID;
     

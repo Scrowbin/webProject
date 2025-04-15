@@ -27,8 +27,9 @@
         $i++;
     }
 
-// Include the view file, passing necessary variables
-// Variables available: $pages, $chapterInfo, $mangaInfo, $commentSection, $mangaID, 
-// $nextChapterID, $prevChapterID, $chapters, $pageLinks, $pageValues, $chapterID
-include __DIR__ . '/../PHP/mangaRead.php';
+
+    
+    
 ?>
+
+<?php include('../PHP/mangaRead.php')?>

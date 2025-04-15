@@ -21,33 +21,45 @@ $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
-    <!-- Swiper CSS (Nếu cần cho trang này) -->
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/> -->
-    <link rel="stylesheet" href="../CSS/navbar.css"> <!-- CSS for Navbar/Sidebar -->
-    <link rel="stylesheet" href="../CSS/mangaInfo.css"> <!-- CSS riêng của trang -->
+    
+    <link rel="stylesheet" href="../CSS/navbar.css"> 
+    <link rel="stylesheet" href="../CSS/mangaInfo.css">
     <title><?=$mangaNameOG?> - Mangadax</title>
 </head>
 <body>
     <?php include 'includes/navbar.php'; ?>
     <?php include 'includes/sidebar.php'; ?>
-    <div class="container mt-3 ">
+
+    <!-- Background Image Div (Moved Here) -->
+    <div class="bg-image">
+        <style>
+            .bg-image{
+                position: absolute; /* Keep absolute positioning */
+                top: 0;             /* Align to top */
+                left: 0;            /* Align to left */
+                width: 100%;        /* Full width */
+                height: 400px;       /* Specific height (adjust as needed) */
+                z-index: -1;        /* Behind content */
+
+                background: linear-gradient(to right,  
+                rgba(0, 0, 0, 0.7) 10%, 
+                rgba(0, 0, 0, 0.45) 50%,   /* Midpoint transition */
+                rgba(0, 0, 0, 0) 90%),   /* Fully transparent near the right */
+                url("../IMG/<?=$mangaID?>/<?=$image?>");  /* Background image - KEEP DYNAMIC */    
+                background-position: center 20%; 
+                background-repeat: no-repeat;
+                background-size: cover;
+                filter: blur(2.5px);            
+            }
+        </style>
+    </div>
+    
+    <div class="container mt-3 main-manga-info-container"> <!-- Added class for targeting -->
         <div class = "manga-container">
-            <?php 
-                // Construct the background style string
-                $bgImageUrl = "/phpCode/webProject/IMG/{$mangaID}/{$image}"; // Use absolute path
-                $bgStyle = sprintf(
-                    'background: linear-gradient(to right, rgba(0, 0, 0, 0.7) 10%%, rgba(0, 0, 0, 0.45) 50%%, rgba(0, 0, 0, 0) 90%%), url("%s");', 
-                    htmlspecialchars($bgImageUrl) // Escape the URL for safety
-                );
-            ?>
-            <div class="bg-image" style="<?= $bgStyle ?>">
-                <?php /* Style block removed, styles are now in CSS/mangaInfo.css */ ?>
-            </div>
             <div class="manga-card">
                 <!-- Left: Cover Image -->
                 <div class="manga-cover">
-                       <?php // Use absolute path for cover image too ?>
-                       <img src="/phpCode/webProject/IMG/<?= $mangaID ?>/<?= $image ?>" alt="Manga Cover">
+                        <img src="../IMG/<?=$mangaID?>/<?=$image?>" alt="Manga Cover">
                 </div>
         
                 <!-- Right: Details -->

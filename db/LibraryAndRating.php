@@ -3,7 +3,7 @@
     function getUserID ($username){
         $userID = pdo_query_one('SELECT user.UserID FROM account join user on
         account.username = user.Username where account.username = ?', $username);
-        if ($userID===null or $userID==='') return null;
+        if ($userID===null || $userID==='' || $userID === false) return null;
         return $userID['UserID'];
     }
 

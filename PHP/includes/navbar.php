@@ -5,8 +5,12 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 $is_logged_in = isset($_SESSION['username']);
 $username = $is_logged_in ? htmlspecialchars($_SESSION['username']) : 'Guest';
+
+// Define path prefix, default to empty string if not set by the including controller
+$pathPrefix = $pathPrefix ?? ''; 
+
 // Corrected path for default avatar
-$user_avatar = 'IMG/avatar_default.png'; // Path relative to index.php
+$user_avatar = $pathPrefix . 'IMG/avatar_default.png'; // Path relative to index.php
 ?>
 
 <!-- Navigation Bar -->
@@ -16,8 +20,9 @@ $user_avatar = 'IMG/avatar_default.png'; // Path relative to index.php
       <i class="bi bi-list fs-3"></i>
     </button>
     <?php // Link to index.php (homepage controller) ?>
-    <a class="navbar-brand text-white fw-bold d-flex align-items-center" href="/phpCode/webProject/index.php">
-       <img src="/phpCode/webProject/IMG/logo.png" alt="Logo" style="height: 30px; margin-right: 8px;"> 
+    <a class="navbar-brand text-white fw-bold d-flex align-items-center" href="<?= $pathPrefix ?>index.php">
+       <?php // Corrected path for logo ?>
+       <img src="<?= $pathPrefix ?>IMG/logo.png" alt="Logo" style="height: 30px; margin-right: 8px;"> 
        MangaDax
     </a>
     
@@ -55,7 +60,7 @@ $user_avatar = 'IMG/avatar_default.png'; // Path relative to index.php
 
           <nav class="nav flex-column user-modal-nav mb-2">
             <?php // Link to profile controller action ?>
-            <a class="nav-link text-white" href="controller/auth_controller.php?action=profile"><i class="bi bi-person me-2"></i> My Profile</a>
+            <a class="nav-link text-white" href="<?= $pathPrefix ?>controller/auth_controller.php?action=profile"><i class="bi bi-person me-2"></i> My Profile</a>
             <a class="nav-link text-white" href="#"><i class="bi bi-bookmark me-2"></i> My Follows</a>
             <a class="nav-link text-white" href="#"><i class="bi bi-list-ul me-2"></i> My Lists</a>
             <a class="nav-link text-white" href="#"><i class="bi bi-people me-2"></i> My Groups</a>
@@ -67,7 +72,7 @@ $user_avatar = 'IMG/avatar_default.png'; // Path relative to index.php
 
           <div class="d-flex justify-content-between mb-2 user-modal-actions px-2">
             <?php // Link to profile controller action ?>
-            <a href="controller/auth_controller.php?action=profile" class="text-decoration-none text-white d-flex align-items-center"><i class="bi bi-gear me-2"></i> Settings</a>
+            <a href="<?= $pathPrefix ?>controller/auth_controller.php?action=profile" class="text-decoration-none text-white d-flex align-items-center"><i class="bi bi-gear me-2"></i> Settings</a>
             <a href="#" class="text-decoration-none text-white d-flex align-items-center"><i class="bi bi-droplet me-2"></i> Theme</a>
           </div>
 
@@ -79,7 +84,7 @@ $user_avatar = 'IMG/avatar_default.png'; // Path relative to index.php
 
           <div class="d-grid gap-2 px-2">
              <?php // Link to logout controller action ?>
-             <a href="controller/auth_controller.php?action=logout" class="btn btn-sm btn-outline-light d-flex align-items-center justify-content-center" type="button"><i class="bi bi-box-arrow-right me-2"></i> Sign Out</a>
+             <a href="<?= $pathPrefix ?>controller/auth_controller.php?action=logout" class="btn btn-sm btn-outline-light d-flex align-items-center justify-content-center" type="button"><i class="bi bi-box-arrow-right me-2"></i> Sign Out</a>
           </div>
           <!---------- END LOGGED IN VIEW ---------->
 
@@ -98,9 +103,9 @@ $user_avatar = 'IMG/avatar_default.png'; // Path relative to index.php
           <hr class="user-modal-divider mb-3">
           <div class="d-grid gap-2">
             <?php // Link to login controller action ?>
-            <a href="controller/auth_controller.php?action=login" class="btn btn-primary btn-user-action sign-in-btn" type="button">Sign In</a>
+            <a href="<?= $pathPrefix ?>controller/auth_controller.php?action=login" class="btn btn-primary btn-user-action sign-in-btn" type="button">Sign In</a>
             <?php // Link to register controller action ?>
-            <a href="controller/auth_controller.php?action=register" class="text-center text-white-50 text-decoration-none small">Register</a>
+            <a href="<?= $pathPrefix ?>controller/auth_controller.php?action=register" class="text-center text-white-50 text-decoration-none small">Register</a>
           </div>
           <!---------- END GUEST VIEW ---------->
         <?php endif; ?>

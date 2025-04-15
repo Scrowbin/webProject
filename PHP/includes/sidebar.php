@@ -1,6 +1,8 @@
 <aside id="nav-sidebar">
   <div class="sidebar-header">
-    <a class="navbar-brand text-white fw-bold d-flex align-items-center sidebar-logo" href="index.php">
+  <a class="navbar-brand text-white fw-bold d-flex align-items-center" href="<?= $pathPrefix ?>index.php">
+       <?php // Corrected path for logo ?>
+       <img src="<?= $pathPrefix ?>IMG/logo.png" alt="Logo" style="height: 30px; margin-right: 8px;"> 
        MangaDax
     </a>
     <button class="btn text-white close-btn" type="button">
