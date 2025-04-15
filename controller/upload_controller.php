@@ -4,7 +4,7 @@
     //     exit('invalid mangaid');
     // }
     
-    $mangaID = $_GET['MangaID'] ?? 1;
+    $mangaID = $_GET['MangaID'] ?? null;
     $mangaInfo = getMangaInfo($mangaID);
     $authorsRaw = getMangaAuthors($mangaID);
     $artistsRaw = getMangaArtists($mangaID);

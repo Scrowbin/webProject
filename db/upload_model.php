@@ -23,3 +23,8 @@ function getUserID ($username){
     if ($userID===null or $userID==='') return null;
     return $userID['UserID'];
 }
+
+function makeComment($chapterID){
+    $sql = 'INSERT INTO comment_section (ChapterID) VALUES (?)';
+    pdo_execute($sql,$chapterID);
+}

@@ -47,10 +47,13 @@
                     break;
                 case "Hiatus":
                     echo "<span class=\"badge bg-warning ms-2 \"><strong>● PUBLICATION: Hiatus</strong></span>";
+                    break;
                 case "Completed":
                     echo "<span class=\"badge bg-primary ms-2\"><strong>● PUBLICATION: COMPLETED</strong></span>";
+                    break;
                 default:
                     echo "";
+                    break;
             }
       ?>
     </div>
@@ -58,11 +61,11 @@
 
   <form action="uploadChapter.php" method="POST" enctype="multipart/form-data">
     <div class="row mb-3">
-      <div class="col-md-4">
-        <input type="text" name="volume" class="form-control" placeholder="Volume Number">
+      <div class="col-md-2">
+        <input type="text" name="volume" class="form-control" placeholder="Volume">
       </div>
-      <div class="col-md-4">
-        <input type="text" name="chapter-number" class="form-control" placeholder="Chapter Number">
+      <div class="col-md-2">
+        <input type="text" name="chapter-number" class="form-control" placeholder="Chapter">
       </div>
       <div class="col-md-4">
         <input type="text" name="scangroup-name" class="form-control" placeholder="Scangroup Name if none leave empty or type 'none'">
@@ -92,6 +95,9 @@
       </div>
     </div>
 
+    <!-- filelist -->
+    <div id="fileList" class="mt-2 text-muted small"></div>
+
     <!-- Buttons -->
     <div class="d-flex justify-content-between">
       <button type="submit" name="upload_another" class="btn btn-outline-primary">Upload and add another chapter</button>
@@ -102,12 +108,29 @@
 
 <script>
   const fileInput = document.getElementById('fileInput');
+  const box = document.querySelector('.upload-box p');
   fileInput.addEventListener('change', function () {
-    const box = document.querySelector('.upload-box p');
+    const fileList = document.getElementById('fileList');
+    fileList.innerHTML = ''; // Clear previous
+
     if (this.files.length > 0) {
-      box.innerHTML = `${this.files.length} file(s) selected`;
+      const ul = document.createElement('ul');
+      ul.style.listStyle = 'none';
+      ul.style.paddingLeft = '0';
+
+      Array.from(this.files).forEach((file, i) => {
+        const li = document.createElement('li');
+        li.textContent = `${i + 1}. ${file.name}`;
+        ul.appendChild(li);
+      });
+
+      fileList.appendChild(ul);
+    } else {
+      fileList.textContent = 'No files selected.';
     }
+    
   });
+
 </script>
 
 </body>

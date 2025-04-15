@@ -19,38 +19,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $chapterNum = $_POST['chapter-number'] ?? 0;
     $chapterName = $_POST['chapter-name'] ?? '';
 
-    var_dump($mangaID,$volume,$chapterScangroup,$chapterNum,$chapterName);
     // Save chapter
     $chapterID = insertChapter($mangaID, $volume, $chapterScangroup, $username, $chapterName, $chapterNum);
-
+    makeComment($chapterID);
     // Upload directory
-    $uploadDir = "../IMG/$mangaID/$chapterID/";
+    $uploadDir = "../IMG/$mangaID/$chapterNum/";
     if (!is_dir($uploadDir)) {
         mkdir($uploadDir, 0777, true);
     }
 
-    // Sort files by filename
-    $files = [];
-    foreach ($_FILES['pages']['name'] as $i => $name) {
-        $files[] = [
-            'name' => $name,
-            'tmp_name' => $_FILES['pages']['tmp_name'][$i],
-        ];
-    }
+    // Loop through uploaded files
 
-    usort($files, fn($a, $b) => strcmp($a['name'], $b['name']));
-
-    foreach ($files as $i => $file) {
-        $targetPath = $uploadDir . basename($file['name']);
-        if (move_uploaded_file($file['tmp_name'], $targetPath)) {
-            insertPage($chapterID, $targetPath, $i + 1);
+    foreach ($_FILES['pages']['tmp_name'] as $i => $tmpName) {
+        $originalName = $_FILES['pages']['name'][$i];
+    
+        // Get file extension
+        $ext = pathinfo($originalName, PATHINFO_EXTENSION);
+        $ext = strtolower($ext); // ensure lowercase
+    
+        // Define new name like 1.png, 2.jpg, etc.
+        $newFileName = ($i + 1) . '.' . $ext;
+        $targetPath = $uploadDir . $newFileName;
+    
+        if (move_uploaded_file($tmpName, $targetPath)) {
+            // Insert with clean filename and page number
+            insertPage($chapterID, $newFileName, $i + 1);
         }
     }
 
     if (isset($_POST['upload_another'])) {
-        header("Location: ../views/upload_chapter_form.php?manga_id=$mangaID");
+        header("Location: upload_controller.php?MangaID=$mangaID");
     } else {
-        header("Location: ../views/manga_detail.php?id=$mangaID");
+        header("Location: mangaInfo_controller.php?MangaID=$mangaID");
     }
     exit;
 }

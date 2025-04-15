@@ -14,8 +14,11 @@ function renderPublicationStatus($status, $year) {
 //
 //Trả về dv thởi gian lớn nhất 
 function timeAgo($datetime) {
-    $now = new DateTime;
-    $ago = new DateTime($datetime);
+    $timezone = new DateTimeZone('Asia/Ho_Chi_Minh'); // or your actual timezone
+$now = new DateTime('now', $timezone);
+$ago = new DateTime($datetime, $timezone);
+    // $now = new DateTime;
+    // $ago = new DateTime($datetime);
     $diff = $now->diff($ago);
 
     if ($diff->y > 0) {
@@ -37,7 +40,6 @@ function timeAgo($datetime) {
     if ($diff->i > 0) {
         return $diff->i . ' minute' . ($diff->i > 1 ? 's' : '') . ' ago';
     }
-
     return 'just now';
 }
 
