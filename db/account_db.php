@@ -6,7 +6,7 @@ require_once __DIR__ . '/pdo.php';
  */
 function account_check_username_exists(string $username): bool
 {
-    $sql = "SELECT username FROM account WHERE username = ? LIMIT 1"; 
+    $sql = "SELECT username FROM account WHERE username = ? LIMIT 1";
     return pdo_query_one($sql, $username) !== false;
 }
 
@@ -15,7 +15,7 @@ function account_check_username_exists(string $username): bool
  */
 function account_check_email_exists(string $email): bool
 {
-    $sql = "SELECT email FROM account WHERE email = ? LIMIT 1"; 
+    $sql = "SELECT email FROM account WHERE email = ? LIMIT 1";
     return pdo_query_one($sql, $email) !== false;
 }
 
@@ -40,9 +40,9 @@ function account_add(string $username, string $hashed_password, string $email, s
  */
 function user_add(string $username): bool
 {
-    // UserID auto-increments. Using 0 for link FKs (adjust if needed).
-    $sql = "INSERT INTO user (Username, UserProfileLink, UserBannerLink, Joined)
-            VALUES (?, 0, 0, NOW())"; 
+    // UserID auto-increments. Avatar has a default value in the schema.
+    $sql = "INSERT INTO user (Username, Joined)
+            VALUES (?, NOW())";
     try {
         pdo_execute($sql, $username);
         return true;
@@ -68,7 +68,7 @@ function account_activate(string $token): bool
 {
     $account = account_find_by_token($token);
     if ($account && !$account['activated']) {
-        $sql = "UPDATE account SET activated = 1, activate_token = '' WHERE activate_token = ?"; 
+        $sql = "UPDATE account SET activated = 1, activate_token = '' WHERE activate_token = ?";
         try {
             pdo_execute($sql, $token);
             return true;
@@ -96,8 +96,8 @@ function account_find_by_username_or_email(string $usernameOrEmail): array|false
  */
 function account_find_by_username(string $username): array|false
 {
-    $sql = "SELECT username, email, activated FROM account WHERE username = ? LIMIT 1"; 
+    $sql = "SELECT username, email, activated FROM account WHERE username = ? LIMIT 1";
     return pdo_query_one($sql, $username);
 }
 
-?> 
+?>

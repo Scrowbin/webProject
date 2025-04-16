@@ -1,4 +1,4 @@
-<?php 
+<?php
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -6,12 +6,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>MangaDax Home</title>
-  
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
   <?php /* Corrected CSS paths relative to index.php */ ?>
-  <link rel="stylesheet" href="CSS/navbar.css"> 
+  <link rel="stylesheet" href="CSS/navbar.css">
   <link rel="stylesheet" href="CSS/home.css" />
 </head>
 <body>
@@ -22,6 +22,17 @@
   <!-- INSERT BLOCK BEFORE main -->
   <!-- Popular New Titles Section - Moved OUTSIDE main container -->
   <section class="section-container popular-new-titles-section full-width-section">
+    <!-- Background container for sliding backgrounds -->
+    <div class="featured-backgrounds-container">
+      <!-- Background for Slide 1 -->
+      <div class="featured-background active" data-slide="0" style="background-image: url('IMG/<?= $allManga[1]['MangaID'] ?>/<?= htmlspecialchars($allManga[1]['CoverLink']) ?>');"></div>
+      <!-- Background for Slide 2 -->
+      <div class="featured-background" data-slide="1" style="background-image: url('IMG/<?= $allManga[2]['MangaID'] ?>/<?= htmlspecialchars($allManga[2]['CoverLink']) ?>');"></div>
+      <!-- Background for Slide 3 -->
+      <div class="featured-background" data-slide="2" style="background-image: url('IMG/<?= $allManga[3]['MangaID'] ?>/<?= htmlspecialchars($allManga[3]['CoverLink']) ?>');"></div>
+      <!-- Background for Slide 4 -->
+      <div class="featured-background" data-slide="3" style="background-image: url('https://placehold.co/1200x450/555/ccc?text=Slide+4+BG');"></div>
+    </div>
     <!-- Add inner container for content alignment -->
     <div class="container-xxl">
       <div class="section-heading">
@@ -29,35 +40,42 @@
       </div>
 
       <!-- Featured Manga Carousel (Stays within the inner container) -->
-      <div id="featuredMangaCarousel" class="carousel slide">
+      <div id="featuredMangaCarousel" class="carousel slide carousel-fade">
         <div class="carousel-inner">
-          <!-- Slide 1 (Original Item) -->
+          <!-- Slide 1 (Zeikin de Katta Hon - MangaID 1) -->
           <div class="carousel-item active">
-             <?php /* Corrected image path relative to index.php */ ?>
-            <div class="featured-manga" data-bg-src="IMG/cover1.png">
+            <?php if (isset($allManga[1]) && $allManga[1]): ?>
+            <div class="featured-manga" data-bg-src="IMG/<?= $allManga[1]['MangaID'] ?>/<?= htmlspecialchars($allManga[1]['CoverLink']) ?>" onclick="window.location='controller/mangaInfo_Controller.php?MangaID=<?= $allManga[1]['MangaID'] ?>'">
               <div class="background-overlay"></div>
               <div class="featured-manga-content row g-0">
                 <div class="col-md-3 featured-cover-col">
-                  <?php /* Corrected image path relative to index.php */ ?>
-                  <img src="IMG/cover1.png" alt="Featured Manga Cover 1" class="img-fluid rounded featured-cover">
+                  <img src="IMG/<?= $allManga[1]['MangaID'] ?>/<?= htmlspecialchars($allManga[1]['CoverLink']) ?>" alt="<?= htmlspecialchars($allManga[1]['MangaNameOG']) ?>" class="img-fluid rounded featured-cover">
                   <img class="flag flag-featured" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
                 </div>
                 <div class="col-md-9 featured-details">
-                  <h3 class="title">Shio no Kikan ~Moto Yuusha no Ore, Jibun ga Soshiki Shita Chuunibyou Himitsu Kessha o Tomeru Tame ni...</h3>
+                  <h3 class="title"><?= htmlspecialchars($allManga[1]['MangaNameOG']) ?></h3>
                   <div class="genres mb-3">
-                    <span class="genre-tag">ACTION</span>
-                    <span class="genre-tag">ADVENTURE</span>
-                    <span class="genre-tag">COMEDY</span>
-                    <span class="genre-tag">FANTASY</span>
-                    <span class="genre-tag">ISEKAI</span>
+                    <?php if (isset($allManga[1]['tags'])): ?>
+                      <?php foreach ($allManga[1]['tags'] as $tag): ?>
+                        <span class="genre-tag"><?= strtoupper(htmlspecialchars($tag)) ?></span>
+                      <?php endforeach; ?>
+                    <?php endif; ?>
                   </div>
                   <div class="description-box mb-3">
-                    When he was in the third year of middle school, Hizaki Shiou was summoned to another world to save it. After defeating the Demon King, he was forcibly returned back to the present day. Yet another three years later, he is summoned to the other world once again, this time to stop the rampage of the secret society "Helheim."
-                    That organization was supposedly actually the one that he had founded during his chuunibyou phase, where he called himself the "Corpse King"—a dark past too embarrassing to remember!
-                    Someone seems to be impersonating the name of "Helheim" and tarnishing its reputation. To uncover the truth behind this mystery and clear the organization's name, the Corpse King reunites with his former subordinates—the "Undead Knights," who once made Helheim the strongest it had ever been.
+                    <?= htmlspecialchars($allManga[1]['MangaDiscription']) ?>
                   </div>
                   <div class="featured-bottom-row">
-                  <div class="author">Adashino Sotova, Sty</div>
+                    <div class="author">
+                      <?php
+                      $authorNames = [];
+                      if (isset($allManga[1]['authors'])) {
+                          foreach ($allManga[1]['authors'] as $author) {
+                              $authorNames[] = htmlspecialchars($author['AuthorName']);
+                          }
+                      }
+                      echo implode(', ', $authorNames);
+                      ?>
+                    </div>
                     <div class="featured-right-controls">
                       <div class="ranking-indicator">NO. 1</div>
                       <div class="featured-navigation-arrows">
@@ -75,78 +93,96 @@
                 </div>
               </div>
             </div>
+            <?php endif; ?>
           </div>
 
-          <!-- Slide 2 (Update content/images) -->
+          <!-- Slide 2 (Kaoru Hana wa Rin to Saku - MangaID 2) -->
           <div class="carousel-item">
-             <?php /* Corrected image path relative to index.php */ ?>
-            <div class="featured-manga" data-bg-src="IMG/cover2.jpg">
+            <?php if (isset($allManga[2]) && $allManga[2]): ?>
+            <div class="featured-manga" data-bg-src="IMG/<?= $allManga[2]['MangaID'] ?>/<?= htmlspecialchars($allManga[2]['CoverLink']) ?>" onclick="window.location='controller/mangaInfo_Controller.php?MangaID=<?= $allManga[2]['MangaID'] ?>'">
               <div class="background-overlay"></div>
               <div class="featured-manga-content row g-0">
                 <div class="col-md-3 featured-cover-col">
-                  <?php /* Corrected image path relative to index.php */ ?>
-                  <img src="IMG/cover2.jpg" alt="Akuyaku Reijou no Oyome-sama Cover" class="img-fluid rounded featured-cover">
+                  <img src="IMG/<?= $allManga[2]['MangaID'] ?>/<?= htmlspecialchars($allManga[2]['CoverLink']) ?>" alt="<?= htmlspecialchars($allManga[2]['MangaNameOG']) ?>" class="img-fluid rounded featured-cover">
                   <img class="flag flag-featured" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
                 </div>
-                <div class="col-md-9 featured-details d-flex flex-column"> <!-- Make this a flex column -->
-                  <div> <!-- Wrapper for top content -->
-                    <h3 class="title">Akuyaku Reijou no Oyome-sama</h3>
-                    <div class="genres mb-3">
-                      <span class="genre-tag genre-suggestive">SUGGESTIVE</span> <!-- Added specific class for potential styling -->
-                      <span class="genre-tag">DRAMA</span>
-                      <span class="genre-tag">FANTASY</span>
-                      <span class="genre-tag">GIRLS' LOVE</span>
-                      <span class="genre-tag">ROMANCE</span>
+                <div class="col-md-9 featured-details">
+                  <h3 class="title"><?= htmlspecialchars($allManga[2]['MangaNameOG']) ?></h3>
+                  <div class="genres mb-3">
+                    <?php if (isset($allManga[2]['tags'])): ?>
+                      <?php foreach ($allManga[2]['tags'] as $tag): ?>
+                        <span class="genre-tag"><?= strtoupper(htmlspecialchars($tag)) ?></span>
+                      <?php endforeach; ?>
+                    <?php endif; ?>
+                  </div>
+                  <div class="description-box mb-3">
+                    <?= htmlspecialchars($allManga[2]['MangaDiscription']) ?>
+                  </div>
+                  <div class="featured-bottom-row">
+                    <div class="author">
+                      <?php
+                      $authorNames = [];
+                      if (isset($allManga[2]['authors'])) {
+                          foreach ($allManga[2]['authors'] as $author) {
+                              $authorNames[] = htmlspecialchars($author['AuthorName']);
+                          }
+                      }
+                      echo implode(', ', $authorNames);
+                      ?>
                     </div>
-                  </div>
-                  <div class="description-box mb-3 flex-grow-1"> <!-- Allow description to grow -->
-                    One day, Karina, a lady who has been groomed to be queen, suddenly has her engagement broken by her fiancé, the prince. Now he is sending Karina into exile while standing beside her sister, Aurora, instead. Exiled to the far north, where monsters are said to dwell, Karina ventures out to investigate the identity of a disturbing sound and has a fateful encounter in the snow...? A predatory love fantasy between a lady sworn to revenge and a strange girl seeking love.
-                  </div>
-                  <div class="featured-bottom-row mt-auto"> <!-- Use mt-auto as fallback, flex-grow above should push it -->
-                    <div class="author">Kawano Akiko</div>
-                      <div class="featured-right-controls">
-                        <div class="ranking-indicator">NO. 2</div>
-                        <div class="featured-navigation-arrows">
-                          <button class="carousel-control-prev featured-carousel-control" type="button" data-bs-target="#featuredMangaCarousel" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                          </button>
-                          <button class="carousel-control-next featured-carousel-control" type="button" data-bs-target="#featuredMangaCarousel" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                          </button>
-                        </div>
+                    <div class="featured-right-controls">
+                      <div class="ranking-indicator">NO. 2</div>
+                      <div class="featured-navigation-arrows">
+                        <button class="carousel-control-prev featured-carousel-control" type="button" data-bs-target="#featuredMangaCarousel" data-bs-slide="prev">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next featured-carousel-control" type="button" data-bs-target="#featuredMangaCarousel" data-bs-slide="next">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Next</span>
+                        </button>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            <?php endif; ?>
           </div>
-
-          <!-- Slide 3 (Update content/images) -->
+          <!-- Slide 3 (Sousou no Frieren - MangaID 3) -->
           <div class="carousel-item">
-            <?php /* Using placeholder, path would be IMG/ if it existed */ ?>
-            <div class="featured-manga" data-bg-src="https://placehold.co/1200x450/444/ccc?text=Slide+3+BG">
+            <?php if (isset($allManga[3]) && $allManga[3]): ?>
+            <div class="featured-manga" data-bg-src="IMG/<?= $allManga[3]['MangaID'] ?>/<?= htmlspecialchars($allManga[3]['CoverLink']) ?>" onclick="window.location='controller/mangaInfo_Controller.php?MangaID=<?= $allManga[3]['MangaID'] ?>'">
               <div class="background-overlay"></div>
               <div class="featured-manga-content row g-0">
                 <div class="col-md-3 featured-cover-col">
-                   <?php /* Using placeholder, path would be IMG/ if it existed */ ?>
-                  <img src="https://placehold.co/250x350/1e1e1e/cccccc?text=Featured+3" alt="Featured Manga Cover 3" class="img-fluid rounded featured-cover">
-                  <img class="flag flag-featured" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
+                  <img src="IMG/<?= $allManga[3]['MangaID'] ?>/<?= htmlspecialchars($allManga[3]['CoverLink']) ?>" alt="<?= htmlspecialchars($allManga[3]['MangaNameOG']) ?>" class="img-fluid rounded featured-cover">
+                  <img class="flag flag-featured" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
                 </div>
                 <div class="col-md-9 featured-details">
-                  <h3 class="title">Custom Title for Slide 3</h3>
+                  <h3 class="title"><?= htmlspecialchars($allManga[3]['MangaNameOG']) ?></h3>
                   <div class="genres mb-3">
-                    <span class="genre-tag">COMEDY</span>
-                    <span class="genre-tag">FANTASY</span>
-                    <span class="genre-tag">ROMANCE</span>
+                    <?php if (isset($allManga[3]['tags'])): ?>
+                      <?php foreach ($allManga[3]['tags'] as $tag): ?>
+                        <span class="genre-tag"><?= strtoupper(htmlspecialchars($tag)) ?></span>
+                      <?php endforeach; ?>
+                    <?php endif; ?>
                   </div>
                   <div class="description-box mb-3">
-                    Here is the updated description for the third slide in the popular new titles carousel. Add relevant details here.
+                    <?= htmlspecialchars($allManga[3]['MangaDiscription']) ?>
                   </div>
                   <div class="featured-bottom-row">
-                  <div class="author">Author Name 3</div>
+                    <div class="author">
+                      <?php
+                      $authorNames = [];
+                      if (isset($allManga[3]['authors'])) {
+                          foreach ($allManga[3]['authors'] as $author) {
+                              $authorNames[] = htmlspecialchars($author['AuthorName']);
+                          }
+                      }
+                      echo implode(', ', $authorNames);
+                      ?>
+                    </div>
                     <div class="featured-right-controls">
                       <div class="ranking-indicator">NO. 3</div>
                       <div class="featured-navigation-arrows">
@@ -164,12 +200,13 @@
                 </div>
               </div>
             </div>
+            <?php endif; ?>
           </div>
 
           <!-- Slide 4 (Update content/images) -->
           <div class="carousel-item">
              <?php /* Using placeholder, path would be IMG/ if it existed */ ?>
-            <div class="featured-manga" data-bg-src="https://placehold.co/1200x450/555/ccc?text=Slide+4+BG">
+            <div class="featured-manga" data-bg-src="https://placehold.co/1200x450/555/ccc?text=Slide+4+BG" onclick="window.location='controller/mangaInfo_Controller.php?MangaID=4'">
               <div class="background-overlay"></div>
               <div class="featured-manga-content row g-0">
                 <div class="col-md-3 featured-cover-col">
@@ -188,7 +225,7 @@
                     Description for slide four goes here. Adjust content as needed for demonstration purposes.
                   </div>
                   <div class="featured-bottom-row">
-                  <div class="author">Another Author</div>
+                    <div class="author">Another Author</div>
                     <div class="featured-right-controls">
                       <div class="ranking-indicator">NO. 4</div>
                       <div class="featured-navigation-arrows">
@@ -223,25 +260,38 @@
           <i class="bi bi-arrow-right"></i>
         </a>
       </div>
-      
+
       <div class="latest-updates-grid">
         <!-- Column 1 (Visible by default) -->
         <div class="latest-updates-column">
-          <?php // Display Zeikin de Katta Hon first ?>
-          <?php if (isset($zeikinManga) && $zeikinManga): ?>
-          <a href="controller/mangaInfo_Controller.php?MangaID=<?= $zeikinManga['MangaID'] ?>" class="latest-item"> <?php /* Corrected parameter name */ ?>
-             <?php /* Corrected path using MangaID */ ?>
-            <img src="IMG/<?= $zeikinManga['MangaID'] ?>/<?= htmlspecialchars($zeikinManga['CoverLink']) ?>" alt="<?= htmlspecialchars($zeikinManga['MangaNameOG']) ?> Cover" class="latest-cover">
-            <div class="latest-details">
-              <div class="latest-title"><?= htmlspecialchars($zeikinManga['MangaNameOG']) ?></div>
-              <?php /* Placeholder chapter/group - replace if you fetch latest chapter info */ ?>
-              <div class="latest-chapter"><img src="https://mangadex.org/img/flags/jp.svg" class="flag-icon" alt="JP"> Latest Ch. ?</div>
-              <div class="latest-group"><i class="bi bi-people-fill"></i> Group?</div> 
-            </div>
-            <?php /* Placeholder meta - replace if you fetch info */ ?>
-            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i> ?</span><span class="latest-time">? ago</span></div>
-          </a>
-          <?php endif; ?>
+          <?php // Display all manga in the Latest Updates section ?>
+          <?php foreach ([1, 2, 3] as $mangaID): ?>
+            <?php if (isset($allManga[$mangaID]) && $allManga[$mangaID]): ?>
+              <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[$mangaID]['MangaID'] ?>" class="latest-item">
+                <img src="IMG/<?= $allManga[$mangaID]['MangaID'] ?>/<?= htmlspecialchars($allManga[$mangaID]['CoverLink']) ?>" alt="<?= htmlspecialchars($allManga[$mangaID]['MangaNameOG']) ?> Cover" class="latest-cover">
+                <div class="latest-details">
+                  <div class="latest-title"><?= htmlspecialchars($allManga[$mangaID]['MangaNameOG']) ?></div>
+                  <?php /* Placeholder chapter/group - replace if you fetch latest chapter info */ ?>
+                  <div class="latest-chapter"><img src="https://mangadex.org/img/flags/jp.svg" class="flag-icon" alt="JP"> Latest Ch. ?</div>
+                  <div class="latest-group"><i class="bi bi-people-fill"></i>
+                    <?php
+                    $authorNames = [];
+                    if (isset($allManga[$mangaID]['authors'])) {
+                        foreach ($allManga[$mangaID]['authors'] as $author) {
+                            $authorNames[] = htmlspecialchars($author['AuthorName']);
+                        }
+                        echo implode(', ', $authorNames);
+                    } else {
+                        echo 'Unknown Author';
+                    }
+                    ?>
+                  </div>
+                </div>
+                <?php /* Placeholder meta - replace if you fetch info */ ?>
+                <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i> ?</span><span class="latest-time">? ago</span></div>
+              </a>
+            <?php endif; ?>
+          <?php endforeach; ?>
           <?php // --- Original Hardcoded Items (for example) --- ?>
           <!-- Item 1 -->
           <a href="#" class="latest-item">
@@ -277,7 +327,7 @@
             <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">18 minutes ago</span></div>
           </a>
           <!-- Item 4 -->
-          <a href="#" class="latest-item">
+          <!-- <a href="#" class="latest-item">
              <?php /* Placeholders, paths would be IMG/ if exist */ ?>
             <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
             <div class="latest-details">
@@ -286,9 +336,9 @@
               <div class="latest-group"><i class="bi bi-people-fill"></i> Reaper_Scans</div>
             </div>
             <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">24 minutes ago</span></div>
-          </a>
+          </a> -->
           <!-- Item 5 -->
-           <a href="#" class="latest-item">
+           <!-- <a href="#" class="latest-item">
             <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
             <div class="latest-details">
               <div class="latest-title">Cool na Megami-sama to Issho ni Sundara, Amayakashi Sug...</div>
@@ -296,7 +346,7 @@
               <div class="latest-group"><i class="bi bi-people-fill"></i> O TRANSLATIONS</div>
           </div>
             <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">25 minutes ago</span></div>
-          </a>
+          </a> -->
           <!-- Item 6 -->
            <!-- <a href="#" class="latest-item">
             <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
@@ -464,107 +514,91 @@
           <i class="bi bi-arrow-right"></i>
         </a>
           </div>
-          
+
       <!-- Swiper Container -->
       <div class="swiper staff-picks-swiper">
         <div class="swiper-wrapper">
           <!-- Staff Picks Manga Items - Now Swiper Slides -->
           <div class="swiper-slide item"> <!-- Changed class -->
-          <a href="#">
+          <?php if (isset($allManga[1]) && $allManga[1]): ?>
+          <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[1]['MangaID'] ?>">
             <div class="image-container">
-              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+1" alt="Manga 1 Cover">
-              <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB"> 
+              <img src="IMG/<?= $allManga[1]['MangaID'] ?>/<?= htmlspecialchars($allManga[1]['CoverLink']) ?>" alt="<?= htmlspecialchars($allManga[1]['MangaNameOG']) ?> Cover">
+              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
               <div class="overlay">
                  <div class="description-box">
-                  Despite being from a prestigious noble family, Bridget, a failed daughter who made a contract with the weakest spirit, one day had her engagement broken off by the third prince, Joseph.
-
-However, no one sympathized with her, who was acting as a proud daughter at the behest of Joseph... At that time, Bridget meets the Duke's son Yuri, who is feared by those around him because of his overwhelming ability and cold personality.
-
-Two people who hate each other and repel each other. However, the encounter gradually changes their destinies. This is the story of a villainess who is despised for being incompetent and a villain who is shunned for being a genius who eventually fall in love.
-
-Despite her noble status, Brigitte contracts with the weakest type of spirit—and on that very same day, the prince publicly breaks off their engagement. No one shows much sympathy towards the once haughty young lady—except for the duke's son, Yuri, who attends the same magic academy. Yuri is feared for his incredible abilities and icy personality, but with him on her side, her fortunes might have changed…
+                  <?= htmlspecialchars($allManga[1]['MangaDiscription']) ?>
+                </div>
+                <div class="overlay-actions">
+                  <div class="overlay-buttons">
+                    <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[1]['MangaID'] ?>" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                    <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[1]['MangaID'] ?>" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                  </div>
+                </div>
               </div>
-                 <div class="overlay-actions"> 
-                   <div class="overlay-buttons">
-                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                     <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-              </div>
-                   <!-- Removed flag-overlay img -->
-              </div>
-            </div>
             </div>
           </a>
-           <a href="#" class="item-title-link"><h3 class="item-title">Manga 1</h3></a> 
+          <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[1]['MangaID'] ?>" class="item-title-link"><h3 class="item-title"><?= htmlspecialchars($allManga[1]['MangaNameOG']) ?></h3></a>
+          <?php endif; ?>
           </div>
 
-        <!-- Item 2 -->
+        <!-- Item 2 (Kaoru Hana wa Rin to Saku - MangaID 2) -->
             <div class="swiper-slide item"> <!-- Changed class -->
-          <a href="#">
+          <?php if (isset($allManga[2]) && $allManga[2]): ?>
+          <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[2]['MangaID'] ?>">
             <div class="image-container">
-              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+2" alt="Manga 2 Cover">
-              <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB"> 
-               <div class="overlay">
-                 <div class="description-box">
-                  Despite being from a prestigious noble family, Bridget, a failed daughter who made a contract with the weakest spirit, one day had her engagement broken off by the third prince, Joseph.
-
-                  However, no one sympathized with her, who was acting as a proud daughter at the behest of Joseph... At that time, Bridget meets the Duke's son Yuri, who is feared by those around him because of his overwhelming ability and cold personality.
-                  
-                  Two people who hate each other and repel each other. However, the encounter gradually changes their destinies. This is the story of a villainess who is despised for being incompetent and a villain who is shunned for being a genius who eventually fall in love.
-                  
-                  Despite her noble status, Brigitte contracts with the weakest type of spirit—and on that very same day, the prince publicly breaks off their engagement. No one shows much sympathy towards the once haughty young lady—except for the duke's son, Yuri, who attends the same magic academy. Yuri is feared for his incredible abilities and icy personality, but with him on her side, her fortunes might have changed… 
-                  Despite being from a prestigious noble family, Bridget, a failed daughter who made a contract with the weakest spirit, one day had her engagement broken off by the third prince, Joseph.
-
-However, no one sympathized with her, who was acting as a proud daughter at the behest of Joseph... At that time, Bridget meets the Duke's son Yuri, who is feared by those around him because of his overwhelming ability and cold personality.
-
-Two people who hate each other and repel each other. However, the encounter gradually changes their destinies. This is the story of a villainess who is despised for being incompetent and a villain who is shunned for being a genius who eventually fall in love.
-
-Despite her noble status, Brigitte contracts with the weakest type of spirit—and on that very same day, the prince publicly breaks off their engagement. No one shows much sympathy towards the once haughty young lady—except for the duke's son, Yuri, who attends the same magic academy. Yuri is feared for his incredible abilities and icy personality, but with him on her side, her fortunes might have changed…
-              </div>
-                 <div class="overlay-actions"> 
-                   <div class="overlay-buttons">
-                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                     <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-              </div>
-                    <!-- Removed flag-overlay img -->
+              <img src="IMG/<?= $allManga[2]['MangaID'] ?>/<?= htmlspecialchars($allManga[2]['CoverLink']) ?>" alt="<?= htmlspecialchars($allManga[2]['MangaNameOG']) ?> Cover">
+              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
+              <div class="overlay">
+                <div class="description-box">
+                  <?= htmlspecialchars($allManga[2]['MangaDiscription']) ?>
+                </div>
+                <div class="overlay-actions">
+                  <div class="overlay-buttons">
+                    <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[2]['MangaID'] ?>" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                    <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[2]['MangaID'] ?>" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
           </a>
-           <a href="#" class="item-title-link"><h3 class="item-title">Manga 2</h3></a> 
-              </div>
-        <!-- Item 3 -->
+          <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[2]['MangaID'] ?>" class="item-title-link"><h3 class="item-title"><?= htmlspecialchars($allManga[2]['MangaNameOG']) ?></h3></a>
+          <?php endif; ?>
+          </div>
+        <!-- Item 3 (Sousou no Frieren - MangaID 3) -->
           <div class="swiper-slide item"> <!-- Changed class -->
-          <a href="#">
+          <?php if (isset($allManga[3]) && $allManga[3]): ?>
+          <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[3]['MangaID'] ?>">
             <div class="image-container">
-              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+3" alt="Manga 3 Cover">
-               <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB"> 
-               <div class="overlay">
-                 <div class="description-box">
-                   This is a placeholder description for Manga 3.
+              <img src="IMG/<?= $allManga[3]['MangaID'] ?>/<?= htmlspecialchars($allManga[3]['CoverLink']) ?>" alt="<?= htmlspecialchars($allManga[3]['MangaNameOG']) ?> Cover">
+              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
+              <div class="overlay">
+                <div class="description-box">
+                  <?= htmlspecialchars($allManga[3]['MangaDiscription']) ?>
+                </div>
+                <div class="overlay-actions">
+                  <div class="overlay-buttons">
+                    <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[3]['MangaID'] ?>" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                    <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[3]['MangaID'] ?>" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                  </div>
+                </div>
               </div>
-                 <div class="overlay-actions"> 
-                   <div class="overlay-buttons">
-                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                     <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-              </div>
-                    <!-- Removed flag-overlay img -->
             </div>
-          </div>
-              </div>
           </a>
-           <a href="#" class="item-title-link"><h3 class="item-title">Manga 3</h3></a> 
-              </div>
+          <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[3]['MangaID'] ?>" class="item-title-link"><h3 class="item-title"><?= htmlspecialchars($allManga[3]['MangaNameOG']) ?></h3></a>
+          <?php endif; ?>
+          </div>
          <!-- Item 4 -->
           <div class="swiper-slide item"> <!-- Changed class -->
           <a href="#">
             <div class="image-container">
               <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+4" alt="Manga 4 Cover">
-               <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB"> 
+               <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
                <div class="overlay">
                  <div class="description-box">
                     This is a placeholder description for Manga 4.
               </div>
-                 <div class="overlay-actions"> 
+                 <div class="overlay-actions">
                    <div class="overlay-buttons">
                      <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
                      <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
@@ -574,19 +608,19 @@ Despite her noble status, Brigitte contracts with the weakest type of spirit—a
               </div>
               </div>
           </a>
-           <a href="#" class="item-title-link"><h3 class="item-title">Manga 4</h3></a> 
+           <a href="#" class="item-title-link"><h3 class="item-title">Manga 4</h3></a>
               </div>
          <!-- Item 5 -->
           <div class="swiper-slide item"> <!-- Changed class -->
           <a href="#">
             <div class="image-container">
               <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+5" alt="Manga 5 Cover">
-               <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB"> 
+               <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
                <div class="overlay">
                  <div class="description-box">
                     This is a placeholder description for Manga 5.
             </div>
-                 <div class="overlay-actions"> 
+                 <div class="overlay-actions">
                    <div class="overlay-buttons">
                      <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
                      <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
@@ -596,19 +630,19 @@ Despite her noble status, Brigitte contracts with the weakest type of spirit—a
               </div>
               </div>
           </a>
-           <a href="#" class="item-title-link"><h3 class="item-title">Manga 5</h3></a> 
+           <a href="#" class="item-title-link"><h3 class="item-title">Manga 5</h3></a>
             </div>
         <!-- Item 6 -->
           <div class="swiper-slide item"> <!-- Changed class -->
            <a href="#">
             <div class="image-container">
                <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+6" alt="Manga 6 Cover">
-               <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB"> 
+               <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
                <div class="overlay">
                  <div class="description-box">
                    This is a placeholder description for Manga 6.
           </div>
-                 <div class="overlay-actions"> 
+                 <div class="overlay-actions">
                    <div class="overlay-buttons">
                      <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
                      <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
@@ -618,19 +652,19 @@ Despite her noble status, Brigitte contracts with the weakest type of spirit—a
               </div>
             </div>
            </a>
-           <a href="#" class="item-title-link"><h3 class="item-title">Manga 6</h3></a> 
+           <a href="#" class="item-title-link"><h3 class="item-title">Manga 6</h3></a>
       </div>
         <!-- Item 7 -->
           <div class="swiper-slide item"> <!-- Changed class -->
            <a href="#">
           <div class="image-container">
                <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+7" alt="Manga 7 Cover">
-               <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB"> 
+               <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
             <div class="overlay">
                  <div class="description-box">
                    This is a placeholder description for Manga 7.
             </div>
-                 <div class="overlay-actions"> 
+                 <div class="overlay-actions">
                    <div class="overlay-buttons">
                      <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
                      <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
@@ -640,7 +674,7 @@ Despite her noble status, Brigitte contracts with the weakest type of spirit—a
                </div>
             </div>
            </a>
-           <a href="#" class="item-title-link"><h3 class="item-title">Manga 7</h3></a> 
+           <a href="#" class="item-title-link"><h3 class="item-title">Manga 7</h3></a>
         </div>
         <!-- Item 8 -->
         <div class="swiper-slide item"> <!-- Changed class -->
@@ -652,7 +686,7 @@ Despite her noble status, Brigitte contracts with the weakest type of spirit—a
                  <div class="description-box">
                    This is a placeholder description for Manga 8.
             </div>
-                 <div class="overlay-actions"> 
+                 <div class="overlay-actions">
                    <div class="overlay-buttons">
                      <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
                      <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
@@ -662,7 +696,7 @@ Despite her noble status, Brigitte contracts with the weakest type of spirit—a
                </div>
             </div>
            </a>
-           <a href="#" class="item-title-link"><h3 class="item-title">Manga 8</h3></a> 
+           <a href="#" class="item-title-link"><h3 class="item-title">Manga 8</h3></a>
         </div>
         <!-- Item 9 -->
         <div class="swiper-slide item"> <!-- Changed class -->
@@ -674,7 +708,7 @@ Despite her noble status, Brigitte contracts with the weakest type of spirit—a
                  <div class="description-box">
                    This is a placeholder description for Manga 9.
                  </div>
-                 <div class="overlay-actions"> 
+                 <div class="overlay-actions">
                    <div class="overlay-buttons">
               <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
               <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
@@ -684,19 +718,19 @@ Despite her noble status, Brigitte contracts with the weakest type of spirit—a
         </div>
             </div>
            </a>
-           <a href="#" class="item-title-link"><h3 class="item-title">Manga 9</h3></a> 
+           <a href="#" class="item-title-link"><h3 class="item-title">Manga 9</h3></a>
         </div>
         <!-- Item 10 -->
         <div class="swiper-slide item"> <!-- Changed class -->
            <a href="#">
           <div class="image-container">
                <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+10" alt="Manga 10 Cover">
-               <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB"> 
+               <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
              <div class="overlay">
                  <div class="description-box">
                    This is a placeholder description for Manga 10.
             </div>
-                 <div class="overlay-actions"> 
+                 <div class="overlay-actions">
                    <div class="overlay-buttons">
                      <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
                      <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
@@ -706,7 +740,7 @@ Despite her noble status, Brigitte contracts with the weakest type of spirit—a
             </div>
           </div>
            </a>
-           <a href="#" class="item-title-link"><h3 class="item-title">Manga 10</h3></a> 
+           <a href="#" class="item-title-link"><h3 class="item-title">Manga 10</h3></a>
         </div>
 
         </div> <!-- End swiper-wrapper -->
@@ -731,7 +765,7 @@ Despite her noble status, Brigitte contracts with the weakest type of spirit—a
           <i class="bi bi-arrow-right"></i>
         </a>
       </div>
-      
+
       <div class="swiper self-published-swiper"> <!-- Swiper Container -->
         <div class="swiper-wrapper">
         <!-- Self-Published Manga Items -->
@@ -757,7 +791,7 @@ Despite her noble status, Brigitte contracts with the weakest type of spirit—a
               <h3 class="item-title">Manga 1</h3> <!-- Use h3 and class -->
           </a>
         </div>
-        
+
           <div class="swiper-slide item"> <!-- Swiper Slide -->
           <a href="#">
             <div class="image-container">
@@ -849,7 +883,7 @@ Despite her noble status, Brigitte contracts with the weakest type of spirit—a
               <h3 class="item-title">Manga 5</h3> <!-- Use h3 and class -->
           </a>
         </div>
-        
+
         <!-- Item 6 -->
           <div class="swiper-slide item"> <!-- Swiper Slide -->
             <a href="#">
@@ -930,7 +964,7 @@ Despite her noble status, Brigitte contracts with the weakest type of spirit—a
             </a>
           <a href="#" class="item-title-link"><h3 class="item-title">Manga 10</h3></a>
       </div>
-      
+
         </div> <!-- End swiper-wrapper -->
 
         <!-- Add Pagination -->
@@ -950,7 +984,7 @@ Despite her noble status, Brigitte contracts with the weakest type of spirit—a
           <i class="bi bi-arrow-right"></i> Seasonal: Spring 2025
         </a>
       </div>
-      
+
       <div class="swiper featured-items-swiper"> <!-- Swiper Container -->
         <div class="swiper-wrapper">
         <!-- Featured Manga Items -->
@@ -1091,7 +1125,7 @@ Despite her noble status, Brigitte contracts with the weakest type of spirit—a
               <h3 class="item-title">Manga 6</h3> <!-- Use h3 and class -->
           </a>
         </div>
-        
+
         <!-- Item 7 -->
           <div class="swiper-slide item"> <!-- Swiper Slide -->
              <a href="#">
@@ -1156,7 +1190,7 @@ Despite her noble status, Brigitte contracts with the weakest type of spirit—a
             </a>
           <a href="#" class="item-title-link"><h3 class="item-title">Manga 10</h3></a>
       </div>
-      
+
         </div> <!-- End swiper-wrapper -->
 
         <!-- Add Pagination -->
@@ -1176,32 +1210,36 @@ Despite her noble status, Brigitte contracts with the weakest type of spirit—a
           <i class="bi bi-arrow-right"></i>
         </a>
       </div>
-      
+
       <div class="swiper recently-added-swiper"> <!-- Swiper Container -->
         <div class="swiper-wrapper">
         <!-- Recently Added Manga Items -->
+        <?php foreach ([1, 2, 3] as $mangaID): ?>
           <div class="swiper-slide item"> <!-- Swiper Slide -->
-          <a href="#">
+          <?php if (isset($allManga[$mangaID]) && $allManga[$mangaID]): ?>
+          <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[$mangaID]['MangaID'] ?>">
             <div class="image-container">
-              <img src="https://placehold.co/150x210/1a1a1a/cccccc?text=Cover" alt="Recent 1">
-              <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="EN">
-                 <div class="overlay">
-                   <div class="description-box">
-                     Short manga description here
-                   </div>
-                   <div class="overlay-actions">
-                     <div class="overlay-buttons">
-                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                     </div>
-                   </div>
-                 </div>
+              <img src="IMG/<?= $allManga[$mangaID]['MangaID'] ?>/<?= htmlspecialchars($allManga[$mangaID]['CoverLink']) ?>" alt="<?= htmlspecialchars($allManga[$mangaID]['MangaNameOG']) ?> Cover">
+              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
+              <div class="overlay">
+                <div class="description-box">
+                  <?= htmlspecialchars(substr($allManga[$mangaID]['MangaDiscription'], 0, 200)) ?>...
+                </div>
+                <div class="overlay-actions">
+                  <div class="overlay-buttons">
+                    <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[$mangaID]['MangaID'] ?>" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                    <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[$mangaID]['MangaID'] ?>" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                  </div>
+                </div>
+              </div>
             </div>
           </a>
-           <a href="#" class="item-title-link">
-              <h3 class="item-title">April Fool's Collection 2025</h3> <!-- Use h3 and class -->
+          <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[$mangaID]['MangaID'] ?>" class="item-title-link">
+            <h3 class="item-title"><?= htmlspecialchars($allManga[$mangaID]['MangaNameOG']) ?></h3>
           </a>
+          <?php endif; ?>
         </div>
+        <?php endforeach; ?>
 
            <div class="swiper-slide item"> <!-- Swiper Slide -->
           <a href="#">
@@ -1371,7 +1409,7 @@ Despite her noble status, Brigitte contracts with the weakest type of spirit—a
             </a>
             <a href="#" class="item-title-link"><h3 class="item-title">Manga 10</h3></a>
       </div>
-      
+
         </div> <!-- End swiper-wrapper -->
 
         <!-- Add Pagination -->
@@ -1386,7 +1424,105 @@ Despite her noble status, Brigitte contracts with the weakest type of spirit—a
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <?php /* Corrected JS paths relative to index.php */ ?>
-  <script src="JS/navbar.js"></script> 
+  <script src="JS/navbar.js"></script>
   <script src="JS/home.js"></script>
+  <script>
+    // Prevent click events from bubbling up from navigation controls
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get all navigation controls in the featured carousel
+      const navControls = document.querySelectorAll('.featured-bottom-row .featured-right-controls');
+
+      // Add event listener to each control to stop propagation
+      navControls.forEach(control => {
+        control.addEventListener('click', function(e) {
+          e.stopPropagation(); // Prevent the click from bubbling up to the parent
+        });
+      });
+
+      // Initialize the carousel with custom options
+      const featuredCarousel = new bootstrap.Carousel(document.getElementById('featuredMangaCarousel'), {
+        interval: 5000, // Change slides every 5 seconds
+        ride: 'carousel', // Auto-play the carousel
+        wrap: true, // Loop through slides
+        touch: true, // Enable touch swiping on mobile
+        pause: 'hover' // Pause on hover
+      });
+
+      // Add smooth transition effect
+      const carouselElement = document.getElementById('featuredMangaCarousel');
+      carouselElement.addEventListener('slide.bs.carousel', function (e) {
+        const activeItem = this.querySelector('.active');
+        const nextItem = e.relatedTarget;
+        const currentIndex = [...this.querySelectorAll('.carousel-item')].indexOf(activeItem);
+        const nextIndex = [...this.querySelectorAll('.carousel-item')].indexOf(nextItem);
+        const direction = e.direction; // 'left' for next, 'right' for prev
+
+        // Remove any existing transition classes
+        activeItem.classList.remove('sliding-out-left', 'sliding-out-right', 'sliding-in-left', 'sliding-in-right');
+        nextItem.classList.remove('sliding-out-left', 'sliding-out-right', 'sliding-in-left', 'sliding-in-right');
+
+        // Add custom transition classes based on direction
+        if (direction === 'left') { // Next button - slide from right to left
+          activeItem.classList.add('sliding-out-left');
+          nextItem.classList.add('sliding-in-right');
+        } else { // Prev button - slide from left to right
+          activeItem.classList.add('sliding-out-right');
+          nextItem.classList.add('sliding-in-left');
+        }
+
+        // Sync background with carousel
+        const backgrounds = document.querySelectorAll('.featured-background');
+        const currentBg = document.querySelector(`.featured-background[data-slide="${currentIndex}"]`);
+        const nextBg = document.querySelector(`.featured-background[data-slide="${nextIndex}"]`);
+
+        // Reset all backgrounds - remove all animation classes
+        backgrounds.forEach(bg => {
+          bg.classList.remove('active', 'slide-out-left', 'slide-out-right', 'slide-in-left', 'slide-in-right');
+          // Also remove any inline styles that might interfere
+          bg.style.transform = '';
+          bg.style.opacity = '';
+        });
+
+        // Make sure current background is visible before starting animation
+        currentBg.classList.add('active');
+
+        // Set direction based on slide direction
+        if (direction === 'left') { // Next button - slide from right to left
+          // Start animations immediately to sync with carousel
+          requestAnimationFrame(() => {
+            // Start the animations
+            currentBg.classList.remove('active');
+            currentBg.classList.add('slide-out-left');
+            nextBg.classList.add('slide-in-right');
+          });
+        } else { // Prev button - slide from left to right
+          // Start animations immediately to sync with carousel
+          requestAnimationFrame(() => {
+            // Start the animations
+            currentBg.classList.remove('active');
+            currentBg.classList.add('slide-out-right');
+            nextBg.classList.add('slide-in-left');
+          });
+        }
+
+        // Remove classes after transition completes
+        setTimeout(function() {
+          // Clean up carousel item classes
+          activeItem.classList.remove('sliding-out-left', 'sliding-out-right');
+          nextItem.classList.remove('sliding-in-left', 'sliding-in-right');
+
+          // Reset background classes and set active class
+          backgrounds.forEach(bg => {
+            // Remove all animation classes
+            bg.classList.remove('slide-out-left', 'slide-out-right', 'slide-in-left', 'slide-in-right');
+            // Remove active class from all backgrounds
+            bg.classList.remove('active');
+          });
+          // Set active class only on the current visible background
+          nextBg.classList.add('active');
+        }, 600); // Match the transition duration in CSS
+      });
+    });
+  </script>
 </body>
 </html>

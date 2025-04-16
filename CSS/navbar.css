@@ -49,7 +49,7 @@
   border-radius: 4px;
   padding: 6px 12px;
   transition: background-color 0.3s ease, border-color 0.3s ease, width 0.3s ease;
-  width: 250px; 
+  width: 250px;
   height: 38px;
   display: flex; /* Align items */
   align-items: center; /* Center items vertically */
@@ -99,16 +99,22 @@
    ========================================================================== */
 body.sidebar-open {
   /* Padding adjustment might not be needed if navbar is not fixed */
-  /* padding-left: 280px; */ 
+  /* padding-left: 280px; */
   overflow: hidden; /* Prevent body scroll when sidebar is open */
+
+  /* Push content to the right when sidebar is open */
+  .page-wrapper {
+    transform: translateX(280px);
+  }
 }
 
-/* Hide hamburger when sidebar is open (if needed) */
-/* body.sidebar-open #hamburger-btn {
+/* Hide hamburger, logo and brand text in navbar when sidebar is open */
+body.sidebar-open #hamburger-btn,
+body.sidebar-open .navbar .navbar-brand {
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.1s ease, visibility 0.1s ease;
-} */
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
 
 #nav-sidebar {
   background-color: #1f1f1f;
@@ -271,33 +277,39 @@ body:not(.sidebar-open) #hamburger-btn {
   visibility: visible;
 }
 
+/* Add transition to page-wrapper for smooth sidebar open/close */
+.page-wrapper {
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(0);
+}
+
 /* ==========================================================================
    MODALS (User Modal)
    ========================================================================== */
 
 .user-modal-dialog {
-  position: absolute; 
+  position: absolute;
   top: 55px; /* Position relative to navbar */
-  right: 10px; 
-  margin: 0; 
+  right: 10px;
+  margin: 0;
   max-width: 280px;
   z-index: 1050; /* Above navbar scrolled state, below sidebar */
 }
 
 .user-modal-content {
-  background-color: #262626; 
-  color: #e0e0e0; 
+  background-color: #262626;
+  color: #e0e0e0;
   border: 1px solid #333;
   border-radius: 6px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.5); 
-  max-height: calc(100vh - 70px); 
-  display: flex; 
-  flex-direction: column; 
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  max-height: calc(100vh - 70px);
+  display: flex;
+  flex-direction: column;
 }
 
 .user-modal-body {
   padding: 0.75rem;
-  overflow-y: auto; 
+  overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #4F4F4F transparent;
 }
@@ -330,18 +342,18 @@ body:not(.sidebar-open) #hamburger-btn {
 }
 
 .user-modal-divider {
-  border-color: #444; 
+  border-color: #444;
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
 }
 
 .user-modal-actions {
   padding: 0 0.5rem;
-  margin-bottom: 0.75rem !important; 
+  margin-bottom: 0.75rem !important;
 }
 
 .user-modal-actions a {
-  color: #b0b0b0; 
+  color: #b0b0b0;
   font-size: 0.85rem;
   display: flex;
   flex-direction: column;
@@ -386,8 +398,8 @@ body:not(.sidebar-open) #hamburger-btn {
 }
 
 .beta-badge {
-  background-color: #ff9800 !important; 
-  color: #111 !important; 
+  background-color: #ff9800 !important;
+  color: #111 !important;
   font-weight: bold;
   font-size: 0.6rem;
   padding: 2px 4px;
@@ -396,8 +408,8 @@ body:not(.sidebar-open) #hamburger-btn {
 }
 
 .all-badge {
-  background-color: #444 !important; 
-  color: #ccc !important; 
+  background-color: #444 !important;
+  color: #ccc !important;
   font-size: 0.6rem;
   padding: 2px 4px;
   border-radius: 3px;
@@ -409,7 +421,7 @@ body:not(.sidebar-open) #hamburger-btn {
 }
 
 .sign-in-btn {
-  background-color: #FF6740 !important; 
+  background-color: #FF6740 !important;
   border-color: #FF6740 !important;
   font-weight: bold;
   padding: 0.5rem;
@@ -417,7 +429,7 @@ body:not(.sidebar-open) #hamburger-btn {
 }
 
 .sign-in-btn:hover {
-  background-color: #e65c3a !important; 
+  background-color: #e65c3a !important;
   border-color: #e65c3a !important;
 }
 
@@ -443,4 +455,4 @@ body:not(.sidebar-open) #hamburger-btn {
 
 .modal-backdrop.show {
   opacity: 0.75;
-} 
+}
