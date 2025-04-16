@@ -55,5 +55,52 @@ function displayNameOrChapter($name,$number){
     }
     else return "<div class='chapter'>$name</div>";
 }
+function renderPagination($currentPage, $totalPages, $baseUrl = '?page=') {
+    echo '<ul class="pagination">';
 
+    // Previous button
+    if ($currentPage > 1) {
+        echo '<li class="page-item">
+                <a class="page-link" href="' . $baseUrl . ($currentPage - 1) . '">&laquo;</a>
+              </li>';
+    }
+
+    // Always show page 1
+    echo '<li class="page-item ' . ($currentPage == 1 ? 'active orange' : '') . '">
+            <a class="page-link" href="' . $baseUrl . '1">1</a>
+          </li>';
+
+    // Dots after 1
+    if ($currentPage > 4) {
+        echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
+    }
+
+    // Pages around current
+    for ($i = max(2, $currentPage - 1); $i <= min($totalPages - 1, $currentPage + 1); $i++) {
+        echo '<li class="page-item ' . ($currentPage == $i ? 'active orange' : '') . '">
+                <a class="page-link" href="' . $baseUrl . $i . '">' . $i . '</a>
+              </li>';
+    }
+
+    // Dots before last
+    if ($currentPage < $totalPages - 3) {
+        echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
+    }
+
+    // Last page
+    if ($totalPages > 1) {
+        echo '<li class="page-item ' . ($currentPage == $totalPages ? 'active orange' : '') . '">
+                <a class="page-link" href="' . $baseUrl . $totalPages . '">' . $totalPages . '</a>
+              </li>';
+    }
+
+    // Next button
+    if ($currentPage < $totalPages) {
+        echo '<li class="page-item">
+                <a class="page-link" href="' . $baseUrl . ($currentPage + 1) . '">&raquo;</a>
+              </li>';
+    }
+
+    echo '</ul>';
+}
 ?>

@@ -64,4 +64,14 @@
         ";
         return pdo_query_int($sql,$userID, $limit, $offset);
     }
+
+    function getLibrary($userID,$limit){
+        $sql = "SELECT m.* from manga m
+                JOIN bookmark b 
+                ON m.MangaID = b.MangaID
+                WHERE b.UserID = ?
+                ORDER BY m.MangaID DESC
+                LIMIT ?";
+        return pdo_query_int($sql,$userID,$limit);
+    }
 ?>
