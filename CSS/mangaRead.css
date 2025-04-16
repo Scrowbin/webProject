@@ -51,6 +51,18 @@ html{
 }
 
 /* topReaderbar */
+.chapter{
+    font-size: 18px;
+    font-family: sans-serif;
+
+}
+.mangaInfo{
+    text-decoration: none !important; 
+    color: #ff7450 !important;
+    font-size: 18px;
+    font-family: sans-serif;
+
+}
 .row{
     display: flex;
     gap: 5px;
@@ -114,6 +126,85 @@ button[name="menu"]:hover {
     width: 100%;
     height: 40px;
 }
+/* manga name and chaptername  */
+.inline-info {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* space between manga and chapter */
+    align-items: start;
+    font-family: sans-serif;
+}
+.right-manga-info,
+.right-chapter {
+    display: flex;
+    gap: 6px; /* space between icon and text */
+}
+
+.right-manga a {
+    color: #ff5722;
+    text-decoration: none;
+}
+
+/*pin and close btn  */
+#close-btn,
+#pin-btn {
+    background-color: #f1f1f1;
+    border: none;
+    border-radius: 8px;
+    padding: 5px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+    margin-right: 8px;
+}
+
+#close-btn:hover,
+#pin-btn:hover {
+    background-color: #e0e0e0;
+    transform: scale(1.05);
+}
+
+#close-btn i,
+#pin-btn i {
+    color: #333;
+}
+
+
+/* the two page transverse buttons  */
+
+
+.page-selector .btn, .chapter-selector .btn {
+    height: 100%;
+    width: 30px;
+    color: #242424;
+    font-size: 18px;
+    font-family: sans-serif;
+    background: #f8f4f4;
+    border: none;
+    
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 8px 12px;
+ 
+    transition: background-color 0.2s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.page-selector .btn:hover, .chapter-selector .btn:hover{
+    cursor: pointer;
+    background-color: #e2e6ea;
+    transform: scale(1.05);
+}
+.nav-btn i {
+    color: #949494;
+}
+
+
+
+
 
 /* Page/chapter label */
 .page-label {
@@ -160,23 +251,13 @@ button[name="menu"]:hover {
     height: 50px;
 }
 
-.page-selector .btn, .chapter-selector .btn {
-    height: 100%;
-    width: 50px;
-    color: #242424;
-    font-size: 18px;
-    font-family: sans-serif;
-    background: #f8f4f4;
-    border: none;
-}
 
-.page-selector .btn:hover, .chapter-selector .btn:hover{
-    cursor: pointer;
-}
 
 .dropdown-container {
     display: flex;
     flex-direction: column;
+    border: 0.5px solid #ddd;
+    border-radius: 6px;
     position: relative;
     width: 100%;
     height: 100%;
@@ -188,9 +269,10 @@ button[name="menu"]:hover {
     width: 100%;
     padding: 5px;
     font-size: 18px;
+    border: 0.5px solid #ddd;
+    border-radius: 6px;
     font-family: sans-serif;
     background: #f8f4f4;
-    border: none;
     color: #242424;
 }
 
@@ -226,7 +308,8 @@ hr{ margin: 20px auto; }
     font-size: 18px;
     font-family: sans-serif;
     background: #f8f4f4;
-    border: none;
+    border: 0.5px solid #ddd;
+    border-radius: 6px;
 }
 
 .reader-btn:hover{
@@ -264,10 +347,7 @@ img:hover{
 /*  */
 /* Manga Container */
 /*  */
-.mangaInfo{
-    text-decoration: none !important; 
-    color: #ff7450 !important;
-}
+
 
 #page-container{
     display: flex;

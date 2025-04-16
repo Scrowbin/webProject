@@ -56,6 +56,7 @@
         return $prev['ChapterID'] ?? null;
     }
 
+    
     function getCommentSection($chapterID) {
         $sql = 'SELECT cs.CommentSectionID, COUNT(c.CommentID) AS NumOfComments
                 FROM commentsection cs

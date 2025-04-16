@@ -52,7 +52,6 @@
     
         <main>
             <div id = "topReadBar" class = "">
-                <!-- <div class="chapter"><strong>Chapter <?=$chapterNumber?></strong></div> -->
                 <?php echo displayNameOrChapter($chapterName,$chapterNumber)?>
                 <div>
                     <a class="mangaInfo" href="mangaInfo_Controller.php?MangaID=<?=$mangaID?>">
@@ -111,9 +110,25 @@
                 <button type="button" class="btn" id="pin-btn"><i class="bi bi-pin"></i></button>
             </div>
             <div class="rightSidebar-body">
+                <div class="inline-info">
+                    <div class="right-manga-info">
+                        <i class="bi bi-book"></i>
+                        <span class="right-manga">
+                            <a href="mangaInfo_Controller.php?MangaID=<?=$mangaID?>">
+                                <strong><?=$mangaName?></strong>
+                            </a>
+                        </span>
+                    </div>
+
+                    <div class="right-chapter">
+                        <i class="bi bi-file-earmark"></i>
+                        <span><?=$chapterName?></span>
+                    </div>
+                </div>
+                <hr>
                 <!-- Page Selector -->
                 <div class="page-selector">
-                    <button class="btn" id = "prevPageBtn"><i class="bi bi-chevron-left "></i></button>
+                    <button class="btn nav-button" id = "prevPageBtn"><i class="bi bi-chevron-left "></i></button>
                     <div class="dropdown-container">
                         <label class="page-label" id ="page-label">Page</label>
                         <select class="dropdown" name="page" id ="page-dropdown">
@@ -127,13 +142,13 @@
                                 ?>
                         </select>
                     </div>
-                    <button class="btn" id = "nextPageBtn"><i class="bi bi-chevron-right"></i></button>
+                    <button class="btn nav-button" id = "nextPageBtn"><i class="bi bi-chevron-right"></i></button>
                 </div>
         
                 <!-- Chapter Selector -->
                 <div class="chapter-selector">
                     <button class='btn btn-page' id='prevCh-btn'><i class='bi bi-chevron-left'></i></button>
-                    <div class="position-relative w-100 dropdown-container">
+                    <div class="dropdown-container">
                         <label class="page-label" id="chapter-label">Chapter</label>
                         <select class="dropdown" name="chapter" id="chapter-dropdown">
                             <?php

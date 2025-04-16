@@ -149,7 +149,7 @@ $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
             </button>
 
             <!-- Upload Chapter -->
-            <button class="btn btn-outline-secondary d-flex align-items-center">
+            <button class="btn btn-outline-secondary d-flex align-items-center" onclick="window.location.href='upload_controller.php?MangaID=<?=$mangaID?>'">
                 <i class="bi bi-upload me-2"></i>
                 <span class="d-none d-md-inline">Upload Chapter</span>
             </button>
@@ -234,6 +234,7 @@ $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
                         <div class="info-middle">
                             <span class="time">
                                 <img src="../IMG/clock.svg" class="icon">
+                                
                                 <?=timeAgo($chapters['UploadTime'])?>
                             </span>
                             <span class="uploader">
