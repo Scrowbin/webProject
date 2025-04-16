@@ -31,17 +31,17 @@
         <div class="container-fluid wid">
             <div class="manga-card">
                 <div class="manga-cover">
-                    <a href="mangaInfo_Controller.php?MangaID=<?=$mangaID?>">
+                    <a href="../controller/mangaInfo_controller.php?MangaID=<?=$mangaID?>">
                         <img src="../IMG/<?=$mangaID?>/<?=$CoverLink?>" alt="Manga Cover">
                     </a>
                 </div>
-        
+
                 <!-- Right: Details -->
                 <div class="manga-details">
                     <div class="manga-header">
                         <div class="manga-title">
                             <img class="flag" src="https://mangadex.org/img/flags/jp.svg">
-                            <a href="mangaInfo_Controller.php?MangaID=<?=$mangaID?>" class=""><strong><?=$mangaName?></strong></a>
+                            <a href="../controller/mangaInfo_controller.php?MangaID=<?=$mangaID?>" class=""><strong><?=$mangaName?></strong></a>
                         </div>
                         <?php
                             switch ($pubStatus) {
@@ -55,9 +55,9 @@
                                     echo "<span class='text-warning pub-status'><strong>● " . strtoupper($pubStatus) . "</strong></span>";
                                     break;
                             }
-                            
+
                         ?>
-                        
+
                     </div>
                     <div class="badge-bar">
                         <?php
@@ -80,14 +80,14 @@
             <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
                 <button class="btn custom-signin">Sign In</button>
             </div>
-                            
+
             <?php
         }
    ?>
     <div class="d-flex justify-content-center mt-4">
     <?php renderPagination($currentPage, $totalPages); ?>
     </div>
-    
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../JS/navbar.js"></script>

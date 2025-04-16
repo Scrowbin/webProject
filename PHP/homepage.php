@@ -256,7 +256,7 @@
     <section class="section-container latest-updates-section">
       <div class="section-heading">
         <h2 class="text-white fw-bold">Latest Updates</h2>
-        <a href="#" class="see-all see-all-arrow">
+        <a href="controller/latestUpdates_controller.php" class="see-all see-all-arrow">
           <i class="bi bi-arrow-right"></i>
         </a>
       </div>
