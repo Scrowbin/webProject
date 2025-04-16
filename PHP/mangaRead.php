@@ -18,12 +18,7 @@
     foreach($chapters as $chapter){
         $chapterDropdownValues[] = truncateNumber($chapter['ChapterNumber']);
     } 
-    function displayNameOrChapter($name,$number){
-        if ($name === '' || $name === null){
-            return "<div class='chapter'>Chapter $number</div>";
-        }
-        else return "<div class='chapter'>$name</div>";
-    }
+    
     function displayTitle($name,$number){
         if ($name === '' || $name === null){
             return "<title>Mangadax Ch. $number</title>";

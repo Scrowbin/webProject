@@ -43,22 +43,22 @@
 
     function getCommentCountsPerChapter($mangaID){
         return pdo_query(
-            '    SELECT 
-  cs.CommentSectionID, 
-  c.ChapterID, 
-  COUNT(cm.CommentID) AS NumOfComments
-FROM 
-  chapter c
-JOIN 
-  commentsection cs ON c.ChapterID = cs.ChapterID
-LEFT JOIN 
-  comment cm ON cm.CommentSectionID = cs.CommentSectionID
-WHERE 
-  c.MangaID = ?
-GROUP BY 
-  cs.CommentSectionID, c.ChapterID;',
-            $mangaID
-        );
+                        '    SELECT 
+            cs.CommentSectionID, 
+            c.ChapterID, 
+            COUNT(cm.CommentID) AS NumOfComments
+            FROM 
+            chapter c
+            JOIN 
+            commentsection cs ON c.ChapterID = cs.ChapterID
+            LEFT JOIN 
+            comment cm ON cm.CommentSectionID = cs.CommentSectionID
+            WHERE 
+            c.MangaID = ?
+            GROUP BY 
+            cs.CommentSectionID, c.ChapterID;',
+                        $mangaID
+                    );
     }
 
 

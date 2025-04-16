@@ -3,7 +3,6 @@ require_once('helper.php');
 $mangaNameOG = $mangaInfo['MangaNameOG'];
 $mangaNameEN = $mangaInfo['MangaNameEN'];
 $mangaCover = $mangaInfo['CoverLink'];
-
 $authors = implode(', ', array_column($authorsRaw, 'AuthorName'));
 $artists = implode(', ', array_column($artistsRaw, 'ArtistName'));
 $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;

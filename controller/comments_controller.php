@@ -1,5 +1,8 @@
 <?php
     require('../db/commentsPdo.php');
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
     if (!isset($_GET['commentsID'])){
         exit('Invalid comment section');
     }
@@ -9,7 +12,6 @@
     if ($userID !=null || $username!= null){
         $isLoggedIn =true;
     }
-     
     $commentsID = $_GET['commentsID'];
     if ($commentsID==null || $commentsID==0){
         exit('This comment section doesnt exist yet');

@@ -20,29 +20,7 @@
                           WHERE manga_artist.mangaID = ?', $mangaID);
     }
 
-    function pdo_query_int($sql){
-        $sql_args = array_slice(func_get_args(), 1);
-        try {
-            $conn = pdo_get_connection();
-            $stmt = $conn->prepare($sql);
     
-            // Bind parameters with proper types
-            foreach ($sql_args as $i => $arg) {
-                $paramType = is_int($arg) ? PDO::PARAM_INT : PDO::PARAM_STR;
-                $stmt->bindValue($i + 1, $arg, $paramType);
-            }
-    
-            $stmt->execute();
-            $rows = $stmt->fetchAll();
-            return $rows;
-        }
-        catch(PDOException $e) {
-            throw $e;
-        }
-        finally {
-            unset($conn);
-        }
-    }
     function getComments($commentSectionID,$limit,$offset){
         $sql = 'SELECT 
                     u.Username, 

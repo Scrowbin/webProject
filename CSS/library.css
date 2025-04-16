@@ -21,7 +21,8 @@ a {
 
 /* Manga Card */
 .manga-card {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr;
     background: #f4f4f4;
     border-radius: 10px;
     padding: 10px;
@@ -36,59 +37,52 @@ a {
 
 /* Manga Cover */
 .manga-cover img {
-    width: 150px;
-    height: 200px;
+    width: 75px;
+    height: 100px;
     border-radius: 5px;
     object-fit: cover;
 }
 
 /* Manga Details */
 .manga-details {
-    width: 100%;
-    padding-left: 10px;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
 }
 
 /* Manga Header */
 .manga-header {
     display: flex;
+    align-items: flex-start;
     gap: 5px;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
 }
-
-/* Divider */
-hr {
-    margin: 5px 0;
-    border: none;
-    border-top: 1px solid #ccc;
+.pub-status{
+    font-size: 10px;
+    border: 0.5px solid #fcfcfc;
+    padding: 2px 5px;
+    background-color: #eeecec;
+    border-radius: 5px;
+}
+.manga-desc {
+    font-size: 12px;
+    padding-left: 5px;
+    font-family: sans-serif;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* change to desired number of lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
 
 /* Manga Info */
-.chapter-container {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    font-size: 12px;
-    color: #666;
-    width: 100%;
-}
-
-/* Chapter Title */
-.manga-chapter {
-    font-size: 14px;
-    font-weight: bold;
-    margin: 5px 0;
-}
-.chapter-title{
-    font-weight: 700;
+.badge{
+    border: 1px solid #fcfcfc;
+    background-color: #eeecec;
+    font-size: 10px;
     color: black;
-}
-/* Scanlation Group */
-.scan-group {
-    font-size: 12px;
-    color: #444;
 }
 
 /* Icons */
@@ -99,29 +93,7 @@ hr {
     background-size: cover;
 }
 
-/* Chapter Info Grid */
-.chapter-info {
-    display: grid;
-    grid-template-columns: 1fr auto auto;
-    width: 100%;
-    gap: 10px;
-}
-.chapter-info:hover{
-    background-color: #ececec;
-    cursor: pointer;
-}
-
-
-.info-middle {
-    min-width: 150px;
-}
-
-.info-right {
-    min-width: 70px;
-}
-.comments:hover{
-    background-color: #d1d1d1;
-}
+/* Pagonation */
 .pagination .page-item.orange .page-link {
     background-color: #ff6740;
     border-color: #ff6740;
@@ -151,26 +123,11 @@ hr {
     background-color: #e95b37;
     color: white;
 }
-
-/* Responsive */
 @media (max-width: 700px) {
-    .info-middle {
-        min-width: 70px;
-        gap: 2px;
+    .manga-header {
+        flex-direction: column;
     }
-    
-    .info-right {
-        min-width: 50px;
-        gap: 2px;
-    }
-    .manga-cover img {
-        width: 150px;
-        height: 200px;
-    }
-}
-@media (max-width: 500px) {
-    .manga-cover img {
-        width: 75px;
-        height: 100px;
+    .manga-desc {
+        -webkit-line-clamp: 2;
     }
 }

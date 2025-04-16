@@ -1,6 +1,6 @@
 <?php
-require_once('helper.php');
 
+require_once('helper.php');
 
 
 $image = $mangaInfo['CoverLink'];

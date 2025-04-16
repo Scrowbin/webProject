@@ -6,27 +6,27 @@ document.addEventListener('DOMContentLoaded', () => {
     let toast = new bootstrap.Toast(toastElement);
 
     // Handle rating dropdown
-    // document.querySelectorAll('.dropdown-item').forEach(item => {
-    //     item.addEventListener('click', function (e) {
-    //         e.preventDefault();
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+        item.addEventListener('click', function (e) {
+            e.preventDefault();
 
-    //         if (!isLoggedIn) {
-    //             toast.show(); // Show toast if not logged in
-    //             return;
-    //         }
-    //         commentForm.submit();
-    //     });
-    // });
+            if (!isLoggedIn) {
+                toast.show(); // Show toast if not logged in
+                return;
+            }
+            commentForm.submit();
+        });
+    });
 
-    // // Prevent rating form submission if not logged in
-    // if (commentForm) {
-    //     commentForm.addEventListener('submit', function (e) {
-    //         if (!isLoggedIn) {
-    //             e.preventDefault();
-    //             toast.show();
-    //         }
-    //     });
-    // }
+    // Prevent rating form submission if not logged in
+    if (commentForm) {
+        commentForm.addEventListener('submit', function (e) {
+            if (!isLoggedIn) {
+                e.preventDefault();
+                toast.show();
+            }
+        });
+    }
     let currentPage = 1;
     const commentsPerPage = 5;
 

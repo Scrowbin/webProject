@@ -5,12 +5,16 @@
     require('../db/commentsPdo.php');
     require('../db/LibraryAndRating.php');
     
-    $userID = $_SESSION['userID'] ?? 0;
-    if ($userID==0){
-        $userID= getUserID($_SESSION['username'])??0;
-        if ($userID== 0)
-            exit('You must be logged in to comment');
+    if (!isset($_SESSION['userID'])) {
+        $userID = getUserID($_SESSION['username']);
+        if ($userID==null){
+            http_response_code(401);
+            exit("You must be logged in to rate.");
+        }
+        
+        $_SESSION['userID'] = $userID;        
     }
+
     $comment = $_POST['commentText'];
     $commentSectionID = $_POST['CommentSectionID'];
     $replyID = $_POST['replyID'] ?? 0; // Optional, defaults to 0 if not set

@@ -1,3 +1,58 @@
+<?php
+    require_once('helper.php');
+
+    function renderPagination($currentPage, $totalPages, $baseUrl = '?page=') {
+        echo '<ul class="pagination">';
+    
+        // Previous button
+        if ($currentPage > 1) {
+            echo '<li class="page-item">
+                    <a class="page-link" href="' . $baseUrl . ($currentPage - 1) . '">&laquo;</a>
+                  </li>';
+        }
+    
+        // Always show page 1
+        echo '<li class="page-item ' . ($currentPage == 1 ? 'active orange' : '') . '">
+                <a class="page-link" href="' . $baseUrl . '1">1</a>
+              </li>';
+    
+        // Dots after 1
+        if ($currentPage > 4) {
+            echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
+        }
+    
+        // Pages around current
+        for ($i = max(2, $currentPage - 1); $i <= min($totalPages - 1, $currentPage + 1); $i++) {
+            echo '<li class="page-item ' . ($currentPage == $i ? 'active orange' : '') . '">
+                    <a class="page-link" href="' . $baseUrl . $i . '">' . $i . '</a>
+                  </li>';
+        }
+    
+        // Dots before last
+        if ($currentPage < $totalPages - 3) {
+            echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
+        }
+    
+        // Last page
+        if ($totalPages > 1) {
+            echo '<li class="page-item ' . ($currentPage == $totalPages ? 'active orange' : '') . '">
+                    <a class="page-link" href="' . $baseUrl . $totalPages . '">' . $totalPages . '</a>
+                  </li>';
+        }
+    
+        // Next button
+        if ($currentPage < $totalPages) {
+            echo '<li class="page-item">
+                    <a class="page-link" href="' . $baseUrl . ($currentPage + 1) . '">&raquo;</a>
+                  </li>';
+        }
+    
+        echo '</ul>';
+    }
+    
+    
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,177 +72,120 @@
 
     <div class="container-xxl pt-5 mt-4">
 
-        <h1 class="mb-4">Latest Updates</h1>
 
-        <div class="manga-card">
-            <!-- Left: Cover Image -->
-            <div class="manga-cover">
-                <a href="#">
-                    <img src="../IMG/1/m1.jpg" alt="Manga Cover">
-                </a>
-            </div>
-    
-            <!-- Right: Details -->
-            <div class="manga-details">
-                <div class="manga-header">
-                    <img class="flag" src="https://mangadex.org/img/flags/jp.svg">
-                    <a href="#" class="manga-title"><strong>Zeikin de Katta Hon</strong></a>
-                </div>
-                <hr>
-    
-                <div class="chapter-container">
-                    <div class="chapter-info">
-                        <div class="info-left">
-                            <div class="chapter-title">
-                                <a href="#">
-                                    <img class="flag" src="https://mangadex.org/img/flags/gb.svg">
-                                    <strong>Vol. 9 Ch. 70.5 – Vol. 9 Extras</strong>
-                                </a>
-                            </div>
-                            <div  class="scan-group">
-                                <a href="#">
-                                <img src="../IMG/avatar.svg" alt="" class="icon">
-                                <span>Baking Translations</span>
-                                </a>
-                            </div>
-                        </div>
+        <?php
+        if ($isLoggedIn??false|| $isLatestUpdates??false){
+            if ($isLatestUpdates??false){
+                ?>
+                    <h1 class="mb-4">Latest Updates</h1>
+                <?php
+            }else{
+                ?>
+                    <h1 class="mb-4">My Follows</h1>
+                <?php
+            }
         
-                        <div class="info-middle">
-                            <div class="time">
-                                <img src="../IMG/clock.svg" class="icon">
-                                <strong>10 minutes ago</strong>
-                            </div>
-                            <div class="uploader">
-                                <img src="../IMG/avatar.svg" alt="" class="icon">
-                                <a href="#">RhyeBread_</a>
-                            </div>
-                        </div>
-        
-                        <div class="info-right">
-                            <div class="views">
-                                <img class="icon" src="../IMG/eye.svg">
-                                <strong>N/A</strong>
-                            </div>
-                            <div class="comments">
-                                <a href="#">
-                                    <img src="../IMG/comment.svg" alt="" >
-                                    <strong></strong>
-                                </a>
-                            </div>
-                            
-                        </div>
-                    </div>    
+            foreach($grouped as $manga){
+                $mangaID = $manga[0]['MangaID'];
+                $mangaCover =  $manga[0]['CoverLink'];
+                $mangaName = $manga[0]['MangaNameOG'];
+        ?>
+
+            <div class="manga-card">
+                <!-- Left: Cover Image -->
+                <div class="manga-cover">
+                    <a href="mangaInfo_Controller.php?MangaID=<?=$mangaID?>">
+                        <img src="../IMG/<?=$mangaID?>/<?=$mangaCover?>" alt="Manga Cover">
+                    </a>
                 </div>
+        
+                <!-- Right: Details -->
+                <div class="manga-details">
+                    <div class="manga-header">
+                        <img class="flag" src="https://mangadex.org/img/flags/jp.svg">
+                        <a href="#" class="manga-title"><strong><?=$mangaName?></strong></a>
+                    </div>
+                    <hr>
+                    <?php
+                        foreach($manga as $chapter){
+                            $chapterNumber = truncateNumber($chapter['ChapterNumber']);
+                            $chapterName = $chapter['ChapterName'];
+                            $chapterID = $chapter['ChapterID'];
+                            $chapterScangroup = $chapter['ScangroupName'];
+                            $uploadTime = $chapter['UploadTime'];
+                            $uploader = $chapter['UploaderName'];
+                            $commentsID = $chapter['CommentSectionID'];
+                            $NumOfComments = $chapter['NumOfComments'];
+                    ?>
+                        <div class="chapter-container mb-1"  onclick="window.location.href='mangaRead_Controller.php?chapterID=<?=$chapterID?>'">
+
+                            <div class="chapter-info">
+                                <div class="info-left">
+                                    <div class="chapter-title">
+                                            <img class="flag" src="https://mangadex.org/img/flags/gb.svg">
+                                            <strong>Ch. <?=$chapterNumber?> - <?=$chapterName?></strong>
+                                    </div>
+                                    <div  class="scan-group">
+                                        <a href="#">
+                                        <img src="../IMG/avatar.svg" alt="" class="icon">
+                                        <span><?=$chapterScangroup?></span>
+                                        </a>
+                                    </div>
+                                </div>
                 
-                <div class="chapter-container mt-2">
-                    <div class="chapter-info">
-                        <div class="info-left">
-                            <div class="chapter-title">
-                                <a href="#">
-                                    <img class="flag" src="https://mangadex.org/img/flags/gb.svg">
-                                    <strong>Vol. 9 Ch. 70.5 – Vol. 9 Extras</strong>
-                                </a>
-                            </div>
-                            <div  class="scan-group">
-                                <a href="#">
-                                <img src="../IMG/avatar.svg" alt="" class="icon">
-                                <span>Baking Translations</span>
-                                </a>
-                            </div>
-                        </div>
-        
-                        <div class="info-middle">
-                            <div class="time">
-                                <img src="../IMG/clock.svg" class="icon">
-                                <strong>10 minutes ago</strong>
-                            </div>
-                            <div class="uploader">
-                                <img src="../IMG/avatar.svg" alt="" class="icon">
-                                <a href="#">RhyeBread_</a>
-                            </div>
-                        </div>
-        
-                        <div class="info-right">
-                            <div class="views">
-                                <img class="icon" src="../IMG/eye.svg">
-                                <strong>N/A</strong>
-                            </div>
-                            <div class="comments">
-                                <a href="#">
-                                    <img src="../IMG/comment.svg" alt="" >
-                                    <strong></strong>
-                                </a>
-                            </div>
-                            
-                        </div>
-                    </div>    
-                </div>
-                <div class="chapter-container mt-2">
-                    <div class="chapter-info">
-                        <div class="info-left">
-                            <div class="chapter-title">
-                                <a href="#">
-                                    <img class="flag" src="https://mangadex.org/img/flags/gb.svg">
-                                    <strong>Vol. 9 Ch. 70.5 – Vol. 9 Extras</strong>
-                                </a>
-                            </div>
-                            <div  class="scan-group">
-                                <a href="#">
-                                <img src="../IMG/avatar.svg" alt="" class="icon">
-                                <span>Baking Translations</span>
-                                </a>
+                                <div class="info-middle">
+                                    <div class="time">
+                                        <img src="../IMG/clock.svg" class="icon">
+                                        <strong><?=timeAgo($uploadTime)?></strong>
+                                    </div>
+                                    <div class="uploader">
+                                        <img src="../IMG/avatar.svg" alt="" class="icon">
+                                        <a href="#"><?=$uploader?></a>
+                                    </div>
+                                </div>
+                
+                                <div class="info-right">
+                                    <div class="views">
+                                        <img class="icon" src="../IMG/eye.svg">
+                                        <strong>N/A</strong>
+                                    </div>
+                                    <div class="comments">
+                                        <a href="comments_controller.php?commentsID=<?=$commentsID?>">
+                                            <img src="../IMG/comment.svg" alt="" >
+                                            <strong><?=$NumOfComments?></strong>
+                                        </a>
+                                    </div>
+                                    
+                                </div>
                             </div>
                         </div>
-        
-                        <div class="info-middle">
-                            <div class="time">
-                                <img src="../IMG/clock.svg" class="icon">
-                                <strong>10 minutes ago</strong>
-                            </div>
-                            <div class="uploader">
-                                <img src="../IMG/avatar.svg" alt="" class="icon">
-                                <a href="#">RhyeBread_</a>
-                            </div>
-                        </div>
-        
-                        <div class="info-right">
-                            <div class="views">
-                                <img class="icon" src="../IMG/eye.svg">
-                                <strong>N/A</strong>
-                            </div>
-                            <div class="comments">
-                                <a href="#">
-                                    <img src="../IMG/comment.svg" alt="" >
-                                    <strong></strong>
-                                </a>
-                            </div>
-                            
-                        </div>
-                    </div>    
+    
+                    <?php
+                        }
+                    ?>
                 </div>
             </div>
-        </div>
+        <?php
+            }
+        }
+            else{
+                ?>
+                <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+                    <button class="btn custom-signin">Sign In</button>
+                </div>
+                                
+                <?php
+            }
+        
+        ?>
+        
+    </div>
+
+    <div class="d-flex justify-content-center mt-4">
+    <?php renderPagination($currentPage, $totalPages); ?>
     </div>
     
-    <nav aria-label="Page navigation example" class="d-flex justify-content-center mb-4">
-        <ul class="pagination">
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-              <span class="sr-only">Previous</span>
-            </a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-              <span class="sr-only">Next</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../JS/navbar.js"></script>
 

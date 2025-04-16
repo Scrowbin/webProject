@@ -49,5 +49,11 @@ $ago = new DateTime($datetime, $timezone);
 function truncateNumber($number){
     return ($number == floor($number)) ? intval($number) : $number;
 }
+function displayNameOrChapter($name,$number){
+    if ($name === '' || $name === null){
+        return "<div class='chapter'>Chapter $number</div>";
+    }
+    else return "<div class='chapter'>$name</div>";
+}
 
 ?>
