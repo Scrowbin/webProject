@@ -11,8 +11,7 @@
   </div>
   <nav class="sidebar-nav">
       <a href="<?= $pathPrefix ?>index.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : '' ?>"><i class="bi bi-house-door-fill"></i> Home</a>
-      <a href="<?= $pathPrefix ?>controller/follows_controller.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'follows.php' || (isset($isFollows) && $isFollows) ? 'active' : '' ?>"><i class="bi bi-bookmark-fill"></i> Follows</a>
-      <a href="<?= $pathPrefix ?>controller/latestUpdates_controller.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'latestUpdates.php' ? 'active' : '' ?>"><i class="bi bi-arrow-repeat"></i> Updates</a>
+      <a href="<?= $pathPrefix ?>controller/follows_controller.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'follows.php' || (isset($isFollows) && $isFollows) ? 'active' : '' ?>"><i class="bi bi-arrow-repeat"></i> Updates</a>
       <a href="<?= $pathPrefix ?>controller/library_controller.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'library.php' || (isset($isLibrary) && $isLibrary) ? 'active' : '' ?>"><i class="bi bi-collection-fill"></i> Library</a>
       <a href="#" class="nav-link"><i class="bi bi-list-ul"></i> MDLists</a>
       <a href="#" class="nav-link"><i class="bi bi-people-fill"></i> My Groups</a>
@@ -23,7 +22,7 @@
           <div class="sub-links">
               <a href="#" class="nav-link">Advanced Search</a>
               <a href="#" class="nav-link">Recently Added</a>
-              <a href="<?= $pathPrefix ?>controller/latestUpdates_controller.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'latestUpdates.php' ? 'active' : '' ?>">Latest Updates</a>
+              <a href="<?= $pathPrefix ?>controller/latestUpdates_controller.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'latestUpdates.php' || (isset($isLatestUpdates) && $isLatestUpdates) ? 'active' : '' ?>">Latest Updates</a>
               <a href="#" class="nav-link">Random</a>
           </div>
       </div>

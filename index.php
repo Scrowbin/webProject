@@ -11,7 +11,7 @@ require_once __DIR__ . '/db/mangaInfoPdo.php'; // Contains getMangaInfo, getTags
 
 // --- Data Fetching for Homepage ---
 
-// Fetch info for all manga (IDs 1, 2, and 3)
+// Simplified approach to avoid SQL errors
 $allManga = [];
 
 // Fetch manga with ID 1 (Zeikin de Katta Hon)
@@ -32,8 +32,21 @@ foreach ($allManga as $id => $manga) {
     }
 }
 
+// Get all manga for latest updates
+try {
+    $latestUpdates = getLatestUpdatedManga(12);
+} catch (Exception $e) {
+    // Fallback if there's an error
+    $latestUpdates = [];
+    for ($i = 1; $i <= 3; $i++) {
+        if (isset($allManga[$i])) {
+            $latestUpdates[] = $allManga[$i];
+        }
+    }
+}
+
 // For backward compatibility
-$zeikinManga = $allManga[1];
+$zeikinManga = $allManga[1] ?? null;
 
 $pathPrefix = ''; // Define path prefix for includes relative to root
 
