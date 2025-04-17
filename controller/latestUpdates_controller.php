@@ -26,7 +26,6 @@
             return floatval($b['ChapterNumber']) <=> floatval($a['ChapterNumber']);
         });
 
-        // Keep only the top 3 latest chapters
         $chapterList = array_slice($chapterList, 0, 3);
     }
 

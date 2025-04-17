@@ -6,6 +6,11 @@ require('../db/mangaInfoPdo.php');
 
 $userID = $_SESSION['userID'] ?? null;
 $username = $_SESSION['username'] ?? null;
+if (!isset($_SESSION['userID'])) {
+    $userID = getUserID($_SESSION['username']);
+    $_SESSION['userID'] = $userID;        
+}
+
 $isLoggedIn = false;
 if ($userID !=null || $username!= null){
     $isLoggedIn =true;
@@ -19,8 +24,14 @@ if (!$mangaID) {
     die("Missing MangaID.");
 }
 
-if ($userID && $mangaID)
+if ($username)
 $isBookmarked = isBookmarked($mangaID,$userID);
+
+$userRating = 0;
+if ($userID) {
+    $userRating = getRating($userID, $mangaID);
+}
+
 else $isBookmarked = false;
 
 $mangaInfo = getMangaInfo($mangaID);
@@ -48,11 +59,6 @@ foreach ($chapters as $chapter) {
     $chapter['NumOfComments'] = $countsMap[$chapter['ChapterID']] ?? 0;
     $chapter['CommentSectionID'] = $commentSectionIDMap[$chapter['ChapterID']] ?? 0;
     $grouped[$vol][] = $chapter;
-}
-
-$userRating = 0;
-if ($userID) {
-    $userRating = getRating($userID, $mangaID);
 }
 
 $pathPrefix = '../'; // Define path prefix for includes relative to controller directory
