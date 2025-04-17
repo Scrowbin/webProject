@@ -256,7 +256,7 @@
     <section class="section-container latest-updates-section">
       <div class="section-heading">
         <h2 class="text-white fw-bold">Latest Updates</h2>
-        <a href="#" class="see-all see-all-arrow">
+        <a href="controller/latestUpdates_controller.php" class="see-all see-all-arrow">
           <i class="bi bi-arrow-right"></i>
         </a>
       </div>
@@ -264,20 +264,24 @@
       <div class="latest-updates-grid">
         <!-- Column 1 (Visible by default) -->
         <div class="latest-updates-column">
-          <?php // Display all manga in the Latest Updates section ?>
-          <?php foreach ([1, 2, 3] as $mangaID): ?>
-            <?php if (isset($allManga[$mangaID]) && $allManga[$mangaID]): ?>
-              <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[$mangaID]['MangaID'] ?>" class="latest-item">
-                <img src="IMG/<?= $allManga[$mangaID]['MangaID'] ?>/<?= htmlspecialchars($allManga[$mangaID]['CoverLink']) ?>" alt="<?= htmlspecialchars($allManga[$mangaID]['MangaNameOG']) ?> Cover" class="latest-cover">
+          <?php // Display latest updated manga ?>
+          <?php
+          $count = 0;
+          foreach ($latestUpdates as $index => $manga):
+            if ($count >= 6) break; // Limit to 6 items in first column
+            $count++;
+          ?>
+              <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>" class="latest-item">
+                <img src="IMG/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?> Cover" class="latest-cover">
                 <div class="latest-details">
-                  <div class="latest-title"><?= htmlspecialchars($allManga[$mangaID]['MangaNameOG']) ?></div>
-                  <?php /* Placeholder chapter/group - replace if you fetch latest chapter info */ ?>
+                  <div class="latest-title"><?= htmlspecialchars($manga['MangaNameOG']) ?></div>
                   <div class="latest-chapter"><img src="https://mangadex.org/img/flags/jp.svg" class="flag-icon" alt="JP"> Latest Ch. ?</div>
                   <div class="latest-group"><i class="bi bi-people-fill"></i>
                     <?php
                     $authorNames = [];
-                    if (isset($allManga[$mangaID]['authors'])) {
-                        foreach ($allManga[$mangaID]['authors'] as $author) {
+                    $id = $manga['MangaID'];
+                    if (isset($allManga[$id]['authors'])) {
+                        foreach ($allManga[$id]['authors'] as $author) {
                             $authorNames[] = htmlspecialchars($author['AuthorName']);
                         }
                         echo implode(', ', $authorNames);
@@ -287,11 +291,14 @@
                     ?>
                   </div>
                 </div>
-                <?php /* Placeholder meta - replace if you fetch info */ ?>
-                <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i> ?</span><span class="latest-time">? ago</span></div>
+                <div class="latest-meta">
+                  <span class="latest-comments"><i class="bi bi-chat-square"></i> <?= rand(0, 10) ?></span>
+                  <span class="latest-time"><?= rand(5, 60) ?> minutes ago</span>
+                </div>
               </a>
-            <?php endif; ?>
           <?php endforeach; ?>
+
+
           <?php // --- Original Hardcoded Items (for example) --- ?>
           <!-- Item 1 -->
           <a href="#" class="latest-item">
@@ -361,66 +368,39 @@
 
         <!-- Column 2 (Visible by default) -->
         <div class="latest-updates-column">
-          <!-- Item 7 -->
-          <a href="#" class="latest-item">
-            <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
-            <div class="latest-details">
-              <div class="latest-title">Super Girl UFO</div>
-              <div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Vol. 1 Ch. 3 - Goodbye, And Hello... <span class="badge bg-primary end-badge">END</span></div>
-              <div class="latest-group"><i class="bi bi-people-fill"></i> AndroidLB</div>
-              </div>
-            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">41 minutes ago</span></div>
-          </a>
-          <!-- Item 8 -->
-          <a href="#" class="latest-item">
-            <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
-            <div class="latest-details">
-              <div class="latest-title">Dorei Shounin shika Sentakushi ga Nai desu yo? Harem? Nani...</div>
-              <div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Vol. 8 Ch. 50</div>
-              <div class="latest-group"><i class="bi bi-people-fill"></i> SilasMeanQuite</div>
-              </div>
-            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">49 minutes ago</span></div>
-          </a>
-          <!-- Item 9 -->
-          <a href="#" class="latest-item">
-            <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
-            <div class="latest-details">
-              <div class="latest-title">Yuurei to Tsukareta Kaishain</div>
-              <div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Ch. 386 – Where She Wanted To Go</div>
-              <div class="latest-group"><i class="bi bi-people-fill"></i> Irrelevant Scans</div>
-              </div>
-            <div class="latest-meta"><span class="latest-comments">1 <i class="bi bi-chat-square"></i></span><span class="latest-time">58 minutes ago</span></div>
-          </a>
-          <!-- Item 10 -->
-          <a href="#" class="latest-item">
-            <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
-            <div class="latest-details">
-              <div class="latest-title">Digimon 04: Infinite Zone</div>
-              <div class="latest-chapter"><img src="https://mangadex.org/img/flags/pl.svg" class="flag-icon" alt="PL"> Vol. 1 Ch. 7 - Opowieść o 4 okrutnych Digimonach!</div>
-              <div class="latest-group"><i class="bi bi-people-fill"></i> ARTURAP89</div>
-            </div>
-            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">1 hour ago</span></div>
-          </a>
-          <!-- Item 11 -->
-          <a href="#" class="latest-item">
-            <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
-            <div class="latest-details">
-              <div class="latest-title">Naniwa Tomoare</div>
-              <div class="latest-chapter"><img src="https://mangadex.org/img/flags/vn.svg" class="flag-icon" alt="VN"> Vol. 6 Ch. 52 - Phẩm chất khỉ vui vẻ</div>
-              <div class="latest-group"><i class="bi bi-people-fill"></i> To Another Reality</div>
-          </div>
-            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">1 hour ago</span></div>
-          </a>
-          <!-- Item 12 -->
-          <a href="#" class="latest-item">
-            <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
-            <div class="latest-details">
-              <div class="latest-title">Tensei Shite Inaka de Slow Life wo Okuritai</div>
-              <div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Ch. 74</div>
-              <div class="latest-group"><i class="bi bi-people-fill"></i> Nerissa's Barely Competent Jailbird Scans</div>
-              </div>
-            <div class="latest-meta"><span class="latest-comments">8 <i class="bi bi-chat-square"></i></span><span class="latest-time">2 hours ago</span></div>
-          </a>
+          <?php
+          $count = 0;
+          foreach ($latestUpdates as $index => $manga):
+            if ($index < 6) continue; // Skip first 6 items (shown in first column)
+            if ($count >= 6) break; // Limit to 6 items in second column
+            $count++;
+          ?>
+              <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>" class="latest-item">
+                <img src="IMG/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?> Cover" class="latest-cover">
+                <div class="latest-details">
+                  <div class="latest-title"><?= htmlspecialchars($manga['MangaNameOG']) ?></div>
+                  <div class="latest-chapter"><img src="https://mangadex.org/img/flags/jp.svg" class="flag-icon" alt="JP"> Latest Ch. ?</div>
+                  <div class="latest-group"><i class="bi bi-people-fill"></i>
+                    <?php
+                    $authorNames = [];
+                    $id = $manga['MangaID'];
+                    if (isset($allManga[$id]['authors'])) {
+                        foreach ($allManga[$id]['authors'] as $author) {
+                            $authorNames[] = htmlspecialchars($author['AuthorName']);
+                        }
+                        echo implode(', ', $authorNames);
+                    } else {
+                        echo 'Unknown Author';
+                    }
+                    ?>
+                  </div>
+                </div>
+                <div class="latest-meta">
+                  <span class="latest-comments"><i class="bi bi-chat-square"></i> <?= rand(0, 10) ?></span>
+                  <span class="latest-time"><?= rand(5, 60) ?> minutes ago</span>
+                </div>
+              </a>
+          <?php endforeach; ?>
         </div> <!-- End Column 2 -->
 
         <!-- Column 3 (Hidden by default) -->

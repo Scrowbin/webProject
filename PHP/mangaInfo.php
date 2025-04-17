@@ -21,8 +21,8 @@ $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
-    
-    <link rel="stylesheet" href="../CSS/navbar.css"> 
+
+    <link rel="stylesheet" href="../CSS/navbar.css">
     <link rel="stylesheet" href="../CSS/mangaInfo.css">
     <title><?=$mangaNameOG?> - Mangadax</title>
 </head>
@@ -41,19 +41,19 @@ $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
                 height: 400px;       /* Specific height (adjust as needed) */
                 z-index: -1;        /* Behind content */
 
-                background: linear-gradient(to right,  
-                rgba(0, 0, 0, 0.7) 10%, 
+                background: linear-gradient(to right,
+                rgba(0, 0, 0, 0.7) 10%,
                 rgba(0, 0, 0, 0.45) 50%,   /* Midpoint transition */
                 rgba(0, 0, 0, 0) 90%),   /* Fully transparent near the right */
-                url("../IMG/<?=$mangaID?>/<?=$image?>");  /* Background image - KEEP DYNAMIC */    
-                background-position: center 20%; 
+                url("../IMG/<?=$mangaID?>/<?=$image?>");  /* Background image - KEEP DYNAMIC */
+                background-position: center 20%;
                 background-repeat: no-repeat;
                 background-size: cover;
-                filter: blur(2.5px);            
+                filter: blur(2.5px);
             }
         </style>
     </div>
-    
+
     <div class="container mt-3 main-manga-info-container"> <!-- Added class for targeting -->
         <div class = "manga-container">
             <div class="manga-card">
@@ -61,7 +61,7 @@ $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
                 <div class="manga-cover">
                         <img src="../IMG/<?=$mangaID?>/<?=$image?>" alt="Manga Cover">
                 </div>
-        
+
                 <!-- Right: Details -->
                 <div class="manga-details">
                     <div class="manga-header">
@@ -119,7 +119,7 @@ $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
                             }
                             else echo "<span class='d-none d-md-inline'>($userRating)</span>";
                             ?>
-                            
+
                         </button>
                         <ul class="dropdown-menu">
                             <?php
@@ -157,19 +157,19 @@ $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
 
 
 
-      
-       
-    
+
+
+
         <div class="mt-2">
             <?php
                 foreach($tags as $Tagname){
                     ?>
                         <span class="badge mb-1"><?=strtoupper($Tagname)?></span>
                     <?php
-                }    
+                }
             ?>
         </div>
-    
+
         <div class="mt-2">
             <?php
                 echo renderPublicationStatus($pubStatus, $pubYear);
@@ -188,16 +188,16 @@ $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
 
 
     <!-- chapters part -->
-   
+
     <div class="volumes-and-chapters container">
     <?php
-        
+
         foreach ($grouped as $group) {
             $volume = truncateNumber($group[0]['Volume']);
             $firstChapter = truncateNumber($group[0]['ChapterNumber']);
             $lastChapter = truncateNumber($group[count($group) - 1]['ChapterNumber']);
             $chapterCount = count($group);
-        
+
             echo '
                 <div class = "volumes mb-3">
                     <div class="container-fluid">
@@ -210,31 +210,31 @@ $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
             ';
             foreach($group as $chapters){
                 $chapterNum = truncateNumber($chapters['ChapterNumber']);
-                
+
                 ?>
-                <div class="chapter-container mt-1 "onclick="window.location.href='mangaRead_Controller.php?chapterID=<?=$chapters['ChapterID']?>'">   
+                <div class="chapter-container mt-1 "onclick="window.location.href='../controller/mangaRead_controller.php?chapterID=<?=$chapters['ChapterID']?>'">
                     <div class="chapter-info p-2">
                         <div class="info-left">
                             <div>
                                 <img class="icon" src="../IMG/eye.svg">
-        
+
                                 <img class="flag" src="https://mangadex.org/img/flags/gb.svg">
-        
+
                                 <span class="chapter-title">
                                     <strong>Ch. <?=$chapterNum?> – <?=$chapters['ChapterName']?></strong>
                                 </span>
                             </div>
-                            
+
                             <a href="#" class="scan-group">
                                 <img src="../IMG/avatar.svg" alt="" class="icon">
                                 <?=$chapters['ScangroupName']?>
                             </a>
                         </div>
-        
+
                         <div class="info-middle">
                             <span class="time">
                                 <img src="../IMG/clock.svg" class="icon">
-                                
+
                                 <?=timeAgo($chapters['UploadTime'])?>
                             </span>
                             <span class="uploader">
@@ -242,32 +242,31 @@ $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
                                 <a href="#"><?=$chapters['UploaderName']?></a>
                             </span>
                         </div>
-        
+
                         <div class="info-right">
                             <span class="views">
                                 <img class="icon" src="../IMG/eye.svg">
                                 <strong>N/A</strong>
                             </span>
-                            <a href="comments_controller.php?commentsID=<?=$chapters['CommentSectionID']?>" class="comments"> 
-                            <!-- <a href="#" class="comments"> -->
+                            <a href="../controller/comments_controller.php?commentsID=<?=$chapters['CommentSectionID']?>" class="comments">
                                 <img src="../IMG/comment.svg" alt="">
                                 <strong><?=$chapters['NumOfComments']?></strong>
                             </a>
                         </div>
                     </div>
-                </div>  
-                <?php  
+                </div>
+                <?php
             }
             echo '</div>';
 
         }
     ?>
-    
+
     </div>
 
     <!-- Toast Container -->
     <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1080">
-        <div id="loginToast" class="toast align-items-center text-bg-danger border-0" 
+        <div id="loginToast" class="toast align-items-center text-bg-danger border-0"
         role="alert" aria-live="assertive" aria-atomic="true"
         data-bs-delay="3000" data-bs-autohide="true">
             <div class="d-flex">
@@ -277,7 +276,7 @@ $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
                 <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
         </div>
-    </div>    
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../JS/navbar.js"></script> <!-- JS for Navbar/Sidebar -->

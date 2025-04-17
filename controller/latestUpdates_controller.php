@@ -3,13 +3,14 @@
         session_start();
     }
     require_once("../db/latestUpdates_model.php");
-    
-    
+
+
     $page = $_GET['page'] ?? 1;
     $limit = 4;
     $offset = ($page - 1) * $limit;
     $chapters = getUpdates(1000,0);
-    $isLatestUpdates = true;    
+    $isLatestUpdates = true;
+    $pathPrefix = '../'; // Define path prefix for includes relative to controller directory
     // Group chapters by MangaID
     $grouped = [];
     foreach ($chapters as $chapter) {
@@ -29,12 +30,12 @@
         $chapterList = array_slice($chapterList, 0, 3);
     }
 
-    $grouped = array_values($grouped); 
+    $grouped = array_values($grouped);
     //lấy 4 cái manga per pagination
     $totalManga = count($grouped); // <- for pagination logic
     $totalPages = ceil($totalManga / $limit);
     $currentPage = $_GET['page'] ?? 1;
     $grouped = array_slice($grouped, $offset, $limit);
-    unset($chapterList); 
+    unset($chapterList);
     include("../PHP/latestUpdates.php");
 ?>

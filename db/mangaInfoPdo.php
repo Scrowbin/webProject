@@ -17,19 +17,19 @@
         return $mangaInfo;
     }
     function getMangaAuthors($mangaID) {
-        return pdo_query('SELECT AuthorName FROM author 
-                          JOIN manga_author ON author.AuthorID = manga_author.AuthorID 
+        return pdo_query('SELECT AuthorName FROM author
+                          JOIN manga_author ON author.AuthorID = manga_author.AuthorID
                           WHERE manga_author.mangaID = ?', $mangaID);
     }
-    
+
     function getMangaArtists($mangaID) {
-        return pdo_query('SELECT ArtistName FROM artist 
-                          JOIN manga_artist ON artist.ArtistID = manga_artist.ArtistID 
+        return pdo_query('SELECT ArtistName FROM artist
+                          JOIN manga_artist ON artist.ArtistID = manga_artist.ArtistID
                           WHERE manga_artist.mangaID = ?', $mangaID);
     }
     function getTags($mangaID){
         $tags = pdo_query('SELECT tag.TagName FROM tag join manga_tag on tag.TagID = manga_tag.TagID where manga_tag.MangaID=?',$mangaID);
-        
+
         $tagNames = [];
         foreach ($tags as $tag) {
             $tagNames[] = $tag['TagName'];
@@ -49,19 +49,19 @@
 
     function getCommentCountsPerChapter($mangaID){
         return pdo_query(
-                        '    SELECT 
-            cs.CommentSectionID, 
-            c.ChapterID, 
+                        '    SELECT
+            cs.CommentSectionID,
+            c.ChapterID,
             COUNT(cm.CommentID) AS NumOfComments
-            FROM 
+            FROM
             chapter c
-            JOIN 
+            JOIN
             commentsection cs ON c.ChapterID = cs.ChapterID
-            LEFT JOIN 
+            LEFT JOIN
             comment cm ON cm.CommentSectionID = cs.CommentSectionID
-            WHERE 
+            WHERE
             c.MangaID = ?
-            GROUP BY 
+            GROUP BY
             cs.CommentSectionID, c.ChapterID;',
                         $mangaID
                     );
@@ -73,5 +73,25 @@
         $row = pdo_query_one($sql, $mangaID, $userID);
         return !empty($row);
     }
-    
+
+    function getAllManga($limit = null, $offset = 0) {
+        $sql = 'SELECT * FROM manga ORDER BY MangaID';
+        if ($limit !== null) {
+            $sql .= ' LIMIT ' . intval($offset) . ', ' . intval($limit);
+        }
+        return pdo_query($sql);
+    }
+
+    function getLatestUpdatedManga($limit = 10) {
+        // Hardcoded limit to avoid SQL errors
+        $sql = 'SELECT * FROM manga ORDER BY MangaID LIMIT ' . intval($limit);
+        return pdo_query($sql);
+    }
+
+    function getPopularManga($limit = 4) {
+        // Hardcoded limit to avoid SQL errors
+        $sql = 'SELECT * FROM manga ORDER BY MangaID LIMIT ' . intval($limit);
+        return pdo_query($sql);
+    }
+
 ?>

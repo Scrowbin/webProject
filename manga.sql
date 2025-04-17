@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 15, 2025 at 04:54 PM
+-- Generation Time: Apr 17, 2025 at 01:57 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,7 +28,6 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `account` (
-  `id` int(11) NOT NULL,
   `username` varchar(64) NOT NULL,
   `password` varchar(255) NOT NULL,
   `email` varchar(64) NOT NULL,
@@ -40,13 +39,13 @@ CREATE TABLE `account` (
 -- Dumping data for table `account`
 --
 
-INSERT INTO `account` (`id`, `username`, `password`, `email`, `activated`, `activate_token`) VALUES
-(1, 'damian123', '$2y$10$tkbGp.J4KMLcteHIfMPz/eCqIihB94koZZgk7oLz9pUwtXue/yOx2', 'khangkhangng2005@gmail.com', b'1', ''),
-(2, 'viktor123', '$2y$10$FOIiXH56YGrjFpttnastWOzYDQ1g/l9GnivtLrf8AVVhTjpAk6YUW', 'charlottebullet3107@gmail.com', b'1', ''),
-(3, 'dante123', '$2y$10$BgklQWIqVF77nRJHuFYjE.HBjVJSj8qJ/woxkTUbghEkTr55Cj8se', 'abcdef@gmail.com', b'1', ''),
-(4, 'Nguvlra', '$2y$10$Ly0RDyKhACCP1E.0ig0bqukOoLQ4/MbzppV0xJcEmcYfrk.Fwvj6S', 'kongudau2@gmail.com', b'1', ''),
-(5, 'Bababoey', '$2y$10$bZvprCGXt2ZMVpAADu8vruEi6QTApeWj6J83RZEJfxmusNnTmGGXi', 'hjiisan8man@gmail.com', b'1', ''),
-(6, 'Nguvlra123', '$2y$10$axNk07NbQlXWnREo2fSbAe366RF1fxQcT1zFCIFrocbXT5NQaLYgu', 'hjiisanman@gmail.com', b'1', '195b52feb560d30cd7f03d52c5c6b808c13671614d8565eb65bf1b82ec36c395');
+INSERT INTO `account` (`username`, `password`, `email`, `activated`, `activate_token`) VALUES
+('damian123', '$2y$10$tkbGp.J4KMLcteHIfMPz/eCqIihB94koZZgk7oLz9pUwtXue/yOx2', 'khangkhangng2005@gmail.com', b'1', ''),
+('viktor123', '$2y$10$FOIiXH56YGrjFpttnastWOzYDQ1g/l9GnivtLrf8AVVhTjpAk6YUW', 'charlottebullet3107@gmail.com', b'1', ''),
+('dante123', '$2y$10$BgklQWIqVF77nRJHuFYjE.HBjVJSj8qJ/woxkTUbghEkTr55Cj8se', 'abcdef@gmail.com', b'1', ''),
+('Nguvlra', '$2y$10$Ly0RDyKhACCP1E.0ig0bqukOoLQ4/MbzppV0xJcEmcYfrk.Fwvj6S', 'kongudau2@gmail.com', b'1', ''),
+('Bababoey', '$2y$10$bZvprCGXt2ZMVpAADu8vruEi6QTApeWj6J83RZEJfxmusNnTmGGXi', 'hjiisan8man@gmail.com', b'1', ''),
+('Nguvlra123', '$2y$10$axNk07NbQlXWnREo2fSbAe366RF1fxQcT1zFCIFrocbXT5NQaLYgu', 'hjiisanman@gmail.com', b'1', '195b52feb560d30cd7f03d52c5c6b808c13671614d8565eb65bf1b82ec36c395');
 
 -- --------------------------------------------------------
 
@@ -103,7 +102,8 @@ CREATE TABLE `bookmark` (
 --
 
 INSERT INTO `bookmark` (`MangaID`, `UserID`) VALUES
-(3, 3);
+(3, 3),
+(1, 3);
 
 -- --------------------------------------------------------
 
@@ -140,7 +140,8 @@ INSERT INTO `chapter` (`ChapterID`, `MangaID`, `Volume`, `ScangroupName`, `Uploa
 (11, 3, 1.0, 'Kirei Cake', 'UnChosen', '2025-04-15 14:58:38', 'The End of the Adventure', 1.0),
 (12, 3, 1.0, 'Kirei Cake', 'UnChosen', '2025-04-15 14:58:38', 'The Priest\'s Lie', 2.0),
 (13, 3, 1.0, 'Kirei Cake', 'Bored_Pray', '2025-04-15 14:59:52', 'Blue Moonweed', 3.0),
-(14, 3, 1.0, 'Kirei Cake', 'UnChosen', '2025-04-15 14:59:52', 'The Mage\'s Secret', 4.0);
+(14, 3, 1.0, 'Kirei Cake', 'UnChosen', '2025-04-15 14:59:52', 'The Mage\'s Secret', 4.0),
+(22, 1, 2.0, 'ScanGroup', 'Anonymous', '2025-04-15 21:56:10', 'fake chapter', 8.0);
 
 -- --------------------------------------------------------
 
@@ -268,7 +269,10 @@ INSERT INTO `chapter_pages` (`ChapterID`, `PageNumber`, `PageLink`) VALUES
 (11, 32, '32.png'),
 (11, 33, '33.png'),
 (11, 34, '34.png'),
-(11, 35, '35.png');
+(11, 35, '35.png'),
+(22, 1, '1.png'),
+(22, 2, '2.png'),
+(22, 3, '3.png');
 
 -- --------------------------------------------------------
 
@@ -320,7 +324,6 @@ INSERT INTO `commentsection` (`CommentSectionID`, `ChapterID`) VALUES
 (4, 4),
 (5, 5),
 (6, 6),
-(7, 11),
 (8, 11),
 (9, 12),
 (10, 13),
@@ -447,7 +450,7 @@ CREATE TABLE `rating` (
 --
 
 INSERT INTO `rating` (`UserID`, `MangaID`, `Rating`) VALUES
-(3, 3, '10');
+(3, 1, '10');
 
 -- --------------------------------------------------------
 
@@ -569,12 +572,6 @@ INSERT INTO `user` (`UserID`, `Username`, `Joined`, `Avatar`) VALUES
 --
 
 --
--- Indexes for table `account`
---
-ALTER TABLE `account`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `artist`
 --
 ALTER TABLE `artist`
@@ -627,12 +624,6 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT for table `account`
---
-ALTER TABLE `account`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
 -- AUTO_INCREMENT for table `artist`
 --
 ALTER TABLE `artist`
@@ -648,7 +639,7 @@ ALTER TABLE `author`
 -- AUTO_INCREMENT for table `chapter`
 --
 ALTER TABLE `chapter`
-  MODIFY `ChapterID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `ChapterID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `comment`

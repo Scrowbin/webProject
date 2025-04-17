@@ -1,5 +1,5 @@
 <?php
-    require_once('helper.php');    
+    require_once('helper.php');
 ?>
 
 <!DOCTYPE html>
@@ -23,17 +23,17 @@
 
 
         <?php
-        if ($isLoggedIn??false|| $isLatestUpdates??false){
+        if ($isLoggedIn??false || $isLatestUpdates??false || $isFollows??false){
             if ($isLatestUpdates??false){
                 ?>
                     <h1 class="mb-4">Latest Updates</h1>
                 <?php
-            }else{
+            }else if ($isFollows??false){
                 ?>
                     <h1 class="mb-4">My Follows</h1>
                 <?php
             }
-        
+
             foreach($grouped as $manga){
                 $mangaID = $manga[0]['MangaID'];
                 $mangaCover =  $manga[0]['CoverLink'];
@@ -43,16 +43,16 @@
             <div class="manga-card">
                 <!-- Left: Cover Image -->
                 <div class="manga-cover">
-                    <a href="mangaInfo_Controller.php?MangaID=<?=$mangaID?>">
+                    <a href="../controller/mangaInfo_controller.php?MangaID=<?=$mangaID?>">
                         <img src="../IMG/<?=$mangaID?>/<?=$mangaCover?>" alt="Manga Cover">
                     </a>
                 </div>
-        
+
                 <!-- Right: Details -->
                 <div class="manga-details">
                     <div class="manga-header">
                         <img class="flag" src="https://mangadex.org/img/flags/jp.svg">
-                        <a href="mangaInfo_Controller.php?MangaID=<?=$mangaID?>" class="manga-title"><strong><?=$mangaName?></strong></a>
+                        <a href="../controller/mangaInfo_controller.php?MangaID=<?=$mangaID?>" class="manga-title"><strong><?=$mangaName?></strong></a>
                     </div>
                     <hr>
                     <?php
@@ -66,7 +66,7 @@
                             $commentsID = $chapter['CommentSectionID'];
                             $NumOfComments = $chapter['NumOfComments'];
                     ?>
-                        <div class="chapter-container mb-1"  onclick="window.location.href='mangaRead_Controller.php?chapterID=<?=$chapterID?>'">
+                        <div class="chapter-container mb-1"  onclick="window.location.href='../controller/mangaRead_controller.php?chapterID=<?=$chapterID?>'">
 
                             <div class="chapter-info">
                                 <div class="info-left">
@@ -81,7 +81,7 @@
                                         </a>
                                     </div>
                                 </div>
-                
+
                                 <div class="info-middle">
                                     <div class="time">
                                         <img src="../IMG/clock.svg" class="icon">
@@ -92,23 +92,23 @@
                                         <a href="#"><?=$uploader?></a>
                                     </div>
                                 </div>
-                
+
                                 <div class="info-right">
                                     <div class="views">
                                         <img class="icon" src="../IMG/eye.svg">
                                         <strong>N/A</strong>
                                     </div>
                                     <div class="comments">
-                                        <a href="comments_controller.php?commentsID=<?=$commentsID?>">
+                                        <a href="../controller/comments_controller.php?commentsID=<?=$commentsID?>">
                                             <img src="../IMG/comment.svg" alt="" >
                                             <strong><?=$NumOfComments?></strong>
                                         </a>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
-    
+
                     <?php
                         }
                     ?>
@@ -122,18 +122,18 @@
                 <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
                     <button class="btn custom-signin">Sign In</button>
                 </div>
-                                
+
                 <?php
             }
-        
+
         ?>
-        
+
     </div>
 
     <div class="d-flex justify-content-center mt-4">
     <?php renderPagination($currentPage, $totalPages); ?>
     </div>
-    
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../JS/navbar.js"></script>

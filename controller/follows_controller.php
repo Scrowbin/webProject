@@ -7,11 +7,20 @@
     $username = $_SESSION['username'] ?? null;
     $isLoggedIn = false;
     if ($userID !=null || $username!= null){
-        $isLoggedIn =true;
+        $isLoggedIn = true;
     }
-    
-    
 
+    $isFollows = true; // Set flag for active menu item in sidebar
+
+    $pathPrefix = '../'; // Define path prefix for includes relative to controller directory
+
+    // Check if user is logged in, if not, show login required page
+    if (!$isLoggedIn) {
+        include("../PHP/login_required.php");
+        exit;
+    }
+
+    // If user is logged in, continue with the follows page
     $page = $_GET['page'] ?? 1;
     $limit = 4;
     $offset = ($page - 1) * $limit;
@@ -37,12 +46,13 @@
         $chapterList = array_slice($chapterList, 0, 3);
     }
 
-    $grouped = array_values($grouped); 
+    $grouped = array_values($grouped);
     //lấy 4 cái manga per pagination
     $totalManga = count($grouped); // <- for pagination logic
     $totalPages = ceil($totalManga / $limit);
     $currentPage = $_GET['page'] ?? 1;
     $grouped = array_slice($grouped, $offset, $limit);
-    unset($chapterList); 
+    unset($chapterList);
+
     include("../PHP/latestUpdates.php");
 ?>
