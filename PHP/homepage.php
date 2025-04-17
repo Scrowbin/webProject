@@ -275,95 +275,78 @@
                 <img src="IMG/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?> Cover" class="latest-cover">
                 <div class="latest-details">
                   <div class="latest-title"><?= htmlspecialchars($manga['MangaNameOG']) ?></div>
-                  <div class="latest-chapter"><img src="https://mangadex.org/img/flags/jp.svg" class="flag-icon" alt="JP"> Latest Ch. ?</div>
+                  <div class="latest-chapter">
+                    <img src="https://mangadex.org/img/flags/jp.svg" class="flag-icon" alt="JP">
+                    <?php if (isset($manga['LatestChapter'])): ?>
+                      Ch. <?= htmlspecialchars($manga['LatestChapter']['ChapterNumber']) ?>
+                      <?php if (!empty($manga['LatestChapter']['ChapterName'])): ?>
+                        - <?= htmlspecialchars($manga['LatestChapter']['ChapterName']) ?>
+                      <?php endif; ?>
+                    <?php else: ?>
+                      Latest Ch. ?
+                    <?php endif; ?>
+                  </div>
                   <div class="latest-group"><i class="bi bi-people-fill"></i>
                     <?php
-                    $authorNames = [];
-                    $id = $manga['MangaID'];
-                    if (isset($allManga[$id]['authors'])) {
-                        foreach ($allManga[$id]['authors'] as $author) {
-                            $authorNames[] = htmlspecialchars($author['AuthorName']);
-                        }
-                        echo implode(', ', $authorNames);
+                    if (isset($manga['LatestChapter']['ScangroupName']) && !empty($manga['LatestChapter']['ScangroupName'])) {
+                        echo htmlspecialchars($manga['LatestChapter']['ScangroupName']);
                     } else {
-                        echo 'Unknown Author';
+                        $authorNames = [];
+                        $id = $manga['MangaID'];
+                        if (isset($allManga[$id]['authors'])) {
+                            foreach ($allManga[$id]['authors'] as $author) {
+                                $authorNames[] = htmlspecialchars($author['AuthorName']);
+                            }
+                            echo implode(', ', $authorNames);
+                        } else {
+                            echo 'Unknown Author';
+                        }
                     }
                     ?>
                   </div>
                 </div>
                 <div class="latest-meta">
-                  <span class="latest-comments"><i class="bi bi-chat-square"></i> <?= rand(0, 10) ?></span>
-                  <span class="latest-time"><?= rand(5, 60) ?> minutes ago</span>
+                  <span class="latest-comments"><i class="bi bi-chat-square"></i>
+                    <?php
+                    // Hiển thị số comment nếu có
+                    if (isset($manga['LatestChapter']['NumOfComments'])) {
+                        echo $manga['LatestChapter']['NumOfComments'];
+                    } else {
+                        echo rand(0, 10); // Fallback
+                    }
+                    ?>
+                  </span>
+                  <span class="latest-time">
+                    <?php
+                    // Hiển thị thời gian upload
+                    if (isset($manga['LatestChapter']['UploadTime'])) {
+                        $uploadTime = strtotime($manga['LatestChapter']['UploadTime']);
+                        $currentTime = time();
+                        $timeDiff = $currentTime - $uploadTime;
+
+                        if ($timeDiff < 60) {
+                            echo "just now";
+                        } elseif ($timeDiff < 3600) {
+                            $minutes = floor($timeDiff / 60);
+                            echo $minutes . " minute" . ($minutes > 1 ? "s" : "") . " ago";
+                        } elseif ($timeDiff < 86400) {
+                            $hours = floor($timeDiff / 3600);
+                            echo $hours . " hour" . ($hours > 1 ? "s" : "") . " ago";
+                        } else {
+                            $days = floor($timeDiff / 86400);
+                            echo $days . " day" . ($days > 1 ? "s" : "") . " ago";
+                        }
+                    } else {
+                        echo rand(5, 60) . " minutes ago"; // Fallback
+                    }
+                    ?>
+                  </span>
                 </div>
               </a>
           <?php endforeach; ?>
 
 
-          <?php // --- Original Hardcoded Items (for example) --- ?>
-          <!-- Item 1 -->
-          <a href="#" class="latest-item">
-             <?php /* Placeholders, paths would be IMG/ if exist */ ?>
-            <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
-            <div class="latest-details">
-              <div class="latest-title">Sono Bisque Doll wa Koi o Suru</div>
-              <div class="latest-chapter"><img src="https://mangadex.org/img/flags/ru.svg" class="flag-icon" alt="RU"> Ch. 116 - Епилог</div>
-              <div class="latest-group"><i class="bi bi-people-fill"></i> Vendetta</div>
-              </div>
-            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">2 minutes ago</span></div>
-          </a>
-          <!-- Item 2 -->
-          <a href="#" class="latest-item">
-             <?php /* Placeholders, paths would be IMG/ if exist */ ?>
-            <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
-            <div class="latest-details">
-              <div class="latest-title">Hyakumanjou Labyrinth</div>
-              <div class="latest-chapter"><img src="https://mangadex.org/img/flags/vn.svg" class="flag-icon" alt="VN"> Vol. 1 Ch. 11</div>
-              <div class="latest-group"><i class="bi bi-people-fill"></i> Dịch giả tập sự GTSCHUNDER</div>
-              </div>
-            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">14 minutes ago</span></div>
-          </a>
-          <!-- Item 3 -->
-          <a href="#" class="latest-item">
-             <?php /* Placeholders, paths would be IMG/ if exist */ ?>
-            <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
-            <div class="latest-details">
-              <div class="latest-title">Albus Changes the World</div>
-              <div class="latest-chapter"><img src="https://mangadex.org/img/flags/vn.svg" class="flag-icon" alt="VN"> Vol. 2 Ch. 14 – Thợ rèn</div>
-              <div class="latest-group"><i class="bi bi-people-fill"></i> Mahiro solo dịch truyện</div>
-              </div>
-            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">18 minutes ago</span></div>
-          </a>
-          <!-- Item 4 -->
-          <!-- <a href="#" class="latest-item">
-             <?php /* Placeholders, paths would be IMG/ if exist */ ?>
-            <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
-            <div class="latest-details">
-              <div class="latest-title">I Became the Genius Bastard of a Noble Dark Clan</div>
-              <div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Ch. 4</div>
-              <div class="latest-group"><i class="bi bi-people-fill"></i> Reaper_Scans</div>
-            </div>
-            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">24 minutes ago</span></div>
-          </a> -->
-          <!-- Item 5 -->
-           <!-- <a href="#" class="latest-item">
-            <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
-            <div class="latest-details">
-              <div class="latest-title">Cool na Megami-sama to Issho ni Sundara, Amayakashi Sug...</div>
-              <div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Vol. 2 Ch. 5.1</div>
-              <div class="latest-group"><i class="bi bi-people-fill"></i> O TRANSLATIONS</div>
-          </div>
-            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">25 minutes ago</span></div>
-          </a> -->
-          <!-- Item 6 -->
-           <!-- <a href="#" class="latest-item">
-            <img src="https://placehold.co/50x70/1a1a1a/cccccc?text=Cover" alt="Cover" class="latest-cover">
-            <div class="latest-details">
-              <div class="latest-title">Boss In My House</div>
-              <div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Ch. 2</div>
-              <div class="latest-group"><i class="bi bi-people-fill"></i> Honey.BeexScans</div>
-              </div>
-            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">35 minutes ago</span></div>
-          </a> -->
+          <?php // Không cần các mục hardcoded nữa vì đã có dữ liệu từ database ?>
         </div> <!-- End Column 1 -->
 
         <!-- Column 2 (Visible by default) -->
@@ -379,25 +362,72 @@
                 <img src="IMG/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?> Cover" class="latest-cover">
                 <div class="latest-details">
                   <div class="latest-title"><?= htmlspecialchars($manga['MangaNameOG']) ?></div>
-                  <div class="latest-chapter"><img src="https://mangadex.org/img/flags/jp.svg" class="flag-icon" alt="JP"> Latest Ch. ?</div>
+                  <div class="latest-chapter">
+                    <img src="https://mangadex.org/img/flags/jp.svg" class="flag-icon" alt="JP">
+                    <?php if (isset($manga['LatestChapter'])): ?>
+                      Ch. <?= htmlspecialchars($manga['LatestChapter']['ChapterNumber']) ?>
+                      <?php if (!empty($manga['LatestChapter']['ChapterName'])): ?>
+                        - <?= htmlspecialchars($manga['LatestChapter']['ChapterName']) ?>
+                      <?php endif; ?>
+                    <?php else: ?>
+                      Latest Ch. ?
+                    <?php endif; ?>
+                  </div>
                   <div class="latest-group"><i class="bi bi-people-fill"></i>
                     <?php
-                    $authorNames = [];
-                    $id = $manga['MangaID'];
-                    if (isset($allManga[$id]['authors'])) {
-                        foreach ($allManga[$id]['authors'] as $author) {
-                            $authorNames[] = htmlspecialchars($author['AuthorName']);
-                        }
-                        echo implode(', ', $authorNames);
+                    if (isset($manga['LatestChapter']['ScangroupName']) && !empty($manga['LatestChapter']['ScangroupName'])) {
+                        echo htmlspecialchars($manga['LatestChapter']['ScangroupName']);
                     } else {
-                        echo 'Unknown Author';
+                        $authorNames = [];
+                        $id = $manga['MangaID'];
+                        if (isset($allManga[$id]['authors'])) {
+                            foreach ($allManga[$id]['authors'] as $author) {
+                                $authorNames[] = htmlspecialchars($author['AuthorName']);
+                            }
+                            echo implode(', ', $authorNames);
+                        } else {
+                            echo 'Unknown Author';
+                        }
                     }
                     ?>
                   </div>
                 </div>
                 <div class="latest-meta">
-                  <span class="latest-comments"><i class="bi bi-chat-square"></i> <?= rand(0, 10) ?></span>
-                  <span class="latest-time"><?= rand(5, 60) ?> minutes ago</span>
+                  <span class="latest-comments"><i class="bi bi-chat-square"></i>
+                    <?php
+                    // Hiển thị số comment nếu có
+                    if (isset($manga['LatestChapter']['NumOfComments'])) {
+                        echo $manga['LatestChapter']['NumOfComments'];
+                    } else {
+                        echo rand(0, 10); // Fallback
+                    }
+                    ?>
+                  </span>
+                  <span class="latest-time">
+                    <?php
+                    // Hiển thị thời gian upload
+                    if (isset($manga['LatestChapter']['UploadTime'])) {
+                        $uploadTime = strtotime($manga['LatestChapter']['UploadTime']);
+                        $currentTime = time();
+                        $timeDiff = $currentTime - $uploadTime;
+
+                        if ($timeDiff < 60) {
+                            echo "just now";
+                        } elseif ($timeDiff < 3600) {
+                            $minutes = floor($timeDiff / 60);
+                            echo $minutes . " minute" . ($minutes > 1 ? "s" : "") . " ago";
+                        } elseif ($timeDiff < 86400) {
+                            $hours = floor($timeDiff / 3600);
+                            echo $hours . " hour" . ($hours > 1 ? "s" : "") . " ago";
+                        } else {
+                            $days = floor($timeDiff / 86400);
+                            echo $days . " day" . ($days > 1 ? "s" : "") . " ago";
+                        }
+                    } else {
+                        echo rand(5, 60) . " minutes ago"; // Fallback
+                    }
+                    ?>
+                  </span>
                 </div>
               </a>
           <?php endforeach; ?>
@@ -405,82 +435,18 @@
 
         <!-- Column 3 (Hidden by default) -->
         <div class="latest-updates-column">
-          <!-- Item 13 -->
-          <a href="#" class="latest-item">
-            <img src="https://placehold.co/45x63/1e1e1e/cccccc?text=13" alt="Cover" class="latest-cover">
-            <div class="latest-details"><div class="latest-title">The Baby Fairy is a Villain</div><div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Ch. 5</div><div class="latest-group"><i class="bi bi-people-fill"></i> RRScans</div></div>
-            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">2 hours ago</span></div>
-          </a>
-          <!-- Item 14 -->
-          <a href="#" class="latest-item">
-            <img src="https://placehold.co/45x63/1e1e1e/cccccc?text=14" alt="Cover" class="latest-cover">
-            <div class="latest-details"><div class="latest-title">Wind Breaker</div><div class="latest-chapter"><img src="https://mangadex.org/img/flags/vn.svg" class="flag-icon" alt="VN"> Vol. 22 Ch. 174 - Thăm tám</div><div class="latest-group"><i class="bi bi-people-fill"></i> WindBreaker_manga</div></div>
-            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">2 hours ago</span></div>
-          </a>
-          <!-- Item 15 -->
-          <a href="#" class="latest-item">
-            <img src="https://placehold.co/45x63/1e1e1e/cccccc?text=15" alt="Cover" class="latest-cover">
-            <div class="latest-details"><div class="latest-title">Katekyo Hitman Reborn!</div><div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Vol. 8 Ch. 69</div><div class="latest-group"><i class="bi bi-people-fill"></i> MTOZT</div></div>
-            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">2 hours ago</span></div>
-          </a>
-          <!-- Item 16 -->
-          <a href="#" class="latest-item">
-            <img src="https://placehold.co/45x63/1e1e1e/cccccc?text=16" alt="Cover" class="latest-cover">
-            <div class="latest-details"><div class="latest-title">The Ride-On King</div><div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Ch. 79 - The President and the...</div><div class="latest-group"><i class="bi bi-people-fill"></i> Burning Love Scans</div></div>
-            <div class="latest-meta"><span class="latest-comments">2 <i class="bi bi-chat-square"></i></span><span class="latest-time">2 hours ago</span></div>
-          </a>
-          <!-- Item 17 -->
-          <a href="#" class="latest-item">
-            <img src="https://placehold.co/45x63/1e1e1e/cccccc?text=17" alt="Cover" class="latest-cover">
-            <div class="latest-details"><div class="latest-title">My First Friend Was A Zombie</div><div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Vol. 1 Ch. 1</div><div class="latest-group"><i class="bi bi-people-fill"></i> RRScans</div></div>
-            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">1 hour ago</span></div>
-          </a>
-          <!-- Item 18 -->
-          <a href="#" class="latest-item">
-            <img src="https://placehold.co/45x63/1e1e1e/cccccc?text=18" alt="Cover" class="latest-cover">
-            <div class="latest-details"><div class="latest-title">Boku wa Isekai de Fuyo Mahou to Shouka...</div><div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Vol. 5 Ch. 34</div><div class="latest-group"><i class="bi bi-people-fill"></i> Tenuous Scans</div></div>
-            <div class="latest-meta"><span class="latest-comments">6 <i class="bi bi-chat-square"></i></span><span class="latest-time">2 hours ago</span></div>
-          </a>
+          <?php
+          // Có thể thêm code để hiển thị thêm manga nếu cần
+          // Ví dụ: lấy thêm 6 manga tiếp theo từ $latestUpdates
+          ?>
         </div> <!-- End Column 3 -->
 
         <!-- Column 4 (Hidden by default) -->
         <div class="latest-updates-column">
-          <!-- Item 19 -->
-          <a href="#" class="latest-item">
-            <img src="https://placehold.co/45x63/1e1e1e/cccccc?text=19" alt="Cover" class="latest-cover">
-            <div class="latest-details"><div class="latest-title">It's Over! Empress' Husband...</div><div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Ch. 243 - Surname ZI,...</div><div class="latest-group"><i class="bi bi-people-fill"></i> ffftizzy</div></div>
-            <div class="latest-meta"><span class="latest-comments"><i class="bi bi-chat-square"></i></span><span class="latest-time">2 hours ago</span></div>
-          </a>
-          <!-- Item 20 -->
-          <a href="#" class="latest-item">
-            <img src="https://placehold.co/45x63/1e1e1e/cccccc?text=20" alt="Cover" class="latest-cover">
-            <div class="latest-details"><div class="latest-title">Kazure Doushin</div><div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Vol. 1 Ch. 5 - Episode...</div><div class="latest-group"><i class="bi bi-people-fill"></i> Stiletto Heels</div></div>
-            <div class="latest-meta"><span class="latest-comments">1 <i class="bi bi-chat-square"></i></span><span class="latest-time">3 hours ago</span></div>
-          </a>
-          <!-- Item 21 -->
-          <a href="#" class="latest-item">
-            <img src="https://placehold.co/45x63/1e1e1e/cccccc?text=21" alt="Cover" class="latest-cover">
-            <div class="latest-details"><div class="latest-title">Youheidan no Ryouriban</div><div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Vol. 3 Ch. 71</div><div class="latest-group"><i class="bi bi-people-fill"></i> TripolarsNotBipol...</div></div>
-            <div class="latest-meta"><span class="latest-comments">7 <i class="bi bi-chat-square"></i></span><span class="latest-time">3 hours ago</span></div>
-          </a>
-          <!-- Item 22 -->
-          <a href="#" class="latest-item">
-            <img src="https://placehold.co/45x63/1e1e1e/cccccc?text=22" alt="Cover" class="latest-cover">
-            <div class="latest-details"><div class="latest-title">Will You Clean This For Me?</div><div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Vol. 6 Ch. 36 - This...</div><div class="latest-group"><i class="bi bi-people-fill"></i> Koin Randorii</div></div>
-            <div class="latest-meta"><span class="latest-comments">4 <i class="bi bi-chat-square"></i></span><span class="latest-time">3 hours ago</span></div>
-          </a>
-          <!-- Item 23 -->
-          <a href="#" class="latest-item">
-            <img src="https://placehold.co/45x63/1e1e1e/cccccc?text=23" alt="Cover" class="latest-cover">
-            <div class="latest-details"><div class="latest-title">Wakarase ♥ Dekamaid-ch...</div><div class="latest-chapter"><img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN"> Vol. 3 Ch. 22.5</div><div class="latest-group"><i class="bi bi-people-fill"></i> beeg scans</div></div>
-            <div class="latest-meta"><span class="latest-comments">4 <i class="bi bi-chat-square"></i></span><span class="latest-time">3 hours ago</span></div>
-          </a>
-          <!-- Item 24 -->
-          <a href="#" class="latest-item">
-            <img src="https://placehold.co/45x63/1e1e1e/cccccc?text=24" alt="Cover" class="latest-cover">
-            <div class="latest-details"><div class="latest-title">I Thought My Time Was Up!</div><div class="latest-chapter"><img src="https://mangadex.org/img/flags/pl.svg" class="flag-icon" alt="PL"> Vol. 2 Ch. 86</div><div class="latest-group"><i class="bi bi-people-fill"></i> Racuchy</div></div>
-            <div class="latest-meta"><span class="latest-comments">3 <i class="bi bi-chat-square"></i></span><span class="latest-time">3 hours ago</span></div>
-          </a>
+          <?php
+          // Có thể thêm code để hiển thị thêm manga nếu cần
+          // Ví dụ: lấy thêm 6 manga tiếp theo từ $latestUpdates
+          ?>
         </div> <!-- End Column 4 -->
 
       </div> <!-- End latest-updates-grid -->
