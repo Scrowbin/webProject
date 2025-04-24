@@ -10,9 +10,7 @@ $mangaNameOG = $mangaInfo['MangaNameOG'];
 $mangaNameEN = $mangaInfo['MangaNameEN'];
 $mangaDesc= $mangaInfo['MangaDiscription'];
 
-$authors = implode(', ', array_column($authorsRaw, 'AuthorName'));
-$artists = implode(', ', array_column($artistsRaw, 'ArtistName'));
-$mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
+$mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -85,7 +83,7 @@ $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
     <div class="container mt-3 ">
         <div class="d-flex align-items-center gap-2 flex-wrap">
             <!-- Add to Library -->
-            <div class="btn-wrapper">
+            <!-- <div class="btn-wrapper">
                 <?php if (!$isBookmarked): ?>
                     <form method="POST" action="../controller/addToLibrary.php" class="m-0" id="add-form" data-logged-in="<?= $isLoggedIn ? 'true' : 'false' ?>">
                         <input type="hidden" name="mangaID" value="<?= $mangaID ?>">
@@ -103,10 +101,10 @@ $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
                         </button>
                     </form>
                 <?php endif; ?>
-            </div>
+            </div> -->
 
             <!-- Rate -->
-            <div class="btn-wrapper">
+            <!-- <div class="btn-wrapper">
                 <form action="../controller/submitRating.php" method="POST" id="rating-form" class="m-0" data-logged-in="<?= $isLoggedIn ? 'true' : 'false' ?>">
                     <input type="hidden" name="rating" id="rating-input" value="">
                     <input type="hidden" name="mangaID" value="<?= $mangaID ?>">
@@ -114,12 +112,64 @@ $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
                         <button class="btn btn-orange d-flex align-items-center justify-content-center no-caret" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-star me-2"></i>
                             <?php
-                            if ($userRating === 0) {
-                                echo "<span class='d-none d-md-inline'>Rate</span>";
-                            }
-                            else echo "<span class='d-none d-md-inline'>($userRating)</span>";
+                            // if ($userRating === 0) {
+                            //     echo "<span class='d-none d-md-inline'>Rate</span>";
+                            // }
+                            // else echo "<span class='d-none d-md-inline'>($userRating)</span>";
                             ?>
 
+                        </button>
+                        <ul class="dropdown-menu">
+                            <?php
+                            // $ratings = [
+                            //     10 => "Masterpiece", 9 => "Great", 8 => "Very Good", 7 => "Good",
+                            //     6 => "Fine", 5 => "Average", 4 => "Bad", 3 => "Very Bad",
+                            //     2 => "Horrible", 1 => "Appalling"
+                            // ];
+
+                            // foreach ($ratings as $val => $label) {
+                            //     echo "<li><a class='dropdown-item' href='#' data-value='$val'>($val) $label</a></li>";
+                            // }
+
+                            // if ($userRating != 0) {
+                            //     echo "<li><a class='dropdown-item' href='#' data-value='0'>Remove Rating</a></li>";
+                            // }
+                            ?>
+                        </ul>
+                    </div>
+                </form>
+            </div> -->
+            <div class="btn-wrapper">
+                <form method="POST" action="../controller/addToLibrary.php"
+                    class="m-0" id="add-form"
+                    data-logged-in="<?= $isLoggedIn ? 'true' : 'false' ?>"
+                    data-bookmarked="<?= $isBookmarked ? 'true' : 'false' ?>">
+                    <input type="hidden" name="mangaID" value="<?= $mangaID ?>">
+                    <button type="submit" class="btn btn-orange d-flex align-items-center">
+                        <?php if ($isBookmarked): ?>
+                            <i class="bi bi-check2 me-2"></i>
+                            <span class="d-none d-md-inline">Added to Library</span>
+                        <?php else: ?>
+                            <i class="bi bi-bookmark me-2"></i>
+                            <span class="d-none d-md-inline">Add To Library</span>
+                        <?php endif; ?>
+                    </button>
+                </form>
+            </div>
+            <div class="btn-wrapper">
+                <form method="POST" action="../controller/submitRating.php"
+                    id="rating-form" class="m-0"
+                    data-logged-in="<?= $isLoggedIn ? 'true' : 'false' ?>">
+                    <input type="hidden" name="rating" id="rating-input" value="">
+                    <input type="hidden" name="mangaID" value="<?= $mangaID ?>">
+
+                    <div class="dropdown">
+                        <button class="btn btn-orange d-flex align-items-center justify-content-center no-caret"
+                                type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-star me-2"></i>
+                            <span class="d-none d-md-inline">
+                                <?= $userRating === 0 ? "Rate" : "($userRating)" ?>
+                            </span>
                         </button>
                         <ul class="dropdown-menu">
                             <?php
@@ -128,11 +178,11 @@ $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
                                 6 => "Fine", 5 => "Average", 4 => "Bad", 3 => "Very Bad",
                                 2 => "Horrible", 1 => "Appalling"
                             ];
-
+            
                             foreach ($ratings as $val => $label) {
                                 echo "<li><a class='dropdown-item' href='#' data-value='$val'>($val) $label</a></li>";
                             }
-
+                            
                             if ($userRating != 0) {
                                 echo "<li><a class='dropdown-item' href='#' data-value='0'>Remove Rating</a></li>";
                             }

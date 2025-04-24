@@ -7,8 +7,10 @@ require('../db/mangaInfoPdo.php');
 $userID = $_SESSION['userID'] ?? null;
 $username = $_SESSION['username'] ?? null;
 if (!isset($_SESSION['userID'])) {
-    $userID = getUserID($_SESSION['username']);
-    $_SESSION['userID'] = $userID;        
+    if ($username != null){
+        $userID = getUserID($_SESSION['username']);
+        $_SESSION['userID'] = $userID;        
+    }
 }
 
 $isLoggedIn = false;

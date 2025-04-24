@@ -5,12 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Upload Manga</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  
 </head>
 <body>
 <div class="container mt-5">
   <h2 class="mb-4">Upload New Manga</h2>
 
-  <form action="handle_upload.php" method="POST" enctype="multipart/form-data" class="row g-3">
+  <form id="mangaUploadForm" enctype="multipart/form-data" class="row g-3">
+  <!-- <form action="handle_upload.php" method="POST" enctype="multipart/form-data" class="row g-3"> -->
     <!-- Manga Name -->
     <div class="col-md-6">
       <label class="form-label">Original Name</label>
@@ -26,6 +28,21 @@
       <label class="form-label">Cover Image</label>
       <input type="file" name="cover" class="form-control" accept="image/*" required>
     </div>
+    <!-- Original Language -->
+    <div class="col-md-6">
+      <label class="form-label">Original Language</label>
+      <select name="language" class="form-control" required>
+          <option value="">-- Select Language --</option>
+          <option value="Japanese">Japanese</option>
+          <option value="Korean">Korean</option>
+          <option value="Chinese">Chinese</option>
+          <option value="English">English</option>
+          <option value="French">French</option>
+          <option value="Spanish">Spanish</option>
+          <option value="Vietnamese">Vietnamese</option>
+          <option value="Other">Other</option>
+      </select>
+  </div>
 
     <!-- Authors & Artists -->
     <div class="col-md-6">
@@ -38,7 +55,7 @@
     </div>
 
     <!-- Demographic & Content Rating -->
-    <div class="col-md-6">
+    <div class="col-md-3">
       <label class="form-label">Demographic</label>
       <select name="demographic" class="form-select" required>
         <option value="Shounen">Shounen</option>
@@ -49,7 +66,7 @@
       </select>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-3">
       <label class="form-label">Content Rating</label>
       <select name="content_rating" class="form-select" required>
         <option value="Safe">Safe</option>
@@ -82,7 +99,7 @@
     <!-- Tags -->
     <div class="col-12">
       <label class="form-label">Tags</label>
-      <select name="tags[]" id="tagSelect" class="form-select" multiple required>
+      <select name="tags[]" id="tagSelect" class="form-select" multiple required size="15">
         <optgroup label="Format">
           <option value="4-Koma">4-Koma</option>
           <option value="Adaptation">Adaptation</option>
@@ -107,7 +124,8 @@
           <option value="Fantasy">Fantasy</option>
           <option value="Girls' Love">Girls' Love</option>
           <option value="Historical">Historical</option>
-          <option value="Horror Isekai">Horror Isekai</option>
+          <option value="Horror">Horror</option>
+          <option value="Isekai">Isekai</option>
           <option value="Magical Girls">Magical Girls</option>
           <option value="Mecha">Mecha</option>
           <option value="Medical">Medical</option>
@@ -179,6 +197,19 @@
   </form>
 </div>
 
+<!--Toast để cho coi thành công hay không -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+  <div id="uploadToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <strong class="me-auto">Upload Status</strong>
+      <small>Now</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body" id="uploadToastBody"></div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 <!-- Scripts -->
 <script>
   // Word Count
@@ -204,6 +235,44 @@
       selectedTagsDisplay.appendChild(badge);
     });
   });
+
+  //upload bằng ajax
+  document.getElementById('mangaUploadForm').addEventListener('submit', function(e) {
+  e.preventDefault(); // Prevent default form submission
+
+  const form = e.target;
+  const formData = new FormData(form);
+  const toastBody = document.getElementById('uploadToastBody');
+  fetch('handle_upload.php', {
+      method: 'POST',
+      body: formData
+  })
+  .then(response => {
+      if (!response.ok) {
+          throw new Error("Network response was not OK");
+      }
+      return response.json();
+  })
+  .then(data => {
+      if (data.success) {
+          toastBody.textContent = data.message;
+      } else {
+          toastBody.textContent = `Error: ${data.error}`;
+      }
+      const toast = new bootstrap.Toast(document.getElementById('uploadToast'));
+      toast.show();
+      form.reset();
+      document.getElementById("selectedTags").innerHTML = "";
+      document.getElementById("wordCount").textContent = "0 / 200 words";
+  })
+  .catch(error => {
+      console.error("Error uploading manga:", error);
+      toastBody.textContent = `Upload failed: ${error.message}`;
+      const toast = new bootstrap.Toast(document.getElementById('uploadToast'));
+      toast.show();
+  });
+
+});
 </script>
 </body>
 </html>
