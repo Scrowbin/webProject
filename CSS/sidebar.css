@@ -1,0 +1,214 @@
+/* ==========================================================================
+   SIDEBAR
+   ========================================================================== */
+body.sidebar-open {
+  overflow-x: hidden; /* Prevent horizontal scroll when sidebar is open */
+}
+
+/* Push content to the right when sidebar is open */
+body.sidebar-open .page-wrapper,
+body.sidebar-open .container-xxl,
+body.sidebar-open .container-fluid,
+body.sidebar-open main {
+  transform: translateX(280px);
+  width: calc(100% - 280px);
+  transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+  margin-left: 0;
+}
+
+/* Revised handling for Popular New Titles section */
+body.sidebar-open .popular-new-titles-section.full-width-section {
+  transform: translateX(0);
+  width: 100%;
+  padding-left: 280px;
+  transition: padding-left 0.3s ease-in-out;
+}
+
+body.sidebar-open .popular-new-titles-section.full-width-section > .container-xxl {
+  max-width: 100%;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+/* Adjust grid layouts when sidebar is open */
+body.sidebar-open .row {
+  margin-right: 0;
+  width: 100%;
+}
+
+/* Hide only hamburger and navbar brand when sidebar is open, but keep sidebar brand visible */
+body.sidebar-open #hamburger-btn,
+body.sidebar-open .navbar .navbar-brand {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Ensure sidebar brand remains visible */
+body.sidebar-open #nav-sidebar .navbar-brand {
+  opacity: 1;
+  visibility: visible;
+}
+
+#nav-sidebar {
+  background-color: #1f1f1f;
+  color: #e0e0e0;
+  width: 280px;
+  height: 100vh;
+  position: fixed; /* Sidebar remains fixed */
+  top: 0;
+  left: 0;
+  z-index: 1040;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #333;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #4F4F4F transparent;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+}
+
+#nav-sidebar::-webkit-scrollbar {
+  width: 5px;
+}
+#nav-sidebar::-webkit-scrollbar-thumb {
+  background-color: #4F4F4F;
+  border-radius: 3px;
+}
+#nav-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+body.sidebar-open #nav-sidebar {
+  transform: translateX(0);
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  height: 60px; /* Match navbar height */
+  border-bottom: 1px solid #333;
+  flex-shrink: 0;
+}
+
+.sidebar-header .navbar-brand {
+    color: #e0e0e0;
+    text-decoration: none;
+}
+
+.close-btn {
+  padding: 0.5rem;
+  color: #ccc;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+}
+.close-btn:hover {
+    color: #fff;
+}
+
+.sidebar-nav {
+  padding: 1rem;
+  flex-grow: 1; /* Allow nav to fill remaining space */
+}
+
+.sidebar-nav .nav-link {
+  display: flex; /* Use flex for icon alignment */
+  align-items: center; /* Align icon and text */
+  color: #ccc;
+  text-decoration: none;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  margin-bottom: 0.25rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.sidebar-nav .nav-link i {
+  margin-right: 0.75rem;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0; /* Prevent icon from shrinking */
+}
+
+.sidebar-nav .nav-link:hover,
+.sidebar-nav .nav-link.active {
+  background-color: #FF6740;
+  color: #fff;
+}
+
+.sidebar-section {
+  margin-top: 1rem;
+  border-top: 1px solid #333;
+  padding-top: 1rem;
+}
+
+.sidebar-section .section-title {
+  font-weight: bold;
+  color: #e0e0e0;
+  padding: 0.75rem 1rem; /* Match nav-link padding */
+  display: block; /* Make it block for padding */
+  margin-bottom: 0.25rem;
+}
+
+.sidebar-section .section-title:hover {
+  background-color: transparent; /* No hover effect like links */
+  color: #fff;
+}
+
+.sidebar-section .sub-links {
+  padding-left: calc(1rem + 20px + 0.75rem); /* Indent past icon */
+  margin-top: 0.5rem;
+}
+
+.sidebar-section .sub-links .nav-link {
+  padding: 0.5rem 0; /* Adjust padding */
+}
+
+.sidebar-section .sub-links .nav-link:hover {
+  background-color: transparent;
+  color: #FF6740;
+}
+
+.sidebar-footer {
+  padding: 1rem;
+  border-top: 1px solid #333;
+  flex-shrink: 0; /* Prevent footer from shrinking */
+}
+
+.sidebar-footer .social-icons a {
+  color: #ccc;
+  margin: 0 0.5rem;
+  font-size: 1.2rem;
+  transition: color 0.2s ease;
+}
+
+.sidebar-footer .social-icons a:hover {
+  color: #fff;
+}
+
+#hamburger-btn {
+  background: none;
+  border: none;
+  color: #e0e0e0;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 1050;
+  transition: all 0.3s ease;
+}
+
+#hamburger-btn:hover {
+  color: #fff;
+  transform: scale(1.1);
+}
+
+body:not(.sidebar-open) #hamburger-btn {
+  display: inline-block;
+  opacity: 1;
+  visibility: visible;
+} 

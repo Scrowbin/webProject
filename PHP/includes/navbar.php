@@ -7,7 +7,7 @@ $is_logged_in = isset($_SESSION['username']);
 $username = $is_logged_in ? htmlspecialchars($_SESSION['username']) : 'Guest';
 
 // Define path prefix, default to empty string if not set by the including controller
-$pathPrefix = $pathPrefix ?? ''; 
+$pathPrefix = $pathPrefix ?? '';
 
 // Corrected path for default avatar
 $user_avatar = $pathPrefix . 'IMG/avatar_default.png'; // Path relative to index.php
@@ -22,15 +22,19 @@ $user_avatar = $pathPrefix . 'IMG/avatar_default.png'; // Path relative to index
     <?php // Link to index.php (homepage controller) ?>
     <a class="navbar-brand text-white fw-bold d-flex align-items-center" href="<?= $pathPrefix ?>index.php">
        <?php // Corrected path for logo ?>
-       <img src="<?= $pathPrefix ?>IMG/logo.png" alt="Logo" style="height: 30px; margin-right: 8px;"> 
+       <img src="<?= $pathPrefix ?>IMG/logo.png" alt="Logo" style="height: 30px; margin-right: 8px;">
        MangaDax
     </a>
-    
-    <div class="search-box d-flex align-items-center ms-auto me-3">
-      <input type="text" class="form-control border-0" placeholder="Search"/>
-      <span class="shortcut-key text-white-50 ms-2 d-none d-md-inline">Ctrl</span>
-      <span class="shortcut-key text-white-50 ms-2 d-none d-md-inline">K</span>
-      <i class="bi bi-search text-white ms-2"></i>
+
+    <div class="search-container ms-auto me-3">
+      <div class="search-box d-flex align-items-center" id="search-trigger">
+        <input type="text" id="search-input" class="form-control border-0" placeholder="Search"/>
+        <span class="shortcut-key text-white-50 ms-2 d-none d-md-inline">Ctrl</span>
+        <span class="shortcut-key text-white-50 ms-2 d-none d-md-inline">K</span>
+        <i class="bi bi-search text-white ms-2"></i>
+        <button type="button" class="btn-close text-white d-none" id="search-close"></button>
+      </div>
+      <?php include $pathPrefix . 'PHP/includes/search_modal.php'; ?>
     </div>
     <button class="btn text-white p-0" type="button" id="user-avatar-btn" data-bs-toggle="modal" data-bs-target="#user-modal">
       <?php if ($is_logged_in): ?>
@@ -41,7 +45,7 @@ $user_avatar = $pathPrefix . 'IMG/avatar_default.png'; // Path relative to index
       <?php endif; ?>
     </button>
   </div>
-</nav> 
+</nav>
 
 <!-- User Modal -->
 <div class="modal fade" id="user-modal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
@@ -113,4 +117,5 @@ $user_avatar = $pathPrefix . 'IMG/avatar_default.png'; // Path relative to index
       </div>
     </div>
   </div>
-</div> 
+</div>
+

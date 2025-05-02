@@ -1,5 +1,5 @@
 <?php
-    require('helper.php');
+    require 'helper.php';
 ?>
 
 <!DOCTYPE html>
@@ -17,10 +17,27 @@
     <?php include 'includes/navbar.php'; ?>
     <?php include 'includes/sidebar.php'; ?>
     <div class="container-xxl pt-5 mt-4">
-
-    <h1>Library</h1>
+        <div class="library-header">
+            <div class="back-button">
+                <a href="../controller/follows_controller.php">
+                    <i class="bi bi-arrow-left"></i>
+                </a>
+            </div>
+            <h1>Library</h1>
+        </div>
+        <div class="library-controls">
+            <div class="manga-count"><?= $totalMangaCount ?> Titles</div>
+            <div class="view-controls">
+                <button class="view-btn list-view active"><i class="bi bi-list"></i></button>
+                <button class="view-btn grid-view"><i class="bi bi-grid-3x3-gap"></i></button>
+                <button class="view-btn compact-view"><i class="bi bi-grid-3x3"></i></button>
+            </div>
+        </div>
     <?php
         if ($isLoggedIn){
+    ?>
+        <div class="manga-container">
+    <?php
             foreach($manga as $m){
             $mangaID = $m["MangaID"];
             $mangaName = $m["MangaNameOG"];
@@ -28,7 +45,6 @@
             $pubStatus = $m["PublicationStatus"];
             $mangaDesc = $m["MangaDiscription"];
     ?>
-        <div class="container-fluid wid">
             <div class="manga-card">
                 <div class="manga-cover">
                     <a href="../controller/mangaInfo_controller.php?MangaID=<?=$mangaID?>">
@@ -38,26 +54,38 @@
 
                 <!-- Right: Details -->
                 <div class="manga-details">
+                    <?php
+                        switch ($pubStatus) {
+                            case "Ongoing":
+                                echo "<span class='grid-pub-status text-success'><strong>● " . strtoupper($pubStatus) . "</strong></span>";
+                                break;
+                            case "Completed":
+                                echo "<span class='grid-pub-status text-primary'><strong>● " . strtoupper($pubStatus) . "</strong></span>";
+                                break;
+                            case "Hiatus":
+                                echo "<span class='grid-pub-status text-warning'><strong>● " . strtoupper($pubStatus) . "</strong></span>";
+                                break;
+                        }
+                    ?>
                     <div class="manga-header">
                         <div class="manga-title">
                             <img class="flag" src="https://mangadex.org/img/flags/jp.svg">
                             <a href="../controller/mangaInfo_controller.php?MangaID=<?=$mangaID?>" class=""><strong><?=$mangaName?></strong></a>
                         </div>
-                        <?php
-                            switch ($pubStatus) {
-                                case "Ongoing":
-                                    echo "<span class='text-success pub-status'><strong>● " . strtoupper($pubStatus) . "</strong></span>";
-                                    break;
-                                case "Completed":
-                                    echo "<span class='text-primary pub-status'><strong>● " . strtoupper($pubStatus) . "</strong></span>";
-                                    break;
-                                case "Hiatus":
-                                    echo "<span class='text-warning pub-status'><strong>● " . strtoupper($pubStatus) . "</strong></span>";
-                                    break;
-                            }
-
-                        ?>
-
+                    </div>
+                    <div class="manga-stats">
+                        <div class="stat-item">
+                            <i class="bi bi-star-fill"></i> 7.94
+                        </div>
+                        <div class="stat-item">
+                            <i class="bi bi-bookmark-fill"></i> 35k
+                        </div>
+                        <div class="stat-item">
+                            <i class="bi bi-eye-fill"></i> N/A
+                        </div>
+                        <div class="stat-item">
+                            <i class="bi bi-chat-fill"></i> 36
+                        </div>
                     </div>
                     <div class="badge-bar">
                         <?php
@@ -66,14 +94,17 @@
                             }
                         ?>
                     </div>
+                    <div class="manga-tagline">Only you are special.</div>
                     <div class="manga-desc">
                         <?=$mangaDesc?>
                     </div>
                 </div>
             </div>
-        </div>
     <?php
             }
+    ?>
+        </div>
+    <?php
         }
         else{
             ?>
@@ -91,5 +122,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../JS/navbar.js"></script>
+    <script src="../JS/library.js"></script>
 </body>
 </html>

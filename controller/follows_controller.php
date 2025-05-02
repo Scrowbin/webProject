@@ -3,10 +3,21 @@
         session_start();
     }
     require_once('../db/latestUpdates_model.php');
+    require_once('../db/mangaInfoPdo.php');
+
     $userID = $_SESSION['userID'] ?? null;
     $username = $_SESSION['username'] ?? null;
+
+    // Nếu không có userID nhưng có username, lấy userID từ username
+    if (!$userID && $username) {
+        $userID = getUserID($username);
+        if ($userID) {
+            $_SESSION['userID'] = $userID;
+        }
+    }
+
     $isLoggedIn = false;
-    if ($userID !=null || $username!= null){
+    if ($userID != null || $username != null){
         $isLoggedIn = true;
     }
 

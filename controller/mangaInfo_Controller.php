@@ -26,15 +26,13 @@ if (!$mangaID) {
     die("Missing MangaID.");
 }
 
-if ($username)
-$isBookmarked = isBookmarked($mangaID,$userID);
-
-$userRating = 0;
+$isBookmarked = false;
 if ($userID) {
+    $isBookmarked = isBookmarked($mangaID, $userID);
     $userRating = getRating($userID, $mangaID);
+} else {
+    $userRating = 0;
 }
-
-else $isBookmarked = false;
 
 $mangaInfo = getMangaInfo($mangaID);
 if (!$mangaInfo) {
@@ -43,7 +41,7 @@ if (!$mangaInfo) {
 
 $authorsRaw = getMangaAuthors($mangaID);
 $artistsRaw = getMangaArtists($mangaID);
-$tags = getTags($mangaID); 
+$tags = getTags($mangaID);
 $chapters = getChapters($mangaID);
 
 $counts = getCommentCountsPerChapter($mangaID);
@@ -51,7 +49,7 @@ $countsMap = [];
 $commentSectionIDMap = [];
 foreach ($counts as $row) {
     $countsMap[$row['ChapterID']] = $row['NumOfComments'];
-    $commentSectionIDMap[$row['ChapterID']]=$row['CommentSectionID'] ; 
+    $commentSectionIDMap[$row['ChapterID']]=$row['CommentSectionID'] ;
 }
 
 // Group chapters by volume
