@@ -1372,6 +1372,7 @@
   <?php /* Corrected JS paths relative to index.php */ ?>
   <script src="JS/navbar.js"></script>
   <script src="JS/home.js"></script>
+  <script src="JS/search.js"></script>
   <script>
     // Prevent click events from bubbling up from navigation controls
     document.addEventListener('DOMContentLoaded', function() {
