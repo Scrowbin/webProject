@@ -1,9 +1,9 @@
 <?php
-ini_set('display_errors', 1);  // Enable display of errors
-error_reporting(E_ALL);  // Report all types of errors
-ini_set('error_log', 'D:/XAMPP/php/logs/php_errors.log');
-ini_set('log_errors', value: 1);     // Log errors to error_log
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);  // Enable display of errors
+// error_reporting(E_ALL);  // Report all types of errors
+// ini_set('error_log', 'D:/XAMPP/php/logs/php_errors.log');
+// ini_set('log_errors', value: 1);     // Log errors to error_log
+// error_reporting(E_ALL);
 
 require_once "../db/create_model.php";
 header('Content-Type: application/json');
@@ -26,6 +26,7 @@ try {
     $authors = extractArtists($_POST["authors"] ?? '');
     $artists = extractArtists($_POST["artists"] ?? '');
     $mangaDesc = trim($_POST['description'] ?? '');
+    $original_language = $_POST["language"] ?? '';
     $demographic = $_POST["demographic"] ?? '';
     $content_rating = $_POST["content_rating"] ?? '';
     $publication_year = intval($_POST["year"] ?? 0);
@@ -94,7 +95,7 @@ try {
     error_log("Step 3: Image uploaded successfully.");
 
     // Step 4: Insert manga
-    insertManga($name_original, $name_english, $mangaDesc, $coverLink,$demographic, $content_rating, $publication_year, $publication_status);
+    insertManga( $name_original, $name_english, $mangaDesc,$original_language, $coverLink,$demographic, $content_rating, $publication_year, $publication_status);
     error_log("Step 4: Manga inserted.");
 
     // Step 5: Link authors and artists

@@ -25,6 +25,6 @@ function getUserID ($username){
 }
 
 function makeComment($chapterID){
-    $sql = 'INSERT INTO comment_section (ChapterID) VALUES (?)';
+    $sql = 'INSERT INTO commentsection (ChapterID) VALUES (?)';
     pdo_execute($sql,$chapterID);
 }

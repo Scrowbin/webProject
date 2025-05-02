@@ -1,3 +1,10 @@
+<?php
+$mode = $mode ?? "create"; // Default to create if $mode is not set
+$actionUrl = ($mode === "edit") ? "handle_edit.php" : "handle_upload.php";
+$formTitle = ($mode === "edit") ? "Edit Manga" : "Upload New Manga";
+$submitButtonText = ($mode === "edit") ? "Update Manga" : "Upload Manga";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +16,7 @@
 </head>
 <body>
 <div class="container mt-5">
-  <h2 class="mb-4">Upload New Manga</h2>
+  <h2 class="mb-4"><?= htmlspecialchars($formTitle) ?></h2>
 
   <form id="mangaUploadForm" enctype="multipart/form-data" class="row g-3">
   <!-- <form action="handle_upload.php" method="POST" enctype="multipart/form-data" class="row g-3"> -->
@@ -26,7 +33,22 @@
     <!-- Cover Image -->
     <div class="col-md-6">
       <label class="form-label">Cover Image</label>
-      <input type="file" name="cover" class="form-control" accept="image/*" required>
+      
+      <?php 
+      if($mode==="edit"){
+        ?>
+        <div class="mt-2">
+          <input type="file" name="cover" class="form-control" accept="image/*">
+          <img name="cover_preview" alt="Current Cover" style="max-width: 200px;">
+        </div>
+        <?php
+      }
+      else{
+        ?>
+          <input type="file" name="cover" class="form-control" accept="image/*" required>
+        <?php
+      }
+    ?>
     </div>
     <!-- Original Language -->
     <div class="col-md-6">
@@ -42,7 +64,10 @@
           <option value="Vietnamese">Vietnamese</option>
           <option value="Other">Other</option>
       </select>
-  </div>
+      
+    </div>
+    
+    
 
     <!-- Authors & Artists -->
     <div class="col-md-6">
@@ -192,7 +217,7 @@
 
     <!-- Submit Button -->
     <div class="col-12">
-      <button type="submit" class="btn btn-primary">Upload Manga</button>
+      <button type="submit" class="btn btn-primary"><?= htmlspecialchars($submitButtonText) ?></button>
     </div>
   </form>
 </div>
@@ -242,8 +267,11 @@
 
   const form = e.target;
   const formData = new FormData(form);
+  <?php if ($mode === "edit"): ?>
+    formData.append('manga_id', <?= json_encode($id) ?>);
+  <?php endif; ?>
   const toastBody = document.getElementById('uploadToastBody');
-  fetch('handle_upload.php', {
+  fetch('<?= $actionUrl ?>', {
       method: 'POST',
       body: formData
   })
@@ -256,14 +284,15 @@
   .then(data => {
       if (data.success) {
           toastBody.textContent = data.message;
+          form.reset();
+          document.getElementById("selectedTags").innerHTML = "";
+          document.getElementById("wordCount").textContent = "0 / 200 words";
       } else {
           toastBody.textContent = `Error: ${data.error}`;
       }
       const toast = new bootstrap.Toast(document.getElementById('uploadToast'));
       toast.show();
-      form.reset();
-      document.getElementById("selectedTags").innerHTML = "";
-      document.getElementById("wordCount").textContent = "0 / 200 words";
+
   })
   .catch(error => {
       console.error("Error uploading manga:", error);
@@ -271,7 +300,6 @@
       const toast = new bootstrap.Toast(document.getElementById('uploadToast'));
       toast.show();
   });
-
 });
 </script>
 </body>
