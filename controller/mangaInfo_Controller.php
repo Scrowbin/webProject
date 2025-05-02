@@ -51,6 +51,12 @@ foreach ($counts as $row) {
     $countsMap[$row['ChapterID']] = $row['NumOfComments'];
     $commentSectionIDMap[$row['ChapterID']]=$row['CommentSectionID'] ;
 }
+$avgRating =  getAverageRating($mangaID) ?? "N/A";
+if ($avgRating!=="N/A"){
+    $avgRating = round($avgRating,2);
+}
+$follows = getTotalFollows($mangaID) ?? 0;
+$totalCom = getTotalComments($mangaID)??0;
 
 // Group chapters by volume
 $grouped = [];

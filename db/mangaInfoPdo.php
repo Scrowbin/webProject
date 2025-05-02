@@ -94,4 +94,19 @@
         return pdo_query($sql);
     }
 
+    function getAverageRating($mangaID){
+        $sql = 'SELECT AVG(Rating) FROM rating WHERE MangaID = ?';
+        return pdo_query_value($sql,$mangaID);
+    }
+    function getTotalFollows($mangaID){
+        $sql = 'SELECT COUNT(*) FROM bookmark WHERE MangaID = ?';
+        return pdo_query_value($sql,$mangaID);
+    }
+    function getTotalComments($mangaID){
+        $sql = 'SELECT COUNT(*) FROM commentsection cs 
+                JOIN chapter c ON cs.ChapterID = c.ChapterID
+                JOIN comment co ON cs.CommentSectionID = co.CommentSectionID
+                WHERE MangaID = ?';
+        return pdo_query_value($sql,$mangaID);
+    }
 ?>

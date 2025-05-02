@@ -53,8 +53,13 @@
 
     function addComment($commentSectionID, $comment,$userID,$replyID){
         $sql = 'INSERT INTO comment (CommentSectionID,CommentText,UserID,ReplyID) VALUES (?,?,?,?)' ;
-        pdo_execute($sql,$commentSectionID,$comment,$userID,$replyID);
-
+        try{
+            pdo_execute($sql,$commentSectionID,$comment,$userID,$replyID);
+        }
+        catch(Exception){
+            return false;
+        }
+        return true;
     }
 
     function getChapterID($commentSectionID){

@@ -9,7 +9,16 @@ $pubYear = $mangaInfo['PublicationYear'];
 $mangaNameOG = $mangaInfo['MangaNameOG'];
 $mangaNameEN = $mangaInfo['MangaNameEN'];
 $mangaDesc= $mangaInfo['MangaDiscription'];
+$priorityTags = [];
+$normalTags = [];
 
+foreach ($tags as $tagName) {
+    if (in_array(strtolower($tagName), ['gore', 'sexual violence'])) {
+        $priorityTags[] = $tagName;
+    } else {
+        $normalTags[] = $tagName;
+    }
+}
 $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
 ?>
 <!DOCTYPE html>
@@ -70,9 +79,9 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
                         <?=$mangaAuthors?>
                     </div>
                     <div class="mt-2 d-flex align-items-center manga-data">
-                        <span class="text-warning"><i class="bi bi-star-fill"></i> 9.13</span>
-                        <span class="ms-3"><i class="bi bi-bookmark"></i> 14k</span>
-                        <span class="ms-3"><i class="bi bi-chat-dots"></i> 27</span>
+                        <span class="text-warning"><i class="bi bi-star-fill"></i> <?=$avgRating?></span>
+                        <span class="ms-3"><i class="bi bi-bookmark"></i> <?=$follows?></span>
+                        <span class="ms-3"><i class="bi bi-chat-dots"></i> <?=$totalCom?></span>
                         <span class="ms-3"><i class="bi bi-eye"></i> N/A</span>
                     </div>
                 </div>
@@ -82,63 +91,6 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
     <!-- Buttons -->
     <div class="container mt-3 ">
         <div class="d-flex align-items-center gap-2 flex-wrap">
-            <!-- Add to Library -->
-            <!-- <div class="btn-wrapper">
-                <?php if (!$isBookmarked): ?>
-                    <form method="POST" action="../controller/addToLibrary.php" class="m-0" id="add-form" data-logged-in="<?= $isLoggedIn ? 'true' : 'false' ?>">
-                        <input type="hidden" name="mangaID" value="<?= $mangaID ?>">
-                        <button type="submit" class="btn btn-orange d-flex align-items-center">
-                            <i class="bi bi-bookmark me-2"></i>
-                            <span class="d-none d-md-inline">Add To Library</span>
-                        </button>
-                    </form>
-                <?php else: ?>
-                    <form method="POST" action="../controller/addToLibrary.php" class="m-0" id="add-form" data-logged-in="<?= $isLoggedIn ? 'true' : 'false' ?>">
-                        <input type="hidden" name="mangaID" value="<?= $mangaID ?>">
-                        <button type="submit" class="btn btn-orange d-flex align-items-center">
-                            <i class="bi bi-check2 me-2"></i>
-                            <span class="d-none d-md-inline">Added to Library</span>
-                        </button>
-                    </form>
-                <?php endif; ?>
-            </div> -->
-
-            <!-- Rate -->
-            <!-- <div class="btn-wrapper">
-                <form action="../controller/submitRating.php" method="POST" id="rating-form" class="m-0" data-logged-in="<?= $isLoggedIn ? 'true' : 'false' ?>">
-                    <input type="hidden" name="rating" id="rating-input" value="">
-                    <input type="hidden" name="mangaID" value="<?= $mangaID ?>">
-                    <div class="dropdown">
-                        <button class="btn btn-orange d-flex align-items-center justify-content-center no-caret" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-star me-2"></i>
-                            <?php
-                            // if ($userRating === 0) {
-                            //     echo "<span class='d-none d-md-inline'>Rate</span>";
-                            // }
-                            // else echo "<span class='d-none d-md-inline'>($userRating)</span>";
-                            ?>
-
-                        </button>
-                        <ul class="dropdown-menu">
-                            <?php
-                            // $ratings = [
-                            //     10 => "Masterpiece", 9 => "Great", 8 => "Very Good", 7 => "Good",
-                            //     6 => "Fine", 5 => "Average", 4 => "Bad", 3 => "Very Bad",
-                            //     2 => "Horrible", 1 => "Appalling"
-                            // ];
-
-                            // foreach ($ratings as $val => $label) {
-                            //     echo "<li><a class='dropdown-item' href='#' data-value='$val'>($val) $label</a></li>";
-                            // }
-
-                            // if ($userRating != 0) {
-                            //     echo "<li><a class='dropdown-item' href='#' data-value='0'>Remove Rating</a></li>";
-                            // }
-                            ?>
-                        </ul>
-                    </div>
-                </form>
-            </div> -->
             <div class="btn-wrapper">
                 <form method="POST" action="../controller/addToLibrary.php"
                     class="m-0" id="add-form"
@@ -209,12 +161,28 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
 
 
 
-
+        <!-- tags -->
         <div class="mt-2">
             <?php
-                foreach($tags as $Tagname){
+                if ($mangaInfo["ContentRating"]=="Suggestive"){
                     ?>
-                        <span class="badge mb-1"><?=strtoupper($Tagname)?></span>
+                        <span class="badge mb-1" style="background-color: #da7500"><?=strtoupper($mangaInfo["ContentRating"])?></span>
+                    <?php
+                }
+                if ($mangaInfo["ContentRating"]=="Erotica" ){
+                    ?>
+                        <span class="badge mb-1" style="background-color: #ff4040"><?=strtoupper($mangaInfo["ContentRating"])?></span>
+                    <?php
+                }
+                foreach ($priorityTags as $tagName) {
+                    ?>
+                    <span class="badge bg-danger mb-1" style="background-color: #ff4040"><?= strtoupper($tagName) ?></span>
+                    <?php
+                }
+                
+                foreach ($normalTags as $tagName) {
+                    ?>
+                    <span class="badge mb-1"><?= strtoupper($tagName) ?></span>
                     <?php
                 }
             ?>
