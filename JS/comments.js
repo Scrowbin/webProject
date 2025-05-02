@@ -2,6 +2,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     let commentForm = document.getElementById('comment-form');
     let isLoggedIn = commentForm?.dataset.loggedIn === "true"; // Safely access logged-in flag
+    const commentsID = commentForm?.dataset.sectionId;
     let toastElement = document.getElementById('loginToast');
     let toast = new bootstrap.Toast(toastElement);
 
@@ -21,12 +22,37 @@ document.addEventListener('DOMContentLoaded', () => {
     // Prevent rating form submission if not logged in
     if (commentForm) {
         commentForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
             if (!isLoggedIn) {
-                e.preventDefault();
                 toast.show();
+                return;
             }
+
+            const formData = new FormData(commentForm);
+
+            fetch('../controller/submitComment.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => { throw new Error(text); });
+                }
+                return response.text();
+            })
+            .then(() => {
+                commentForm.reset();
+                document.getElementById('replyID').value = "0";
+                document.getElementById('reply-preview').innerHTML = '';
+                fetchComments(currentPage); // Refresh comment list
+            })
+            .catch(error => {
+                alert(error.message || "Failed to submit comment.");
+            });
         });
     }
+
     let currentPage = 1;
     const commentsPerPage = 5;
 
@@ -47,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     div.className = "comment rounded p-3 mb-4";
 
                     // Quoted comment block (if ReplyID is not 0)
-                    const quoteHTML = (comment.ReplyID !== 0 || comment.ReplyID==null) ? `
+                    const quoteHTML = (comment.ReplyID !== 0 && comment.QuoteContent) ? `
                         <div class="quote">
                             <div class="quote-author">${comment.QuoteUsername} said:</div>
                             <div>${comment.QuoteContent}</div>

@@ -79,9 +79,9 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
                         <?=$mangaAuthors?>
                     </div>
                     <div class="mt-2 d-flex align-items-center manga-data">
-                        <span class="text-warning"><i class="bi bi-star-fill"></i> 9.13</span>
-                        <span class="ms-3"><i class="bi bi-bookmark"></i> 14k</span>
-                        <span class="ms-3"><i class="bi bi-chat-dots"></i> 27</span>
+                        <span class="text-warning"><i class="bi bi-star-fill"></i> <?=$avgRating?></span>
+                        <span class="ms-3"><i class="bi bi-bookmark"></i> <?=$follows?></span>
+                        <span class="ms-3"><i class="bi bi-chat-dots"></i> <?=$totalCom?></span>
                         <span class="ms-3"><i class="bi bi-eye"></i> N/A</span>
                     </div>
                 </div>

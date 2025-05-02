@@ -77,8 +77,11 @@ $chapterNumber = truncateNumber($chapterNumber);
     
     <!-- Comment Form -->
     <div class="comment rounded p-3">
-        <form method="POST" action="../controller/submitComment.php" data-logged-in="<?= $isLoggedIn ? 'true' : 'false' ?>"
-            id = "comment-form">
+        <form method="POST" 
+            id = "comment-form"
+            data-section-id="<?= $commentsID ?>"
+            data-logged-in="<?= $isLoggedIn ? 'true' : 'false' ?>"
+            data-url="../controller/addComment_controller.php">
             <div class="mb-3" id = "post-comment">
                 <label for="commentText" class="form-label fw-bold text-light">Post a Reply</label>
                 <div id="reply-preview" class="mb-2"></div>
