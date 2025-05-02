@@ -1,3 +1,16 @@
+// Function to determine the base path based on the current page
+function getBasePath() {
+    const path = window.location.pathname;
+
+    // If we're in a subdirectory like /controller/ or /PHP/
+    if (path.includes('/controller/') || path.includes('/PHP/')) {
+        return '../';
+    }
+
+    // If we're at the root
+    return '';
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Elements
     const searchInput = document.getElementById('search-input');
@@ -100,7 +113,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Perform search
     function performSearch(query) {
-        fetch(`controller/search_controller.php?query=${encodeURIComponent(query)}`, {
+        // Get the base path based on the current page
+        const basePath = getBasePath();
+
+        fetch(`${basePath}controller/search_controller.php?query=${encodeURIComponent(query)}`, {
             headers: {
                 'X-Requested-With': 'XMLHttpRequest'
             }
@@ -134,11 +150,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const bookmarks = manga.BookmarkCount || Math.floor(Math.random() * 1000);
 
             const resultItem = document.createElement('a');
-            resultItem.href = `controller/mangaInfo_Controller.php?MangaID=${manga.MangaID}`;
+            const basePath = getBasePath();
+            resultItem.href = `${basePath}controller/mangaInfo_Controller.php?MangaID=${manga.MangaID}`;
             resultItem.className = 'search-result-item';
 
             resultItem.innerHTML = `
-                <img src="IMG/${manga.MangaID}/${manga.CoverLink}" alt="${manga.MangaNameOG}" class="search-result-cover">
+                <img src="${basePath}IMG/${manga.MangaID}/${manga.CoverLink}" alt="${manga.MangaNameOG}" class="search-result-cover">
                 <div class="search-result-info">
                     <div class="search-result-title">${manga.MangaNameOG}</div>
                     <div class="search-result-subtitle">${manga.MangaNameEN}</div>

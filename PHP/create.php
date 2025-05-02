@@ -3,12 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Upload Manga</title>
+  <title>Upload Manga - MangaDax</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+  <link rel="stylesheet" href="../CSS/navbar.css">
+  <link rel="stylesheet" href="../CSS/create.css">
 </head>
 <body>
-<div class="container mt-5">
+  <?php include 'includes/navbar.php'; ?>
+  <?php include 'includes/sidebar.php'; ?>
+
+<div class="container-xxl mt-5 pt-4">
   <h2 class="mb-4">Upload New Manga</h2>
 
   <form id="mangaUploadForm" enctype="multipart/form-data" class="row g-3">
@@ -243,7 +248,7 @@
   const form = e.target;
   const formData = new FormData(form);
   const toastBody = document.getElementById('uploadToastBody');
-  fetch('handle_upload.php', {
+  fetch('../controller/handle_upload.php', {
       method: 'POST',
       body: formData
   })

@@ -1,0 +1,105 @@
+/* Create Manga Page Styles */
+body {
+  background-color: #1f1f1f;
+  color: #e0e0e0;
+}
+
+h2 {
+  color: #fff;
+  font-weight: 700;
+}
+
+.form-label {
+  color: #ccc;
+  font-weight: 500;
+}
+
+.form-control, .form-select {
+  background-color: #2a2a2a;
+  border: 1px solid #444;
+  color: #fff;
+}
+
+.form-control:focus, .form-select:focus {
+  background-color: #333;
+  border-color: #FF6740;
+  color: #fff;
+  box-shadow: 0 0 0 0.25rem rgba(255, 103, 64, 0.25);
+}
+
+.form-control::placeholder {
+  color: #888;
+}
+
+.form-text {
+  color: #aaa !important;
+}
+
+.text-danger {
+  color: #ff6b6b !important;
+}
+
+.btn-primary {
+  background-color: #FF6740;
+  border-color: #FF6740;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+  background-color: #e65c3a;
+  border-color: #e65c3a;
+}
+
+/* Tag badges */
+.badge {
+  background-color: #444;
+  color: #fff;
+  padding: 0.4rem 0.6rem;
+  margin-right: 0.3rem;
+  margin-bottom: 0.3rem;
+  font-size: 0.8rem;
+}
+
+/* Toast styling */
+.toast {
+  background-color: #2a2a2a;
+  color: #fff;
+}
+
+.toast-header {
+  background-color: #333;
+  color: #fff;
+  border-bottom: 1px solid #444;
+}
+
+.toast-header .btn-close {
+  filter: invert(1);
+}
+
+/* Select multiple styling */
+select[multiple] {
+  height: auto;
+  min-height: 200px;
+}
+
+optgroup {
+  color: #FF6740;
+  font-weight: bold;
+}
+
+option {
+  color: #fff;
+  padding: 5px;
+}
+
+option:checked {
+  background-color: #FF6740;
+  color: #fff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container-xxl {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}

@@ -178,11 +178,11 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
                                 6 => "Fine", 5 => "Average", 4 => "Bad", 3 => "Very Bad",
                                 2 => "Horrible", 1 => "Appalling"
                             ];
-            
+
                             foreach ($ratings as $val => $label) {
                                 echo "<li><a class='dropdown-item' href='#' data-value='$val'>($val) $label</a></li>";
                             }
-                            
+
                             if ($userRating != 0) {
                                 echo "<li><a class='dropdown-item' href='#' data-value='0'>Remove Rating</a></li>";
                             }
@@ -330,7 +330,7 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../JS/navbar.js"></script> <!-- JS for Navbar/Sidebar -->
-
+    <script src="../JS/search.js"></script> <!-- JS for Search -->
     <script src="../JS/mangaInfo.js"></script>
 
 </body>

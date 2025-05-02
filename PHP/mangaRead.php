@@ -9,16 +9,16 @@
     $chapterUploader = $chapterInfo['UploaderName'];
     $mangaName = $mangaInfo['MangaNameOG'];
     $mangaID = $mangaInfo['MangaID'];
-    
-   
+
+
 
     $lastPageNumber = $pages[count($pages)-1]["PageNumber"];
-    
+
     $chapterDropdownValues = [];
     foreach($chapters as $chapter){
         $chapterDropdownValues[] = truncateNumber($chapter['ChapterNumber']);
-    } 
-    
+    }
+
     function displayTitle($name,$number){
         if ($name === '' || $name === null){
             return "<title>Mangadax Ch. $number</title>";
@@ -37,14 +37,14 @@
     <link rel="stylesheet" href="../CSS/mangaRead.css">
 
 </head>
-    
+
 <body>
     <div class="layout">
         <header>
             Header here
         </header>
         <button type="button" class="btn sticky hidden" id="menu-sticky" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
-    
+
         <main>
             <div id = "topReadBar" class = "">
                 <?php echo displayNameOrChapter($chapterName,$chapterNumber)?>
@@ -53,7 +53,7 @@
                         <strong><?=$mangaName?></strong>
                     </a>
                 </div>
-                
+
                 <div class="row">
                     <div class="">
                         <span class="">Vol. <?=$chapterVolume?>, Ch. <?=$chapterNumber?></span>
@@ -66,16 +66,16 @@
                     </button>
                 </div>
             </div>
-            
+
             <div class="" id="page-container">
                     <?php
-                    
+
                     for($i=0;$i<count($pages);$i++){
                         ?>
                         <img src="../IMG/<?=$mangaID?>/<?=$chapterNumber?>/<?=$pageLinks[$i]?>" class="img-fit-width" id="page-<?=$i+1?>" alt="Page <?=$i+1?>">
-                        <?php        
+                        <?php
                     }
-                    ?>    
+                    ?>
             </div>
 
             <nav id = "progress-bar" class="">
@@ -96,7 +96,7 @@
                     echo "<button id='next-chapter' onclick=\"location.href='mangaInfo_Controller.php?MangaID=$mangaID'\">Back to Info</button>";
                 }
             ?>
-    
+
         </main>
         <!-- class = "" -->
         <aside id="rightSidebar" class="sticky close">
@@ -139,7 +139,7 @@
                     </div>
                     <button class="btn nav-button" id = "nextPageBtn"><i class="bi bi-chevron-right"></i></button>
                 </div>
-        
+
                 <!-- Chapter Selector -->
                 <div class="chapter-selector">
                     <button class='btn btn-page' id='prevCh-btn'><i class='bi bi-chevron-left'></i></button>
@@ -157,24 +157,24 @@
                         </select>
                     </div>
                     <button class='btn btn-page' id='nextCh-btn'><i class='bi bi-chevron-right'></i></button>
-                    
+
                 </div>
-        
-                
-        
+
+
+
                 <!-- Report Chapter -->
                 <button class="btn"id = "report-btn">Report Chapter</button>
-    
+
                 <hr>
-    
+
                 <!-- Comments -->
                 <a href="comments_controller.php?commentsID=<?=$commentSection['CommentSectionID']?>">
                     <button class="btn" id = "comment-btn">
                         <i class="bi bi-chat-left"></i> <?=$commentSection['NumOfComments']?> Comments
                     </button>
                 </a>
-                
-                
+
+
                 <!-- Uploaded By -->
                 <div class="mb-3" id = "uploader-info">
                     <p class="mb-1">Uploaded By</p>
@@ -187,9 +187,9 @@
                         <a href="#" class="ms-2 text-primary"><?=$chapterUploader?></a>
                     </div>
                 </div>
-        
+
                 <hr>
-        
+
                 <!-- Reader Settings -->
                 <div id = "reader-settings">
                     <button class="btn reader-btn" id = "readMethod"><i class = "bi bi-files"></i> Long Strip</button>
@@ -197,18 +197,20 @@
                     <!-- <button class="btn reader-btn"><i class="bi bi-eye-slash"></i> Header Hidden</button> -->
                     <button class="btn reader-btn" id = "progress-setting"><i class="bi bi-list"></i> Normal Progress</button>
                     <!-- <button class="btn reader-btn"><i class="bi bi-gear"></i> Reader Settings</button> -->
-    
+
                 </div>
-                
+
             </div>
         </aside>
     </div>
-    
+
 </body>
 <script>
     const mangaID = <?= json_encode($mangaID) ?>;
     const prevChapterID = <?= json_encode($prevChapterID) ?>;
     const nextChapterID = <?= json_encode($nextChapterID) ?>;
 </script>
+<script src="../JS/navbar.js"></script>
+<script src="../JS/search.js"></script>
 <script src="../JS/mangaRead.js"></script>
 </html>
