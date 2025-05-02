@@ -1,73 +1,138 @@
 <?php
-require_once "your_pdo_connection_file.php"; // replace with your actual PDO config
+ini_set('display_errors', 1);  // Enable display of errors
+error_reporting(E_ALL);  // Report all types of errors
+ini_set('error_log', 'D:/XAMPP/php/logs/php_errors.log');
+ini_set('log_errors', value: 1);     // Log errors to error_log
+error_reporting(E_ALL);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+require_once "../db/create_model.php";
+header('Content-Type: application/json');
+
+function extractArtists($input) {
+    $artists = array_map('trim', explode(',', $input));
+    return array_filter($artists); // Removes empty strings
+}
+
+$response = [];
+
+try {
+    if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+        throw new Exception("Invalid request method.");
+    }
+
     // Step 1: Collect and validate fields
-    $name_original = trim($_POST["original_name"]);
-    $name_english = trim($_POST["english_name"]);
-    $authors = trim($_POST["authors"]);
-    $artists = trim($_POST["artists"]);
-    $demographic = $_POST["demographic"];
-    $content_rating = $_POST["content_rating"];
-    $publication_year = intval($_POST["year"]);
-    $publication_status = $_POST["status"];
+    $name_original = trim($_POST["original_name"] ?? '');
+    $name_english = trim($_POST["english_name"] ?? '');
+    $authors = extractArtists($_POST["authors"] ?? '');
+    $artists = extractArtists($_POST["artists"] ?? '');
+    $mangaDesc = trim($_POST['description'] ?? '');
+    $demographic = $_POST["demographic"] ?? '';
+    $content_rating = $_POST["content_rating"] ?? '';
+    $publication_year = intval($_POST["year"] ?? 0);
+    $publication_status = $_POST["status"] ?? '';
     $tags = $_POST["tags"] ?? [];
 
-    // Basic field validation
+    error_log("Step 1: Collected and validated POST data.");
+
     if (
         empty($name_original) || empty($name_english) || empty($authors) ||
         empty($artists) || empty($demographic) || empty($content_rating) ||
-        empty($publication_year) || empty($publication_status)
+        empty($publication_year) || empty($publication_status) || empty($mangaDesc)
     ) {
-        die("Please fill in all required fields.");
+        throw new Exception("Please fill in all required fields.");
     }
 
-    // Step 2: Insert basic manga info (without cover image path yet)
-    $stmt = $pdo->prepare("INSERT INTO manga (
-        NameOriginal, NameEnglish, Authors, Artists,
-        Demographic, ContentRating, PublicationYear, PublicationStatus
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->execute([
-        $name_original, $name_english, $authors, $artists,
-        $demographic, $content_rating, $publication_year, $publication_status
-    ]);
+    // Step 2:Check if manga already exist, Get manga ID and prepare authors/artists
+    if (mangaExist($name_english,$name_original)){
+        throw new Exception("This manga already exists.");
+    }
 
-    // Step 3: Get the auto-incremented ID
-    $mangaID = $pdo->lastInsertId();
+    $mangaID = getLatestID() + 1;
+    $authorsID = [];
+    $artistsID = [];
 
-    // Step 4: Upload cover image
-    $targetDir = "uploads/";
+    foreach ($authors as $a) {
+        error_log("Checking author: $a");
+        $authorsID[] = authorExist($a) ?: insertAuthor($a);
+    }
+
+    foreach ($artists as $a) {
+        error_log("Checking artist: $a");
+        $artistsID[] = artistExist($a) ?: insertArtist($a);
+    }
+
+    error_log("Step 2: Authors and artists processed.");
+
+    // Step 3: Handle image upload
+    $targetDir = "../IMG/" . $mangaID . "/";
+    if (!file_exists($targetDir)) {
+        mkdir($targetDir, 0777, true);
+    }
+
     $imageFileType = strtolower(pathinfo($_FILES["cover"]["name"], PATHINFO_EXTENSION));
     $allowedTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
     if (!in_array($imageFileType, $allowedTypes)) {
-        die("Invalid image format.");
+        throw new Exception("Invalid image format.");
     }
 
-    $coverPath = $targetDir . "cover_" . $mangaID . "." . $imageFileType;
+    $coverLink = "m" . $mangaID . "." . $imageFileType;
+    $coverPath = $targetDir . $coverLink;
 
     if (getimagesize($_FILES["cover"]["tmp_name"]) === false) {
-        die("Uploaded file is not an image.");
+        throw new Exception("Uploaded file is not a valid image.");
     }
 
     if ($_FILES["cover"]["size"] > 2 * 1024 * 1024) {
-        die("Image too large (max 2MB).");
+        throw new Exception("Image too large (max 2MB).");
     }
 
     if (!move_uploaded_file($_FILES["cover"]["tmp_name"], $coverPath)) {
-        die("Failed to move uploaded file.");
+        throw new Exception("Failed to move uploaded file.");
     }
 
-    // Step 5: Update manga row with the cover path
-    $stmt = $pdo->prepare("UPDATE manga SET CoverImage = ? WHERE MangaID = ?");
-    $stmt->execute([$coverPath, $mangaID]);
+    error_log("Step 3: Image uploaded successfully.");
 
-    // Step 6: Insert tags (assuming you have a manga_tag table)
-    $tagStmt = $pdo->prepare("INSERT INTO manga_tag (MangaID, TagID) VALUES (?, ?)");
-    foreach ($tags as $tagID) {
-        $tagStmt->execute([$mangaID, $tagID]);
+    // Step 4: Insert manga
+    insertManga($name_original, $name_english, $mangaDesc, $coverLink,$demographic, $content_rating, $publication_year, $publication_status);
+    error_log("Step 4: Manga inserted.");
+
+    // Step 5: Link authors and artists
+    foreach ($authorsID as $aID) {
+        assignAuthorManga($mangaID, $aID);
     }
 
-    echo "Manga uploaded successfully with ID: $mangaID";
+    foreach ($artistsID as $aID) {
+        assignArtistManga($mangaID, $aID);
+    }
+
+    error_log("Step 5: Author and artist linked.");
+
+    // Step 6: Link tags
+    foreach ($tags as $tag) {
+        $tagID = getTagID($tag);
+        mapMangaWithTag($mangaID, $tagID);
+    }
+
+    error_log("Step 6: Tags linked.");
+
+    $response = [
+        'success' => true,
+        'message' => "Manga uploaded successfully with ID: $mangaID",
+        'mangaID' => $mangaID
+    ];
+
+    error_log("Upload completed successfully.");
+} catch (Exception $e) {
+    http_response_code(400); // Bad request
+    $response = [
+        'success' => false,
+        'error' => $e->getMessage()
+    ];
+
+    error_log("Upload failed: " . $e->getMessage());
 }
+
+echo json_encode($response);
+error_log("Final JSON response: " . json_encode($response));
 ?>

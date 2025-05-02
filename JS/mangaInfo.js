@@ -30,45 +30,114 @@ document.addEventListener('DOMContentLoaded', () => {
     let toast = new bootstrap.Toast(toastElement);
 
     // Handle rating dropdown
+    // document.querySelectorAll('.dropdown-item').forEach(item => {
+    //     item.addEventListener('click', function (e) {
+    //         e.preventDefault();
+
+    //         if (!isLoggedIn) {
+    //             toast.show(); // Show toast if not logged in
+    //             return;
+    //         }
+
+    //         // Set rating value in hidden input
+    //         const ratingValue = this.dataset.value;
+    //         document.getElementById('rating-input').value = ratingValue;
+
+    //         // Optional: update button text
+    //         const label = this.textContent.trim();
+    //         document.querySelector('.dropdown button span').textContent = label;
+
+    //         ratingForm.submit();
+    //     });
+    // });
+
+    // Prevent rating form submission if not logged in
+    // if (ratingForm) {
+    //     ratingForm.addEventListener('submit', function (e) {
+    //         if (!isLoggedIn) {
+    //             e.preventDefault();
+    //             toast.show();
+    //         }
+    //     });
+    // }
+
+    // Prevent add-form submission if not logged in
+    // if (addForm) {
+    //     addForm.addEventListener('submit', function (e) {
+    //         if (!isLoggedIn) {
+    //             e.preventDefault();
+    //             toast.show();
+    //         }
+    //     });
+    // }
+    addForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        if (!isLoggedIn) {
+            toast.show();
+            return;
+        }
+    
+        const formData = new FormData(addForm);
+        try {
+            const res = await fetch(addForm.action, {
+                method: "POST",
+                body: formData
+            });
+    
+            const data = await res.json();
+    
+            if (data.success) {
+                const isNowBookmarked = data.bookmarked;
+                const button = addForm.querySelector("button");
+                const icon = button.querySelector("i");
+                const label = button.querySelector("span");
+    
+                icon.className = isNowBookmarked ? "bi bi-check2 me-2" : "bi bi-bookmark me-2";
+                label.textContent = isNowBookmarked ? "Added to Library" : "Add To Library";
+    
+                addForm.dataset.bookmarked = isNowBookmarked ? "true" : "false";
+            } else {
+                console.error("Server responded with failure:", data.message);
+            }
+        } catch (err) {
+            console.error("Bookmark error:", err);
+        }
+    });
+    // Rating dropdown logic
     document.querySelectorAll('.dropdown-item').forEach(item => {
-        item.addEventListener('click', function (e) {
+        item.addEventListener('click', async function (e) {
             e.preventDefault();
 
             if (!isLoggedIn) {
-                toast.show(); // Show toast if not logged in
+                toast.show();
                 return;
             }
 
-            // Set rating value in hidden input
             const ratingValue = this.dataset.value;
             document.getElementById('rating-input').value = ratingValue;
 
-            // Optional: update button text
-            const label = this.textContent.trim();
-            document.querySelector('.dropdown button span').textContent = label;
+            const formData = new FormData(ratingForm);
 
-            ratingForm.submit();
+            try {
+                const res = await fetch(ratingForm.action, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    const btnLabel = ratingForm.querySelector('button span');
+                    const rating = data.rating;
+                    btnLabel.textContent = rating === 0 ? "Rate" : `(${rating})`;
+                } else {
+                    console.error("Failed to rate:", data.message);
+                }
+            } catch (err) {
+                console.error("Rating error:", err);
+            }
         });
     });
 
-    // Prevent rating form submission if not logged in
-    if (ratingForm) {
-        ratingForm.addEventListener('submit', function (e) {
-            if (!isLoggedIn) {
-                e.preventDefault();
-                toast.show();
-            }
-        });
-    }
-
-    // Prevent add-form submission if not logged in
-    if (addForm) {
-        addForm.addEventListener('submit', function (e) {
-            if (!isLoggedIn) {
-                e.preventDefault();
-                toast.show();
-            }
-        });
-    }
-
+        
 });

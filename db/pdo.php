@@ -82,22 +82,48 @@
      * @return giá trị
      * @throws PDOException lỗi thực thi câu lệnh
      */
+    // function pdo_query_value($sql){
+    //     $sql_args = array_slice(func_get_args(), 1);
+    //     try{
+    //         $conn = pdo_get_connection();
+    //         $stmt = $conn->prepare($sql);
+    //         $stmt->execute($sql_args);
+    //         $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    //         return array_values($row)[0];
+    //     }
+    //     catch(PDOException $e){
+    //         throw $e;
+    //     }
+    //     finally{
+    //         unset($conn);
+    //     }
+    // }
     function pdo_query_value($sql){
         $sql_args = array_slice(func_get_args(), 1);
-        try{
+        try {
             $conn = pdo_get_connection();
             $stmt = $conn->prepare($sql);
             $stmt->execute($sql_args);
+            
+            // Fetch the row, or return null if no row is found
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            // Check if $row is false (no result found)
+            if ($row === false) {
+                return null;  // Return null if no rows are found
+            }
+    
+            // Return the first value from the associative array
             return array_values($row)[0];
         }
-        catch(PDOException $e){
+        catch(PDOException $e) {
             throw $e;
         }
-        finally{
+        finally {
             unset($conn);
         }
     }
+    
     function pdo_execute_return_id($sql) {
         $sql_args = array_slice(func_get_args(), 1);
         try {

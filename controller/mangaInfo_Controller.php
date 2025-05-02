@@ -6,12 +6,10 @@ require('../db/mangaInfoPdo.php');
 
 $userID = $_SESSION['userID'] ?? null;
 $username = $_SESSION['username'] ?? null;
-
-// Nếu không có userID nhưng có username, lấy userID từ username
-if (!$userID && $username) {
-    $userID = getUserID($username);
-    if ($userID) {
-        $_SESSION['userID'] = $userID;
+if (!isset($_SESSION['userID'])) {
+    if ($username != null){
+        $userID = getUserID($_SESSION['username']);
+        $_SESSION['userID'] = $userID;        
     }
 }
 

@@ -1,4 +1,26 @@
 <?php
+//
+//xử lý tên artist/author sao cho nếu nó trùng chỉ trả về 1
+//
+function combineAuthorsAndArtists($authorsRaw, $artistsRaw) {
+    // Get the names of authors and artists
+    $authors = array_column($authorsRaw, 'AuthorName');
+    $artists = array_column($artistsRaw, 'ArtistName');
+    
+    // Find common names (those that are both in authors and artists)
+    $common = array_intersect($authors, $artists);
+    
+    // Remove common names from both authors and artists arrays
+    $uniqueAuthors = array_diff($authors, $common);
+    $uniqueArtists = array_diff($artists, $common);
+    
+    // Combine the unique authors, common names (added only once), and unique artists
+    $combined = array_merge($uniqueAuthors, $common, $uniqueArtists);
+    
+    // Return the combined list as a string
+    return implode(', ', $combined);
+}
+
 function renderPublicationStatus($status, $year) {
     switch ($status) {
         case "Ongoing":
