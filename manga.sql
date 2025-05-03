@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 17, 2025 at 01:57 AM
+-- Generation Time: May 03, 2025 at 04:52 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -64,7 +64,9 @@ CREATE TABLE `artist` (
 
 INSERT INTO `artist` (`ArtistID`, `ArtistName`) VALUES
 (1, 'Keiyama Kei'),
-(2, 'Abe Tsukasa');
+(2, 'Abe Tsukasa'),
+(3, 'Megame'),
+(4, 'Yukimura Makoto');
 
 -- --------------------------------------------------------
 
@@ -84,7 +86,9 @@ CREATE TABLE `author` (
 INSERT INTO `author` (`AuthorID`, `AuthorName`) VALUES
 (1, 'Zuino'),
 (2, 'Yomada Kanehito'),
-(3, 'Mikami Saka');
+(3, 'Mikami Saka'),
+(5, 'Megame'),
+(6, 'Yukimura Makoto');
 
 -- --------------------------------------------------------
 
@@ -103,7 +107,8 @@ CREATE TABLE `bookmark` (
 
 INSERT INTO `bookmark` (`MangaID`, `UserID`) VALUES
 (3, 3),
-(1, 3);
+(1, 3),
+(5, 3);
 
 -- --------------------------------------------------------
 
@@ -141,7 +146,8 @@ INSERT INTO `chapter` (`ChapterID`, `MangaID`, `Volume`, `ScangroupName`, `Uploa
 (12, 3, 1.0, 'Kirei Cake', 'UnChosen', '2025-04-15 14:58:38', 'The Priest\'s Lie', 2.0),
 (13, 3, 1.0, 'Kirei Cake', 'Bored_Pray', '2025-04-15 14:59:52', 'Blue Moonweed', 3.0),
 (14, 3, 1.0, 'Kirei Cake', 'UnChosen', '2025-04-15 14:59:52', 'The Mage\'s Secret', 4.0),
-(22, 1, 2.0, 'ScanGroup', 'Anonymous', '2025-04-15 21:56:10', 'fake chapter', 8.0);
+(22, 1, 2.0, 'ScanGroup', 'Anonymous', '2025-04-15 21:56:10', 'fake chapter', 8.0),
+(24, 5, 1.0, 'Normanni', 'Anonymous', '2025-04-28 11:56:42', 'Normanni', 1.0);
 
 -- --------------------------------------------------------
 
@@ -272,7 +278,18 @@ INSERT INTO `chapter_pages` (`ChapterID`, `PageNumber`, `PageLink`) VALUES
 (11, 35, '35.png'),
 (22, 1, '1.png'),
 (22, 2, '2.png'),
-(22, 3, '3.png');
+(22, 3, '3.png'),
+(24, 1, '1.jfif'),
+(24, 2, '2.jfif'),
+(24, 3, '3.jfif'),
+(24, 4, '4.jfif'),
+(24, 5, '5.jfif'),
+(24, 6, '6.jfif'),
+(24, 7, '7.jfif'),
+(24, 8, '8.jfif'),
+(24, 9, '9.jfif'),
+(24, 10, '10.jfif'),
+(24, 11, '11.jfif');
 
 -- --------------------------------------------------------
 
@@ -300,7 +317,9 @@ INSERT INTO `comment` (`CommentID`, `CommentSectionID`, `CommentText`, `UserID`,
 (6, 1, 'Hello world programmed to work and not to feel.', 1, 1, '2025-04-14 16:26:33'),
 (7, 8, 'frieren is so cool', 1, 0, '2025-04-15 16:02:34'),
 (8, 8, 'hello!', 3, 0, '2025-04-15 16:41:00'),
-(9, 8, 'wowza', 3, 7, '2025-04-15 16:41:09');
+(9, 8, 'wowza', 3, 7, '2025-04-15 16:41:09'),
+(10, 9, 'whats up people', 3, 0, '2025-05-02 14:15:44'),
+(11, 15, 'I have no enemies', 3, 0, '2025-05-02 15:01:42');
 
 -- --------------------------------------------------------
 
@@ -330,7 +349,8 @@ INSERT INTO `commentsection` (`CommentSectionID`, `ChapterID`) VALUES
 (11, 14),
 (12, 8),
 (13, 9),
-(14, 10);
+(14, 10),
+(15, 24);
 
 -- --------------------------------------------------------
 
@@ -358,7 +378,9 @@ CREATE TABLE `manga` (
 INSERT INTO `manga` (`MangaID`, `MangaNameOG`, `MangaNameEN`, `MangaDiscription`, `CoverLink`, `OriginalLanguage`, `ContentRating`, `MagazineDemographic`, `PublicationYear`, `PublicationStatus`) VALUES
 (1, 'Zeikin de Katta Hon', 'Books Bought With Taxes\n', 'Ishidaira is a delinquent who visited the library for the first time since elementary school. But then, he was pointed out by Hayasemaru and Shirai, who works at the library, that he has not returned a book that he borrowed ten years ago. A manga about how Ishidaira went from trying to borrow a book from a library to working there instead.', 'm1.jpg', 'Japanese', 'Safe', 'Seinen', 2021, 'Ongoing'),
 (2, 'Kaoru Hana wa Rin to Saku', 'The Fragrant Flower Blooms With Dignity', 'In a certain place, there are two neighboring high schools. Chidori High School, a bottom-feeder boys\' school where idiots gather, and Kikyo Girls\' School, a well-established girls\' school. Rintaro Tsumugi, a strong and quiet second year student at Chidori High School, meets Kaoruko Waguri, a girl who comes as a customer while helping out at his family\'s cake shop. Rintaro feels comfortable spending time with Kaoruko, but she is a student at Kikyo Girls, a neighboring school that thoroughly dislikes Chidori High.', 'm2.jpg', 'Japanese', 'Safe', 'Shounen', 2021, 'Ongoing'),
-(3, 'Sousou no Frieren\r\n\r\n', 'Frieren at the Funeral\r\n', 'The adventure is over but life goes on for an elf mage just beginning to learn what living is all about. Elf mage Frieren and her courageous fellow adventurers have defeated the Demon King and brought peace to the land. With the great struggle over, they all go their separate ways to live a quiet life. But as an elf, Frieren, nearly immortal, will long outlive the rest of her former party. How will she come to terms with the mortality of her friends? How can she find fulfillment in her own life, and can she learn to understand what life means to the humans around her? Frieren begins a new journey to find the answer.', 'm3.jpg', 'Japanese', 'Safe', 'Shounen', 2020, 'Hiatus');
+(3, 'Sousou no Frieren\r\n\r\n', 'Frieren at the Funeral\r\n', 'The adventure is over but life goes on for an elf mage just beginning to learn what living is all about. Elf mage Frieren and her courageous fellow adventurers have defeated the Demon King and brought peace to the land. With the great struggle over, they all go their separate ways to live a quiet life. But as an elf, Frieren, nearly immortal, will long outlive the rest of her former party. How will she come to terms with the mortality of her friends? How can she find fulfillment in her own life, and can she learn to understand what life means to the humans around her? Frieren begins a new journey to find the answer.', 'm3.jpg', 'Japanese', 'Safe', 'Shounen', 2020, 'Hiatus'),
+(4, 'Mizudako-chan kara wa Nigerarenai!', 'You Can\'t Escape from Mizudako-chan!', 'Akigai Kanisuke is an ordinary high school boy. His daily life changes when Mizuda Yuuko (a.k.a. Mizudako-chan), a demi-human girl, transfers to his school.', 'm4.jpg', 'Japanese', 'Safe', 'Seinen', 2023, 'Ongoing'),
+(5, 'Vinland Saga', 'Vinland Saga', 'As a child, Thorfinn sat at the feet of the great Leif Ericson and thrilled to wild tales of a land far to the west. But his youthful fantasies were shattered by a mercenary raid. Raised by the Vikings who murdered his family, Thorfinn became a terrifying warrior, forever seeking to kill the band\'s leader, Askeladd, and avenge his father. Sustaining Thorfinn through his ordeal are his pride in his family and his dreams of a fertile westward land, a land without war or slavery… the land Leif called Vinland.', 'm5.jpg', 'Japanese', 'Suggestive', 'Seinen', 2005, 'Ongoing');
 
 -- --------------------------------------------------------
 
@@ -377,7 +399,9 @@ CREATE TABLE `manga_artist` (
 
 INSERT INTO `manga_artist` (`MangaID`, `ArtistID`) VALUES
 (1, 1),
-(3, 2);
+(3, 2),
+(4, 3),
+(5, 4);
 
 -- --------------------------------------------------------
 
@@ -397,7 +421,9 @@ CREATE TABLE `manga_author` (
 INSERT INTO `manga_author` (`MangaID`, `AuthorID`) VALUES
 (1, 1),
 (2, 3),
-(3, 2);
+(3, 2),
+(4, 5),
+(5, 6);
 
 -- --------------------------------------------------------
 
@@ -431,7 +457,27 @@ INSERT INTO `manga_tag` (`MangaID`, `TagID`) VALUES
 (3, 50),
 (3, 18),
 (3, 19),
-(3, 30);
+(3, 30),
+(4, 16),
+(4, 28),
+(4, 30),
+(4, 53),
+(4, 63),
+(4, 65),
+(5, 4),
+(5, 13),
+(5, 14),
+(5, 18),
+(5, 21),
+(5, 27),
+(5, 28),
+(5, 30),
+(5, 32),
+(5, 33),
+(5, 51),
+(5, 52),
+(5, 66),
+(5, 74);
 
 -- --------------------------------------------------------
 
@@ -450,7 +496,8 @@ CREATE TABLE `rating` (
 --
 
 INSERT INTO `rating` (`UserID`, `MangaID`, `Rating`) VALUES
-(3, 1, '10');
+(3, 1, '10'),
+(3, 3, '9');
 
 -- --------------------------------------------------------
 
@@ -490,7 +537,7 @@ INSERT INTO `tag` (`TagID`, `TagGroup`, `TagName`) VALUES
 (19, 'Genre', 'Fantasy'),
 (20, 'Genre', 'Girls\' Love'),
 (21, 'Genre', 'Historical'),
-(22, 'Genre', 'Horror Isekai'),
+(22, 'Genre', 'Horror'),
 (23, 'Genre', 'Magical Girls'),
 (24, 'Genre', 'Mecha'),
 (25, 'Genre', 'Medical'),
@@ -543,7 +590,8 @@ INSERT INTO `tag` (`TagID`, `TagGroup`, `TagName`) VALUES
 (72, 'Theme', 'Virtual Reality'),
 (73, 'Theme', 'Zombies'),
 (74, 'Content', 'Gore'),
-(75, 'Content', 'Sexual Violence');
+(75, 'Content', 'Sexual Violence'),
+(76, 'Genre', ' Isekai');
 
 -- --------------------------------------------------------
 
@@ -627,43 +675,43 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `artist`
 --
 ALTER TABLE `artist`
-  MODIFY `ArtistID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ArtistID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `author`
 --
 ALTER TABLE `author`
-  MODIFY `AuthorID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `AuthorID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `chapter`
 --
 ALTER TABLE `chapter`
-  MODIFY `ChapterID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `ChapterID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `CommentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `CommentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `commentsection`
 --
 ALTER TABLE `commentsection`
-  MODIFY `CommentSectionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `CommentSectionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `manga`
 --
 ALTER TABLE `manga`
-  MODIFY `MangaID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `MangaID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tag`
 --
 ALTER TABLE `tag`
-  MODIFY `TagID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `TagID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT for table `user`
