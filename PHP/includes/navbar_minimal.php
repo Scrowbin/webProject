@@ -13,7 +13,7 @@ $pathPrefix = $pathPrefix ?? '';
 $user_avatar = $pathPrefix . 'IMG/avatar_default.png'; // Path relative to index.php
 ?>
 
-<!-- Minimal Navigation Bar (Static) -->
+<!-- Minimal Navigation Bar (Static) - Only Logo and Avatar -->
 <nav class="navbar navbar-minimal">
   <div class="container">
     <?php // Link to index.php (homepage controller) ?>

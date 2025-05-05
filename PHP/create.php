@@ -17,7 +17,7 @@ $submitButtonText = ($mode === "edit") ? "Update Manga" : "Upload Manga";
   <link rel="stylesheet" href="../CSS/create.css">
 </head>
 <body>
-  <?php include 'includes/navbar.php'; ?>
+  <?php include 'includes/navbar_minimal.php'; ?>
   <?php include 'includes/sidebar.php'; ?>
 
 <div class="container-xxl mt-5 pt-4">
@@ -38,8 +38,8 @@ $submitButtonText = ($mode === "edit") ? "Update Manga" : "Upload Manga";
     <!-- Cover Image -->
     <div class="col-md-6">
       <label class="form-label">Cover Image</label>
-      
-      <?php 
+
+      <?php
       if($mode==="edit"){
         ?>
         <div class="mt-2">
@@ -69,10 +69,10 @@ $submitButtonText = ($mode === "edit") ? "Update Manga" : "Upload Manga";
           <option value="Vietnamese">Vietnamese</option>
           <option value="Other">Other</option>
       </select>
-      
+
     </div>
-    
-    
+
+
 
     <!-- Authors & Artists -->
     <div class="col-md-6">

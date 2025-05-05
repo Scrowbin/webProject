@@ -13,5 +13,8 @@
         exit("You must be logged in as an admin");
     }
 
+    // Define path prefix for includes
+    $pathPrefix = '../';
+
     include("../PHP/create.php");
 ?>

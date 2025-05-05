@@ -33,20 +33,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php echo displayTitle($chapterName,$chapterNumber)?>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+    <link rel="stylesheet" href="../CSS/navbar.css">
     <link rel="stylesheet" href="../CSS/mangaRead.css">
-
 </head>
 
 <body>
+    <?php
+    // Define path prefix for includes
+    $pathPrefix = '../';
+    include 'includes/navbar.php';
+    include 'includes/sidebar.php';
+    ?>
     <div class="layout">
-        <header>
-            Header here
+        <header class="d-none">
+            <!-- Hidden header -->
         </header>
-        <button type="button" class="btn sticky hidden" id="menu-sticky" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
+        <button type="button" class="btn sticky hidden" id="menu-sticky" onclick="toggleRightSidebar()"><i class="bi bi-list"></i></button>
 
         <main>
-            <div id = "topReadBar" class = "">
+            <div id="topReadBar" class="top-read-bar">
                 <?php echo displayNameOrChapter($chapterName,$chapterNumber)?>
                 <div>
                     <a class="mangaInfo" href="mangaInfo_Controller.php?MangaID=<?=$mangaID?>">
@@ -54,16 +61,16 @@
                     </a>
                 </div>
 
-                <div class="row">
-                    <div class="">
-                        <span class="">Vol. <?=$chapterVolume?>, Ch. <?=$chapterNumber?></span>
+                <div class="info-row">
+                    <div class="info-cell">
+                        <span>Vol. <?=$chapterVolume?>, Ch. <?=$chapterNumber?></span>
                     </div>
-                    <div class="">
-                        <span class="">Pg. 1/<?=$lastPageNumber?></span>
+                    <div class="info-cell">
+                        <span>Pg. 1/<?=$lastPageNumber?></span>
                     </div>
-                    <button onclick='toggleSidebar()' class="" name="menu">
-                    Menu
-                    </button>
+                    <div class="info-cell">
+                        <button onclick='toggleSidebar()' class="menu-button" name="menu">Menu</button>
+                    </div>
                 </div>
             </div>
 

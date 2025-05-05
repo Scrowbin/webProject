@@ -16,6 +16,18 @@
   border-bottom: 1px solid transparent; /* Start with transparent border */
 }
 
+/* Minimal Navbar (Static) */
+.navbar-minimal {
+  background-color: #1f1f1f;
+  padding: 0.5rem 1rem;
+  position: static;
+  height: 60px;
+  width: 100%;
+  z-index: 1030;
+  border-bottom: 1px solid #333;
+  margin-bottom: 1rem;
+}
+
 .navbar.scrolled {
   background: #1f1f1f !important; /* Keep background consistent */
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);

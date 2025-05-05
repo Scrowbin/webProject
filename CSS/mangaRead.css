@@ -9,6 +9,20 @@ html{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.5rem;
 }
+
+/* Dark theme for mangaRead page */
+body {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+}
+
+/* Override navbar position to make it static in mangaRead page */
+body .navbar {
+    position: static !important;
+    background-color: #1f1f1f !important;
+    border-bottom: 1px solid #333 !important;
+    margin-bottom: 1rem !important;
+}
 .layout {
     display: grid;
     grid-template-columns: 1fr auto;
@@ -16,20 +30,28 @@ html{
     grid-template-areas:
       "header header"
       "main aside";
-    height: 100%; 
+    height: 100%;
   }
   header {
-      grid-area: header header ;
+      grid-area: header header;
       width: 100%;
-      padding: 10px;
-      position: sticky;
+      padding: 0;
+      display: none;
     }
-    
+
+  /* Top read bar styling */
+  .top-read-bar {
+      background-color: #242424;
+      padding: 10px;
+      border-bottom: 1px solid #333;
+      color: #e0e0e0;
+    }
+
     main {
       grid-area: main;
-      background: #ffffff;;
+      background: #1a1a1a;
     }
-    
+
     aside {
       grid-area:aside;
     }
@@ -57,34 +79,48 @@ html{
 
 }
 .mangaInfo{
-    text-decoration: none !important; 
+    text-decoration: none !important;
     color: #ff7450 !important;
     font-size: 18px;
     font-family: sans-serif;
 
 }
-.row{
+/* Info row styling */
+.info-row {
     display: flex;
     gap: 5px;
+    width: 100%;
+    margin-top: 10px;
 }
 
-.row div, button[name="menu"]{
-    color: #242424;
+.info-cell {
+    color: #e0e0e0;
     font-size: 18px;
     font-family: sans-serif;
     display: flex;
-    border-radius: 1px;
-    background: #f0f1f2;
-    border: none;
+    border-radius: 4px;
+    background: #333333;
     width: 33.333%;
     justify-content: center;
     align-items: center;
     height: 40px;
+    padding: 0 10px;
 }
 
-button[name="menu"]:hover {
+.menu-button {
+    color: #e0e0e0;
+    font-size: 18px;
+    font-family: sans-serif;
+    background: transparent;
+    border: none;
+    width: 100%;
+    height: 100%;
     cursor: pointer;
-    background: #f8f4f4;
+}
+
+.menu-button:hover {
+    cursor: pointer;
+    background: #444444;
 }
 
 /* RightSidebar */
@@ -96,10 +132,11 @@ button[name="menu"]:hover {
     overflow: hidden;
     text-wrap: nowrap;
     position: sticky;
-    background: #ffffff;
+    background: #242424;
+    color: #e0e0e0;
     top: 0;
     right: 0;
-    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.05);
+    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2);
 }
 
 #rightSidebar.sticky{
@@ -113,7 +150,7 @@ button[name="menu"]:hover {
 
 #rightSidebar.close{
     width: 0;
-    padding: 0;       
+    padding: 0;
     transform: translateX(100%);
     box-shadow: none;
 }
@@ -142,14 +179,14 @@ button[name="menu"]:hover {
 }
 
 .right-manga a {
-    color: #ff5722;
+    color: #ff6740;
     text-decoration: none;
 }
 
 /*pin and close btn  */
 #close-btn,
 #pin-btn {
-    background-color: #f1f1f1;
+    background-color: #333333;
     border: none;
     border-radius: 8px;
     padding: 5px;
@@ -161,13 +198,13 @@ button[name="menu"]:hover {
 
 #close-btn:hover,
 #pin-btn:hover {
-    background-color: #e0e0e0;
+    background-color: #444444;
     transform: scale(1.05);
 }
 
 #close-btn i,
 #pin-btn i {
-    color: #333;
+    color: #e0e0e0;
 }
 
 
@@ -182,11 +219,11 @@ button[name="menu"]:hover {
     font-family: sans-serif;
     background: #f8f4f4;
     border: none;
-    
+
     border: 1px solid #ddd;
     border-radius: 6px;
     padding: 8px 12px;
- 
+
     transition: background-color 0.2s, transform 0.2s;
     display: flex;
     align-items: center;
@@ -325,7 +362,7 @@ hr{ margin: 20px auto; }
     height: auto;
 }
 .img-fit-height {
-    max-height: 100vh; 
+    max-height: 100vh;
     width: auto;
     object-fit: contain;
 
@@ -333,8 +370,8 @@ hr{ margin: 20px auto; }
 .img-fit-both {
     max-height: 100vh; /* Maximum height is viewport height */
     max-width: 100%;  /* Maximum width is grid width */
-    width: auto;       
-    height: auto; 
+    width: auto;
+    height: auto;
 }
 img:hover{
     cursor: pointer;
@@ -370,8 +407,8 @@ img:hover{
 /* progress bar */
 #progress-bar{
     display: flex;
-    justify-content: center; 
-    align-items: center; 
+    justify-content: center;
+    align-items: center;
     width: 100%;
     height: 10px;
     padding: 0px 20px;
