@@ -3,8 +3,7 @@
     
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $mangaID = $_POST['MangaID'];
-        $chapterIDs = $_POST["chapterIds[]"];
-
+        $chapterIDs = $_POST["chapterIds"];
         $hasError = false;
 
         foreach ($chapterIDs as $chapterID){
@@ -22,12 +21,13 @@
             }
         }
         if ($hasError) {
-            // Redirect with error message
-            header("Location: delete_controller.php?MangaID=$mangaID&status=fail&message=" . urlencode($errorMessage));
+            $safeMessage = rawurlencode($errorMessage); // handles special characters, including line breaks
+            header("Location: delete_controller.php?MangaID=$mangaID&status=fail&message=$safeMessage");
         } else {
-            // Redirect with success message
-            header("Location: mangaInfo_controller.php?MangaID=$mangaID&status=success&message=" . urlencode('Chapters deleted successfully.'));
+            $successMessage = rawurlencode('Chapters deleted successfully.');
+            header("Location: mangaInfo_controller.php?MangaID=$mangaID&status=success&message=$successMessage");
         }
+        
         exit;
     }
 ?>  

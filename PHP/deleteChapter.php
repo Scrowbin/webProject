@@ -80,8 +80,9 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
             <h4 class="mb-0">Delete Manga Chapters</h4>
         </div>
         <div class="card-body">
-            <form action=".php" method="POST">
-                <label for="chapterSelect" class="form-label">Select Chapter(s):</label>
+            <form action="../controller/deleteChapter.php" method="POST">
+            <input type="hidden" name="MangaID" value="<?= $MangaID ?>">
+            <label for="chapterSelect" class="form-label">Select Chapter(s):</label>
                 <select name="chapterIds[]" id="chapterSelect" class="form-select" multiple size="10">
                     <?php foreach ($grouped as $group): 
                         $volume = truncateNumber($group[0]['Volume']); ?>
