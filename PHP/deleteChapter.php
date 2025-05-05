@@ -81,7 +81,7 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
         </div>
         <div class="card-body">
             <form action="../controller/deleteChapter.php" method="POST">
-            <input type="hidden" name="MangaID" value="<?= $MangaID ?>">
+            <input type="hidden" name="MangaID" value="<?= $mangaID ?>">
             <label for="chapterSelect" class="form-label">Select Chapter(s):</label>
                 <select name="chapterIds[]" id="chapterSelect" class="form-select" multiple size="10">
                     <?php foreach ($grouped as $group): 
@@ -106,6 +106,43 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
         </div>
         </div>
     </div>
+    <div class="toast-container position-fixed top-0 end-0 p-3">
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <?php
+    // Check if the 'status' GET parameter exists and is set to 'success'
+    if (isset($_GET['status'])) {
+        // Optional: You might want to get the ID too for a more specific message
+        if($_GET['status'] === 'success')
+            $message = "Deleted successfully."; // Default message
+        else
+            $message = "Delete failed."; // Default message
+    ?>
+
+        <div id="deleteSuccessToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <i class="bi bi-check-circle-fill me-2"></i> <?php echo $message; ?>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+
+        <script>
+        // Use DOMContentLoaded to ensure the element exists and Bootstrap JS is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            const toastElement = document.getElementById('deleteSuccessToast');
+            if (toastElement) { // Check if the element exists
+                const toast = new bootstrap.Toast(toastElement);
+                toast.show();
+            }
+        });
+        </script>
+
+    <?php
+    } // End of the PHP if statement
+    ?>
+</div>
 </body>
 </html>
