@@ -29,6 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: mangaInfo_controller.php?MangaID=$mangaID&status=success");
     }
 
-    exit;  // Always call exit after a header redirect to stop further execution
+    exit; 
 }
 ?>

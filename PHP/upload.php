@@ -34,30 +34,37 @@
   </div>
 
   <!-- Manga Details (static preview) -->
-  <div class="d-flex align-items-center border rounded p-3 mb-4">
-    <img src="../IMG/<?=$mangaID?>/<?=$image?>" alt="Manga Cover" class="me-3" style="width: 60px; height: 90px; object-fit: cover;">
-    <div>
-      <strong><?=$mangaNameOG?></strong><br>
-      <?=$mangaAuthors?>
-      <?php
-            switch ($pubStatus) {
-                case "Ongoing":
-                    echo "<span class=\"badge bg-success ms-2\"><strong>● PUBLICATION: ONGOING</strong></span>";
-                    break;
-                case "Hiatus":
-                    echo "<span class=\"badge bg-warning ms-2 \"><strong>● PUBLICATION: Hiatus</strong></span>";
-                    break;
-                case "Completed":
-                    echo "<span class=\"badge bg-primary ms-2\"><strong>● PUBLICATION: COMPLETED</strong></span>";
-                    break;
-                default:
-                    echo "";
-                    break;
-            }
-      ?>
+  <a href="../controller/mangaInfo_Controller.php?MangaID=<?=$mangaID?>">
+    <div class="d-flex align-items-center border rounded p-3 mb-4">
+        <img src="../IMG/<?=$mangaID?>/<?=$image?>" alt="Manga Cover" class="me-3" style="width: 60px; height: 90px; object-fit: cover;">
+        <div>
+          <strong><?=$mangaNameOG?></strong><br>
+          <?=$mangaAuthors?>
+          <?php
+                switch ($pubStatus) {
+                    case "Ongoing":
+                        echo "<span class=\"badge bg-success ms-2\"><strong>● PUBLICATION: ONGOING</strong></span>";
+                        break;
+                    case "Hiatus":
+                        echo "<span class=\"badge bg-warning ms-2 \"><strong>● PUBLICATION: Hiatus</strong></span>";
+                        break;
+                    case "Completed":
+                        echo "<span class=\"badge bg-primary ms-2\"><strong>● PUBLICATION: COMPLETED</strong></span>";
+                        break;
+                    default:
+                        echo "";
+                        break;
+                }
+          ?>
+        </div>
     </div>
-  </div>
-
+    <style>
+      a{
+        text-decoration: none;
+        color: inherit;
+      }
+    </style>
+  </a>
   <form action="../controller/uploadChapter.php" method="POST" enctype="multipart/form-data">
     <div class="row mb-3">
       <div class="col-md-2">
@@ -140,13 +147,12 @@
 });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<?php if (isset($_GET['status'])): ?>
 <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999">
-  <div id="uploadToast" class="toast align-items-center text-white <?= isset($_GET['status']) && $_GET['status'] === 'success' ? 'bg-success' : 'bg-danger' ?>" role="alert" aria-live="assertive" aria-atomic="true">
+  <div id="uploadToast" class="toast align-items-center text-white <?= $_GET['status'] === 'success' ? 'bg-success' : 'bg-danger' ?>" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="d-flex">
       <div class="toast-body">
-        <?= isset($_GET['status']) && $_GET['status'] === 'success'
-          ? 'Chapter uploaded successfully!'
-          : 'Upload failed.' ?>
+        <?= $_GET['status'] === 'success' ? 'Chapter uploaded successfully!' : 'Upload failed.' ?>
         <?php if (!empty($_GET['msg'])): ?>
           <br><small><?= htmlspecialchars($_GET['msg']) ?></small>
         <?php endif; ?>
@@ -155,5 +161,6 @@
     </div>
   </div>
 </div>
+<?php endif; ?>
 </body>
 </html>
