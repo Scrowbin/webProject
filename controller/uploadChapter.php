@@ -19,6 +19,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $chapterNum = $_POST['chapter-number'] ?? 0;
     $chapterName = $_POST['chapter-name'] ?? '';
 
+    if (chapterExist($mangaID, $chapterNum)){
+        $msg = "This chapter already exists.";
+        $status = "failed";
+        header("Location: ../controller/upload_controller.php?MangaID=$mangaID&status=$status&msg=" . urlencode($msg));
+        exit();
+    }
+
     // Save chapter
     $chapterID = insertChapter($mangaID, $volume, $chapterScangroup, $username, $chapterName, $chapterNum);
     makeComment($chapterID);
@@ -53,11 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $status = $hasError ? 'partial' : 'success';
     $msg = $hasError ? 'Some pages may not have uploaded properly.' : '';
 
-    if (isset($_POST['upload_another'])) {
-        header("Location: ../view/uploadChapter.php?MangaID=$mangaID&status=$status&msg=" . urlencode($msg));
-    } else {
-        header("Location: ../controller/mangaInfo_controller.php?MangaID=$mangaID&status=$status&msg=" . urlencode($msg));
-    }
+    header("Location: ../controller/upload_controller.php?MangaID=$mangaID&status=$status&msg=" . urlencode($msg));
     exit;
     }
 ?>  

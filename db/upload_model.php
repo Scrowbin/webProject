@@ -1,6 +1,12 @@
 <?php
 require_once 'pdo.php';
 
+function chapterExist($mangaID, $number){
+    $sql = "SELECT 1 FROM chapter WHERE MangaID = ? AND ChapterNumber = ?";
+    $result = pdo_query($sql, $mangaID, $number);
+    return !empty($result);
+}
+
 function insertChapter($mangaID, $volume, $scangroupName, $uploaderName, $chapterName, $chapterNum) {
     $sql = "INSERT INTO chapter (MangaID, Volume, ScangroupName, UploaderName, ChapterName, ChapterNumber)
             VALUES (?, ?, ?, ?, ?, ?)";

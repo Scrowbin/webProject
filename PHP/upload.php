@@ -139,13 +139,14 @@
   }
 });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999">
-  <div id="uploadToast" class="toast align-items-center text-white <?= isset($_GET['status']) && $_GET['status'] === 'success' ? 'bg-success' : 'bg-warning' ?>" role="alert" aria-live="assertive" aria-atomic="true">
+  <div id="uploadToast" class="toast align-items-center text-white <?= isset($_GET['status']) && $_GET['status'] === 'success' ? 'bg-success' : 'bg-danger' ?>" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="d-flex">
       <div class="toast-body">
         <?= isset($_GET['status']) && $_GET['status'] === 'success'
           ? 'Chapter uploaded successfully!'
-          : 'Upload completed with some issues.' ?>
+          : 'Upload failed.' ?>
         <?php if (!empty($_GET['msg'])): ?>
           <br><small><?= htmlspecialchars($_GET['msg']) ?></small>
         <?php endif; ?>
