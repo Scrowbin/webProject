@@ -29,7 +29,6 @@
 
 <div class="container bg-white p-4 rounded shadow-sm">
   <h3 class="mb-3">Upload Chapter</h3>
-
   <div class="alert alert-warning text-center">
     Make sure to read the guidelines!
   </div>
@@ -59,7 +58,7 @@
     </div>
   </div>
 
-  <form action="uploadChapter.php" method="POST" enctype="multipart/form-data">
+  <form action="../controller/uploadChapter.php" method="POST" enctype="multipart/form-data">
     <div class="row mb-3">
       <div class="col-md-2">
         <input type="text" name="volume" class="form-control" placeholder="Volume">
@@ -130,8 +129,30 @@
     }
     
   });
-
+  window.addEventListener('DOMContentLoaded', () => {
+  const toastEl = document.getElementById('uploadToast');
+  if (toastEl) {
+    const toast = new bootstrap.Toast(toastEl, {
+      delay: 5000 // 5 seconds
+    });
+    toast.show();
+  }
+});
 </script>
-
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999">
+  <div id="uploadToast" class="toast align-items-center text-white <?= isset($_GET['status']) && $_GET['status'] === 'success' ? 'bg-success' : 'bg-warning' ?>" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        <?= isset($_GET['status']) && $_GET['status'] === 'success'
+          ? 'Chapter uploaded successfully!'
+          : 'Upload completed with some issues.' ?>
+        <?php if (!empty($_GET['msg'])): ?>
+          <br><small><?= htmlspecialchars($_GET['msg']) ?></small>
+        <?php endif; ?>
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
 </body>
 </html>

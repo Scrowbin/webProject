@@ -100,4 +100,9 @@ function account_find_by_username(string $username): array|false
     return pdo_query_one($sql, $username);
 }
 
+function get_role(string $userID){
+    $sql = "SELECT Role FROM user WHERE UserID = ?";
+    return pdo_query_value($sql, $userID);
+}
+
 ?>

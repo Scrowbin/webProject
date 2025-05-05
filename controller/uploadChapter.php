@@ -30,28 +30,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Loop through uploaded files
 
+    $hasError = false;
+
     foreach ($_FILES['pages']['tmp_name'] as $i => $tmpName) {
         $originalName = $_FILES['pages']['name'][$i];
-    
-        // Get file extension
-        $ext = pathinfo($originalName, PATHINFO_EXTENSION);
-        $ext = strtolower($ext); // ensure lowercase
-    
-        // Define new name like 1.png, 2.jpg, etc.
+        $ext = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
         $newFileName = ($i + 1) . '.' . $ext;
         $targetPath = $uploadDir . $newFileName;
-    
+
         if (move_uploaded_file($tmpName, $targetPath)) {
-            // Insert with clean filename and page number
-            insertPage($chapterID, $newFileName, $i + 1);
+            try {
+                insertPage($chapterID, $newFileName, $i + 1);
+            } catch (Exception $e) {
+                $hasError = true;
+            }
+        } else {
+            $hasError = true;
         }
     }
 
+
+    $status = $hasError ? 'partial' : 'success';
+    $msg = $hasError ? 'Some pages may not have uploaded properly.' : '';
+
     if (isset($_POST['upload_another'])) {
-        header("Location: upload_controller.php?MangaID=$mangaID");
+        header("Location: ../view/uploadChapter.php?MangaID=$mangaID&status=$status&msg=" . urlencode($msg));
     } else {
-        header("Location: mangaInfo_controller.php?MangaID=$mangaID");
+        header("Location: ../controller/mangaInfo_controller.php?MangaID=$mangaID&status=$status&msg=" . urlencode($msg));
     }
     exit;
-}
+    }
 ?>  

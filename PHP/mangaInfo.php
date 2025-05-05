@@ -151,10 +151,24 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
             </button>
 
             <!-- Upload Chapter -->
-            <button class="btn btn-outline-secondary d-flex align-items-center" onclick="window.location.href='upload_controller.php?MangaID=<?=$mangaID?>'">
-                <i class="bi bi-upload me-2"></i>
-                <span class="d-none d-md-inline">Upload Chapter</span>
-            </button>
+            <?php
+                if ($role==="admin"){
+            ?>
+                <button class="btn btn-outline-secondary d-flex align-items-center" onclick="window.location.href='upload_controller.php?MangaID=<?=$mangaID?>'">
+                    <i class="bi bi-upload me-2"></i>
+                    <span class="d-none d-md-inline">Upload Chapter</span>
+                </button>
+                <button class="btn btn-outline-secondary d-flex align-items-center" onclick="window.location.href='delete_controller.php?MangaID=<?=$mangaID?>'">
+                    <i class="bi bi-upload me-2"></i>
+                    <span class="d-none d-md-inline">Delete Chapter</span>
+                </button>
+                <button class="btn btn-outline-secondary d-flex align-items-center" onclick="window.location.href='edit_manga.php?MangaID=<?=$mangaID?>'">
+                    <i class="bi bi-upload me-2"></i>
+                    <span class="d-none d-md-inline">Edit manga</span>
+                </button>
+            <?php  
+                }
+            ?>
     </div>
 
 

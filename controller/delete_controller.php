@@ -23,21 +23,14 @@ $role = "user";
 if ($isLoggedIn){
     $role = get_role($userID);
 }
-
-
+if($role !== "admin"){
+    exit('Must be admin');
+}
 
 $mangaID = $_GET['MangaID'] ?? null;
 
 if (!$mangaID) {
     die("Missing MangaID.");
-}
-
-$isBookmarked = false;
-if ($userID) {
-    $isBookmarked = isBookmarked($mangaID, $userID);
-    $userRating = getRating($userID, $mangaID);
-} else {
-    $userRating = 0;
 }
 
 $mangaInfo = getMangaInfo($mangaID);
@@ -50,13 +43,6 @@ $artistsRaw = getMangaArtists($mangaID);
 $tags = getTags($mangaID);
 $chapters = getChapters($mangaID);
 
-$counts = getCommentCountsPerChapter($mangaID);
-$countsMap = [];
-$commentSectionIDMap = [];
-foreach ($counts as $row) {
-    $countsMap[$row['ChapterID']] = $row['NumOfComments'];
-    $commentSectionIDMap[$row['ChapterID']]=$row['CommentSectionID'] ;
-}
 $avgRating =  getAverageRating($mangaID) ?? "N/A";
 if ($avgRating!=="N/A"){
     $avgRating = round($avgRating,2);
@@ -73,7 +59,4 @@ foreach ($chapters as $chapter) {
     $grouped[$vol][] = $chapter;
 }
 
-$pathPrefix = '../'; // Define path prefix for includes relative to controller directory
-
-include('../PHP/mangaInfo.php');
-?>
+include("../PHP/deleteChapter.php");

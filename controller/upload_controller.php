@@ -5,7 +5,13 @@
     // }
     
     $mangaID = $_GET['MangaID'] ?? null;
+    if ($mangaID === null){
+        exit('No mangaID found');
+    }
     $mangaInfo = getMangaInfo($mangaID);
+    if ($mangaInfo === null){
+        exit('No manga found');
+    }
     $authorsRaw = getMangaAuthors($mangaID);
     $artistsRaw = getMangaArtists($mangaID);
 
