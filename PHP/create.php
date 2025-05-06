@@ -263,10 +263,10 @@
   <div class="mt-2" id="selectedTags"></div>
   </div>
 
-    <!-- Submit Button -->
-    <div class="col-12">
-      button type="submit" class="btn btn-primary"><?= htmlspecialchars($submitButtonText) ?></button>
-    </div>
+  <!-- Submit Button -->
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary"><?= htmlspecialchars($submitButtonText) ?></button>
+  </div>
   </form>
   </div>
 
