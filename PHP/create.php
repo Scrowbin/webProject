@@ -263,7 +263,7 @@
 
     <!-- Submit Button -->
     <div class="col-12">
-      button type="submit" class="btn btn-primary"><?= htmlspecialchars($submitButtonText) ?></button>
+      <button type="submit" class="btn btn-primary"><?= htmlspecialchars($submitButtonText) ?></button>
     </div>
   </form>
   </div>
@@ -317,7 +317,11 @@
     formData.append('manga_id', <?= json_encode($mangaID) ?>);
     <?php endif; ?>
     const toastBody = document.getElementById('uploadToastBody');
-    fetch('../controller/handle_create.php', {
+    // Use the correct path based on the current location
+    const handleCreatePath = '<?= $pathPrefix ?>controller/handle_create.php';
+    console.log('Submitting to:', handleCreatePath); // Debug log
+
+    fetch(handleCreatePath, {
     method: 'POST',
     body: formData
     })
