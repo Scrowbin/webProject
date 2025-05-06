@@ -145,7 +145,7 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
             </div>
 
             <!-- Report -->
-            <button class="btn btn-outline-secondary d-flex align-items-center">
+            <button class="btn btn-outline-secondary d-flex align-items-center" id = "report-btn">
                 <i class="bi bi-flag me-2"></i>
                 <span class="d-none d-md-inline">Report</span>
             </button>

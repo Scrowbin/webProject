@@ -124,4 +124,8 @@
     
         return !empty($result); // true if there is a row, false if empty
     }
+    function mapMangaWithTag($mangaID, $tagID){
+        $sql = "INSERT INTO manga_tag (MangaID, TagID) VALUES (?,?)";
+        return pdo_execute($sql,$mangaID,$tagID);
+    }
     

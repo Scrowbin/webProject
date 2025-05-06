@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const nextChButton = document.getElementById("nextCh-btn");
     const prevChButton = document.getElementById("prevCh-btn");
     const pageContainer = document.getElementById("page-container");
+    const reportChapter = document.getElementById("report-btn");
 
     let currentIndex= 0;
     let  isInLongStrip = true; // default is inlongstrip
@@ -243,7 +244,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     })
 
-    //
+
     //progressBar
     //
     //update when transitioning and resizing

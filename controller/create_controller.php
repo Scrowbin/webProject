@@ -17,4 +17,5 @@
     $pathPrefix = '../';
 
     include("../PHP/create.php");
+    // Upload via AJAX
 ?>
