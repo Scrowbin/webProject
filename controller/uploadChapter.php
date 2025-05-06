@@ -19,6 +19,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $chapterNum = $_POST['chapter-number'] ?? 0;
     $chapterName = $_POST['chapter-name'] ?? '';
 
+    if (empty($_FILES['pages']['name']) || count(array_filter($_FILES['pages']['name'])) === 0) {
+        $msg = "No files were uploaded.";
+        $status = "failed";
+        header("Location: ../controller/upload_controller.php?MangaID=$mangaID&status=$status&msg=" . urlencode($msg));
+        exit();
+    }
     if (chapterExist($mangaID, $chapterNum)){
         $msg = "This chapter already exists.";
         $status = "failed";
