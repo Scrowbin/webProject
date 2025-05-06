@@ -2,24 +2,25 @@
 // edit_manga.php
 require '../db/edit_model.php'; // Your database connection
 $mode = "edit";
-$id = $_GET['MangaID'] ?? null;
-if (!$id) {
+$mangaID = $_GET['MangaID'] ?? null;
+if (!$mangaID) {
     echo "No manga ID provided.";
     exit;
 }
 
 
-$manga = getMangaInfo($id);
+$manga = getMangaInfo($mangaID);
 if (!$manga) {
     echo "Manga not found.";
     exit;
 }
 
-$authorsRaw = getMangaAuthors($id);
-$artistsRaw = getMangaArtists($id);
-$coverLink = "../IMG/" . $id . "/" . $manga["CoverLink"];
 
-$selectedTags = getTags($id);
+$authorsRaw = getMangaAuthors($mangaID);
+$artistsRaw = getMangaArtists($mangaID);
+$coverLink = "../IMG/" . $mangaID . "/" . $manga["CoverLink"];
+
+$selectedTags = getTags($mangaID);
 include("../PHP/create.php")
 ?>
 <script>
@@ -59,7 +60,7 @@ document.getElementById('mangaUploadForm').addEventListener('submit', function(e
   e.preventDefault();
   const form = e.target;
   const formData = new FormData(form);
-  formData.append('id', <?= json_encode($id) ?>);
+  formData.append('id', <?= json_encode($mangaID) ?>);
 
   const toastBody = document.getElementById('uploadToastBody');
   fetch('handle_edit.php', {

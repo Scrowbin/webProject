@@ -1,8 +1,14 @@
 <?php
+require('helper.php');
 $mode = $mode ?? "create"; // Default to create if $mode is not set
 $actionUrl = ($mode === "edit") ? "handle_edit.php" : "handle_upload.php";
 $formTitle = ($mode === "edit") ? "Edit Manga" : "Upload New Manga";
 $submitButtonText = ($mode === "edit") ? "Update Manga" : "Upload Manga";
+$mangaNameOG = $manga["MangaNameOG"];
+$mangaNameEN = $manga["MangaNameEN"];
+$image = $manga["CoverLink"];
+$pubStatus = $manga["PublicationStatus"];
+$mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
 ?>
 
 <!DOCTYPE html>
@@ -10,7 +16,7 @@ $submitButtonText = ($mode === "edit") ? "Update Manga" : "Upload Manga";
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Upload Manga - MangaDax</title>
+  <title><?=$mode==="create"? "Upload Manga":"Edit Manga"?> - MangaDax</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
   <link rel="stylesheet" href="../CSS/navbar.css">
@@ -21,8 +27,38 @@ $submitButtonText = ($mode === "edit") ? "Update Manga" : "Upload Manga";
   <?php include 'includes/sidebar.php'; ?>
 
 <div class="container-xxl mt-5 pt-4">
-  <h2 class="mb-4">Upload New Manga</h2>
-
+  <h2 class="mb-4" id="title"><?=$mode==="create"? "Upload New Manga":"Edit Manga"?></h2>
+  <a href="../controller/mangaInfo_Controller.php?MangaID=<?=$mangaID?>">
+    <div class="d-flex align-items-center border rounded p-3 mb-4">
+        <img src="../IMG/<?=$mangaID?>/<?=$image?>" alt="Manga Cover" class="me-3" style="width: 60px; height: 90px; object-fit: cover;">
+        <div>
+          <strong><?=$mangaNameOG?></strong><br>
+          <?=$mangaAuthors?>
+          <?php
+                switch ($pubStatus) {
+                    case "Ongoing":
+                        echo "<span class=\"badge bg-success ms-2\"><strong>● PUBLICATION: ONGOING</strong></span>";
+                        break;
+                    case "Hiatus":
+                        echo "<span class=\"badge bg-warning ms-2 \"><strong>● PUBLICATION: Hiatus</strong></span>";
+                        break;
+                    case "Completed":
+                        echo "<span class=\"badge bg-primary ms-2\"><strong>● PUBLICATION: COMPLETED</strong></span>";
+                        break;
+                    default:
+                        echo "";
+                        break;
+                }
+          ?>
+        </div>
+    </div>
+    <style>
+      a{
+        text-decoration: none;
+        color: inherit;
+      }
+    </style>
+  </a>
   <form id="mangaUploadForm" enctype="multipart/form-data" class="row g-3">
   <!-- <form action="handle_upload.php" method="POST" enctype="multipart/form-data" class="row g-3"> -->
     <!-- Manga Name -->
