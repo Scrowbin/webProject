@@ -164,24 +164,19 @@ document.addEventListener("DOMContentLoaded", () => {
     nextChButton.addEventListener('click',()=>showImage(images.length));
     prevChButton.addEventListener('click',()=>showImage(-1));
 
-
-    // add each teleport to each image
-    // images.forEach((img, index) => {
-    //     img.addEventListener("click", function(event) {
-    //         const clickX = event.offsetX; // X coordinate of the click inside the image
-    //         const imgWidth = img.clientWidth; // Image width
-        
-    //         if (clickX < imgWidth / 2) {
-    //             if (index >= 0) { // Ensure we don't go below 0
-    //                 showImage(currentIndex-1);
-    //             }
-    //         } else {
-    //             if (index <= images.length - 1) { // Ensure it's not the last image
-    //                 showImage(currentIndex+1);
-    //             }
-    //         }    
-    //     });
-    // });
+    function getVisibleImage() {
+        const viewportHeight = window.innerHeight;
+        for (let i = 0; i < images.length; i++) {
+            const rect = images[i].getBoundingClientRect();
+            const isPartiallyVisible = rect.bottom > 0 && rect.top < viewportHeight;
+            if (isPartiallyVisible) {
+                return i; // Index of first partially visible image
+            }
+        }
+        return -1;
+    }
+    
+    // add teleport 
     pageContainer.addEventListener("click", function(event) {
         const containerRect = pageContainer.getBoundingClientRect();
         const clickX = event.clientX - containerRect.left; // Relative X inside visible container
@@ -189,11 +184,11 @@ document.addEventListener("DOMContentLoaded", () => {
     
         if (clickX < containerWidth  / 2) {
             if (currentIndex >= 0) { // Ensure we don't go below 0
-                showImage(currentIndex-1);
+                showImage(getVisibleImage()-1);
             }
         } else {
             if (currentIndex <= images.length - 1) { // Ensure it's not the last image
-                showImage(currentIndex+1);
+                showImage(getVisibleImage()+1);
             }
         }    
     });

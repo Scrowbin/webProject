@@ -1,59 +1,59 @@
-document.querySelectorAll('.chapter-container a').forEach(link => {
-    link.addEventListener('click', e => e.stopPropagation());
-});
-window.onload = function() {
-const descriptionText = document.querySelector('.description-text');
-const seeMoreBtn = document.querySelector('.see-more-btn');
-
-// Check if the description is overflowing
-if (descriptionText.scrollHeight > descriptionText.clientHeight) {
-    descriptionText.parentElement.classList.add('overflow');
-}
-
-// Toggle full description on "See More" button click
-seeMoreBtn.addEventListener('click', function() {
-    if (descriptionText.style.webkitLineClamp === "3") {
-        descriptionText.style.webkitLineClamp = "unset"; // Show full text
-        seeMoreBtn.innerText = "See Less"; // Change button text
-    } else {
-        descriptionText.style.webkitLineClamp = "3"; // Truncate text
-        seeMoreBtn.innerText = "See More"; // Change button text back
-    }
-});
-}
-
 document.addEventListener('DOMContentLoaded', () => {
-    let ratingForm = document.getElementById('rating-form');
-    let addForm = document.getElementById('add-form');
-    let isLoggedIn = ratingForm?.dataset.loggedIn === "true"; // Safely access logged-in flag
-    let toastElement = document.getElementById('loginToast');
-    let toast = new bootstrap.Toast(toastElement);
+    document.querySelectorAll('.chapter-container a').forEach(link => {
+        link.addEventListener('click', e => e.stopPropagation());
+    });
 
-    addForm.addEventListener('submit', async function (e) {
+    const descriptionText = document.querySelector('.description-text');
+    const seeMoreBtn = document.querySelector('.see-more-btn');
+    function checkOverflow() {
+        if (!descriptionText || !seeMoreBtn) return;
+
+        const isOverflowing = descriptionText.scrollHeight > descriptionText.clientHeight;
+
+        // Show or hide the See More button
+        seeMoreBtn.style.display = isOverflowing ? "inline-block" : "none";
+    }
+
+    checkOverflow();
+    // Re-check on window resize
+    window.addEventListener("resize", checkOverflow);
+
+    // Toggle full description on button click
+    seeMoreBtn.addEventListener('click', function () {
+        const isExpanded = descriptionText.classList.toggle("expanded");
+        seeMoreBtn.innerText = isExpanded ? "See Less" : "See More";
+        checkOverflow(); // Optional: re-check in case expansion collapses the need
+    });
+
+    const ratingForm = document.getElementById('rating-form');
+    const addForm = document.getElementById('add-form');
+    const isLoggedIn = ratingForm?.dataset.loggedIn === "true";
+    const toastElement = document.getElementById('loginToast');
+    const toast = new bootstrap.Toast(toastElement);
+
+    addForm?.addEventListener('submit', async function (e) {
         e.preventDefault();
         if (!isLoggedIn) {
             toast.show();
             return;
         }
-    
+
         const formData = new FormData(addForm);
         try {
             const res = await fetch(addForm.action, {
                 method: "POST",
                 body: formData
             });
-    
             const data = await res.json();
-    
             if (data.success) {
                 const isNowBookmarked = data.bookmarked;
                 const button = addForm.querySelector("button");
                 const icon = button.querySelector("i");
                 const label = button.querySelector("span");
-    
+
                 icon.className = isNowBookmarked ? "bi bi-check2 me-2" : "bi bi-bookmark me-2";
                 label.textContent = isNowBookmarked ? "Added to Library" : "Add To Library";
-    
+
                 addForm.dataset.bookmarked = isNowBookmarked ? "true" : "false";
             } else {
                 console.error("Server responded with failure:", data.message);
@@ -62,11 +62,10 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error("Bookmark error:", err);
         }
     });
-    // Rating dropdown logic
+
     document.querySelectorAll('.dropdown-item').forEach(item => {
         item.addEventListener('click', async function (e) {
             e.preventDefault();
-
             if (!isLoggedIn) {
                 toast.show();
                 return;
@@ -97,6 +96,4 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-
-        
 });
