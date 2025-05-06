@@ -35,6 +35,8 @@ document.querySelector('select[name="content_rating"]').value = <?= json_encode(
 document.querySelector('input[name="year"]').value = <?= json_encode($manga['PublicationYear']) ?>;
 document.querySelector('select[name="status"]').value = <?= json_encode($manga['PublicationStatus']) ?>;
 document.querySelector('textarea[name="description"]').value = <?= json_encode($manga['MangaDiscription']) ?>;
+document.querySelector('textarea[name="description"]').dispatchEvent(new Event('input'));
+
 </script>
 <script>
   // When editing, we'll preload selected tags

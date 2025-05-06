@@ -50,7 +50,7 @@
         <header class="d-none">
             <!-- Hidden header -->
         </header>
-        <button type="button" class="btn sticky hidden" id="menu-sticky" onclick="toggleRightSidebar()"><i class="bi bi-list"></i></button>
+        <button type="button" class="btn sticky hidden" id="menu-sticky" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
 
         <main>
             <div id="topReadBar" class="top-read-bar">

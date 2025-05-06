@@ -314,7 +314,7 @@
     const form = e.target;
     const formData = new FormData(form);
     <?php if ($mode === "edit"): ?>
-    formData.append('manga_id', <?= json_encode($id) ?>);
+    formData.append('manga_id', <?= json_encode($mangaID) ?>);
     <?php endif; ?>
     const toastBody = document.getElementById('uploadToastBody');
     fetch('../controller/handle_create.php', {
