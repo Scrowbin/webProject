@@ -365,7 +365,6 @@ hr{ margin: 20px auto; }
     max-height: 100vh;
     width: auto;
     object-fit: contain;
-
 }
 .img-fit-both {
     max-height: 100vh; /* Maximum height is viewport height */
@@ -373,7 +372,11 @@ hr{ margin: 20px auto; }
     width: auto;
     height: auto;
 }
-img:hover{
+img {
+    user-select: none;       /* Prevent text/image selection */
+    pointer-events: auto;    /* Allow clicks if needed */
+}
+#page-container:hover{
     cursor: pointer;
 }
 
@@ -457,6 +460,7 @@ img:hover{
 }
 
 .p-bar-number{
+    color: #130c0c;
     margin-right: 5px;
     margin-left: 5px;
 }

@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const nextChapter = document.getElementById("next-chapter")
     const nextChButton = document.getElementById("nextCh-btn");
     const prevChButton = document.getElementById("prevCh-btn");
+    const pageContainer = document.getElementById("page-container");
 
     let currentIndex= 0;
     let  isInLongStrip = true; // default is inlongstrip
@@ -47,10 +48,9 @@ document.addEventListener("DOMContentLoaded", () => {
             pinIcon.classList.replace("bi-pin-angle", "bi-pin"); // Change back to normal pin
         }
         progressBar.style.width = getComputedStyle(progressBar.parentElement).width;
-
     }
     
-
+    
     // 
     // fucked up and evil toggleFit
     // 
@@ -164,23 +164,40 @@ document.addEventListener("DOMContentLoaded", () => {
     nextChButton.addEventListener('click',()=>showImage(images.length));
     prevChButton.addEventListener('click',()=>showImage(-1));
 
+
     // add each teleport to each image
-    images.forEach((img, index) => {
-        img.addEventListener("click", function(event) {
-            const clickX = event.offsetX; // X coordinate of the click inside the image
-            const imgWidth = img.clientWidth; // Image width
+    // images.forEach((img, index) => {
+    //     img.addEventListener("click", function(event) {
+    //         const clickX = event.offsetX; // X coordinate of the click inside the image
+    //         const imgWidth = img.clientWidth; // Image width
         
-            if (clickX < imgWidth / 2) {
-                if (index >= 0) { // Ensure we don't go below 0
-                    showImage(currentIndex-1);
-                }
-            } else {
-                if (index <= images.length - 1) { // Ensure it's not the last image
-                    showImage(currentIndex+1);
-                }
-            }    
-        });
+    //         if (clickX < imgWidth / 2) {
+    //             if (index >= 0) { // Ensure we don't go below 0
+    //                 showImage(currentIndex-1);
+    //             }
+    //         } else {
+    //             if (index <= images.length - 1) { // Ensure it's not the last image
+    //                 showImage(currentIndex+1);
+    //             }
+    //         }    
+    //     });
+    // });
+    pageContainer.addEventListener("click", function(event) {
+        const containerRect = pageContainer.getBoundingClientRect();
+        const clickX = event.clientX - containerRect.left; // Relative X inside visible container
+        const containerWidth = containerRect.width;
+    
+        if (clickX < containerWidth  / 2) {
+            if (currentIndex >= 0) { // Ensure we don't go below 0
+                showImage(currentIndex-1);
+            }
+        } else {
+            if (currentIndex <= images.length - 1) { // Ensure it's not the last image
+                showImage(currentIndex+1);
+            }
+        }    
     });
+
 
 
     //add pagedropdown teleport
@@ -231,7 +248,24 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     })
 
-   
+    //
+    //progressBar
+    //
+    //update when transitioning and resizing
+    sideBar.addEventListener("transitionend", function updateWidth(e) {
+        if (e.propertyName === "width") { // Ensure it's the width transition ending
+            progressBar.style.width = getComputedStyle(progressBar.parentElement).width;
+            sideBar.removeEventListener("transitionend", updateWidth);
+        }
+    });
+    function resizeProgressBar() {
+        const progressBar = document.getElementById("progress-bar");
+        if (progressBar && progressBar.parentElement) {
+            progressBar.style.width = getComputedStyle(progressBar.parentElement).width;
+        }
+    }
+    
+    window.addEventListener("resize", resizeProgressBar);
 
     // added progress setting
         progressSetting = document.getElementById("progress-setting");
@@ -266,6 +300,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     
     function expandProgressBar() {
+        
         progressBar.classList.add("expanded");
         barNumberLow.classList.remove("hidden");
         barNumberHigh.classList.remove("hidden");
