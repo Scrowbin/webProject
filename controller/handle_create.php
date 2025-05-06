@@ -1,10 +1,4 @@
 <?php
-// ini_set('display_errors', 1);  // Enable display of errors
-// error_reporting(E_ALL);  // Report all types of errors
-// ini_set('error_log', 'D:/XAMPP/php/logs/php_errors.log');
-// ini_set('log_errors', value: 1);     // Log errors to error_log
-// error_reporting(E_ALL);
-
 require_once "../db/create_model.php";
 header('Content-Type: application/json');
 
