@@ -477,3 +477,69 @@ img {
     cursor: pointer;
 }
 .hidden { display: none; }
+
+/* in modal */
+.chapter-info {
+    background-color: #f0f1f2 !important;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    width: 100%;
+    gap: 10px;
+}
+
+/* Info Sections */
+.info-left,.info-middle,.info-right{
+    display: flex;
+    flex-direction: column;
+    color: #000000;
+    font-size: 15px;
+}
+.info-left {
+    flex: 1;
+    gap: 5px;
+}
+
+.info-middle {
+    min-width: 150px;
+    color: #000000;
+    gap: 5px;
+    margin-left: auto;
+}
+
+.info-right {
+    min-width: 70px;
+    color: #000000;
+    gap: 5px;
+}
+
+/* Elements inside middle and right */
+.time, .uploader, .views, .comments {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+.time i, .uploader i, .views i, .comments i {
+    color: #000000;
+}
+.flag, .icon {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    background-size: cover;
+}
+.modal-content {
+    border-radius: 1rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  }
+  .chapter-info {
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+    padding: 1rem;
+  }
+  .dropdown-reason {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  #reportModal .modal-content {
+    color: #000;
+  }

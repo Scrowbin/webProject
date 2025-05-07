@@ -80,8 +80,8 @@ try {
         throw new Exception("Uploaded file is not a valid image.");
     }
 
-    if ($_FILES["cover"]["size"] > 2 * 1024 * 1024) {
-        throw new Exception("Image too large (max 2MB).");
+    if ($_FILES["cover"]["size"] > 10 * 1024 * 1024) {
+        throw new Exception("Image too large (max 10MB).");
     }
 
     if (!move_uploaded_file($_FILES["cover"]["tmp_name"], $coverPath)) {

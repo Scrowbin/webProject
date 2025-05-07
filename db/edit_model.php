@@ -118,6 +118,12 @@
         $sql = "SELECT TagID FROM tag WHERE TagName = ?";
         return pdo_query_value($sql,$tagName);
     }
+
+    function deleteTags($mangaID){
+        $sql = "DELETE FROM  manga_tag WHERE MangaID = ?";
+        return pdo_execute($sql,$mangaID,);
+    }
+
     function checkTag($tagID,$mangaID){
         $sql = "SELECT 1 FROM manga_tag WHERE TagID = ? AND MangaID = ?";
         $result = pdo_query($sql, $tagID, $mangaID);

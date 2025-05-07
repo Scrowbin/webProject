@@ -170,7 +170,7 @@
 
 
                 <!-- Report Chapter -->
-                <button class="btn"id = "report-btn">Report Chapter</button>
+                <button class="btn"id = "report-btn" data-bs-toggle="modal" data-bs-target="#reportModal">Report Chapter</button>
 
                 <hr>
 
@@ -210,14 +210,130 @@
             </div>
         </aside>
     </div>
+<!-- Modal -->
+<div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Report</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        
+        <!-- Chapter Info -->
+        <div class="chapter-info p-2">
+            <div class="info-left">
+                <div>
+                    <img class="icon" src="../IMG/eye.svg">
+
+                    <img class="flag" src="https://mangadex.org/img/flags/gb.svg">
+
+                    <span class="chapter-title">
+                        <strong>Ch. <?=$chapterNumber?> – <?=$chapterName?></strong>
+                    </span>
+                </div>
+
+                <div class="scan-group">
+                    <img src="../IMG/avatar.svg" alt="" class="icon">
+                    <?=$chapterScangroup?>
+                </div>
+            </div>
+
+            <div class="info-middle">
+                <span class="time">
+                    <img src="../IMG/clock.svg" class="icon">
+
+                    <?=timeAgo($chapterInfo['UploadTime'])?>
+                </span>
+                <span class="uploader">
+                    <img src="../IMG/avatar.svg" alt="" class="icon">
+                    <div ><?=$chapterUploader?></div>
+                </span>
+            </div>
+
+            <div class="info-right">
+                <span class="views">
+                    <img class="icon" src="../IMG/eye.svg">
+                    <strong>N/A</strong>
+                </span>
+                <div class="comments">
+                    <img src="../IMG/comment.svg" alt="">
+                    <strong><?=$commentSection['NumOfComments']?></strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Report Reason -->
+        <form id="reportForm">
+            <div class="mb-3">
+                <label for="reportReason" class="form-label">Reason</label>
+                <select class="form-select dropdown-reason" id="reportReason" name="reason" required>
+                    <option selected disabled value="">Choose a reason</option>
+                    <option value="credit_page_middle">Credit page in the middle of the chapter</option>
+                    <option value="duplicate_upload">Duplicate upload from same user/group</option>
+                    <option value="offensive_content">Extraneous political/race-baiting/offensive content</option>
+                    <option value="fake_spam">Fake/Spam chapter</option>
+                    <option value="group_lock_evasion">Group lock evasion</option>
+                    <option value="images_not_loading">Images not loading</option>
+                    <option value="incorrect_chapter_number">Incorrect chapter number</option>
+                    <option value="incorrect_group">Incorrect group</option>
+                    <option value="duplicate_pages">Incorrect or duplicate pages</option>
+                    <option value="missing_chapter_title">Incorrect or missing chapter title</option>
+                    <option value="missing_volume_number">Incorrect or missing volume number</option>
+                    <option value="missing_pages">Missing pages</option>
+                    <option value="naming_rules_broken">Naming rules broken</option>
+                    <option value="official_release_raw">Official release/Raw</option>
+                    <option value="pages_out_of_order">Pages out of order</option>
+                    <option value="premature_release">Released before raws released</option>
+                    <option value="wrong_manga">Uploaded on wrong manga</option>
+                    <option value="watermarked_images">Watermarked images</option>
+                </select>
+            </div>
+            
+            <input type="hidden" name="chapterID" id="hiddenChapterID">
+            <!-- Additional Info -->
+            <div class="mb-3">
+                <label for="additionalInfo" class="form-label">Additional Information (Optional)</label>
+                <textarea class="form-control" id="additionalInfo" name="details" rows="3" placeholder="Add any details that may help the moderators..."></textarea>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">Send Report</button>
+            </div>
+        </form>
+    </div>
+  </div>
+</div>
+
+<!-- toast log in -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1080">
+    <div id="loginToast" class="toast align-items-center text-bg-danger border-0"
+    role="alert" aria-live="assertive" aria-atomic="true"
+    data-bs-delay="3000" data-bs-autohide="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                You must be logged in to do this.
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        </div>
+</div>
 
 </body>
 <script>
+    const userID = <?=json_encode($userID) ?>;
+    const chapterID = <?=json_encode($chapterID) ?>;
+    console.log(userID);
     const mangaID = <?= json_encode($mangaID) ?>;
     const prevChapterID = <?= json_encode($prevChapterID) ?>;
     const nextChapterID = <?= json_encode($nextChapterID) ?>;
 </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../JS/navbar.js"></script>
 <script src="../JS/search.js"></script>
 <script src="../JS/mangaRead.js"></script>
+
+
 </html>

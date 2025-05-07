@@ -14,7 +14,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const nextChButton = document.getElementById("nextCh-btn");
     const prevChButton = document.getElementById("prevCh-btn");
     const pageContainer = document.getElementById("page-container");
-    const reportChapter = document.getElementById("report-btn");
+    const toastElement = document.getElementById('loginToast');
+    const toast = new bootstrap.Toast(toastElement);
+    const reportForm = document.getElementById('reportForm');
 
     let currentIndex= 0;
     let  isInLongStrip = true; // default is inlongstrip
@@ -248,12 +250,7 @@ document.addEventListener("DOMContentLoaded", () => {
     //progressBar
     //
     //update when transitioning and resizing
-    sideBar.addEventListener("transitionend", function updateWidth(e) {
-        if (e.propertyName === "width") { // Ensure it's the width transition ending
-            progressBar.style.width = getComputedStyle(progressBar.parentElement).width;
-            sideBar.removeEventListener("transitionend", updateWidth);
-        }
-    });
+   
     function resizeProgressBar() {
         const progressBar = document.getElementById("progress-bar");
         if (progressBar && progressBar.parentElement) {
@@ -408,4 +405,36 @@ document.addEventListener("DOMContentLoaded", () => {
           });
         }
     }
+
+    //report form
+    reportForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+    
+        if (userID == 0 || userID==null) {
+            toast.show();
+            return;
+        }
+        document.getElementById("hiddenChapterID").value = chapterID;
+        const formData = new FormData(this);
+    
+        fetch('../controller/report_chapter.php', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json()) // expect JSON from backend
+        .then(data => {
+          if (data.success) {
+            alert('Report sent successfully!');
+            const modal = bootstrap.Modal.getInstance(document.getElementById('reportModal'));
+            modal.hide();
+            this.reset();
+          } else {
+            alert('Error: ' + data.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Something went wrong while sending the report.');
+        });
+      });
 });
