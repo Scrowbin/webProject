@@ -39,11 +39,21 @@
           <a href="#" class="nav-link section-title"><i class="bi bi-speedometer2"></i> MangaDex</a>
            <div class="sub-links">
               <a href="#" class="nav-link">Site Rules</a>
-              <a href="#" class="nav-link">Announcements</a>
+              <a href="<?= $pathPrefix ?>controller/announcement_controller.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'announcement.php' ? 'active' : '' ?>">Announcements</a>
               <a href="#" class="nav-link">About Us</a>
               <a href="#" class="nav-link">Contact</a>
            </div>
       </div>
+
+      <?php if (isset($role) && $role === 'admin'): ?>
+      <!-- Admin Section - Only visible to admins -->
+      <div class="sidebar-section">
+          <a href="#" class="nav-link section-title"><i class="bi bi-shield-lock-fill"></i> Admin</a>
+           <div class="sub-links">
+              <a href="<?= $pathPrefix ?>controller/announcement_controller.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'announcement.php' ? 'active' : '' ?>">Create Announcement</a>
+           </div>
+      </div>
+      <?php endif; ?>
   </nav>
   <div class="sidebar-footer">
        <div class="support-placeholder my-3 text-center">

@@ -1,0 +1,67 @@
+/* Announcement Overlay Styles */
+#announcement-overlay {
+  position: fixed;
+  top: 80px; /* Đặt vị trí cao hơn, ngay dưới navbar */
+  left: 0;
+  right: 0;
+  z-index: 1050;
+  background-color: rgba(44, 62, 80, 0.85);
+  color: #ecf0f1;
+  padding: 15px 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  display: none; /* Hidden by default, shown with JS */
+}
+
+.announcement-content {
+  white-space: nowrap;
+  animation: marquee 6s linear infinite; /* Tốc độ rất nhanh - 10 giây cho một vòng lặp */
+  padding-right: 50px;
+  display: inline-block;
+  position: relative;
+  left: 100%; /* Bắt đầu từ lề phải của màn hình */
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); } /* Bắt đầu từ vị trí ban đầu (đã được đặt ở lề phải) */
+  100% { transform: translateX(-800%); } /* Di chuyển sang trái một khoảng bằng 2 lần chiều rộng để đảm bảo chạy hết màn hình */
+}
+
+.announcement-content img {
+  max-height: 40px;
+  width: auto;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.announcement-content a {
+  color: #3498db;
+  text-decoration: underline;
+}
+
+.announcement-content a:hover {
+  color: #2980b9;
+}
+
+#announcement-close {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+#announcement-close:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
