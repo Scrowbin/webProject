@@ -288,12 +288,13 @@
     // Word Count
     const descInput = document.getElementById("description");
     const wordCountText = document.getElementById("wordCount");
-
-    descInput.addEventListener("input", () => {
+    function updateWordCount() {
       const words = descInput.value.trim().split(/\s+/).filter(word => word.length > 0);
-      wordCountText.textContent = `${words.length} / 200 words`; // ✅ Fixed
+      wordCountText.textContent = `${words.length} / 200 words`;
       wordCountText.classList.toggle("text-danger", words.length > 200);
-    });
+    }
+    
+    descInput.addEventListener("input", updateWordCount);
 
     // Tag Tracker
     const tagSelect = document.getElementById("tagSelect");
@@ -308,9 +309,7 @@
         selectedTagsDisplay.appendChild(badge);
       });
     });
-  });
-</script>
-<script>
+
   document.getElementById('mangaUploadForm').addEventListener('submit', function(e) {
     e.preventDefault(); // Prevent default form submission
     const form = e.target;
@@ -338,10 +337,13 @@
     })
     .then(data => {
       if (data.success) {
+        
         toastBody.textContent = data.message;
+        <?php if ($mode === "create"): ?>
         form.reset();
         document.getElementById("selectedTags").innerHTML = ""; // Reset selected tags display
         document.getElementById("wordCount").textContent = "0 / 200 words"; // Reset word count
+        <?php endif; ?>
       } else {
         toastBody.textContent = `Error: ${data.error}`;
       }
@@ -355,11 +357,14 @@
       toast.show();
     });
   });
-</script>
+});
+
 
 <?php if ($mode === "edit"): ?>
-  <script>
     // Preload manga data for editing
+    
+    document.addEventListener("DOMContentLoaded", () => {
+
     document.querySelector('img[name="cover_preview"]').src = <?= json_encode($coverLink) ?>;
     document.querySelector('input[name="original_name"]').value = <?= json_encode($manga['MangaNameOG']) ?>;
     document.querySelector('input[name="english_name"]').value = <?= json_encode($manga['MangaNameEN']) ?>;
@@ -372,27 +377,31 @@
     document.querySelector('select[name="status"]').value = <?= json_encode($manga['PublicationStatus']) ?>;
     document.querySelector('textarea[name="description"]').value = <?= json_encode($manga['MangaDiscription']) ?>;
     document.querySelector('textarea[name="description"]').dispatchEvent(new Event('input'));
-  </script>
-  
-  <script>
-    // Preload selected tags when editing
-    window.addEventListener("DOMContentLoaded", () => {
-      const selected = <?= json_encode($selectedTags) ?>;
-      const tagSelect = document.getElementById("tagSelect");
-      const selectedTagsDisplay = document.getElementById("selectedTags");
+    const descInput = document.getElementById("description");
+    const wordCountText = document.getElementById("wordCount");
+    function updateWordCount() {
+      const words = descInput.value.trim().split(/\s+/).filter(word => word.length > 0);
+      wordCountText.textContent = `${words.length} / 200 words`;
+      wordCountText.classList.toggle("text-danger", words.length > 200);
+    }
+    updateWordCount();
+    const selected = <?= json_encode($selectedTags) ?>;
+    const tagSelect = document.getElementById("tagSelect");
+    const selectedTagsDisplay = document.getElementById("selectedTags");
 
-      for (const option of tagSelect.options) {
-        if (selected.includes(option.value)) {
-          option.selected = true;
-          const badge = document.createElement("span");
-          badge.className = "badge bg-secondary me-1 mb-1";
-          badge.textContent = option.value;
-          selectedTagsDisplay.appendChild(badge);
-        }
+    for (const option of tagSelect.options) {
+      if (selected.includes(option.value)) {
+        option.selected = true;
+        const badge = document.createElement("span");
+        badge.className = "badge bg-secondary me-1 mb-1";
+        badge.textContent = option.value;
+        selectedTagsDisplay.appendChild(badge);
       }
-    });
-  </script>
+    }
+  });
+
 <?php endif; ?>
+</script>
 
   
 </body>

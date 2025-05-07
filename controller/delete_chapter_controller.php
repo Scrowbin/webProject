@@ -1,27 +1,21 @@
 <?php
+require('../db/mangaInfoPdo.php');
+require_once('../db/account_db.php');
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-require('../db/mangaInfoPdo.php');
-require('../db/account_db.php');
-
 $userID = $_SESSION['userID'] ?? null;
-$username = $_SESSION['username'] ?? null;
-if (!isset($_SESSION['userID'])) {
-    if ($username != null){
-        $userID = getUserID($_SESSION['username']);
-        $_SESSION['userID'] = $userID;        
-    }
-}
-
-
 $isLoggedIn = false;
-if ($userID !=null || $username!= null){
+if ($userID !=null){
     $isLoggedIn =true;
 }
-$role = "user";
-if ($isLoggedIn){
-    $role = get_role($userID);
+else{
+    exit('You must be logged in as an admin');
+}
+
+$role = get_role($userID);
+if (!$isLoggedIn||$role !== "admin"){
+    exit("You must be logged in as an admin");
 }
 if($role !== "admin"){
     exit('Must be admin');

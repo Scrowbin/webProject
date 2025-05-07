@@ -1,7 +1,20 @@
 <?php
 // Ensure no output or extra whitespace before this line
 require_once('../db/delete_model.php');
-
+require_once('../db/account_db.php');
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+$userID = $_SESSION['userID'] ?? null;
+$username = $_SESSION['username'] ?? null;
+$isLoggedIn = false;
+if ($userID !=null || $username!= null){
+    $isLoggedIn =true;
+}
+$role = get_role($userID);
+if (!$isLoggedIn||$role !== "admin"){
+    exit("You must be logged in as an admin");
+}
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve data from POST
     

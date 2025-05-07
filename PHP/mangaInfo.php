@@ -158,9 +158,13 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
                     <i class="bi bi-upload me-2"></i>
                     <span class="d-none d-md-inline">Upload Chapter</span>
                 </button>
-                <button class="btn btn-outline-secondary d-flex align-items-center" onclick="window.location.href='delete_controller.php?MangaID=<?=$mangaID?>'">
+                <button class="btn btn-outline-secondary d-flex align-items-center" onclick="window.location.href='delete_chapter_controller.php?MangaID=<?=$mangaID?>'">
                     <i class="bi bi-trash me-2"></i>
                     <span class="d-none d-md-inline">Delete Chapter</span>
+                </button>
+                <button class="btn btn-outline-secondary d-flex align-items-center" onclick="window.location.href='handle_delete_manga.php?MangaID=<?=$mangaID?>'">
+                    <i class="bi bi-trash me-2"></i>
+                    <span class="d-none d-md-inline">Delete Manga</span>
                 </button>
                 <button class="btn btn-outline-secondary d-flex align-items-center" onclick="window.location.href='edit_manga.php?MangaID=<?=$mangaID?>'">
                     <i class="bi bi-pencil-square me-2"></i>
@@ -224,7 +228,6 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
 
     <div class="volumes-and-chapters container">
     <?php
-
         foreach ($grouped as $group) {
             $volume = truncateNumber($group[0]['Volume']);
             $firstChapter = truncateNumber($group[0]['ChapterNumber']);
