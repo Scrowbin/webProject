@@ -126,6 +126,10 @@
                         <i class="bi bi-file-earmark"></i>
                         <span><?=$chapterName?></span>
                     </div>
+                    <?php if ($role == "admin"):?>
+                        <button class="btn reader-btn" id = "editBtn" onclick="window.location.href='../controller/editChapter_controller.php?ChapterID=<?=$chapterID?>'; return false;"><i class = "bi bi-pencil"></i>Edit Chapter</button>
+                    <?php endif;?>
+
                 </div>
                 <hr>
                 <!-- Page Selector -->
