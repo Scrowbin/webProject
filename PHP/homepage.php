@@ -19,6 +19,30 @@
 
   <?php include 'includes/sidebar.php'; ?>
 
+  <!-- Thông báo xóa manga thành công -->
+  <?php if (isset($_GET['status']) && $_GET['status'] === 'manga_deleted'): ?>
+  <div class="position-fixed top-0 end-0 p-3" style="z-index: 1050;">
+    <div id="deleteToast" class="toast show bg-success text-white" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header bg-success text-white">
+        <strong class="me-auto"><i class="bi bi-check-circle-fill"></i> Thành công</strong>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body">
+        Manga đã được xóa thành công.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Tự động ẩn thông báo sau 5 giây
+    setTimeout(function() {
+      var toast = document.getElementById('deleteToast');
+      var bsToast = new bootstrap.Toast(toast);
+      bsToast.hide();
+    }, 5000);
+  </script>
+  <?php endif; ?>
+
   <!-- INSERT BLOCK BEFORE main -->
   <!-- Popular New Titles Section - Moved OUTSIDE main container -->
   <section class="section-container popular-new-titles-section full-width-section">
@@ -62,7 +86,7 @@
                     <?php endif; ?>
                   </div>
                   <div class="description-box mb-3">
-                    <?= htmlspecialchars($allManga[1]['MangaDiscription']) ?>
+                    <?= $allManga[1]['MangaDiscription'] ?>
                   </div>
                   <div class="featured-bottom-row">
                     <div class="author">
@@ -116,7 +140,7 @@
                     <?php endif; ?>
                   </div>
                   <div class="description-box mb-3">
-                    <?= htmlspecialchars($allManga[2]['MangaDiscription']) ?>
+                    <?= $allManga[2]['MangaDiscription'] ?>
                   </div>
                   <div class="featured-bottom-row">
                     <div class="author">
@@ -169,7 +193,7 @@
                     <?php endif; ?>
                   </div>
                   <div class="description-box mb-3">
-                    <?= htmlspecialchars($allManga[3]['MangaDiscription']) ?>
+                    <?= $allManga[3]['MangaDiscription'] ?>
                   </div>
                   <div class="featured-bottom-row">
                     <div class="author">
@@ -271,25 +295,21 @@
             if ($count >= 6) break; // Limit to 6 items in first column
             $count++;
           ?>
-              <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>" class="latest-item">
+              <a href="controller/mangaRead_controller.php?chapterID=<?= $manga['ChapterID'] ?>" class="latest-item">
                 <img src="IMG/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?> Cover" class="latest-cover">
                 <div class="latest-details">
                   <div class="latest-title"><?= htmlspecialchars($manga['MangaNameOG']) ?></div>
                   <div class="latest-chapter">
                     <img src="https://mangadex.org/img/flags/jp.svg" class="flag-icon" alt="JP">
-                    <?php if (isset($manga['LatestChapter'])): ?>
-                      Ch. <?= htmlspecialchars($manga['LatestChapter']['ChapterNumber']) ?>
-                      <?php if (!empty($manga['LatestChapter']['ChapterName'])): ?>
-                        - <?= htmlspecialchars($manga['LatestChapter']['ChapterName']) ?>
-                      <?php endif; ?>
-                    <?php else: ?>
-                      Latest Ch. ?
+                    Ch. <?= htmlspecialchars($manga['ChapterNumber']) ?>
+                    <?php if (!empty($manga['ChapterName'])): ?>
+                      - <?= htmlspecialchars($manga['ChapterName']) ?>
                     <?php endif; ?>
                   </div>
                   <div class="latest-group"><i class="bi bi-people-fill"></i>
                     <?php
-                    if (isset($manga['LatestChapter']['ScangroupName']) && !empty($manga['LatestChapter']['ScangroupName'])) {
-                        echo htmlspecialchars($manga['LatestChapter']['ScangroupName']);
+                    if (!empty($manga['ScangroupName'])) {
+                        echo htmlspecialchars($manga['ScangroupName']);
                     } else {
                         $authorNames = [];
                         $id = $manga['MangaID'];
@@ -307,20 +327,13 @@
                 </div>
                 <div class="latest-meta">
                   <span class="latest-comments"><i class="bi bi-chat-square"></i>
-                    <?php
-                    // Hiển thị số comment nếu có
-                    if (isset($manga['LatestChapter']['NumOfComments'])) {
-                        echo $manga['LatestChapter']['NumOfComments'];
-                    } else {
-                        echo rand(0, 10); // Fallback
-                    }
-                    ?>
+                    <?= $manga['NumOfComments'] ?? 0 ?>
                   </span>
                   <span class="latest-time">
                     <?php
                     // Hiển thị thời gian upload
-                    if (isset($manga['LatestChapter']['UploadTime'])) {
-                        $uploadTime = strtotime($manga['LatestChapter']['UploadTime']);
+                    if (isset($manga['UploadTime'])) {
+                        $uploadTime = strtotime($manga['UploadTime']);
                         $currentTime = time();
                         $timeDiff = $currentTime - $uploadTime;
 
@@ -358,25 +371,21 @@
             if ($count >= 6) break; // Limit to 6 items in second column
             $count++;
           ?>
-              <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>" class="latest-item">
+              <a href="controller/mangaRead_controller.php?chapterID=<?= $manga['ChapterID'] ?>" class="latest-item">
                 <img src="IMG/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?> Cover" class="latest-cover">
                 <div class="latest-details">
                   <div class="latest-title"><?= htmlspecialchars($manga['MangaNameOG']) ?></div>
                   <div class="latest-chapter">
                     <img src="https://mangadex.org/img/flags/jp.svg" class="flag-icon" alt="JP">
-                    <?php if (isset($manga['LatestChapter'])): ?>
-                      Ch. <?= htmlspecialchars($manga['LatestChapter']['ChapterNumber']) ?>
-                      <?php if (!empty($manga['LatestChapter']['ChapterName'])): ?>
-                        - <?= htmlspecialchars($manga['LatestChapter']['ChapterName']) ?>
-                      <?php endif; ?>
-                    <?php else: ?>
-                      Latest Ch. ?
+                    Ch. <?= htmlspecialchars($manga['ChapterNumber']) ?>
+                    <?php if (!empty($manga['ChapterName'])): ?>
+                      - <?= htmlspecialchars($manga['ChapterName']) ?>
                     <?php endif; ?>
                   </div>
                   <div class="latest-group"><i class="bi bi-people-fill"></i>
                     <?php
-                    if (isset($manga['LatestChapter']['ScangroupName']) && !empty($manga['LatestChapter']['ScangroupName'])) {
-                        echo htmlspecialchars($manga['LatestChapter']['ScangroupName']);
+                    if (!empty($manga['ScangroupName'])) {
+                        echo htmlspecialchars($manga['ScangroupName']);
                     } else {
                         $authorNames = [];
                         $id = $manga['MangaID'];
@@ -394,20 +403,13 @@
                 </div>
                 <div class="latest-meta">
                   <span class="latest-comments"><i class="bi bi-chat-square"></i>
-                    <?php
-                    // Hiển thị số comment nếu có
-                    if (isset($manga['LatestChapter']['NumOfComments'])) {
-                        echo $manga['LatestChapter']['NumOfComments'];
-                    } else {
-                        echo rand(0, 10); // Fallback
-                    }
-                    ?>
+                    <?= $manga['NumOfComments'] ?? 0 ?>
                   </span>
                   <span class="latest-time">
                     <?php
                     // Hiển thị thời gian upload
-                    if (isset($manga['LatestChapter']['UploadTime'])) {
-                        $uploadTime = strtotime($manga['LatestChapter']['UploadTime']);
+                    if (isset($manga['UploadTime'])) {
+                        $uploadTime = strtotime($manga['UploadTime']);
                         $currentTime = time();
                         $timeDiff = $currentTime - $uploadTime;
 
@@ -452,10 +454,10 @@
       </div> <!-- End latest-updates-grid -->
     </section>
 
-    <!-- Staff Picks Section -->
+    <!-- Recently Added Section -->
     <section class="section-container staff-picks-section">
       <div class="section-heading">
-        <a href="#" class="text-white text-decoration-none"><h2 class="text-white fw-bold mb-0">Staff Picks</h2></a>
+        <a href="#" class="text-white text-decoration-none"><h2 class="text-white fw-bold mb-0">Recently Added</h2></a>
         <a href="#" class="see-all see-all-arrow staff-picks-next"> <!-- Changed class for Swiper navigation -->
           <i class="bi bi-arrow-right"></i>
         </a>
@@ -464,230 +466,29 @@
       <!-- Swiper Container -->
       <div class="swiper staff-picks-swiper">
         <div class="swiper-wrapper">
-          <!-- Staff Picks Manga Items - Now Swiper Slides -->
-          <div class="swiper-slide item"> <!-- Changed class -->
-          <?php if (isset($allManga[1]) && $allManga[1]): ?>
-          <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[1]['MangaID'] ?>">
+          <!-- Recently Added Manga Items -->
+          <?php foreach ($recentlyAddedManga as $manga): ?>
+          <div class="swiper-slide item">
+          <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>">
             <div class="image-container">
-              <img src="IMG/<?= $allManga[1]['MangaID'] ?>/<?= htmlspecialchars($allManga[1]['CoverLink']) ?>" alt="<?= htmlspecialchars($allManga[1]['MangaNameOG']) ?> Cover">
+              <img src="IMG/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?> Cover">
               <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
               <div class="overlay">
                  <div class="description-box">
-                  <?= htmlspecialchars($allManga[1]['MangaDiscription']) ?>
+                  <?= $manga['MangaDiscription'] ?>
                 </div>
                 <div class="overlay-actions">
                   <div class="overlay-buttons">
-                    <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[1]['MangaID'] ?>" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                    <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[1]['MangaID'] ?>" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                    <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                    <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>" class="more-button"><i class="bi bi-arrow-right"></i></a>
                   </div>
                 </div>
               </div>
             </div>
           </a>
-          <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[1]['MangaID'] ?>" class="item-title-link"><h3 class="item-title"><?= htmlspecialchars($allManga[1]['MangaNameOG']) ?></h3></a>
-          <?php endif; ?>
+          <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>" class="item-title-link"><h3 class="item-title"><?= htmlspecialchars($manga['MangaNameOG']) ?></h3></a>
           </div>
-
-        <!-- Item 2 (Kaoru Hana wa Rin to Saku - MangaID 2) -->
-            <div class="swiper-slide item"> <!-- Changed class -->
-          <?php if (isset($allManga[2]) && $allManga[2]): ?>
-          <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[2]['MangaID'] ?>">
-            <div class="image-container">
-              <img src="IMG/<?= $allManga[2]['MangaID'] ?>/<?= htmlspecialchars($allManga[2]['CoverLink']) ?>" alt="<?= htmlspecialchars($allManga[2]['MangaNameOG']) ?> Cover">
-              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
-              <div class="overlay">
-                <div class="description-box">
-                  <?= htmlspecialchars($allManga[2]['MangaDiscription']) ?>
-                </div>
-                <div class="overlay-actions">
-                  <div class="overlay-buttons">
-                    <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[2]['MangaID'] ?>" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                    <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[2]['MangaID'] ?>" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-          <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[2]['MangaID'] ?>" class="item-title-link"><h3 class="item-title"><?= htmlspecialchars($allManga[2]['MangaNameOG']) ?></h3></a>
-          <?php endif; ?>
-          </div>
-        <!-- Item 3 (Sousou no Frieren - MangaID 3) -->
-          <div class="swiper-slide item"> <!-- Changed class -->
-          <?php if (isset($allManga[3]) && $allManga[3]): ?>
-          <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[3]['MangaID'] ?>">
-            <div class="image-container">
-              <img src="IMG/<?= $allManga[3]['MangaID'] ?>/<?= htmlspecialchars($allManga[3]['CoverLink']) ?>" alt="<?= htmlspecialchars($allManga[3]['MangaNameOG']) ?> Cover">
-              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
-              <div class="overlay">
-                <div class="description-box">
-                  <?= htmlspecialchars($allManga[3]['MangaDiscription']) ?>
-                </div>
-                <div class="overlay-actions">
-                  <div class="overlay-buttons">
-                    <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[3]['MangaID'] ?>" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                    <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[3]['MangaID'] ?>" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-          <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[3]['MangaID'] ?>" class="item-title-link"><h3 class="item-title"><?= htmlspecialchars($allManga[3]['MangaNameOG']) ?></h3></a>
-          <?php endif; ?>
-          </div>
-         <!-- Item 4 -->
-          <div class="swiper-slide item"> <!-- Changed class -->
-          <a href="#">
-            <div class="image-container">
-              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+4" alt="Manga 4 Cover">
-               <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
-               <div class="overlay">
-                 <div class="description-box">
-                    This is a placeholder description for Manga 4.
-              </div>
-                 <div class="overlay-actions">
-                   <div class="overlay-buttons">
-                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                     <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-            </div>
-                    <!-- Removed flag-overlay img -->
-          </div>
-              </div>
-              </div>
-          </a>
-           <a href="#" class="item-title-link"><h3 class="item-title">Manga 4</h3></a>
-              </div>
-         <!-- Item 5 -->
-          <div class="swiper-slide item"> <!-- Changed class -->
-          <a href="#">
-            <div class="image-container">
-              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+5" alt="Manga 5 Cover">
-               <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
-               <div class="overlay">
-                 <div class="description-box">
-                    This is a placeholder description for Manga 5.
-            </div>
-                 <div class="overlay-actions">
-                   <div class="overlay-buttons">
-                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                     <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-          </div>
-                    <!-- Removed flag-overlay img -->
-              </div>
-              </div>
-              </div>
-          </a>
-           <a href="#" class="item-title-link"><h3 class="item-title">Manga 5</h3></a>
-            </div>
-        <!-- Item 6 -->
-          <div class="swiper-slide item"> <!-- Changed class -->
-           <a href="#">
-            <div class="image-container">
-               <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+6" alt="Manga 6 Cover">
-               <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
-               <div class="overlay">
-                 <div class="description-box">
-                   This is a placeholder description for Manga 6.
-          </div>
-                 <div class="overlay-actions">
-                   <div class="overlay-buttons">
-                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                     <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-              </div>
-                    <!-- Removed flag-overlay img -->
-              </div>
-              </div>
-            </div>
-           </a>
-           <a href="#" class="item-title-link"><h3 class="item-title">Manga 6</h3></a>
-      </div>
-        <!-- Item 7 -->
-          <div class="swiper-slide item"> <!-- Changed class -->
-           <a href="#">
-          <div class="image-container">
-               <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+7" alt="Manga 7 Cover">
-               <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
-            <div class="overlay">
-                 <div class="description-box">
-                   This is a placeholder description for Manga 7.
-            </div>
-                 <div class="overlay-actions">
-                   <div class="overlay-buttons">
-                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                     <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-          </div>
-                    <!-- Removed flag-overlay img -->
-        </div>
-               </div>
-            </div>
-           </a>
-           <a href="#" class="item-title-link"><h3 class="item-title">Manga 7</h3></a>
-        </div>
-        <!-- Item 8 -->
-        <div class="swiper-slide item"> <!-- Changed class -->
-           <a href="#">
-          <div class="image-container">
-               <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+8" alt="Manga 8 Cover">
-            <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
-             <div class="overlay">
-                 <div class="description-box">
-                   This is a placeholder description for Manga 8.
-            </div>
-                 <div class="overlay-actions">
-                   <div class="overlay-buttons">
-                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                     <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-          </div>
-                    <!-- Removed flag-overlay img -->
-        </div>
-               </div>
-            </div>
-           </a>
-           <a href="#" class="item-title-link"><h3 class="item-title">Manga 8</h3></a>
-        </div>
-        <!-- Item 9 -->
-        <div class="swiper-slide item"> <!-- Changed class -->
-           <a href="#">
-          <div class="image-container">
-               <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+9" alt="Manga 9 Cover">
-            <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
-            <div class="overlay">
-                 <div class="description-box">
-                   This is a placeholder description for Manga 9.
-                 </div>
-                 <div class="overlay-actions">
-                   <div class="overlay-buttons">
-              <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-              <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-            </div>
-                    <!-- Removed flag-overlay img -->
-          </div>
-        </div>
-            </div>
-           </a>
-           <a href="#" class="item-title-link"><h3 class="item-title">Manga 9</h3></a>
-        </div>
-        <!-- Item 10 -->
-        <div class="swiper-slide item"> <!-- Changed class -->
-           <a href="#">
-          <div class="image-container">
-               <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+10" alt="Manga 10 Cover">
-               <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
-             <div class="overlay">
-                 <div class="description-box">
-                   This is a placeholder description for Manga 10.
-            </div>
-                 <div class="overlay-actions">
-                   <div class="overlay-buttons">
-                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                     <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-          </div>
-                   <!-- Removed flag-overlay img -->
-        </div>
-            </div>
-          </div>
-           </a>
-           <a href="#" class="item-title-link"><h3 class="item-title">Manga 10</h3></a>
-        </div>
+          <?php endforeach; ?>
 
         </div> <!-- End swiper-wrapper -->
 
@@ -703,665 +504,7 @@
       </div> <!-- End swiper container -->
     </section>
 
-    <!-- Self-Published Section -->
-    <section class="section-container self-published-section">
-      <div class="section-heading">
-         <a href="#" class="text-white text-decoration-none"><h2 class="text-white fw-bold mb-0">Self-Published</h2></a>
-        <a href="#" class="see-all see-all-arrow self-published-next"> <!-- Swiper Nav -->
-          <i class="bi bi-arrow-right"></i>
-        </a>
-      </div>
 
-      <div class="swiper self-published-swiper"> <!-- Swiper Container -->
-        <div class="swiper-wrapper">
-        <!-- Self-Published Manga Items -->
-          <div class="swiper-slide item"> <!-- Swiper Slide -->
-          <a href="#">
-            <div class="image-container">
-              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+1" alt="Self-Published 1">
-              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
-                <div class="overlay">
-                   <div class="description-box"> <!-- Changed p to div.description-box -->
-                     Short manga description here
-                   </div>
-                   <div class="overlay-actions">
-                     <div class="overlay-buttons">
-                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                     </div>
-                   </div>
-                 </div>
-            </div>
-          </a>
-           <a href="#" class="item-title-link">
-              <h3 class="item-title">Manga 1</h3> <!-- Use h3 and class -->
-          </a>
-        </div>
-
-          <div class="swiper-slide item"> <!-- Swiper Slide -->
-          <a href="#">
-            <div class="image-container">
-              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+2" alt="Self-Published 2">
-              <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="EN">
-                <div class="overlay">
-                   <div class="description-box"> <!-- Changed p to div.description-box -->
-                     Short manga description here
-                   </div>
-                   <div class="overlay-actions">
-                     <div class="overlay-buttons">
-                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                     </div>
-                   </div>
-                 </div>
-            </div>
-          </a>
-           <a href="#" class="item-title-link">
-              <h3 class="item-title">Manga 2</h3> <!-- Use h3 and class -->
-          </a>
-        </div>
-
-          <div class="swiper-slide item"> <!-- Swiper Slide -->
-          <a href="#">
-            <div class="image-container">
-              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+3" alt="Self-Published 3">
-              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
-                <div class="overlay">
-                   <div class="description-box"> <!-- Changed p to div.description-box -->
-                     Short manga description here
-                   </div>
-                   <div class="overlay-actions">
-                     <div class="overlay-buttons">
-                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                     </div>
-                   </div>
-                 </div>
-            </div>
-          </a>
-           <a href="#" class="item-title-link">
-              <h3 class="item-title">Manga 3</h3> <!-- Use h3 and class -->
-          </a>
-        </div>
-
-           <div class="swiper-slide item"> <!-- Swiper Slide -->
-          <a href="#">
-            <div class="image-container">
-              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+4" alt="Self-Published 4">
-              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
-                <div class="overlay">
-                   <div class="description-box"> <!-- Changed p to div.description-box -->
-                     Short manga description here
-                   </div>
-                   <div class="overlay-actions">
-                     <div class="overlay-buttons">
-                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                     </div>
-                   </div>
-                 </div>
-            </div>
-          </a>
-           <a href="#" class="item-title-link">
-              <h3 class="item-title">Manga 4</h3> <!-- Use h3 and class -->
-          </a>
-        </div>
-
-           <div class="swiper-slide item"> <!-- Swiper Slide -->
-          <a href="#">
-            <div class="image-container">
-              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+5" alt="Self-Published 5">
-              <img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="EN">
-                 <div class="overlay">
-                   <div class="description-box"> <!-- Changed p to div.description-box -->
-                     Short manga description here
-                   </div>
-                   <div class="overlay-actions">
-                     <div class="overlay-buttons">
-                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                     </div>
-                   </div>
-                 </div>
-            </div>
-          </a>
-           <a href="#" class="item-title-link">
-              <h3 class="item-title">Manga 5</h3> <!-- Use h3 and class -->
-          </a>
-        </div>
-
-        <!-- Item 6 -->
-          <div class="swiper-slide item"> <!-- Swiper Slide -->
-            <a href="#">
-             <div class="image-container"><img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+6" alt="Manga 6 Cover"><img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
-               <div class="overlay">
-                 <div class="description-box">Generic description for the manga goes here, maybe a few lines long.</div>
-                 <div class="overlay-actions">
-                   <div class="overlay-buttons">
-                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a><a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                   </div>
-                 </div>
-               </div>
-             </div>
-            </a>
-          <a href="#" class="item-title-link"><h3 class="item-title">Manga 6</h3></a>
-        </div>
-        <!-- Item 7 -->
-          <div class="swiper-slide item"> <!-- Swiper Slide -->
-             <a href="#">
-              <div class="image-container"><img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+7" alt="Manga 7 Cover"><img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
-               <div class="overlay">
-                 <div class="description-box">Generic description for the manga goes here, maybe a few lines long.</div>
-                 <div class="overlay-actions">
-                   <div class="overlay-buttons">
-                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a><a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                   </div>
-                 </div>
-                </div>
-              </div>
-             </a>
-          <a href="#" class="item-title-link"><h3 class="item-title">Manga 7</h3></a>
-        </div>
-        <!-- Item 8 -->
-          <div class="swiper-slide item"> <!-- Swiper Slide -->
-            <a href="#">
-             <div class="image-container"><img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+8" alt="Manga 8 Cover"><img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
-               <div class="overlay">
-                 <div class="description-box">Generic description for the manga goes here, maybe a few lines long.</div>
-                  <div class="overlay-actions">
-                    <div class="overlay-buttons">
-                      <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a><a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                    </div>
-                  </div>
-               </div>
-             </div>
-            </a>
-          <a href="#" class="item-title-link"><h3 class="item-title">Manga 8</h3></a>
-        </div>
-        <!-- Item 9 -->
-          <div class="swiper-slide item"> <!-- Swiper Slide -->
-            <a href="#">
-             <div class="image-container"><img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+9" alt="Manga 9 Cover"><img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
-               <div class="overlay">
-                 <div class="description-box">Generic description for the manga goes here, maybe a few lines long.</div>
-                  <div class="overlay-actions">
-                    <div class="overlay-buttons">
-                      <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a><a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                    </div>
-                  </div>
-                </div>
-             </div>
-            </a>
-          <a href="#" class="item-title-link"><h3 class="item-title">Manga 9</h3></a>
-        </div>
-        <!-- Item 10 -->
-          <div class="swiper-slide item"> <!-- Swiper Slide -->
-            <a href="#">
-              <div class="image-container"><img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+10" alt="Manga 10 Cover"><img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
-               <div class="overlay">
-                 <div class="description-box">Generic description for the manga goes here, maybe a few lines long.</div>
-                 <div class="overlay-actions">
-                   <div class="overlay-buttons">
-                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a><a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                   </div>
-                 </div>
-                </div>
-              </div>
-            </a>
-          <a href="#" class="item-title-link"><h3 class="item-title">Manga 10</h3></a>
-      </div>
-
-        </div> <!-- End swiper-wrapper -->
-
-        <!-- Add Pagination -->
-        <div class="swiper-pagination self-published-pagination"></div> <!-- Swiper Pagination -->
-
-      </div> <!-- End swiper container -->
-
-      <!-- Removed old pagination dots -->
-      <!-- <div class="pagination-dots" id="selfPublishedDots"> ... </div> -->
-    </section>
-
-    <!-- Featured and Seasonal Section -->
-    <section class="section-container featured-items-section">
-      <div class="section-heading">
-         <a href="#" class="text-white text-decoration-none"><h2 class="text-white fw-bold mb-0">Featured</h2></a>
-        <a href="#" class="see-all see-all-arrow featured-items-next"> <!-- Swiper Nav -->
-          <i class="bi bi-arrow-right"></i> Seasonal: Spring 2025
-        </a>
-      </div>
-
-      <div class="swiper featured-items-swiper"> <!-- Swiper Container -->
-        <div class="swiper-wrapper">
-        <!-- Featured Manga Items -->
-          <div class="swiper-slide item"> <!-- Swiper Slide -->
-          <a href="#">
-            <div class="image-container">
-              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+1" alt="Featured 1">
-              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
-                 <div class="overlay">
-                   <div class="description-box">
-                     Short manga description here
-                   </div>
-                   <div class="overlay-actions">
-                     <div class="overlay-buttons">
-                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                     </div>
-                   </div>
-                 </div>
-            </div>
-          </a>
-           <a href="#" class="item-title-link">
-              <h3 class="item-title">Manga 1</h3> <!-- Use h3 and class -->
-          </a>
-        </div>
-
-           <div class="swiper-slide item"> <!-- Swiper Slide -->
-          <a href="#">
-            <div class="image-container">
-              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+2" alt="Featured 2">
-              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
-                 <div class="overlay">
-                   <div class="description-box">
-                     Short manga description here
-                   </div>
-                   <div class="overlay-actions">
-                     <div class="overlay-buttons">
-                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                     </div>
-                   </div>
-                 </div>
-            </div>
-          </a>
-           <a href="#" class="item-title-link">
-              <h3 class="item-title">Manga 2</h3> <!-- Use h3 and class -->
-          </a>
-        </div>
-
-          <div class="swiper-slide item"> <!-- Swiper Slide -->
-          <a href="#">
-            <div class="image-container">
-              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+3" alt="Featured 3">
-              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
-                 <div class="overlay">
-                   <div class="description-box">
-                     Short manga description here
-                   </div>
-                   <div class="overlay-actions">
-                     <div class="overlay-buttons">
-                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                     </div>
-                   </div>
-                 </div>
-            </div>
-          </a>
-           <a href="#" class="item-title-link">
-              <h3 class="item-title">Manga 3</h3> <!-- Use h3 and class -->
-          </a>
-        </div>
-
-          <div class="swiper-slide item"> <!-- Swiper Slide -->
-          <a href="#">
-            <div class="image-container">
-              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+4" alt="Featured 4">
-              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
-                 <div class="overlay">
-                   <div class="description-box">
-                     Short manga description here
-                   </div>
-                   <div class="overlay-actions">
-                     <div class="overlay-buttons">
-                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                     </div>
-                   </div>
-                 </div>
-            </div>
-          </a>
-           <a href="#" class="item-title-link">
-              <h3 class="item-title">Manga 4</h3> <!-- Use h3 and class -->
-          </a>
-        </div>
-
-           <div class="swiper-slide item"> <!-- Swiper Slide -->
-          <a href="#">
-            <div class="image-container">
-              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+5" alt="Featured 5">
-              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
-                 <div class="overlay">
-                   <div class="description-box">
-                     Short manga description here
-                   </div>
-                   <div class="overlay-actions">
-                     <div class="overlay-buttons">
-                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                     </div>
-                   </div>
-                 </div>
-            </div>
-          </a>
-           <a href="#" class="item-title-link">
-              <h3 class="item-title">Manga 5</h3> <!-- Use h3 and class -->
-          </a>
-        </div>
-
-           <div class="swiper-slide item"> <!-- Swiper Slide -->
-          <a href="#">
-            <div class="image-container">
-              <img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+6" alt="Featured 6">
-              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
-                 <div class="overlay">
-                   <div class="description-box">
-                     Short manga description here
-                   </div>
-                   <div class="overlay-actions">
-                     <div class="overlay-buttons">
-                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                     </div>
-                   </div>
-                 </div>
-            </div>
-          </a>
-           <a href="#" class="item-title-link">
-              <h3 class="item-title">Manga 6</h3> <!-- Use h3 and class -->
-          </a>
-        </div>
-
-        <!-- Item 7 -->
-          <div class="swiper-slide item"> <!-- Swiper Slide -->
-             <a href="#">
-              <div class="image-container"><img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+7" alt="Manga 7 Cover"><img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
-                <div class="overlay">
-                  <div class="description-box">Generic description for the manga goes here, maybe a few lines long.</div>
-                  <div class="overlay-actions">
-                    <div class="overlay-buttons">
-                      <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a><a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-             </a>
-          <a href="#" class="item-title-link"><h3 class="item-title">Manga 7</h3></a>
-        </div>
-        <!-- Item 8 -->
-          <div class="swiper-slide item"> <!-- Swiper Slide -->
-            <a href="#">
-             <div class="image-container"><img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+8" alt="Manga 8 Cover"><img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
-               <div class="overlay">
-                 <div class="description-box">Generic description for the manga goes here, maybe a few lines long.</div>
-                  <div class="overlay-actions">
-                    <div class="overlay-buttons">
-                      <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a><a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                    </div>
-                  </div>
-               </div>
-             </div>
-            </a>
-          <a href="#" class="item-title-link"><h3 class="item-title">Manga 8</h3></a>
-        </div>
-        <!-- Item 9 -->
-          <div class="swiper-slide item"> <!-- Swiper Slide -->
-            <a href="#">
-             <div class="image-container"><img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+9" alt="Manga 9 Cover"><img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
-               <div class="overlay">
-                 <div class="description-box">Generic description for the manga goes here, maybe a few lines long.</div>
-                  <div class="overlay-actions">
-                    <div class="overlay-buttons">
-                      <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a><a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                    </div>
-                  </div>
-                </div>
-             </div>
-            </a>
-          <a href="#" class="item-title-link"><h3 class="item-title">Manga 9</h3></a>
-        </div>
-        <!-- Item 10 -->
-          <div class="swiper-slide item"> <!-- Swiper Slide -->
-            <a href="#">
-             <div class="image-container"><img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+10" alt="Manga 10 Cover"><img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
-               <div class="overlay">
-                 <div class="description-box">Generic description for the manga goes here, maybe a few lines long.</div>
-                  <div class="overlay-actions">
-                    <div class="overlay-buttons">
-                      <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a><a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </a>
-          <a href="#" class="item-title-link"><h3 class="item-title">Manga 10</h3></a>
-      </div>
-
-        </div> <!-- End swiper-wrapper -->
-
-        <!-- Add Pagination -->
-        <div class="swiper-pagination featured-items-pagination"></div> <!-- Swiper Pagination -->
-
-      </div> <!-- End swiper container -->
-
-      <!-- Removed old pagination dots -->
-      <!-- <div class="pagination-dots" id="featuredDots"> ... </div> -->
-    </section>
-
-    <!-- Recently Added Section -->
-    <section class="section-container recently-added-section">
-      <div class="section-heading">
-        <a href="#" class="text-white text-decoration-none"><h2 class="text-white fw-bold mb-0">Recently Added</h2></a>
-        <a href="#" class="see-all see-all-arrow recently-added-next"> <!-- Swiper Nav -->
-          <i class="bi bi-arrow-right"></i>
-        </a>
-      </div>
-
-      <div class="swiper recently-added-swiper"> <!-- Swiper Container -->
-        <div class="swiper-wrapper">
-        <!-- Recently Added Manga Items -->
-        <?php foreach ([1, 2, 3] as $mangaID): ?>
-          <div class="swiper-slide item"> <!-- Swiper Slide -->
-          <?php if (isset($allManga[$mangaID]) && $allManga[$mangaID]): ?>
-          <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[$mangaID]['MangaID'] ?>">
-            <div class="image-container">
-              <img src="IMG/<?= $allManga[$mangaID]['MangaID'] ?>/<?= htmlspecialchars($allManga[$mangaID]['CoverLink']) ?>" alt="<?= htmlspecialchars($allManga[$mangaID]['MangaNameOG']) ?> Cover">
-              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
-              <div class="overlay">
-                <div class="description-box">
-                  <?= htmlspecialchars(substr($allManga[$mangaID]['MangaDiscription'], 0, 200)) ?>...
-                </div>
-                <div class="overlay-actions">
-                  <div class="overlay-buttons">
-                    <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[$mangaID]['MangaID'] ?>" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                    <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[$mangaID]['MangaID'] ?>" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-          <a href="controller/mangaInfo_Controller.php?MangaID=<?= $allManga[$mangaID]['MangaID'] ?>" class="item-title-link">
-            <h3 class="item-title"><?= htmlspecialchars($allManga[$mangaID]['MangaNameOG']) ?></h3>
-          </a>
-          <?php endif; ?>
-        </div>
-        <?php endforeach; ?>
-
-           <div class="swiper-slide item"> <!-- Swiper Slide -->
-          <a href="#">
-            <div class="image-container">
-              <img src="https://placehold.co/150x210/1a1a1a/cccccc?text=Cover" alt="Recent 2">
-              <img class="flag" src="https://mangadex.org/img/flags/kr.svg" alt="KR">
-                 <div class="overlay">
-                   <div class="description-box">
-                     Short manga description here
-                   </div>
-                   <div class="overlay-actions">
-                     <div class="overlay-buttons">
-                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                     </div>
-                   </div>
-                 </div>
-            </div>
-          </a>
-           <a href="#" class="item-title-link">
-              <h3 class="item-title">Martial Evolution: Start by...</h3> <!-- Use h3 and class -->
-          </a>
-        </div>
-
-           <div class="swiper-slide item"> <!-- Swiper Slide -->
-          <a href="#">
-            <div class="image-container">
-              <img src="https://placehold.co/150x210/1a1a1a/cccccc?text=Cover" alt="Recent 3">
-              <img class="flag" src="https://mangadex.org/img/flags/kr.svg" alt="KR">
-                 <div class="overlay">
-                   <div class="description-box">
-                     Short manga description here
-                   </div>
-                   <div class="overlay-actions">
-                     <div class="overlay-buttons">
-                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                     </div>
-                   </div>
-                 </div>
-            </div>
-          </a>
-           <a href="#" class="item-title-link">
-              <h3 class="item-title">Murim's Youngest Miracle Demon...</h3> <!-- Use h3 and class -->
-          </a>
-        </div>
-
-           <div class="swiper-slide item"> <!-- Swiper Slide -->
-          <a href="#">
-            <div class="image-container">
-              <img src="https://placehold.co/150x210/1a1a1a/cccccc?text=Cover" alt="Recent 4">
-              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
-                 <div class="overlay">
-                   <div class="description-box">
-                     Short manga description here
-                   </div>
-                   <div class="overlay-actions">
-                     <div class="overlay-buttons">
-                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                     </div>
-                   </div>
-                 </div>
-            </div>
-          </a>
-           <a href="#" class="item-title-link">
-              <h3 class="item-title">Touhou - I Can't Do Anything</h3> <!-- Use h3 and class -->
-          </a>
-        </div>
-
-           <div class="swiper-slide item"> <!-- Swiper Slide -->
-          <a href="#">
-            <div class="image-container">
-              <img src="https://placehold.co/150x210/1a1a1a/cccccc?text=Cover" alt="Recent 5">
-              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
-                 <div class="overlay">
-                   <div class="description-box">
-                     Short manga description here
-                   </div>
-                   <div class="overlay-actions">
-                     <div class="overlay-buttons">
-                       <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                       <a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                     </div>
-                   </div>
-                 </div>
-            </div>
-          </a>
-           <a href="#" class="item-title-link">
-              <h3 class="item-title">Meito Ruten - Rakujo no Fu</h3> <!-- Use h3 and class -->
-            </a>
-          </div>
-
-        <!-- Add more items here following the pattern -->
-          <div class="swiper-slide item"> <!-- Swiper Slide -->
-            <a href="#">
-             <div class="image-container"><img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+6" alt="Manga 6 Cover"><img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
-          <div class="overlay">
-                 <div class="description-box">Generic description for the manga goes here, maybe a few lines long.</div>
-                 <div class="overlay-actions">
-                   <div class="overlay-buttons">
-                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a><a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-          </div>
-        </div>
-               </div>
-             </div>
-            </a>
-            <a href="#" class="item-title-link"><h3 class="item-title">Manga 6</h3></a>
-          </div>
-          <div class="swiper-slide item"> <!-- Swiper Slide -->
-             <a href="#">
-              <div class="image-container"><img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+7" alt="Manga 7 Cover"><img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
-               <div class="overlay">
-                 <div class="description-box">Generic description for the manga goes here, maybe a few lines long.</div>
-                 <div class="overlay-actions">
-                   <div class="overlay-buttons">
-                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a><a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                   </div>
-                 </div>
-                </div>
-              </div>
-             </a>
-            <a href="#" class="item-title-link"><h3 class="item-title">Manga 7</h3></a>
-          </div>
-          <div class="swiper-slide item"> <!-- Swiper Slide -->
-            <a href="#">
-             <div class="image-container"><img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+8" alt="Manga 8 Cover"><img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
-              <div class="overlay">
-                <div class="description-box">Generic description for the manga goes here, maybe a few lines long.</div>
-                 <div class="overlay-actions">
-                   <div class="overlay-buttons">
-                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a><a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                   </div>
-                 </div>
-              </div>
-             </div>
-            </a>
-            <a href="#" class="item-title-link"><h3 class="item-title">Manga 8</h3></a>
-          </div>
-          <div class="swiper-slide item"> <!-- Swiper Slide -->
-            <a href="#">
-             <div class="image-container"><img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+9" alt="Manga 9 Cover"><img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
-               <div class="overlay">
-                 <div class="description-box">Generic description for the manga goes here, maybe a few lines long.</div>
-                 <div class="overlay-actions">
-                   <div class="overlay-buttons">
-                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a><a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                   </div>
-                 </div>
-               </div>
-              </div>
-            </a>
-            <a href="#" class="item-title-link"><h3 class="item-title">Manga 9</h3></a>
-          </div>
-          <div class="swiper-slide item"> <!-- Swiper Slide -->
-            <a href="#">
-              <div class="image-container"><img src="https://placehold.co/150x210/1e1e1e/cccccc?text=Manga+10" alt="Manga 10 Cover"><img class="flag" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
-               <div class="overlay">
-                 <div class="description-box">Generic description for the manga goes here, maybe a few lines long.</div>
-                 <div class="overlay-actions">
-                   <div class="overlay-buttons">
-                     <a href="#" class="read-button"><i class="bi bi-book-fill"></i> Read</a><a href="#" class="more-button"><i class="bi bi-arrow-right"></i></a>
-                   </div>
-                 </div>
-                </div>
-              </div>
-            </a>
-            <a href="#" class="item-title-link"><h3 class="item-title">Manga 10</h3></a>
-      </div>
-
-        </div> <!-- End swiper-wrapper -->
-
-        <!-- Add Pagination -->
-        <div class="swiper-pagination recently-added-pagination"></div> <!-- Swiper Pagination -->
-
-      </div> <!-- End swiper container -->
 
     </section>
   </main>

@@ -87,7 +87,7 @@
                 </span>
               </div>
               <div class="result-description">
-                <?= htmlspecialchars(substr($manga['MangaDiscription'], 0, 200)) ?>...
+                <?= substr($manga['MangaDiscription'], 0, 200) ?>...
               </div>
             </div>
           </div>
