@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 07, 2025 at 06:03 PM
+-- Generation Time: May 07, 2025 at 05:58 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -40,9 +40,12 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`username`, `password`, `email`, `activated`, `activate_token`) VALUES
+('damian123', '$2y$10$tkbGp.J4KMLcteHIfMPz/eCqIihB94koZZgk7oLz9pUwtXue/yOx2', 'khangkhangng2005@gmail.com', b'1', ''),
+('viktor123', '$2y$10$FOIiXH56YGrjFpttnastWOzYDQ1g/l9GnivtLrf8AVVhTjpAk6YUW', 'charlottebullet3107@gmail.com', b'1', ''),
+('dante123', '$2y$10$BgklQWIqVF77nRJHuFYjE.HBjVJSj8qJ/woxkTUbghEkTr55Cj8se', 'abcdef@gmail.com', b'1', ''),
+('Nguvlra', '$2y$10$Ly0RDyKhACCP1E.0ig0bqukOoLQ4/MbzppV0xJcEmcYfrk.Fwvj6S', 'kongudau2@gmail.com', b'1', ''),
 ('Bababoey', '$2y$10$bZvprCGXt2ZMVpAADu8vruEi6QTApeWj6J83RZEJfxmusNnTmGGXi', 'hjiisan8man@gmail.com', b'1', ''),
-('Nguvlra123', '$2y$10$axNk07NbQlXWnREo2fSbAe366RF1fxQcT1zFCIFrocbXT5NQaLYgu', 'hjiisanman@gmail.com', b'1', '195b52feb560d30cd7f03d52c5c6b808c13671614d8565eb65bf1b82ec36c395'),
-('damian123', '$2y$10$KumobiijqzrF7DmWt2mQwu9Nbk9Q6ZQcIF1eUDe4rf7BcvIpqIfIK', 'damian123@gmail.com', b'1', '');
+('Nguvlra123', '$2y$10$axNk07NbQlXWnREo2fSbAe366RF1fxQcT1zFCIFrocbXT5NQaLYgu', 'hjiisanman@gmail.com', b'1', '195b52feb560d30cd7f03d52c5c6b808c13671614d8565eb65bf1b82ec36c395');
 
 -- --------------------------------------------------------
 
@@ -53,19 +56,9 @@ INSERT INTO `account` (`username`, `password`, `email`, `activated`, `activate_t
 CREATE TABLE `announcement` (
   `announcementID` int(11) NOT NULL,
   `content` text NOT NULL,
-  `expirteAt` datetime DEFAULT NULL,
+  `expireAt` datetime DEFAULT NULL,
   `isActive` tinyint(1) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `announcement`
---
-
-INSERT INTO `announcement` (`announcementID`, `content`, `expirteAt`, `isActive`) VALUES
-(2, '<p style=\"text-align: center;\"><strong><span style=\"font-size: 18pt;\">hello worlds</span></strong></p>', NULL, 0),
-(3, '<p><span style=\"font-family: \'arial black\', sans-serif;\">alo alo 1 2 3&nbsp;</span></p>', NULL, 0),
-(4, '<p>hello world part 2</p>\r\n<p>&nbsp;</p>', NULL, 0),
-(5, '<p>can you hear me</p>', NULL, 1);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- --------------------------------------------------------
 
@@ -87,17 +80,10 @@ INSERT INTO `artist` (`ArtistID`, `ArtistName`) VALUES
 (2, 'Abe Tsukasa'),
 (3, 'Megame'),
 (4, 'Yukimura Makoto'),
-(5, 'Oda Eiichiro'),
-(6, 'asdad'),
-(7, 'Fuji Ryousuke'),
-(8, 'Miura Kouji'),
-(9, 'khang'),
-(10, 'shirotako'),
-(11, 'asd'),
-(12, 'Araki Hirohiko'),
-(13, 'romcom'),
-(14, 'sfdsf'),
-(15, 'Kobayashi Yuugo');
+(11, '123123123'),
+(12, 'Oda'),
+(13, 'NTBHH'),
+(14, '12312');
 
 -- --------------------------------------------------------
 
@@ -120,17 +106,10 @@ INSERT INTO `author` (`AuthorID`, `AuthorName`) VALUES
 (3, 'Mikami Saka'),
 (5, 'Megame'),
 (6, 'Yukimura Makoto'),
-(7, 'Oda Eiichiro'),
-(8, 'adad'),
-(9, 'katarina'),
-(10, 'Miura Kouji'),
-(11, 'khang'),
-(12, 'romcom'),
-(13, 'asd'),
-(14, 'Araki Hirohiko'),
-(15, 'as'),
-(16, 'sdfsdfs'),
-(17, 'Kobayashi Yuugo');
+(13, '123123123'),
+(14, 'Oda'),
+(15, 'NTBHH'),
+(16, '12312');
 
 -- --------------------------------------------------------
 
@@ -189,7 +168,7 @@ INSERT INTO `chapter` (`ChapterID`, `MangaID`, `Volume`, `ScangroupName`, `Uploa
 (13, 3, 1.0, 'Kirei Cake', 'Bored_Pray', '2025-04-15 14:59:52', 'Blue Moonweed', 3.0),
 (14, 3, 1.0, 'Kirei Cake', 'UnChosen', '2025-04-15 14:59:52', 'The Mage\'s Secret', 4.0),
 (22, 1, 2.0, 'ScanGroup', 'Anonymous', '2025-04-15 21:56:10', 'fake chapter', 8.0),
-(24, 5, 1.0, 'Normanni', 'Anonymous', '2025-04-28 11:56:42', 'Normanni', 1.0);
+(24, 5, 1.0, 'Normanni', 'Anonymous', '2025-04-28 11:56:42', 'Normander', 1.0);
 
 -- --------------------------------------------------------
 
@@ -418,14 +397,11 @@ CREATE TABLE `manga` (
 --
 
 INSERT INTO `manga` (`MangaID`, `MangaNameOG`, `MangaNameEN`, `MangaDiscription`, `CoverLink`, `OriginalLanguage`, `ContentRating`, `MagazineDemographic`, `PublicationYear`, `PublicationStatus`) VALUES
-(1, 'Zeikin de Katta Hon', 'Books Bought With Taxes', '<p style=\"text-align: justify;\"><span style=\"font-family: arial, helvetica, sans-serif;\">Ishidaira is a delinquent who visited the library for the first time since elementary school. But then, he was pointed out by Hayasemaru and Shirai, who works at the library, that he has not returned a book that he borrowed ten years ago. A manga about how Ishidaira went from trying to borrow a book from a library to working there instead.</span></p>', 'm1.jpg', 'Japanese', 'Safe', 'Seinen', 2021, 'Ongoing'),
+(1, 'Zeikin de Katta Hon', 'Books Bought With Taxes\n', 'Ishidaira is a delinquent who visited the library for the first time since elementary school. But then, he was pointed out by Hayasemaru and Shirai, who works at the library, that he has not returned a book that he borrowed ten years ago. A manga about how Ishidaira went from trying to borrow a book from a library to working there instead.', 'm1.jpg', 'Japanese', 'Safe', 'Seinen', 2021, 'Ongoing'),
 (2, 'Kaoru Hana wa Rin to Saku', 'The Fragrant Flower Blooms With Dignity', 'In a certain place, there are two neighboring high schools. Chidori High School, a bottom-feeder boys\' school where idiots gather, and Kikyo Girls\' School, a well-established girls\' school. Rintaro Tsumugi, a strong and quiet second year student at Chidori High School, meets Kaoruko Waguri, a girl who comes as a customer while helping out at his family\'s cake shop. Rintaro feels comfortable spending time with Kaoruko, but she is a student at Kikyo Girls, a neighboring school that thoroughly dislikes Chidori High.', 'm2.jpg', 'Japanese', 'Safe', 'Shounen', 2021, 'Ongoing'),
 (3, 'Sousou no Frieren\r\n\r\n', 'Frieren at the Funeral\r\n', 'The adventure is over but life goes on for an elf mage just beginning to learn what living is all about. Elf mage Frieren and her courageous fellow adventurers have defeated the Demon King and brought peace to the land. With the great struggle over, they all go their separate ways to live a quiet life. But as an elf, Frieren, nearly immortal, will long outlive the rest of her former party. How will she come to terms with the mortality of her friends? How can she find fulfillment in her own life, and can she learn to understand what life means to the humans around her? Frieren begins a new journey to find the answer.', 'm3.jpg', 'Japanese', 'Safe', 'Shounen', 2020, 'Hiatus'),
 (4, 'Mizudako-chan kara wa Nigerarenai!', 'You Can\'t Escape from Mizudako-chan!', 'Akigai Kanisuke is an ordinary high school boy. His daily life changes when Mizuda Yuuko (a.k.a. Mizudako-chan), a demi-human girl, transfers to his school.', 'm4.jpg', 'Japanese', 'Safe', 'Seinen', 2023, 'Ongoing'),
-(5, 'Vinland Saga', 'Vinland Saga', 'As a child, Thorfinn sat at the feet of the great Leif Ericson and thrilled to wild tales of a land far to the west. But his youthful fantasies were shattered by a mercenary raid. Raised by the Vikings who murdered his family, Thorfinn became a terrifying warrior, forever seeking to kill the band\'s leader, Askeladd, and avenge his father. Sustaining Thorfinn through his ordeal are his pride in his family and his dreams of a fertile westward land, a land without war or slavery… the land Leif called Vinland.', 'm5.jpg', 'Japanese', 'Suggestive', 'Seinen', 2005, 'Ongoing'),
-(26, 'Blue Box', 'アオのハコ', '<p style=\"text-align: justify;\">Taiki Inomata is on the boys\' badminton team at sports powerhouse Eimei Junior and Senior High. He\'s in love with basketball player Chinatsu Kano, the older girl he trains alongside every morning in the gym. One Spring day, their relationship takes a sharp turn ... And thus begins this brand-new series of love, sports and youth!</p>', 'm26.jpg', 'English', 'Safe', 'Shounen', 2021, 'Ongoing'),
-(27, 'JoJo\'s Bizarre Adventure Part 9 - The JOJOLands', 'ジョジョの奇妙な冒険 Part9 The JOJOLands', '<p style=\"text-align: justify;\">O&rsquo;ahu, present day. Dua Lipa is the trending musician, and COVID is still a major concern. On this island lives a 15-year-old boy named Jodio Joestar. Living with his brother and mother, he acts as a dealer for certain illegal substances. One day, his employer comes and shows him an excellent find: a Japanese person has landed in Hawaii with a diamond worth over six million dollars. Normally it would be impossible to steal, but for someone with a stand&hellip;</p>\r\n<p style=\"text-align: justify;\">This is a story of a young boy and his quest to become rich.</p>', 'm27.jpg', 'English', 'Safe', 'Shounen', 2023, 'Ongoing'),
-(28, 'Ao Ashi', 'アオアシ', '<p style=\"text-align: justify;\">Aoi Ashito is a third year middle school student from Ehime. Behind his raw game hides his immense talent, but Ashito suffers a huge setback because of his overly straightforward personality.</p>\r\n<p style=\"text-align: justify;\">One day the youth team manager of J1 club Tokyo City Esperion, Fukuda Tetsuya, appears in front of him. Fukuda sees his limitless potential and invites him to take part in his team\'s tryouts in Tokyo.</p>\r\n<p style=\"text-align: justify;\">The story of the boy who will revolutionize football in Japan rapidly begins to unfold.</p>', 'm28.jpg', 'English', 'Safe', 'Shounen', 2015, 'Ongoing');
+(5, 'Vinland Saga', 'Vinland Saga', 'As a child, Thorfinn sat at the feet of the great Leif Ericson and thrilled to wild tales of a land far to the west. But his youthful fantasies were shattered by a mercenary raid. Raised by the Vikings who murdered his family, Thorfinn became a terrifying warrior, forever seeking to kill the band\'s leader, Askeladd, and avenge his father. Sustaining Thorfinn through his ordeal are his pride in his family and his dreams of a fertile westward land, a land without war or slavery… the land Leif called Vinland.', 'm5.jpg', 'Japanese', 'Suggestive', 'Seinen', 2005, 'Ongoing');
 
 -- --------------------------------------------------------
 
@@ -447,28 +423,7 @@ INSERT INTO `manga_artist` (`MangaID`, `ArtistID`) VALUES
 (3, 2),
 (4, 3),
 (5, 4),
-(6, 6),
-(6, 5),
-(6, 8),
-(9, 9),
-(9, 9),
-(11, 9),
-(6, 5),
-(6, 10),
-(6, 5),
-(15, 12),
-(16, 13),
-(17, 11),
-(18, 14),
-(6, 12),
-(6, 12),
-(6, 12),
-(6, 12),
-(6, 15),
-(6, 12),
-(26, 8),
-(27, 12),
-(28, 15);
+(6, 11);
 
 -- --------------------------------------------------------
 
@@ -491,28 +446,7 @@ INSERT INTO `manga_author` (`MangaID`, `AuthorID`) VALUES
 (3, 2),
 (4, 5),
 (5, 6),
-(6, 8),
-(6, 7),
-(6, 10),
-(9, 11),
-(9, 11),
-(11, 11),
-(6, 7),
-(6, 12),
-(6, 7),
-(15, 14),
-(16, 12),
-(17, 15),
-(18, 16),
-(6, 14),
-(6, 14),
-(6, 14),
-(6, 14),
-(6, 17),
-(6, 14),
-(26, 10),
-(27, 14),
-(28, 17);
+(6, 13);
 
 -- --------------------------------------------------------
 
@@ -567,119 +501,7 @@ INSERT INTO `manga_tag` (`MangaID`, `TagID`) VALUES
 (5, 52),
 (5, 66),
 (5, 74),
-(6, 3),
-(6, 5),
-(6, 7),
-(6, 9),
-(6, 34),
-(6, 35),
-(6, 36),
-(6, 38),
-(6, 4),
-(6, 13),
-(6, 14),
-(6, 16),
-(6, 17),
-(6, 18),
-(6, 19),
-(6, 29),
-(6, 38),
-(6, 54),
-(6, 65),
-(6, 16),
-(6, 18),
-(6, 28),
-(6, 30),
-(9, 13),
-(9, 14),
-(9, 70),
-(9, 72),
-(9, 2),
-(9, 6),
-(9, 7),
-(9, 10),
-(11, 2),
-(11, 4),
-(11, 13),
-(11, 14),
-(11, 16),
-(6, 2),
-(6, 3),
-(6, 4),
-(6, 5),
-(6, 6),
-(6, 7),
-(6, 8),
-(6, 9),
-(6, 16),
-(6, 18),
-(6, 28),
-(6, 30),
-(6, 4),
-(6, 13),
-(6, 14),
-(6, 16),
-(6, 17),
-(6, 18),
-(6, 19),
-(15, 4),
-(15, 7),
-(15, 8),
-(15, 9),
-(15, 11),
-(16, 4),
-(16, 6),
-(16, 7),
-(16, 8),
-(17, 4),
-(18, 34),
-(18, 35),
-(18, 36),
-(18, 37),
-(18, 38),
-(6, 13),
-(6, 14),
-(6, 74),
-(6, 75),
-(6, 4),
-(6, 2),
-(6, 13),
-(6, 16),
-(6, 17),
-(6, 74),
-(6, 75),
-(6, 4),
-(6, 18),
-(6, 30),
-(6, 36),
-(6, 63),
-(6, 13),
-(6, 16),
-(6, 17),
-(6, 18),
-(6, 19),
-(6, 30),
-(6, 42),
-(6, 43),
-(6, 58),
-(6, 63),
-(6, 65),
-(6, 66),
-(6, 74),
-(6, 75),
-(26, 16),
-(26, 18),
-(26, 28),
-(26, 30),
-(26, 36),
-(26, 63),
-(27, 74),
-(27, 75),
-(28, 4),
-(28, 18),
-(28, 30),
-(28, 36),
-(28, 63);
+(6, 1);
 
 -- --------------------------------------------------------
 
@@ -700,6 +522,52 @@ CREATE TABLE `rating` (
 INSERT INTO `rating` (`UserID`, `MangaID`, `Rating`) VALUES
 (3, 1, '10'),
 (3, 3, '9');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `report_chapter`
+--
+
+CREATE TABLE `report_chapter` (
+  `ReportID` int(11) NOT NULL,
+  `UserID` int(11) NOT NULL,
+  `ChapterID` int(11) NOT NULL,
+  `ReportType` varchar(30) NOT NULL,
+  `Description` varchar(255) NOT NULL,
+  `Resolved` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+--
+-- Dumping data for table `report_chapter`
+--
+
+INSERT INTO `report_chapter` (`ReportID`, `UserID`, `ChapterID`, `ReportType`, `Description`, `Resolved`) VALUES
+(1, 3, 1, 'incorrect_group', '', 0),
+(2, 3, 22, 'fake_spam', 'comments are bugged', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `report_manga`
+--
+
+CREATE TABLE `report_manga` (
+  `ReportID` int(11) NOT NULL,
+  `UserID` int(11) NOT NULL,
+  `MangaID` int(11) NOT NULL,
+  `ReportType` varchar(30) NOT NULL,
+  `Description` varchar(255) NOT NULL,
+  `Resolved` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+--
+-- Dumping data for table `report_manga`
+--
+
+INSERT INTO `report_manga` (`ReportID`, `UserID`, `MangaID`, `ReportType`, `Description`, `Resolved`) VALUES
+(1, 3, 14, 'duplicate', '', 1),
+(2, 3, 1, 'missing_cover', '', 1);
 
 -- --------------------------------------------------------
 
@@ -816,18 +684,11 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`UserID`, `Username`, `Joined`, `Avatar`, `Role`) VALUES
 (1, 'Nguvlra', '2025-04-09 15:58:19', 'avatar_default.png', 'user'),
 (2, 'Bababoey', '2025-04-10 07:28:54', 'avatar_default.png', 'user'),
-(3, 'Nguvlra123', '2025-04-15 16:35:13', 'avatar_default.png', 'admin'),
-(4, 'damian123', '2025-05-07 21:32:10', 'avatar_default.png', 'user');
+(3, 'Nguvlra123', '2025-04-15 16:35:13', 'avatar_default.png', 'admin');
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `account`
---
-ALTER TABLE `account`
-  ADD PRIMARY KEY (`username`);
 
 --
 -- Indexes for table `announcement`
@@ -872,6 +733,18 @@ ALTER TABLE `manga`
   ADD PRIMARY KEY (`MangaID`);
 
 --
+-- Indexes for table `report_chapter`
+--
+ALTER TABLE `report_chapter`
+  ADD PRIMARY KEY (`ReportID`);
+
+--
+-- Indexes for table `report_manga`
+--
+ALTER TABLE `report_manga`
+  ADD PRIMARY KEY (`ReportID`);
+
+--
 -- Indexes for table `tag`
 --
 ALTER TABLE `tag`
@@ -891,25 +764,25 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `announcement`
 --
 ALTER TABLE `announcement`
-  MODIFY `announcementID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `announcementID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `artist`
 --
 ALTER TABLE `artist`
-  MODIFY `ArtistID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `ArtistID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `author`
 --
 ALTER TABLE `author`
-  MODIFY `AuthorID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `AuthorID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `chapter`
 --
 ALTER TABLE `chapter`
-  MODIFY `ChapterID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `ChapterID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `comment`
@@ -921,13 +794,25 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT for table `commentsection`
 --
 ALTER TABLE `commentsection`
-  MODIFY `CommentSectionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `CommentSectionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `manga`
 --
 ALTER TABLE `manga`
-  MODIFY `MangaID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `MangaID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `report_chapter`
+--
+ALTER TABLE `report_chapter`
+  MODIFY `ReportID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `report_manga`
+--
+ALTER TABLE `report_manga`
+  MODIFY `ReportID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tag`
@@ -939,7 +824,7 @@ ALTER TABLE `tag`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
