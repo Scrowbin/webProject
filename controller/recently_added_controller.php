@@ -1,33 +1,46 @@
 <?php
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
-    require_once('../db/latestUpdates_model.php');
-    require_once("../db/mangaInfoPdo.php");
+// controller/recently_added_controller.php - Controller for Recently Added Manga page
 
-    $isLibrary = false; // Set flag for active menu item in sidebar
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-    $pathPrefix = '../'; // Define path prefix for includes relative to controller directory
+// Include necessary base files
+require_once('../db/latestUpdates_model.php');
+require_once("../db/mangaInfoPdo.php");
 
+// Set flag for sidebar active state
+$isLibrary = false; // Not a library page
+$isRecentlyAdded = true; // Set flag for active menu item in sidebar
 
-    $page = $_GET['page'] ?? 1;
-    $currentPage = $page;
-    $limit = 4;
-    $offset = ($page - 1) * $limit;
-    // Get all manga in library for counting total
-    $allLibraryManga = getRecent(1000);
-    $totalMangaCount = count($allLibraryManga);
+// Define path prefix for includes relative to controller directory
+$pathPrefix = '../';
 
-    // Get manga for current page
-    $manga = getRecent( 1000);
-    foreach($manga as $i => $m){
-        $manga[$i]['tags'] = getTags($m["MangaID"]);
-    }
+// Pagination
+$page = $_GET['page'] ?? 1;
+$currentPage = $page;
+$limit = 12; // Show more manga per page
+$offset = ($page - 1) * $limit;
 
-    // Slice for pagination
-    $manga = array_slice($manga, $offset, $limit);
-    $totalPages = ceil($totalMangaCount/$limit);
+// Get all manga for counting total
+$allRecentManga = getRecent(1000);
+$totalMangaCount = count($allRecentManga);
 
-    include("../PHP/library.php");
-?>
+// Get manga for current page
+$manga = getRecent(1000);
+foreach($manga as $i => $m){
+    $manga[$i]['tags'] = getTags($m["MangaID"]);
+    $manga[$i]['authors'] = getMangaAuthors($m["MangaID"]);
+    $manga[$i]['artists'] = getMangaArtists($m["MangaID"]);
+}
+
+// Slice for pagination
+$manga = array_slice($manga, $offset, $limit);
+$totalPages = ceil($totalMangaCount/$limit);
+
+// Set page title
+$pageTitle = "Recently Added Manga";
+
+// Include the library view (reusing it for now)
+include("../PHP/library.php");
 

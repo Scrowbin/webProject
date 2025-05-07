@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
   <link rel="stylesheet" href="../CSS/navbar.css">
   <link rel="stylesheet" href="../CSS/create.css">
+  <!-- TinyMCE CDN with API Key -->
+  <script src="https://cdn.tiny.cloud/1/wx4008qjjx7niu643lrzyglnb9byz72numg3c3jss5gk1noi/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 </head>
 <body>
   <?php include 'includes/navbar_minimal.php'; ?>
@@ -162,10 +164,10 @@
   </select>
   </div>
 
-  <!-- Description -->
+  <!-- Description with Rich Text Editor -->
   <div class="col-12 mb-3">
   <label class="form-label">Manga Description</label>
-  <textarea class="form-control" name="description" id="description" rows="4" placeholder="Write the manga synopsis here (max 200 words)"></textarea>
+  <textarea class="form-control" name="description" id="description" rows="8" placeholder="Write the manga synopsis here (max 200 words)"></textarea>
   <small id="wordCount" class="form-text text-muted">0 / 200 words</small>
   </div>
 
@@ -285,16 +287,46 @@
 
   <script>
   document.addEventListener("DOMContentLoaded", () => {
+    // Initialize TinyMCE with premium features
+    tinymce.init({
+      selector: '#description',
+      plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount advlist advtable autosave fullscreen help pagebreak preview save',
+      toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat | fullscreen preview',
+      height: 300,
+      promotion: false, // Remove the TinyMCE promotion
+      branding: false, // Remove TinyMCE branding
+      menubar: 'file edit view insert format tools table help',
+      autosave_ask_before_unload: true,
+      autosave_interval: '30s',
+      autosave_prefix: 'manga-description-{path}{query}-{id}-',
+      autosave_restore_when_empty: false,
+      autosave_retention: '2m',
+      image_advtab: true,
+      link_list: [
+        { title: 'MangaDax Homepage', value: '../index.php' }
+      ],
+      setup: function(editor) {
+        editor.on('KeyUp', function(e) {
+          // Update word count when content changes
+          updateWordCount();
+        });
+        editor.on('Change', function(e) {
+          // Update word count when content changes
+          updateWordCount();
+        });
+      },
+      content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 16px; }'
+    });
+
     // Word Count
-    const descInput = document.getElementById("description");
     const wordCountText = document.getElementById("wordCount");
     function updateWordCount() {
-      const words = descInput.value.trim().split(/\s+/).filter(word => word.length > 0);
+      // Get content from TinyMCE
+      const content = tinymce.get('description').getContent({format: 'text'});
+      const words = content.trim().split(/\s+/).filter(word => word.length > 0);
       wordCountText.textContent = `${words.length} / 200 words`;
       wordCountText.classList.toggle("text-danger", words.length > 200);
     }
-    
-    descInput.addEventListener("input", updateWordCount);
 
     // Tag Tracker
     const tagSelect = document.getElementById("tagSelect");
@@ -315,13 +347,18 @@
     const form = e.target;
     const formData = new FormData(form);
 
+    // Get content from TinyMCE and add it to the form data
+    if (tinymce.get('description')) {
+      formData.set('description', tinymce.get('description').getContent());
+    }
+
     // Add manga_id if in edit mode
     <?php if ($mode === "edit"): ?>
       formData.append('manga_id', <?= json_encode($mangaID) ?>);
     <?php endif; ?>
 
     const toastBody = document.getElementById('uploadToastBody');
-    
+
     // Decide the action based on mode: create or edit
     const actionUrl = <?php echo json_encode($mode === 'create' ? '../controller/handle_create.php' : '../controller/handle_edit.php'); ?>;
 
@@ -337,12 +374,17 @@
     })
     .then(data => {
       if (data.success) {
-        
+
         toastBody.textContent = data.message;
         <?php if ($mode === "create"): ?>
         form.reset();
         document.getElementById("selectedTags").innerHTML = ""; // Reset selected tags display
         document.getElementById("wordCount").textContent = "0 / 200 words"; // Reset word count
+
+        // Reset TinyMCE editor
+        if (tinymce.get('description')) {
+          tinymce.get('description').setContent('');
+        }
         <?php endif; ?>
       } else {
         toastBody.textContent = `Error: ${data.error}`;
@@ -362,7 +404,7 @@
 
 <?php if ($mode === "edit"): ?>
     // Preload manga data for editing
-    
+
     document.addEventListener("DOMContentLoaded", () => {
 
     document.querySelector('img[name="cover_preview"]').src = <?= json_encode($coverLink) ?>;
@@ -375,16 +417,18 @@
     document.querySelector('select[name="content_rating"]').value = <?= json_encode($manga['ContentRating']) ?>;
     document.querySelector('input[name="year"]').value = <?= json_encode($manga['PublicationYear']) ?>;
     document.querySelector('select[name="status"]').value = <?= json_encode($manga['PublicationStatus']) ?>;
-    document.querySelector('textarea[name="description"]').value = <?= json_encode($manga['MangaDiscription']) ?>;
-    document.querySelector('textarea[name="description"]').dispatchEvent(new Event('input'));
-    const descInput = document.getElementById("description");
-    const wordCountText = document.getElementById("wordCount");
-    function updateWordCount() {
-      const words = descInput.value.trim().split(/\s+/).filter(word => word.length > 0);
-      wordCountText.textContent = `${words.length} / 200 words`;
-      wordCountText.classList.toggle("text-danger", words.length > 200);
-    }
-    updateWordCount();
+
+    // Set TinyMCE content after it's initialized
+    const mangaDescription = <?= json_encode($manga['MangaDiscription']) ?>;
+
+    // Wait for TinyMCE to initialize
+    setTimeout(function() {
+      if (tinymce.get('description')) {
+        tinymce.get('description').setContent(mangaDescription);
+        // Trigger word count update
+        updateWordCount();
+      }
+    }, 500);
     const selected = <?= json_encode($selectedTags) ?>;
     const tagSelect = document.getElementById("tagSelect");
     const selectedTagsDisplay = document.getElementById("selectedTags");
@@ -403,6 +447,6 @@
 <?php endif; ?>
 </script>
 
-  
+
 </body>
 </html>
