@@ -34,19 +34,10 @@
                 <?php
             }
 
-            // Hiển thị từng chapter riêng biệt
-            foreach($chapters as $chapter){
-                $mangaID = $chapter['MangaID'];
-                $mangaCover = $chapter['CoverLink'];
-                $mangaName = $chapter['MangaNameOG'];
-                $chapterNumber = truncateNumber($chapter['ChapterNumber']);
-                $chapterName = $chapter['ChapterName'];
-                $chapterID = $chapter['ChapterID'];
-                $chapterScangroup = $chapter['ScangroupName'];
-                $uploadTime = $chapter['UploadTime'];
-                $uploader = $chapter['UploaderName'];
-                $commentsID = $chapter['CommentSectionID'];
-                $NumOfComments = $chapter['NumOfComments'];
+            foreach($grouped as $manga){
+                $mangaID = $manga[0]['MangaID'];
+                $mangaCover =  $manga[0]['CoverLink'];
+                $mangaName = $manga[0]['MangaNameOG'];
         ?>
 
             <div class="manga-card">
@@ -64,59 +55,76 @@
                         <a href="../controller/mangaInfo_controller.php?MangaID=<?=$mangaID?>" class="manga-title"><strong><?=$mangaName?></strong></a>
                     </div>
                     <hr>
-                    <div class="chapter-container mb-1" onclick="window.location.href='../controller/mangaRead_controller.php?chapterID=<?=$chapterID?>'">
-                        <div class="chapter-info">
-                            <div class="info-left">
-                                <div class="chapter-title">
-                                        <img class="flag" src="https://mangadex.org/img/flags/gb.svg">
-                                        <strong>Ch. <?=$chapterNumber?> <?php if (!empty($chapterName)): ?> - <?=$chapterName?><?php endif; ?></strong>
-                                </div>
-                                <div class="scan-group">
-                                    <a href="#">
-                                    <img src="../IMG/avatar.svg" alt="" class="icon">
-                                    <span><?=$chapterScangroup?></span>
-                                    </a>
-                                </div>
-                            </div>
+                    <?php
+                        foreach($manga as $chapter){
+                            $chapterNumber = truncateNumber($chapter['ChapterNumber']);
+                            $chapterName = $chapter['ChapterName'];
+                            $chapterID = $chapter['ChapterID'];
+                            $chapterScangroup = $chapter['ScangroupName'];
+                            $uploadTime = $chapter['UploadTime'];
+                            $uploader = $chapter['UploaderName'];
+                            $commentsID = $chapter['CommentSectionID'];
+                            $NumOfComments = $chapter['NumOfComments'];
+                    ?>
+                        <div class="chapter-container mb-1"  onclick="window.location.href='../controller/mangaRead_controller.php?chapterID=<?=$chapterID?>'">
 
-                            <div class="info-middle">
-                                <div class="time">
-                                    <img src="../IMG/clock.svg" class="icon">
-                                    <strong><?=timeAgo($uploadTime)?></strong>
+                            <div class="chapter-info">
+                                <div class="info-left">
+                                    <div class="chapter-title">
+                                            <img class="flag" src="https://mangadex.org/img/flags/gb.svg">
+                                            <strong>Ch. <?=$chapterNumber?> - <?=$chapterName?></strong>
+                                    </div>
+                                    <div  class="scan-group">
+                                        <a href="#">
+                                        <img src="../IMG/avatar.svg" alt="" class="icon">
+                                        <span><?=$chapterScangroup?></span>
+                                        </a>
+                                    </div>
                                 </div>
-                                <div class="uploader">
-                                    <img src="../IMG/avatar.svg" alt="" class="icon">
-                                    <a href="#"><?=$uploader?></a>
-                                </div>
-                            </div>
 
-                            <div class="info-right">
-                                <div class="views">
-                                    <img class="icon" src="../IMG/eye.svg">
-                                    <strong>N/A</strong>
+                                <div class="info-middle">
+                                    <div class="time">
+                                        <img src="../IMG/clock.svg" class="icon">
+                                        <strong><?=timeAgo($uploadTime)?></strong>
+                                    </div>
+                                    <div class="uploader">
+                                        <img src="../IMG/avatar.svg" alt="" class="icon">
+                                        <a href="#"><?=$uploader?></a>
+                                    </div>
                                 </div>
-                                <div class="comments">
-                                    <a href="../controller/comments_controller.php?commentsID=<?=$commentsID?>">
-                                        <img src="../IMG/comment.svg" alt="" >
-                                        <strong><?=$NumOfComments?></strong>
-                                    </a>
+
+                                <div class="info-right">
+                                    <div class="views">
+                                        <img class="icon" src="../IMG/eye.svg">
+                                        <strong>N/A</strong>
+                                    </div>
+                                    <div class="comments">
+                                        <a href="../controller/comments_controller.php?commentsID=<?=$commentsID?>">
+                                            <img src="../IMG/comment.svg" alt="" >
+                                            <strong><?=$NumOfComments?></strong>
+                                        </a>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
-                    </div>
+
+                    <?php
+                        }
+                    ?>
                 </div>
             </div>
         <?php
             }
         }
-        else{
-            ?>
-            <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
-                <button class="btn custom-signin">Sign In</button>
-            </div>
+            else{
+                ?>
+                <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+                    <button class="btn custom-signin">Sign In</button>
+                </div>
 
-            <?php
-        }
+                <?php
+            }
 
         ?>
 

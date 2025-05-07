@@ -44,54 +44,57 @@ foreach ($recentlyAddedManga as $key => $manga) {
     $recentlyAddedManga[$key]['artists'] = getMangaArtists($mangaID);
 }
 
-// Get latest manga updates using getAllLatestChapters function
+// Get latest manga updates using getUpdates function
 try {
     // Lấy 12 chapter mới nhất
-    $latestChapters = getAllLatestChapters(12, 0);
+    $latestChapters = getUpdates(12, 0);
 
-    // Tạo mảng để lưu trữ thông tin chapter
+    // Tạo mảng để lưu trữ thông tin manga không trùng lặp
     $latestUpdates = [];
+    $processedMangaIDs = [];
 
-    // Xử lý từng chapter
+    // Xử lý từng chapter để lấy thông tin manga
     foreach ($latestChapters as $chapter) {
         $mangaID = $chapter['MangaID'];
 
-        // Lấy số lượng comment cho chapter
-        $commentData = getComments($chapter['ChapterID']);
+        // Chỉ xử lý mỗi manga một lần
+        if (!in_array($mangaID, $processedMangaIDs)) {
+            // Thêm manga vào danh sách đã xử lý
+            $processedMangaIDs[] = $mangaID;
 
-        // Tạo thông tin chapter
-        $chapterInfo = [
-            'MangaID' => $mangaID,
-            'MangaNameOG' => $chapter['MangaNameOG'],
-            'CoverLink' => $chapter['CoverLink'],
-            'ChapterID' => $chapter['ChapterID'],
-            'ChapterNumber' => $chapter['ChapterNumber'],
-            'ChapterName' => $chapter['ChapterName'],
-            'UploadTime' => $chapter['UploadTime'],
-            'ScangroupName' => $chapter['ScangroupName'],
-            'NumOfComments' => $commentData['NumOfComments'] ?? 0
-        ];
+            // Lấy số lượng comment cho chapter
+            $commentData = getComments($chapter['ChapterID']);
 
-        // Thêm chapter vào danh sách latest updates
-        $latestUpdates[] = $chapterInfo;
+            // Lấy thông tin manga từ chapter
+            $manga = [
+                'MangaID' => $mangaID,
+                'MangaNameOG' => $chapter['MangaNameOG'],
+                'CoverLink' => $chapter['CoverLink'],
+                'LatestChapter' => [
+                    'ChapterID' => $chapter['ChapterID'],
+                    'ChapterNumber' => $chapter['ChapterNumber'],
+                    'ChapterName' => $chapter['ChapterName'],
+                    'UploadTime' => $chapter['UploadTime'],
+                    'ScangroupName' => $chapter['ScangroupName'],
+                    'NumOfComments' => $commentData['NumOfComments'] ?? 0
+                ]
+            ];
+
+            // Thêm manga vào danh sách latest updates
+            $latestUpdates[] = $manga;
+
+            // Nếu đã đủ 12 manga, dừng vòng lặp
+            if (count($latestUpdates) >= 12) {
+                break;
+            }
+        }
     }
 } catch (Exception $e) {
     // Fallback if there's an error
     $latestUpdates = [];
     for ($i = 1; $i <= 3; $i++) {
         if (isset($allManga[$i])) {
-            // Tạo một chapter giả cho mỗi manga
-            $latestUpdates[] = [
-                'MangaID' => $allManga[$i]['MangaID'],
-                'MangaNameOG' => $allManga[$i]['MangaNameOG'],
-                'CoverLink' => $allManga[$i]['CoverLink'],
-                'ChapterID' => 1,
-                'ChapterNumber' => 1,
-                'ChapterName' => 'Chapter 1',
-                'UploadTime' => date('Y-m-d H:i:s'),
-                'ScangroupName' => 'Unknown',
-                'NumOfComments' => 0
-            ];
+            $latestUpdates[] = $allManga[$i];
         }
     }
 }

@@ -4,14 +4,14 @@
     //này sẽ lấy mấy cái gần nhất trong vòng 1 ngày từ cùng 1 manga mà thôi
     function getUpdates($limit, $offset) {
         $sql = "
-            SELECT
-                c.*,
-                m.MangaNameOG,
+            SELECT 
+                c.*, 
+                m.MangaNameOG, 
                 m.CoverLink
             FROM chapter c
             JOIN (
-                SELECT
-                    MangaID,
+                SELECT 
+                    MangaID, 
                     MAX(UploadTime) as LatestUpload
                 FROM chapter
                 GROUP BY MangaID
@@ -31,10 +31,10 @@
                 FROM
                 commentsection cs
                 JOIN
-                comment c
+                comment c 
                 ON
                 cs.CommentSectionID = c.CommentSectionID
-                WHERE
+                WHERE 
                 cs.ChapterID = ?
                 GROUP BY
                 cs.CommentSectionID
@@ -43,14 +43,14 @@
     }
     function getUpdatesBookmark($userID,$limit, $offset) {
         $sql = "
-            SELECT
-                c.*,
-                m.MangaNameOG,
+            SELECT 
+                c.*, 
+                m.MangaNameOG, 
                 m.CoverLink
             FROM chapter c
             JOIN (
-                SELECT
-                    MangaID,
+                SELECT 
+                    MangaID, 
                     MAX(UploadTime) as LatestUpload
                 FROM chapter
                 GROUP BY MangaID
@@ -70,24 +70,9 @@
                 LIMIT ?";
         return pdo_query_int($sql,$limit);
     }
-
-    // Hàm mới để lấy tất cả các chapter mới nhất, không lọc theo manga
-    function getAllLatestChapters($limit, $offset = 0) {
-        $sql = "
-            SELECT
-                c.*,
-                m.MangaNameOG,
-                m.CoverLink
-            FROM chapter c
-            JOIN manga m ON m.MangaID = c.MangaID
-            ORDER BY c.UploadTime DESC
-            LIMIT ? OFFSET ?
-        ";
-        return pdo_query_int($sql, $limit, $offset);
-    }
     function getLibrary($userID,$limit){
         $sql = "SELECT m.* from manga m
-                JOIN bookmark b
+                JOIN bookmark b 
                 ON m.MangaID = b.MangaID
                 WHERE b.UserID = ?
                 ORDER BY m.MangaID DESC

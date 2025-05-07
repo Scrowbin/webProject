@@ -295,21 +295,25 @@
             if ($count >= 6) break; // Limit to 6 items in first column
             $count++;
           ?>
-              <a href="controller/mangaRead_controller.php?chapterID=<?= $manga['ChapterID'] ?>" class="latest-item">
+              <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>" class="latest-item">
                 <img src="IMG/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?> Cover" class="latest-cover">
                 <div class="latest-details">
                   <div class="latest-title"><?= htmlspecialchars($manga['MangaNameOG']) ?></div>
                   <div class="latest-chapter">
                     <img src="https://mangadex.org/img/flags/jp.svg" class="flag-icon" alt="JP">
-                    Ch. <?= htmlspecialchars($manga['ChapterNumber']) ?>
-                    <?php if (!empty($manga['ChapterName'])): ?>
-                      - <?= htmlspecialchars($manga['ChapterName']) ?>
+                    <?php if (isset($manga['LatestChapter'])): ?>
+                      Ch. <?= htmlspecialchars($manga['LatestChapter']['ChapterNumber']) ?>
+                      <?php if (!empty($manga['LatestChapter']['ChapterName'])): ?>
+                        - <?= htmlspecialchars($manga['LatestChapter']['ChapterName']) ?>
+                      <?php endif; ?>
+                    <?php else: ?>
+                      Latest Ch. ?
                     <?php endif; ?>
                   </div>
                   <div class="latest-group"><i class="bi bi-people-fill"></i>
                     <?php
-                    if (!empty($manga['ScangroupName'])) {
-                        echo htmlspecialchars($manga['ScangroupName']);
+                    if (isset($manga['LatestChapter']['ScangroupName']) && !empty($manga['LatestChapter']['ScangroupName'])) {
+                        echo htmlspecialchars($manga['LatestChapter']['ScangroupName']);
                     } else {
                         $authorNames = [];
                         $id = $manga['MangaID'];
@@ -327,13 +331,20 @@
                 </div>
                 <div class="latest-meta">
                   <span class="latest-comments"><i class="bi bi-chat-square"></i>
-                    <?= $manga['NumOfComments'] ?? 0 ?>
+                    <?php
+                    // Hiển thị số comment nếu có
+                    if (isset($manga['LatestChapter']['NumOfComments'])) {
+                        echo $manga['LatestChapter']['NumOfComments'];
+                    } else {
+                        echo rand(0, 10); // Fallback
+                    }
+                    ?>
                   </span>
                   <span class="latest-time">
                     <?php
                     // Hiển thị thời gian upload
-                    if (isset($manga['UploadTime'])) {
-                        $uploadTime = strtotime($manga['UploadTime']);
+                    if (isset($manga['LatestChapter']['UploadTime'])) {
+                        $uploadTime = strtotime($manga['LatestChapter']['UploadTime']);
                         $currentTime = time();
                         $timeDiff = $currentTime - $uploadTime;
 
@@ -371,21 +382,25 @@
             if ($count >= 6) break; // Limit to 6 items in second column
             $count++;
           ?>
-              <a href="controller/mangaRead_controller.php?chapterID=<?= $manga['ChapterID'] ?>" class="latest-item">
+              <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>" class="latest-item">
                 <img src="IMG/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?> Cover" class="latest-cover">
                 <div class="latest-details">
                   <div class="latest-title"><?= htmlspecialchars($manga['MangaNameOG']) ?></div>
                   <div class="latest-chapter">
                     <img src="https://mangadex.org/img/flags/jp.svg" class="flag-icon" alt="JP">
-                    Ch. <?= htmlspecialchars($manga['ChapterNumber']) ?>
-                    <?php if (!empty($manga['ChapterName'])): ?>
-                      - <?= htmlspecialchars($manga['ChapterName']) ?>
+                    <?php if (isset($manga['LatestChapter'])): ?>
+                      Ch. <?= htmlspecialchars($manga['LatestChapter']['ChapterNumber']) ?>
+                      <?php if (!empty($manga['LatestChapter']['ChapterName'])): ?>
+                        - <?= htmlspecialchars($manga['LatestChapter']['ChapterName']) ?>
+                      <?php endif; ?>
+                    <?php else: ?>
+                      Latest Ch. ?
                     <?php endif; ?>
                   </div>
                   <div class="latest-group"><i class="bi bi-people-fill"></i>
                     <?php
-                    if (!empty($manga['ScangroupName'])) {
-                        echo htmlspecialchars($manga['ScangroupName']);
+                    if (isset($manga['LatestChapter']['ScangroupName']) && !empty($manga['LatestChapter']['ScangroupName'])) {
+                        echo htmlspecialchars($manga['LatestChapter']['ScangroupName']);
                     } else {
                         $authorNames = [];
                         $id = $manga['MangaID'];
@@ -403,13 +418,20 @@
                 </div>
                 <div class="latest-meta">
                   <span class="latest-comments"><i class="bi bi-chat-square"></i>
-                    <?= $manga['NumOfComments'] ?? 0 ?>
+                    <?php
+                    // Hiển thị số comment nếu có
+                    if (isset($manga['LatestChapter']['NumOfComments'])) {
+                        echo $manga['LatestChapter']['NumOfComments'];
+                    } else {
+                        echo rand(0, 10); // Fallback
+                    }
+                    ?>
                   </span>
                   <span class="latest-time">
                     <?php
                     // Hiển thị thời gian upload
-                    if (isset($manga['UploadTime'])) {
-                        $uploadTime = strtotime($manga['UploadTime']);
+                    if (isset($manga['LatestChapter']['UploadTime'])) {
+                        $uploadTime = strtotime($manga['LatestChapter']['UploadTime']);
                         $currentTime = time();
                         $timeDiff = $currentTime - $uploadTime;
 
