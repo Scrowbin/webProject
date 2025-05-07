@@ -78,8 +78,8 @@
                 throw new Exception("Uploaded file is not a valid image.");
             }
         
-            if ($_FILES["cover"]["size"] > 2 * 1024 * 1024) {
-                throw new Exception("Image too large (max 2MB).");
+            if ($_FILES["cover"]["size"] > 10 * 1024 * 1024) {
+                throw new Exception("Image too large (max 10MB).");
             }
         
             if (!move_uploaded_file($_FILES["cover"]["tmp_name"], $coverPath)) {
@@ -94,13 +94,13 @@
         else
             editMangaNoNewCover($mangaID,$name_original, $name_english, $mangaDesc,$original_language,$demographic, $content_rating, $publication_year, $publication_status);
             
-        // Step 6: Link tags if not already
+        //step 5: delete old tags
+        deleteTags($mangaID);
+
+        // Step 6: Link tags 
         foreach ($tags as $tag) {
             $tagID = getTagID($tag);
-            if (!checkTag($tagID,$mangaID)){
-                mapMangaWithTag($mangaID, $tagID);
-            }
-            
+            mapMangaWithTag($mangaID, $tagID);            
         }
     
         $response = [

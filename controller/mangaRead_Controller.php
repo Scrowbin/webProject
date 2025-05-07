@@ -1,4 +1,7 @@
 <?php
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
     require_once('../db/mangaReadPdo.php');
     $chapterID = $_GET['chapterID'] ?? null;
     if (!$chapterID) {
@@ -10,7 +13,7 @@
         die("chapter not found.");
     }
 
-    
+    $userID = $_SESSION['userID'] ?? null;
     $nextChapterID = getNextChapter($chapterID);
     $prevChapterID = getPrevChapter($chapterID);
 

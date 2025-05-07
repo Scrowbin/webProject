@@ -11,7 +11,7 @@ $mangaNameEN = $mangaInfo['MangaNameEN'];
 $mangaDesc= $mangaInfo['MangaDiscription'];
 $priorityTags = [];
 $normalTags = [];
-
+$cover = "../IMG/$mangaID/$image";
 foreach ($tags as $tagName) {
     if (in_array(strtolower($tagName), ['gore', 'sexual violence'])) {
         $priorityTags[] = $tagName;
@@ -52,7 +52,7 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
                 rgba(0, 0, 0, 0.7) 10%,
                 rgba(0, 0, 0, 0.45) 50%,   /* Midpoint transition */
                 rgba(0, 0, 0, 0) 90%),   /* Fully transparent near the right */
-                url("../IMG/<?=$mangaID?>/<?=$image?>");  /* Background image - KEEP DYNAMIC */
+                url(<?=$cover?>);  /* Background image - KEEP DYNAMIC */
                 background-position: center 20%;
                 background-repeat: no-repeat;
                 background-size: cover;
@@ -66,7 +66,7 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
             <div class="manga-card">
                 <!-- Left: Cover Image -->
                 <div class="manga-cover">
-                        <img src="../IMG/<?=$mangaID?>/<?=$image?>" alt="Manga Cover">
+                        <img src=<?=$cover?> alt="Manga Cover">
                 </div>
 
                 <!-- Right: Details -->
@@ -335,25 +335,66 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
         <input type="hidden" name="MangaID" id="hiddenMangaID">
     </form>
 
-    
+    <!-- report modal -->
+    <!-- report modal -->
+    <div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content rounded-4 shadow">
+                <form id="reportForm" method="POST" action="handle_report.php">
+                    <div class="modal-header bg-danger text-white rounded-top-4">
+                        <h5 class="modal-title" id="reportModalLabel">Report Manga</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="d-flex align-items-center mb-4">
+                            <img src="<?=$cover?>" alt="Cover" style="width: 70px; height: auto;" class="rounded me-3 border">
+                            <div>
+                                <h6 class="mb-1"><?= htmlspecialchars($mangaNameOG) ?></h6>
+                                <small class="text-muted" id="reportingID"><?= htmlspecialchars($mangaID) ?></small>
+                                <input type="hidden" name="mangaID" value="<?= htmlspecialchars($mangaID) ?>">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="reason" class="form-label fw-semibold">Report Reason</label>
+                            <select name="reason" id="reason" class="form-select" required>
+                                <option value="" disabled selected>Choose a reason</option>
+                                <option value="duplicate">Duplicate entry</option>
+                                <option value="missing volume">Incorrect or missing volume numbers</option>
+                                <option value="info error">Information to correct</option>
+                                <option value="missing cover">Missing cover art</option>
+                                <option value="troll">Troll entry</option>
+                                <option value="vandalism">Vandalism</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="details" class="form-label fw-semibold">Additional Details</label>
+                            <textarea class="form-control" name="details" id="details" rows="5" placeholder="Add any additional context or information..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger" id="reportSubmit">Send Report</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../JS/navbar.js"></script> <!-- JS for Navbar/Sidebar -->
     <script src="../JS/search.js"></script> <!-- JS for Search -->
-    <script src="../JS/mangaInfo.js"></script>
     <script>
         const mangaID = <?= json_encode($mangaID) ?>;
-
-        document.getElementById("deleteMangaBtn").addEventListener("click", function () {
-            const toastEl = document.getElementById("confirmDeleteToast");
-            const toast = new bootstrap.Toast(toastEl);
-            toast.show();
-
-            document.getElementById("confirmDeleteBtn").onclick = function () {
-                document.getElementById("hiddenMangaID").value = mangaID;
-                document.getElementById("deleteForm").submit();
-            };
-        });
     </script>
+    <script src="../JS/mangaInfo.js"></script>
+    
 
 </body>
 </html>
