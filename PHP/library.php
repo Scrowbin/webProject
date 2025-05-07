@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Library - Mangadax</title>
+    <title><?=$isLibrary ? "Library": "Recently Added" ?>- Mangadax</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
     <link rel="stylesheet" href="../CSS/navbar.css">
@@ -18,12 +18,14 @@
     <?php include 'includes/sidebar.php'; ?>
     <div class="container-xxl pt-5 mt-4">
         <div class="library-header">
+            <?php if ($isLibrary):?>
             <div class="back-button">
                 <a href="../controller/follows_controller.php">
                     <i class="bi bi-arrow-left"></i>
                 </a>
             </div>
-            <h1>Library</h1>
+            <?php endif; ?>
+            <h1><?=$isLibrary ? "Library": "Recently Added" ?></h1>
         </div>
         <div class="library-controls">
             <div class="manga-count"><?= $totalMangaCount ?> Titles</div>
@@ -94,7 +96,6 @@
                             }
                         ?>
                     </div>
-                    <div class="manga-tagline">Only you are special.</div>
                     <div class="manga-desc">
                         <?=$mangaDesc?>
                     </div>

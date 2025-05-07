@@ -162,7 +162,7 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
                     <i class="bi bi-trash me-2"></i>
                     <span class="d-none d-md-inline">Delete Chapter</span>
                 </button>
-                <button class="btn btn-outline-secondary d-flex align-items-center" onclick="window.location.href='handle_delete_manga.php?MangaID=<?=$mangaID?>'">
+                <button class="btn btn-outline-secondary d-flex align-items-center" id = "deleteMangaBtn">
                     <i class="bi bi-trash me-2"></i>
                     <span class="d-none d-md-inline">Delete Manga</span>
                 </button>
@@ -313,11 +313,41 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
             </div>
         </div>
     </div>
+    <!-- delete totast -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="confirmDeleteToast" class="toast border border-danger shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-danger text-white">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                <strong class="me-auto">Confirm Deletion</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body text-dark">
+                <p class="mb-3">Are you sure you want to <strong class="text-danger">permanently delete</strong> this manga? This action cannot be undone.</p>
+                <div class="d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-sm btn-danger" id="confirmDeleteBtn">Yes, Delete</button>
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="toast">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../JS/navbar.js"></script> <!-- JS for Navbar/Sidebar -->
     <script src="../JS/search.js"></script> <!-- JS for Search -->
     <script src="../JS/mangaInfo.js"></script>
+    <script>
+        const mangaID = <?= json_encode($mangaID) ?>;
 
+        document.getElementById("deleteMangaBtn").addEventListener("click", function () {
+            const toastEl = document.getElementById("confirmDeleteToast");
+            const toast = new bootstrap.Toast(toastEl);
+            toast.show();
+
+            document.getElementById("confirmDeleteBtn").onclick = function () {
+                window.location.href = `handle_delete_manga.php?MangaID=${mangaID}`;
+            };
+        });
+    </script>
 </body>
 </html>

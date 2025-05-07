@@ -64,7 +64,12 @@
         ";
         return pdo_query_int($sql,$userID, $limit, $offset);
     }
-
+    function getRecent($limit){
+        $sql = "SELECT m.* from manga m
+                ORDER BY m.MangaID DESC
+                LIMIT ?";
+        return pdo_query_int($sql,$limit);
+    }
     function getLibrary($userID,$limit){
         $sql = "SELECT m.* from manga m
                 JOIN bookmark b 

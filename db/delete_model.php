@@ -20,8 +20,6 @@ function deleteCommentSection($commentSectionID){
     pdo_execute($sql,$commentSectionID);
 }
 
-
-
 function deleteChapter($chapterID){
     $sql = "DELETE FROM chapter WHERE ChapterID = ?";
     pdo_execute($sql,$chapterID);
