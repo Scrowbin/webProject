@@ -27,11 +27,13 @@
       </div>
 
 
-       <div class="sidebar-section">
+      <!-- MangaDex Section - Visible to all users -->
+      <div class="sidebar-section">
           <a href="#" class="nav-link section-title"><i class="bi bi-speedometer2"></i> MangaDex</a>
            <div class="sub-links">
               <a href="<?= $pathPrefix ?>controller/announcement_controller.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'announcement.php' ? 'active' : '' ?>">Announcements</a>
-              <a href="#" class="nav-link">Report</a>
+              <!-- Report link - Visible to all but only admins can access -->
+              <a href="<?= $pathPrefix ?>controller/report_controller.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'report_controller.php' || basename($_SERVER['PHP_SELF']) == 'report_view.php' ? 'active' : '' ?>">Report</a>
            </div>
       </div>
 
