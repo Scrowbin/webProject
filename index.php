@@ -9,6 +9,7 @@ if (session_status() === PHP_SESSION_NONE) {
 require_once __DIR__ . '/db/pdo.php';
 require_once __DIR__ . '/db/mangaInfoPdo.php'; // Contains getMangaInfo, getTags, getMangaAuthors, getMangaArtists
 require_once __DIR__ . '/db/latestUpdates_model.php'; // Contains getUpdates for latest manga chapters
+require_once __DIR__ . '/db/announcement_model.php'; // Contains announcement functions
 
 // --- Data Fetching for Homepage ---
 
@@ -101,6 +102,10 @@ try {
 
 // For backward compatibility
 $zeikinManga = $allManga[1] ?? null;
+
+// Get latest active announcement for initial load
+// (AJAX will handle updates after page load)
+$activeAnnouncement = getLatestActiveAnnouncement();
 
 $pathPrefix = ''; // Define path prefix for includes relative to root
 

@@ -13,11 +13,30 @@
   <?php /* Corrected CSS paths relative to index.php */ ?>
   <link rel="stylesheet" href="CSS/navbar.css">
   <link rel="stylesheet" href="CSS/home.css" />
+  <?php if (isset($activeAnnouncement) && $activeAnnouncement): ?>
+  <link rel="stylesheet" href="CSS/announcement.css" />
+  <?php endif; ?>
 </head>
 <body>
   <?php include 'includes/navbar.php'; ?>
 
   <?php include 'includes/sidebar.php'; ?>
+
+  <!-- Announcement Overlay -->
+  <div id="announcement-overlay" style="display: none;">
+    <div class="container-xxl position-relative">
+      <div class="announcement-content">
+        <?php if (isset($activeAnnouncement) && $activeAnnouncement): ?>
+        <?= $activeAnnouncement['content'] ?>
+        <?php endif; ?>
+      </div>
+      <button type="button" id="announcement-close" aria-label="Close">
+        <i class="bi bi-x"></i>
+      </button>
+    </div>
+  </div>
+  <script src="JS/announcement.js"></script>
+  <script src="JS/homepage-announcements.js"></script>
 
   <!-- Thông báo xóa manga thành công -->
   <?php if (isset($_GET['status']) && $_GET['status'] === 'manga_deleted'): ?>
