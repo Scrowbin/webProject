@@ -498,39 +498,40 @@
     <!-- Recently Added Section -->
     <section class="section-container staff-picks-section">
       <div class="section-heading">
-        <a href="#" class="text-white text-decoration-none"><h2 class="text-white fw-bold mb-0">Recently Added</h2></a>
-        <a href="#" class="see-all see-all-arrow staff-picks-next"> <!-- Changed class for Swiper navigation -->
+        <a href="controller/recently_added_controller.php" class="text-white text-decoration-none"><h2 class="text-white fw-bold mb-0">Recently Added</h2></a>
+        <a href="controller/recently_added_controller.php" class="see-all see-all-arrow staff-picks-next"> <!-- Changed class for Swiper navigation -->
           <i class="bi bi-arrow-right"></i>
         </a>
-          </div>
+      </div>
 
       <!-- Swiper Container -->
       <div class="swiper staff-picks-swiper">
         <div class="swiper-wrapper">
-          <!-- Recently Added Manga Items -->
           <?php foreach ($recentlyAddedManga as $manga): ?>
+          <!-- Manga Item -->
           <div class="swiper-slide item">
-          <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>">
-            <div class="image-container">
-              <img src="IMG/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?> Cover">
-              <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
-              <div class="overlay">
-                 <div class="description-box">
-                  <?= $manga['MangaDiscription'] ?>
-                </div>
-                <div class="overlay-actions">
-                  <div class="overlay-buttons">
-                    <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                    <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>" class="more-button"><i class="bi bi-arrow-right"></i></a>
+            <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>">
+              <div class="image-container">
+                <img src="IMG/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?> Cover">
+                <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
+                <div class="overlay">
+                  <div class="description-box">
+                    <?= $manga['MangaDiscription'] ?? 'No description available.' ?>
+                  </div>
+                  <div class="overlay-actions">
+                    <div class="overlay-buttons">
+                      <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                      <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </a>
-          <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>" class="item-title-link"><h3 class="item-title"><?= htmlspecialchars($manga['MangaNameOG']) ?></h3></a>
+            </a>
+            <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>" class="item-title-link">
+              <h3 class="item-title"><?= htmlspecialchars($manga['MangaNameOG']) ?></h3>
+            </a>
           </div>
           <?php endforeach; ?>
-
         </div> <!-- End swiper-wrapper -->
 
         <!-- Add Pagination -->
