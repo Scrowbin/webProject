@@ -22,7 +22,7 @@
     }
 
     $isLibrary = true; // Set flag for active menu item in sidebar
-
+    $isRecentlyAdded = false;
     $pathPrefix = '../'; // Define path prefix for includes relative to controller directory
 
     // Check if user is logged in, if not, show login required page

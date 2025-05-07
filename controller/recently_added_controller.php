@@ -6,13 +6,30 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Include necessary base files
+require('../db/account_db.php');
 require_once('../db/latestUpdates_model.php');
 require_once("../db/mangaInfoPdo.php");
 
 // Set flag for sidebar active state
 $isLibrary = false; // Not a library page
 $isRecentlyAdded = true; // Set flag for active menu item in sidebar
+$userID = $_SESSION['userID'] ?? null;
+$username = $_SESSION['username'] ?? null;
+if (!isset($_SESSION['userID'])) {
+    if ($username != null){
+        $userID = getUserID($_SESSION['username']);
+        $_SESSION['userID'] = $userID;        
+    }
+}
 
+$isLoggedIn = false;
+if ($userID !=null || $username!= null){
+    $isLoggedIn =true;
+}
+$role = "user";
+if ($isLoggedIn){
+    $role = get_role($userID);
+}
 // Define path prefix for includes relative to controller directory
 $pathPrefix = '../';
 

@@ -36,7 +36,7 @@
             </div>
         </div>
     <?php
-        if ($isLoggedIn){
+    if ($isLoggedIn||$isRecentlyAdded){
     ?>
         <div class="manga-container">
     <?php

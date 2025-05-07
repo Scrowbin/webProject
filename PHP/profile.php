@@ -80,7 +80,7 @@ $profile_update_message = $profile_update_message ?? null;
                     <div class="row mb-3">
                         <label for="avatar" class="col-sm-3 col-form-label text-end">Avatar:</label>
                         <div class="col-sm-9 d-flex align-items-center">
-                            <img src="../IMG/whiteguy.png" alt="User Avatar" class="avatar me-3" id="currentAvatar"> 
+                            <img src="../IMG/avatar_default.png" alt="User Avatar" class="avatar me-3" id="currentAvatar"> 
                             <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#avatarModal">
                                 Change Avatar
                             </button>
