@@ -16,7 +16,7 @@ $message = $_GET['message'] ?? ($success === '1' ? 'Manga deleted successfully.'
             <h4 class="alert-heading"><?= $success === '1' ? 'Success!' : 'Error!' ?></h4>
             <p><?= htmlspecialchars($message) ?></p>
             <hr>
-            <a href="/admin/manga_list.php" class="btn btn-outline-primary">Back to Manga List</a>
+            <a href="../index.php" class="btn btn-outline-primary">Back to Home</a>
         </div>
     </div>
 </body>

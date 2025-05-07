@@ -330,6 +330,10 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
             </div>
         </div>
     </div>
+    <!-- jhidden form for delete -->
+    <form id="deleteForm" action="handle_delete_manga.php" method="POST" style="display: none;">
+        <input type="hidden" name="MangaID" id="hiddenMangaID">
+    </form>
 
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -345,9 +349,11 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
             toast.show();
 
             document.getElementById("confirmDeleteBtn").onclick = function () {
-                window.location.href = `handle_delete_manga.php?MangaID=${mangaID}`;
+                document.getElementById("hiddenMangaID").value = mangaID;
+                document.getElementById("deleteForm").submit();
             };
         });
     </script>
+
 </body>
 </html>
