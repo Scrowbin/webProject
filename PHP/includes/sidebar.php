@@ -14,7 +14,6 @@
       <a href="<?= $pathPrefix ?>controller/follows_controller.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'follows.php' || (isset($isFollows) && $isFollows) ? 'active' : '' ?>"><i class="bi bi-arrow-repeat"></i> Updates</a>
       <a href="<?= $pathPrefix ?>controller/library_controller.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'library.php' || (isset($isLibrary) && $isLibrary) ? 'active' : '' ?>"><i class="bi bi-collection-fill"></i> Library</a>
       <a href="#" class="nav-link"><i class="bi bi-list-ul"></i> MDLists</a>
-      <a href="#" class="nav-link"><i class="bi bi-clock-history"></i> Reading History</a>
 
       <div class="sidebar-section">
           <a href="<?= $pathPrefix ?>controller/create_controller.php" class="nav-link section-title"><i class="bi bi-book-fill"></i> Titles <i class="bi bi-plus-lg float-end"></i></a>

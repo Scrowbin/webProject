@@ -43,13 +43,12 @@
 
   <?php include 'includes/sidebar.php'; ?>
 
+  <?php if (isset($activeAnnouncement) && $activeAnnouncement && !empty($activeAnnouncement['content'])): ?>
   <!-- Announcement Overlay -->
   <div id="announcement-overlay" style="display: none;">
     <div class="container-xxl position-relative">
       <div class="announcement-content">
-        <?php if (isset($activeAnnouncement) && $activeAnnouncement): ?>
         <?= $activeAnnouncement['content'] ?>
-        <?php endif; ?>
       </div>
       <button type="button" id="announcement-close" aria-label="Close">
         <i class="bi bi-x"></i>
@@ -58,6 +57,7 @@
   </div>
   <script src="JS/announcement.js"></script>
   <script src="JS/homepage-announcements.js"></script>
+  <?php endif; ?>
 
   <!-- Thông báo xóa manga thành công -->
   <?php if (isset($_GET['status']) && $_GET['status'] === 'manga_deleted'): ?>

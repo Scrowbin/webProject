@@ -65,11 +65,7 @@ $user_avatar = $pathPrefix . 'IMG/avatar_default.png'; // Path relative to index
           <nav class="nav flex-column user-modal-nav mb-2">
             <?php // Link to profile controller action ?>
             <a class="nav-link text-white" href="<?= $pathPrefix ?>controller/auth_controller.php?action=profile"><i class="bi bi-person me-2"></i> My Profile</a>
-            <a class="nav-link text-white" href="#"><i class="bi bi-bookmark me-2"></i> My Follows</a>
-            <a class="nav-link text-white" href="#"><i class="bi bi-list-ul me-2"></i> My Lists</a>
-            <a class="nav-link text-white" href="#"><i class="bi bi-people me-2"></i> My Groups</a>
-            <a class="nav-link text-white" href="#"><i class="bi bi-megaphone me-2"></i> My Reports</a>
-            <a class="nav-link text-white" href="#"><i class="bi bi-info-circle me-2"></i> Announcements</a>
+            <a class="nav-link text-white" href="<?= $pathPrefix ?>controller/follows_controller.php"><i class="bi bi-bookmark me-2"></i> My Follows</a>
           </nav>
 
           <hr class="user-modal-divider mt-2 mb-2">
@@ -77,12 +73,7 @@ $user_avatar = $pathPrefix . 'IMG/avatar_default.png'; // Path relative to index
           <div class="d-flex justify-content-between mb-2 user-modal-actions px-2">
             <?php // Link to profile controller action ?>
             <a href="<?= $pathPrefix ?>controller/auth_controller.php?action=profile" class="text-decoration-none text-white d-flex align-items-center"><i class="bi bi-gear me-2"></i> Settings</a>
-            <a href="#" class="text-decoration-none text-white d-flex align-items-center"><i class="bi bi-droplet me-2"></i> Theme</a>
           </div>
-
-          <nav class="nav flex-column user-modal-nav mb-2">
-            <a class="nav-link text-white" href="#">Content Filter</a>
-          </nav>
 
           <hr class="user-modal-divider mt-2 mb-3">
 
@@ -101,9 +92,7 @@ $user_avatar = $pathPrefix . 'IMG/avatar_default.png'; // Path relative to index
           </div>
           <div class="d-flex justify-content-between mb-3 user-modal-actions">
             <a href="#" class="text-decoration-none text-white d-flex align-items-center"><i class="bi bi-gear-fill me-2"></i> Settings</a>
-            <a href="#" class="text-decoration-none text-white d-flex align-items-center"><i class="bi bi-droplet-half me-2"></i> Theme</a>
           </div>
-          <div class="mb-3"><a href="#" class="text-decoration-none text-white">Content Filter</a></div>
           <hr class="user-modal-divider mb-3">
           <div class="d-grid gap-2">
             <?php // Link to login controller action ?>
