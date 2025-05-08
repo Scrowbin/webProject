@@ -1,8 +1,6 @@
 <?php
     require('helper.php');
-    $authors = implode(', ', array_column($authorsRaw, 'AuthorName'));
-    $artists = implode(', ', array_column($artistsRaw, 'ArtistName'));
-    $mangaAuthors = $authors . ($authors && $artists ? ' | ' : '') . $artists;
+    $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw);
 ?>
 
 <!DOCTYPE html>
@@ -144,7 +142,7 @@
     fileInput.addEventListener('change', function () {
       const fileList = document.getElementById('fileList');
       const previewContainer = document.getElementById('pagePreview');
-      previewContainer.innerHTML = ''; // ✅ This clears all previews
+      previewContainer.innerHTML = '';
 
       fileList.innerHTML = ''; // Clear previous
       if (this.files.length > 0) {

@@ -91,7 +91,7 @@ try {
     error_log("Step 3: Image uploaded successfully.");
 
     // Step 4: Insert manga
-    insertManga( $name_original, $name_english, $mangaDesc,$original_language, $coverLink,$demographic, $content_rating, $publication_year, $publication_status);
+    insertManga( $mangaID,$name_original, $name_english, $mangaDesc,$original_language, $coverLink,$demographic, $content_rating, $publication_year, $publication_status);
     error_log("Step 4: Manga inserted.");
 
     // Step 5: Link authors and artists
