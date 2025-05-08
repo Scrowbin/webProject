@@ -90,7 +90,7 @@
           <option value="">Scanlation Language *</option>
           <option value="en">English</option>
           <option value="jp">Japanese</option>
-          <option value="fr">Vietnamese</option>
+          <option value="vn">Vietnamese</option>
         </select>
       </div>
     </div>

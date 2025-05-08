@@ -1,4 +1,5 @@
 <?php
+require("helper.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -226,7 +227,7 @@
                 <div class="latest-details">
                   <div class="latest-title"><?= htmlspecialchars($manga['MangaNameOG']) ?></div>
                   <div class="latest-chapter">
-                    <img src="https://mangadex.org/img/flags/jp.svg" class="flag-icon" alt="JP">
+                    <?php echo getFlagHome($manga['Chapter']['Language'])?>
                     <?php if (isset($manga['Chapter'])): ?>
                       Ch. <?= htmlspecialchars($manga['Chapter']['ChapterNumber']) ?>
                       <?php if (!empty($manga['Chapter']['ChapterName'])): ?>
@@ -313,8 +314,8 @@
                 <div class="latest-details">
                   <div class="latest-title"><?= htmlspecialchars($manga['MangaNameOG']) ?></div>
                   <div class="latest-chapter">
-                    <img src="https://mangadex.org/img/flags/jp.svg" class="flag-icon" alt="JP">
-                    <?php if (isset($manga['Chapter'])): ?>
+                  <?php echo getFlagHome($manga['Chapter']['Language'])?>
+                  <?php if (isset($manga['Chapter'])): ?>
                       Ch. <?= htmlspecialchars($manga['Chapter']['ChapterNumber']) ?>
                       <?php if (!empty($manga['Chapter']['ChapterName'])): ?>
                         - <?= htmlspecialchars($manga['Chapter']['ChapterName']) ?>
@@ -397,8 +398,8 @@
                 <div class="latest-details">
                   <div class="latest-title"><?= htmlspecialchars($manga['MangaNameOG']) ?></div>
                   <div class="latest-chapter">
-                    <img src="https://mangadex.org/img/flags/jp.svg" class="flag-icon" alt="JP">
-                    <?php if (isset($manga['Chapter'])): ?>
+                  <?php echo getFlagHome($manga['Chapter']['Language'])?>
+                  <?php if (isset($manga['Chapter'])): ?>
                       Ch. <?= htmlspecialchars($manga['Chapter']['ChapterNumber']) ?>
                       <?php if (!empty($manga['Chapter']['ChapterName'])): ?>
                         - <?= htmlspecialchars($manga['Chapter']['ChapterName']) ?>
@@ -481,7 +482,8 @@
                 <div class="latest-details">
                   <div class="latest-title"><?= htmlspecialchars($manga['MangaNameOG']) ?></div>
                   <div class="latest-chapter">
-                    <img src="https://mangadex.org/img/flags/jp.svg" class="flag-icon" alt="JP">
+                    <?php echo getFlagHome($manga['Chapter']['Language'])?>
+
                     <?php if (isset($manga['Chapter'])): ?>
                       Ch. <?= htmlspecialchars($manga['Chapter']['ChapterNumber']) ?>
                       <?php if (!empty($manga['Chapter']['ChapterName'])): ?>

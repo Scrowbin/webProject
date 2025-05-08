@@ -7,11 +7,11 @@ function chapterExist($mangaID, $number){
     return !empty($result);
 }
 
-function insertChapter($mangaID, $volume, $scangroupName, $uploaderName, $chapterName, $chapterNum) {
-    $sql = "INSERT INTO chapter (MangaID, Volume, ScangroupName, UploaderName, ChapterName, ChapterNumber)
-            VALUES (?, ?, ?, ?, ?, ?)";
+function insertChapter($mangaID, $volume, $scangroupName, $uploaderName, $chapterName, $chapterNum,$language) {
+    $sql = "INSERT INTO chapter (MangaID, Volume, ScangroupName, UploaderName, ChapterName, ChapterNumber, Language)
+            VALUES (?, ?, ?, ?, ?, ?,?)";
     
-    return pdo_execute_return_id($sql,$mangaID, $volume, $scangroupName, $uploaderName, $chapterName, $chapterNum);
+    return pdo_execute_return_id($sql,$mangaID, $volume, $scangroupName, $uploaderName, $chapterName, $chapterNum,$language);
 }
 
 function insertPage($chapterID, $filePath, $order) {

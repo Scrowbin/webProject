@@ -253,8 +253,8 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
                         <div class="info-left">
                             <div>
                                 <img class="icon" src="../IMG/eye.svg">
-
-                                <img class="flag" src="https://mangadex.org/img/flags/gb.svg">
+                            
+                                <?php echo getFlag($chapters["Language"]);?>
 
                                 <span class="chapter-title">
                                     <strong>Ch. <?=$chapterNum?> – <?=$chapters['ChapterName']?></strong>

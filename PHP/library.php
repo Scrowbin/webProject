@@ -46,6 +46,7 @@
             $CoverLink = $m["CoverLink"];
             $pubStatus = $m["PublicationStatus"];
             $mangaDesc = $m["MangaDiscription"];
+            $mangaLanguage = $m["OriginalLanguage"];
     ?>
             <div class="manga-card">
                 <div class="manga-cover">
@@ -71,7 +72,9 @@
                     ?>
                     <div class="manga-header">
                         <div class="manga-title">
-                            <img class="flag" src="https://mangadex.org/img/flags/jp.svg">
+                            <?php echo getFlag($mangaLanguage);?>
+
+                            <!-- <img class="flag" src="https://mangadex.org/img/flags/jp.svg"> -->
                             <a href="../controller/mangaInfo_controller.php?MangaID=<?=$mangaID?>" class=""><strong><?=$mangaName?></strong></a>
                         </div>
                     </div>

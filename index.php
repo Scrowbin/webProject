@@ -102,7 +102,8 @@ try {
                 'ChapterName' => $chapter['ChapterName'],
                 'UploadTime' => $chapter['UploadTime'],
                 'ScangroupName' => $chapter['ScangroupName'],
-                'NumOfComments' => $chapter['NumOfComments'] ?? 0
+                'NumOfComments' => $chapter['NumOfComments'] ?? 0,
+                'Language' => $chapter['Language'] ?? "English",
             ]
         ];
     }

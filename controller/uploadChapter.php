@@ -20,6 +20,7 @@
         $chapterScangroup = $_POST['scangroup-name'] ?? "Anonymous"; 
         $chapterNum = $_POST['chapter-number'] ?? 0;
         $chapterName = $_POST['chapter-name'] ?? '';
+        $language = $_POST['language'];
 
         if (empty($_FILES['pages']['name']) || count(array_filter($_FILES['pages']['name'])) === 0) {
             $msg = "No files were uploaded.";
@@ -35,7 +36,7 @@
         }
 
         // Save chapter
-        $chapterID = insertChapter($mangaID, $volume, $chapterScangroup, $username, $chapterName, $chapterNum);
+        $chapterID = insertChapter($mangaID, $volume, $chapterScangroup, $username, $chapterName, $chapterNum,$language);
         makeComment($chapterID);
         // Upload directory
         $uploadDir = "../IMG/$mangaID/$chapterNum/";
