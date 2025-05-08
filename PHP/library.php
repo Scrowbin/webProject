@@ -78,20 +78,6 @@
                             <a href="../controller/mangaInfo_controller.php?MangaID=<?=$mangaID?>" class=""><strong><?=$mangaName?></strong></a>
                         </div>
                     </div>
-                    <div class="manga-stats">
-                        <div class="stat-item">
-                            <i class="bi bi-star-fill"></i> 7.94
-                        </div>
-                        <div class="stat-item">
-                            <i class="bi bi-bookmark-fill"></i> 35k
-                        </div>
-                        <div class="stat-item">
-                            <i class="bi bi-eye-fill"></i> N/A
-                        </div>
-                        <div class="stat-item">
-                            <i class="bi bi-chat-fill"></i> 36
-                        </div>
-                    </div>
                     <div class="badge-bar">
                         <?php
                             foreach($m['tags'] as $tag){

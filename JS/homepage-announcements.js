@@ -42,16 +42,19 @@ document.addEventListener('DOMContentLoaded', function() {
             // Update the announcement content
             const contentContainer = announcementOverlay.querySelector('.announcement-content');
             if (contentContainer) {
-              contentContainer.innerHTML = announcement.content;
+              // Only show if there's actual content
+              if (announcement.content && announcement.content.trim() !== '') {
+                contentContainer.innerHTML = announcement.content;
+
+                // Show the announcement
+                announcementOverlay.style.display = 'block';
+
+                // Auto-hide after 30 seconds
+                setTimeout(function() {
+                  announcementOverlay.style.display = 'none';
+                }, 30000);
+              }
             }
-
-            // Show the announcement
-            announcementOverlay.style.display = 'block';
-
-            // Auto-hide after 30 seconds
-            setTimeout(function() {
-              announcementOverlay.style.display = 'none';
-            }, 30000);
           }
         }
       })
