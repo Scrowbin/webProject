@@ -15,7 +15,7 @@
 
 .announcement-content {
   white-space: nowrap;
-  animation: marquee 6s linear infinite; /* Tốc độ rất nhanh - 10 giây cho một vòng lặp */
+  animation: marquee 10s linear infinite; /* Tốc độ rất nhanh - 10 giây cho một vòng lặp */
   padding-right: 50px;
   display: inline-block;
   position: relative;
@@ -24,7 +24,7 @@
 
 @keyframes marquee {
   0% { transform: translateX(0); } /* Bắt đầu từ vị trí ban đầu (đã được đặt ở lề phải) */
-  100% { transform: translateX(-1000%); } /* Di chuyển sang trái một khoảng bằng 2 lần chiều rộng để đảm bảo chạy hết màn hình */
+  100% { transform: translateX(-800%); } /* Di chuyển sang trái một khoảng bằng 2 lần chiều rộng để đảm bảo chạy hết màn hình */
 }
 
 .announcement-content img {

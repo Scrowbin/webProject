@@ -16,6 +16,27 @@
   <?php if (isset($activeAnnouncement) && $activeAnnouncement): ?>
   <link rel="stylesheet" href="CSS/announcement.css" />
   <?php endif; ?>
+  <style>
+    .rating-badge {
+      background-color: #ffb400;
+      color: #000;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      margin-right: 10px;
+    }
+    .rating-badge i {
+      margin-right: 4px;
+    }
+    .rating-count {
+      font-size: 0.8rem;
+      color: #ddd;
+      margin-left: 5px;
+    }
+  </style>
 </head>
 <body>
   <?php include 'includes/navbar.php'; ?>
@@ -67,210 +88,96 @@
   <section class="section-container popular-new-titles-section full-width-section">
     <!-- Background container for sliding backgrounds -->
     <div class="featured-backgrounds-container">
-      <!-- Background for Slide 1 -->
-      <div class="featured-background active" data-slide="0" style="background-image: url('IMG/<?= $allManga[1]['MangaID'] ?>/<?= htmlspecialchars($allManga[1]['CoverLink']) ?>');"></div>
-      <!-- Background for Slide 2 -->
-      <div class="featured-background" data-slide="1" style="background-image: url('IMG/<?= $allManga[2]['MangaID'] ?>/<?= htmlspecialchars($allManga[2]['CoverLink']) ?>');"></div>
-      <!-- Background for Slide 3 -->
-      <div class="featured-background" data-slide="2" style="background-image: url('IMG/<?= $allManga[3]['MangaID'] ?>/<?= htmlspecialchars($allManga[3]['CoverLink']) ?>');"></div>
-      <!-- Background for Slide 4 -->
-      <div class="featured-background" data-slide="3" style="background-image: url('https://placehold.co/1200x450/555/ccc?text=Slide+4+BG');"></div>
+      <?php
+      // Get the manga IDs in order
+      $mangaIds = array_keys($allManga);
+
+      // Create background slides for each manga
+      foreach ($mangaIds as $index => $mangaId):
+        $manga = $allManga[$mangaId];
+        $isActive = ($index === 0) ? 'active' : '';
+        $bgImage = isset($manga['CoverLink']) ?
+          "url('IMG/{$mangaId}/" . htmlspecialchars($manga['CoverLink']) . "')" :
+          "url('https://placehold.co/1200x450/555/ccc?text=Slide+" . ($index + 1) . "+BG')";
+      ?>
+      <!-- Background for Slide <?= $index + 1 ?> -->
+      <div class="featured-background <?= $isActive ?>" data-slide="<?= $index ?>" style="background-image: <?= $bgImage ?>;"></div>
+      <?php endforeach; ?>
     </div>
     <!-- Add inner container for content alignment -->
     <div class="container-xxl">
       <div class="section-heading">
-        <h2 class="text-white fw-bold">Popular New Titles</h2>
+        <h2 class="text-white fw-bold">Top Rated Manga</h2>
       </div>
 
       <!-- Featured Manga Carousel (Stays within the inner container) -->
       <div id="featuredMangaCarousel" class="carousel slide carousel-fade">
         <div class="carousel-inner">
-          <!-- Slide 1 (Zeikin de Katta Hon - MangaID 1) -->
-          <div class="carousel-item active">
-            <?php if (isset($allManga[1]) && $allManga[1]): ?>
-            <div class="featured-manga" data-bg-src="IMG/<?= $allManga[1]['MangaID'] ?>/<?= htmlspecialchars($allManga[1]['CoverLink']) ?>" onclick="window.location='controller/mangaInfo_Controller.php?MangaID=<?= $allManga[1]['MangaID'] ?>'">
-              <div class="background-overlay"></div>
-              <div class="featured-manga-content row g-0">
-                <div class="col-md-3 featured-cover-col">
-                  <img src="IMG/<?= $allManga[1]['MangaID'] ?>/<?= htmlspecialchars($allManga[1]['CoverLink']) ?>" alt="<?= htmlspecialchars($allManga[1]['MangaNameOG']) ?>" class="img-fluid rounded featured-cover">
-                  <img class="flag flag-featured" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
-                </div>
-                <div class="col-md-9 featured-details">
-                  <h3 class="title"><?= htmlspecialchars($allManga[1]['MangaNameOG']) ?></h3>
-                  <div class="genres mb-3">
-                    <?php if (isset($allManga[1]['tags'])): ?>
-                      <?php foreach ($allManga[1]['tags'] as $tag): ?>
-                        <span class="genre-tag"><?= strtoupper(htmlspecialchars($tag)) ?></span>
-                      <?php endforeach; ?>
-                    <?php endif; ?>
-                  </div>
-                  <div class="description-box mb-3">
-                    <?= $allManga[1]['MangaDiscription'] ?>
-                  </div>
-                  <div class="featured-bottom-row">
-                    <div class="author">
-                      <?php
-                      $authorNames = [];
-                      if (isset($allManga[1]['authors'])) {
-                          foreach ($allManga[1]['authors'] as $author) {
-                              $authorNames[] = htmlspecialchars($author['AuthorName']);
-                          }
-                      }
-                      echo implode(', ', $authorNames);
-                      ?>
-                    </div>
-                    <div class="featured-right-controls">
-                      <div class="ranking-indicator">NO. 1</div>
-                      <div class="featured-navigation-arrows">
-                        <button class="carousel-control-prev featured-carousel-control" type="button" data-bs-target="#featuredMangaCarousel" data-bs-slide="prev">
-                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                          <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next featured-carousel-control" type="button" data-bs-target="#featuredMangaCarousel" data-bs-slide="next">
-                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                          <span class="visually-hidden">Next</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <?php endif; ?>
-          </div>
+          <?php
+          // Get the manga IDs in order
+          $mangaIds = array_keys($allManga);
 
-          <!-- Slide 2 (Kaoru Hana wa Rin to Saku - MangaID 2) -->
-          <div class="carousel-item">
-            <?php if (isset($allManga[2]) && $allManga[2]): ?>
-            <div class="featured-manga" data-bg-src="IMG/<?= $allManga[2]['MangaID'] ?>/<?= htmlspecialchars($allManga[2]['CoverLink']) ?>" onclick="window.location='controller/mangaInfo_Controller.php?MangaID=<?= $allManga[2]['MangaID'] ?>'">
-              <div class="background-overlay"></div>
-              <div class="featured-manga-content row g-0">
-                <div class="col-md-3 featured-cover-col">
-                  <img src="IMG/<?= $allManga[2]['MangaID'] ?>/<?= htmlspecialchars($allManga[2]['CoverLink']) ?>" alt="<?= htmlspecialchars($allManga[2]['MangaNameOG']) ?>" class="img-fluid rounded featured-cover">
-                  <img class="flag flag-featured" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
-                </div>
-                <div class="col-md-9 featured-details">
-                  <h3 class="title"><?= htmlspecialchars($allManga[2]['MangaNameOG']) ?></h3>
-                  <div class="genres mb-3">
-                    <?php if (isset($allManga[2]['tags'])): ?>
-                      <?php foreach ($allManga[2]['tags'] as $tag): ?>
-                        <span class="genre-tag"><?= strtoupper(htmlspecialchars($tag)) ?></span>
-                      <?php endforeach; ?>
-                    <?php endif; ?>
-                  </div>
-                  <div class="description-box mb-3">
-                    <?= $allManga[2]['MangaDiscription'] ?>
-                  </div>
-                  <div class="featured-bottom-row">
-                    <div class="author">
-                      <?php
-                      $authorNames = [];
-                      if (isset($allManga[2]['authors'])) {
-                          foreach ($allManga[2]['authors'] as $author) {
-                              $authorNames[] = htmlspecialchars($author['AuthorName']);
-                          }
-                      }
-                      echo implode(', ', $authorNames);
-                      ?>
-                    </div>
-                    <div class="featured-right-controls">
-                      <div class="ranking-indicator">NO. 2</div>
-                      <div class="featured-navigation-arrows">
-                        <button class="carousel-control-prev featured-carousel-control" type="button" data-bs-target="#featuredMangaCarousel" data-bs-slide="prev">
-                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                          <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next featured-carousel-control" type="button" data-bs-target="#featuredMangaCarousel" data-bs-slide="next">
-                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                          <span class="visually-hidden">Next</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <?php endif; ?>
-          </div>
-          <!-- Slide 3 (Sousou no Frieren - MangaID 3) -->
-          <div class="carousel-item">
-            <?php if (isset($allManga[3]) && $allManga[3]): ?>
-            <div class="featured-manga" data-bg-src="IMG/<?= $allManga[3]['MangaID'] ?>/<?= htmlspecialchars($allManga[3]['CoverLink']) ?>" onclick="window.location='controller/mangaInfo_Controller.php?MangaID=<?= $allManga[3]['MangaID'] ?>'">
-              <div class="background-overlay"></div>
-              <div class="featured-manga-content row g-0">
-                <div class="col-md-3 featured-cover-col">
-                  <img src="IMG/<?= $allManga[3]['MangaID'] ?>/<?= htmlspecialchars($allManga[3]['CoverLink']) ?>" alt="<?= htmlspecialchars($allManga[3]['MangaNameOG']) ?>" class="img-fluid rounded featured-cover">
-                  <img class="flag flag-featured" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
-                </div>
-                <div class="col-md-9 featured-details">
-                  <h3 class="title"><?= htmlspecialchars($allManga[3]['MangaNameOG']) ?></h3>
-                  <div class="genres mb-3">
-                    <?php if (isset($allManga[3]['tags'])): ?>
-                      <?php foreach ($allManga[3]['tags'] as $tag): ?>
-                        <span class="genre-tag"><?= strtoupper(htmlspecialchars($tag)) ?></span>
-                      <?php endforeach; ?>
-                    <?php endif; ?>
-                  </div>
-                  <div class="description-box mb-3">
-                    <?= $allManga[3]['MangaDiscription'] ?>
-                  </div>
-                  <div class="featured-bottom-row">
-                    <div class="author">
-                      <?php
-                      $authorNames = [];
-                      if (isset($allManga[3]['authors'])) {
-                          foreach ($allManga[3]['authors'] as $author) {
-                              $authorNames[] = htmlspecialchars($author['AuthorName']);
-                          }
-                      }
-                      echo implode(', ', $authorNames);
-                      ?>
-                    </div>
-                    <div class="featured-right-controls">
-                      <div class="ranking-indicator">NO. 3</div>
-                      <div class="featured-navigation-arrows">
-                        <button class="carousel-control-prev featured-carousel-control" type="button" data-bs-target="#featuredMangaCarousel" data-bs-slide="prev">
-                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                          <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next featured-carousel-control" type="button" data-bs-target="#featuredMangaCarousel" data-bs-slide="next">
-                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                          <span class="visually-hidden">Next</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <?php endif; ?>
-          </div>
+          // Create carousel items for each manga
+          foreach ($mangaIds as $index => $mangaId):
+            $manga = $allManga[$mangaId];
+            $isActive = ($index === 0) ? 'active' : '';
 
-          <!-- Slide 4 (Update content/images) -->
-          <div class="carousel-item">
-             <?php /* Using placeholder, path would be IMG/ if it existed */ ?>
-            <div class="featured-manga" data-bg-src="https://placehold.co/1200x450/555/ccc?text=Slide+4+BG" onclick="window.location='controller/mangaInfo_Controller.php?MangaID=4'">
+            // Get cover image
+            $coverImage = isset($manga['CoverLink']) && !empty($manga['CoverLink'])
+              ? "IMG/{$mangaId}/" . htmlspecialchars($manga['CoverLink'])
+              : "https://placehold.co/250x350/1e1e1e/cccccc?text=Featured+" . ($index + 1);
+
+            // Get manga title
+            $mangaTitle = htmlspecialchars($manga['MangaNameOG'] ?? "Manga " . ($index + 1));
+
+            // Get manga description
+            $mangaDesc = $manga['MangaDiscription'] ?? "No description available.";
+          ?>
+          <!-- Slide <?= $index + 1 ?> -->
+          <div class="carousel-item <?= $isActive ?>">
+            <div class="featured-manga" data-bg-src="<?= $coverImage ?>" onclick="window.location='controller/mangaInfo_Controller.php?MangaID=<?= $mangaId ?>'">
               <div class="background-overlay"></div>
               <div class="featured-manga-content row g-0">
                 <div class="col-md-3 featured-cover-col">
-                   <?php /* Using placeholder, path would be IMG/ if it existed */ ?>
-                  <img src="https://placehold.co/250x350/1e1e1e/cccccc?text=Featured+4" alt="Featured Manga Cover 4" class="img-fluid rounded featured-cover">
-                  <img class="flag flag-featured" src="https://mangadex.org/img/flags/gb.svg" alt="GB">
+                  <img src="<?= $coverImage ?>" alt="<?= $mangaTitle ?>" class="img-fluid rounded featured-cover">
+                  <img class="flag flag-featured" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
                 </div>
                 <div class="col-md-9 featured-details">
-                  <h3 class="title">Custom Title for Slide 4</h3>
+                  <h3 class="title"><?= $mangaTitle ?></h3>
+
+                  <?php if (isset($manga['AvgRating'])): ?>
+                  <div class="rating mb-2">
+                    <span class="rating-badge">
+                      <i class="bi bi-star-fill"></i> <?= $manga['AvgRating'] ?>
+                      <span class="rating-count">(<?= $manga['RatingCount'] ?> ratings)</span>
+                    </span>
+                  </div>
+                  <?php endif; ?>
+
                   <div class="genres mb-3">
-                    <span class="genre-tag">COMEDY</span>
-                    <span class="genre-tag">DRAMA</span>
-                    <span class="genre-tag">ROMANCE</span>
+                    <?php if (isset($manga['tags'])): ?>
+                      <?php foreach ($manga['tags'] as $tag): ?>
+                        <span class="genre-tag"><?= strtoupper(htmlspecialchars($tag)) ?></span>
+                      <?php endforeach; ?>
+                    <?php endif; ?>
                   </div>
                   <div class="description-box mb-3">
-                    Description for slide four goes here. Adjust content as needed for demonstration purposes.
+                    <?= $mangaDesc ?>
                   </div>
                   <div class="featured-bottom-row">
-                    <div class="author">Another Author</div>
+                    <div class="author">
+                      <?php
+                      $authorNames = [];
+                      if (isset($manga['authors'])) {
+                          foreach ($manga['authors'] as $author) {
+                              $authorNames[] = htmlspecialchars($author['AuthorName']);
+                          }
+                      }
+                      echo implode(', ', $authorNames);
+                      ?>
+                    </div>
                     <div class="featured-right-controls">
-                      <div class="ranking-indicator">NO. 4</div>
+                      <div class="ranking-indicator">NO. <?= $index + 1 ?></div>
                       <div class="featured-navigation-arrows">
                         <button class="carousel-control-prev featured-carousel-control" type="button" data-bs-target="#featuredMangaCarousel" data-bs-slide="prev">
                           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -287,7 +194,7 @@
               </div>
             </div>
           </div>
-          <!-- Add more slides as needed -->
+          <?php endforeach; ?>
         </div>
       </div>
     </div> <!-- End inner container -->
@@ -314,16 +221,16 @@
             if ($count >= 6) break; // Limit to 6 items in first column
             $count++;
           ?>
-              <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>" class="latest-item">
+              <a href="controller/mangaRead_controller.php?chapterID=<?= $manga['Chapter']['ChapterID'] ?>" class="latest-item">
                 <img src="IMG/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?> Cover" class="latest-cover">
                 <div class="latest-details">
                   <div class="latest-title"><?= htmlspecialchars($manga['MangaNameOG']) ?></div>
                   <div class="latest-chapter">
                     <img src="https://mangadex.org/img/flags/jp.svg" class="flag-icon" alt="JP">
-                    <?php if (isset($manga['LatestChapter'])): ?>
-                      Ch. <?= htmlspecialchars($manga['LatestChapter']['ChapterNumber']) ?>
-                      <?php if (!empty($manga['LatestChapter']['ChapterName'])): ?>
-                        - <?= htmlspecialchars($manga['LatestChapter']['ChapterName']) ?>
+                    <?php if (isset($manga['Chapter'])): ?>
+                      Ch. <?= htmlspecialchars($manga['Chapter']['ChapterNumber']) ?>
+                      <?php if (!empty($manga['Chapter']['ChapterName'])): ?>
+                        - <?= htmlspecialchars($manga['Chapter']['ChapterName']) ?>
                       <?php endif; ?>
                     <?php else: ?>
                       Latest Ch. ?
@@ -331,8 +238,8 @@
                   </div>
                   <div class="latest-group"><i class="bi bi-people-fill"></i>
                     <?php
-                    if (isset($manga['LatestChapter']['ScangroupName']) && !empty($manga['LatestChapter']['ScangroupName'])) {
-                        echo htmlspecialchars($manga['LatestChapter']['ScangroupName']);
+                    if (isset($manga['Chapter']['ScangroupName']) && !empty($manga['Chapter']['ScangroupName'])) {
+                        echo htmlspecialchars($manga['Chapter']['ScangroupName']);
                     } else {
                         $authorNames = [];
                         $id = $manga['MangaID'];
@@ -352,8 +259,8 @@
                   <span class="latest-comments"><i class="bi bi-chat-square"></i>
                     <?php
                     // Hiển thị số comment nếu có
-                    if (isset($manga['LatestChapter']['NumOfComments'])) {
-                        echo $manga['LatestChapter']['NumOfComments'];
+                    if (isset($manga['Chapter']['NumOfComments'])) {
+                        echo $manga['Chapter']['NumOfComments'];
                     } else {
                         echo rand(0, 10); // Fallback
                     }
@@ -362,8 +269,8 @@
                   <span class="latest-time">
                     <?php
                     // Hiển thị thời gian upload
-                    if (isset($manga['LatestChapter']['UploadTime'])) {
-                        $uploadTime = strtotime($manga['LatestChapter']['UploadTime']);
+                    if (isset($manga['Chapter']['UploadTime'])) {
+                        $uploadTime = strtotime($manga['Chapter']['UploadTime']);
                         $currentTime = time();
                         $timeDiff = $currentTime - $uploadTime;
 
@@ -401,16 +308,16 @@
             if ($count >= 6) break; // Limit to 6 items in second column
             $count++;
           ?>
-              <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>" class="latest-item">
+              <a href="controller/mangaRead_controller.php?chapterID=<?= $manga['Chapter']['ChapterID'] ?>" class="latest-item">
                 <img src="IMG/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?> Cover" class="latest-cover">
                 <div class="latest-details">
                   <div class="latest-title"><?= htmlspecialchars($manga['MangaNameOG']) ?></div>
                   <div class="latest-chapter">
                     <img src="https://mangadex.org/img/flags/jp.svg" class="flag-icon" alt="JP">
-                    <?php if (isset($manga['LatestChapter'])): ?>
-                      Ch. <?= htmlspecialchars($manga['LatestChapter']['ChapterNumber']) ?>
-                      <?php if (!empty($manga['LatestChapter']['ChapterName'])): ?>
-                        - <?= htmlspecialchars($manga['LatestChapter']['ChapterName']) ?>
+                    <?php if (isset($manga['Chapter'])): ?>
+                      Ch. <?= htmlspecialchars($manga['Chapter']['ChapterNumber']) ?>
+                      <?php if (!empty($manga['Chapter']['ChapterName'])): ?>
+                        - <?= htmlspecialchars($manga['Chapter']['ChapterName']) ?>
                       <?php endif; ?>
                     <?php else: ?>
                       Latest Ch. ?
@@ -418,8 +325,8 @@
                   </div>
                   <div class="latest-group"><i class="bi bi-people-fill"></i>
                     <?php
-                    if (isset($manga['LatestChapter']['ScangroupName']) && !empty($manga['LatestChapter']['ScangroupName'])) {
-                        echo htmlspecialchars($manga['LatestChapter']['ScangroupName']);
+                    if (isset($manga['Chapter']['ScangroupName']) && !empty($manga['Chapter']['ScangroupName'])) {
+                        echo htmlspecialchars($manga['Chapter']['ScangroupName']);
                     } else {
                         $authorNames = [];
                         $id = $manga['MangaID'];
@@ -439,8 +346,8 @@
                   <span class="latest-comments"><i class="bi bi-chat-square"></i>
                     <?php
                     // Hiển thị số comment nếu có
-                    if (isset($manga['LatestChapter']['NumOfComments'])) {
-                        echo $manga['LatestChapter']['NumOfComments'];
+                    if (isset($manga['Chapter']['NumOfComments'])) {
+                        echo $manga['Chapter']['NumOfComments'];
                     } else {
                         echo rand(0, 10); // Fallback
                     }
@@ -449,8 +356,8 @@
                   <span class="latest-time">
                     <?php
                     // Hiển thị thời gian upload
-                    if (isset($manga['LatestChapter']['UploadTime'])) {
-                        $uploadTime = strtotime($manga['LatestChapter']['UploadTime']);
+                    if (isset($manga['Chapter']['UploadTime'])) {
+                        $uploadTime = strtotime($manga['Chapter']['UploadTime']);
                         $currentTime = time();
                         $timeDiff = $currentTime - $uploadTime;
 
@@ -476,21 +383,173 @@
           <?php endforeach; ?>
         </div> <!-- End Column 2 -->
 
-        <!-- Column 3 (Hidden by default) -->
+        <!-- Column 3 -->
         <div class="latest-updates-column">
           <?php
-          // Có thể thêm code để hiển thị thêm manga nếu cần
-          // Ví dụ: lấy thêm 6 manga tiếp theo từ $latestUpdates
+          $count = 0;
+          foreach ($latestUpdates as $index => $manga):
+            if ($index < 12) continue; // Skip first 12 items (shown in first and second columns)
+            if ($count >= 6) break; // Limit to 6 items in third column
+            $count++;
           ?>
+              <a href="controller/mangaRead_controller.php?chapterID=<?= $manga['Chapter']['ChapterID'] ?>" class="latest-item">
+                <img src="IMG/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?> Cover" class="latest-cover">
+                <div class="latest-details">
+                  <div class="latest-title"><?= htmlspecialchars($manga['MangaNameOG']) ?></div>
+                  <div class="latest-chapter">
+                    <img src="https://mangadex.org/img/flags/jp.svg" class="flag-icon" alt="JP">
+                    <?php if (isset($manga['Chapter'])): ?>
+                      Ch. <?= htmlspecialchars($manga['Chapter']['ChapterNumber']) ?>
+                      <?php if (!empty($manga['Chapter']['ChapterName'])): ?>
+                        - <?= htmlspecialchars($manga['Chapter']['ChapterName']) ?>
+                      <?php endif; ?>
+                    <?php else: ?>
+                      Latest Ch. ?
+                    <?php endif; ?>
+                  </div>
+                  <div class="latest-group"><i class="bi bi-people-fill"></i>
+                    <?php
+                    if (isset($manga['Chapter']['ScangroupName']) && !empty($manga['Chapter']['ScangroupName'])) {
+                        echo htmlspecialchars($manga['Chapter']['ScangroupName']);
+                    } else {
+                        $authorNames = [];
+                        $id = $manga['MangaID'];
+                        if (isset($allManga[$id]['authors'])) {
+                            foreach ($allManga[$id]['authors'] as $author) {
+                                $authorNames[] = htmlspecialchars($author['AuthorName']);
+                            }
+                            echo implode(', ', $authorNames);
+                        } else {
+                            echo 'Unknown Author';
+                        }
+                    }
+                    ?>
+                  </div>
+                </div>
+                <div class="latest-meta">
+                  <span class="latest-comments"><i class="bi bi-chat-square"></i>
+                    <?php
+                    // Hiển thị số comment nếu có
+                    if (isset($manga['Chapter']['NumOfComments'])) {
+                        echo $manga['Chapter']['NumOfComments'];
+                    } else {
+                        echo rand(0, 10); // Fallback
+                    }
+                    ?>
+                  </span>
+                  <span class="latest-time">
+                    <?php
+                    // Hiển thị thời gian upload
+                    if (isset($manga['Chapter']['UploadTime'])) {
+                        $uploadTime = strtotime($manga['Chapter']['UploadTime']);
+                        $currentTime = time();
+                        $timeDiff = $currentTime - $uploadTime;
+
+                        if ($timeDiff < 60) {
+                            echo "just now";
+                        } elseif ($timeDiff < 3600) {
+                            $minutes = floor($timeDiff / 60);
+                            echo $minutes . " minute" . ($minutes > 1 ? "s" : "") . " ago";
+                        } elseif ($timeDiff < 86400) {
+                            $hours = floor($timeDiff / 3600);
+                            echo $hours . " hour" . ($hours > 1 ? "s" : "") . " ago";
+                        } else {
+                            $days = floor($timeDiff / 86400);
+                            echo $days . " day" . ($days > 1 ? "s" : "") . " ago";
+                        }
+                    } else {
+                        echo rand(5, 60) . " minutes ago"; // Fallback
+                    }
+                    ?>
+                  </span>
+                </div>
+              </a>
+          <?php endforeach; ?>
         </div> <!-- End Column 3 -->
 
-        <!-- Column 4 (Hidden by default) -->
+        <!-- Column 4 -->
         <div class="latest-updates-column">
           <?php
-          // Có thể thêm code để hiển thị thêm manga nếu cần
-          // Ví dụ: lấy thêm 6 manga tiếp theo từ $latestUpdates
+          $count = 0;
+          foreach ($latestUpdates as $index => $manga):
+            if ($index < 18) continue; // Skip first 18 items (shown in first, second, and third columns)
+            if ($count >= 6) break; // Limit to 6 items in fourth column
+            $count++;
           ?>
-        </div> <!-- End Column 4 -->
+              <a href="controller/mangaRead_controller.php?chapterID=<?= $manga['Chapter']['ChapterID'] ?>" class="latest-item">
+                <img src="IMG/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?> Cover" class="latest-cover">
+                <div class="latest-details">
+                  <div class="latest-title"><?= htmlspecialchars($manga['MangaNameOG']) ?></div>
+                  <div class="latest-chapter">
+                    <img src="https://mangadex.org/img/flags/jp.svg" class="flag-icon" alt="JP">
+                    <?php if (isset($manga['Chapter'])): ?>
+                      Ch. <?= htmlspecialchars($manga['Chapter']['ChapterNumber']) ?>
+                      <?php if (!empty($manga['Chapter']['ChapterName'])): ?>
+                        - <?= htmlspecialchars($manga['Chapter']['ChapterName']) ?>
+                      <?php endif; ?>
+                    <?php else: ?>
+                      Latest Ch. ?
+                    <?php endif; ?>
+                  </div>
+                  <div class="latest-group"><i class="bi bi-people-fill"></i>
+                    <?php
+                    if (isset($manga['Chapter']['ScangroupName']) && !empty($manga['Chapter']['ScangroupName'])) {
+                        echo htmlspecialchars($manga['Chapter']['ScangroupName']);
+                    } else {
+                        $authorNames = [];
+                        $id = $manga['MangaID'];
+                        if (isset($allManga[$id]['authors'])) {
+                            foreach ($allManga[$id]['authors'] as $author) {
+                                $authorNames[] = htmlspecialchars($author['AuthorName']);
+                            }
+                            echo implode(', ', $authorNames);
+                        } else {
+                            echo 'Unknown Author';
+                        }
+                    }
+                    ?>
+                  </div>
+                </div>
+                <div class="latest-meta">
+                  <span class="latest-comments"><i class="bi bi-chat-square"></i>
+                    <?php
+                    // Hiển thị số comment nếu có
+                    if (isset($manga['Chapter']['NumOfComments'])) {
+                        echo $manga['Chapter']['NumOfComments'];
+                    } else {
+                        echo rand(0, 10); // Fallback
+                    }
+                    ?>
+                  </span>
+                  <span class="latest-time">
+                    <?php
+                    // Hiển thị thời gian upload
+                    if (isset($manga['Chapter']['UploadTime'])) {
+                        $uploadTime = strtotime($manga['Chapter']['UploadTime']);
+                        $currentTime = time();
+                        $timeDiff = $currentTime - $uploadTime;
+
+                        if ($timeDiff < 60) {
+                            echo "just now";
+                        } elseif ($timeDiff < 3600) {
+                            $minutes = floor($timeDiff / 60);
+                            echo $minutes . " minute" . ($minutes > 1 ? "s" : "") . " ago";
+                        } elseif ($timeDiff < 86400) {
+                            $hours = floor($timeDiff / 3600);
+                            echo $hours . " hour" . ($hours > 1 ? "s" : "") . " ago";
+                        } else {
+                            $days = floor($timeDiff / 86400);
+                            echo $days . " day" . ($days > 1 ? "s" : "") . " ago";
+                        }
+                    } else {
+                        echo rand(5, 60) . " minutes ago"; // Fallback
+                    }
+                    ?>
+                  </span>
+                </div>
+              </a>
+          <?php endforeach; ?>
+        </div>  <!-- End Column 4 -->
 
       </div> <!-- End latest-updates-grid -->
     </section>

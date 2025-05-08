@@ -9,8 +9,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Upload Chapter</title>
+  <title><?=$mode==="upload" ? "Upload" : "Edit"?> Chapter - MangaDax</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+  <link rel="stylesheet" href="../CSS/navbar.css">
   <style>
     .upload-box {
       border: 2px dashed #ccc;
@@ -23,11 +25,20 @@
     .upload-box:hover {
       border-color: #ff5722;
     }
+    body {
+      background-color: #f8f9fa;
+      padding-top: 0;
+    }
   </style>
 </head>
-<body class="bg-light py-5">
+<body class="bg-light">
+<?php
+  // Set the path prefix for the navbar
+  $pathPrefix = '../';
+  include 'includes/navbar_minimal.php';
+?>
 
-<div class="container bg-white p-4 rounded shadow-sm">
+<div class="container bg-white p-4 rounded shadow-sm mt-4">
   <h3 class="mb-3"><?=$mode==="upload" ? "Upload" : "Edit"?> Chapter</h3>
   <div class="alert alert-warning text-center">
     Make sure to read the guidelines!
@@ -111,6 +122,9 @@
 
     <!-- Buttons -->
     <div class="d-flex justify-content-between">
+      <a href="../controller/mangaInfo_Controller.php?MangaID=<?=$mangaID?>" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Back to Manga
+      </a>
       <button type="submit" class="btn btn-primary"><?=$mode==="upload" ? "Upload" : "Edit"?></button>
     </div>
   </form>

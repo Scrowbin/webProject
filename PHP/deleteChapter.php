@@ -23,16 +23,26 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Delete Manga Chapters</title>
+    <title>Delete Manga Chapters - MangaDax</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
 
     <link rel="stylesheet" href="../CSS/navbar.css">
     <link rel="stylesheet" href="../CSS/mangaInfo.css">
+    <style>
+        body {
+            padding-top: 0;
+        }
+    </style>
 </head>
 <body class="bg-light">
+<?php
+    // Set the path prefix for the navbar
+    $pathPrefix = '../';
+    include 'includes/navbar_minimal.php';
+?>
     <div class = "manga-container">
-        <a href="mangaInfo_Controller.php?MangaID=<?=$mangaID?>">
+        <a href="../controller/mangaInfo_Controller.php?MangaID=<?=$mangaID?>">
             <div class="bg-image">
                 <style>
                 .bg-image{
@@ -60,7 +70,7 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
                 <div class="manga-cover">
                         <img src="../IMG/<?=$mangaID?>/<?=$image?>" alt="Manga Cover">
                 </div>
-        
+
                 <!-- Right: Details -->
                 <div class="manga-details">
                     <div class="manga-header">
@@ -69,7 +79,7 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
                     </div>
                     <div class="artist-name">
                         <?=$mangaAuthors?>
-                    </div>                
+                    </div>
                 </div>
             </div>
         </a>
@@ -80,13 +90,18 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
             <h4 class="mb-0">Delete Manga Chapters</h4>
         </div>
         <div class="card-body">
+            <div class="alert alert-warning mb-4">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                <strong>Warning:</strong> Deleting chapters will permanently remove them and all associated comments. This action cannot be undone.
+            </div>
+
             <form action="../controller/deleteChapter.php" method="POST">
             <input type="hidden" name="MangaID" value="<?= $mangaID ?>">
             <label for="chapterSelect" class="form-label">Select Chapter(s):</label>
                 <select name="chapterIds[]" id="chapterSelect" class="form-select" multiple size="10">
-                    <?php foreach ($grouped as $group): 
+                    <?php foreach ($grouped as $group):
                         $volume = truncateNumber($group[0]['Volume']); ?>
-                        
+
                         <optgroup label="Volume <?= $volume ?>">
                         <?php foreach ($group as $chapter):
                             $chapterNum = truncateNumber($chapter['ChapterNumber']);
@@ -101,7 +116,14 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
                 </select>
                 <div class="form-text">Hold Ctrl (Windows) or Command (Mac) to select multiple chapters.</div>
 
-                <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                <div class="d-flex justify-content-between mt-3">
+                    <a href="../controller/mangaInfo_Controller.php?MangaID=<?=$mangaID?>" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Back to Manga
+                    </a>
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-trash"></i> Delete Selected Chapters
+                    </button>
+                </div>
             </form>
         </div>
         </div>

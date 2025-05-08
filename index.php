@@ -13,24 +13,47 @@ require_once __DIR__ . '/db/announcement_model.php'; // Contains announcement fu
 
 // --- Data Fetching for Homepage ---
 
-// Simplified approach to avoid SQL errors
+// Get top-rated manga for the Popular New Titles carousel
+$topRatedManga = getTopRatedManga(4, 1); // Get top 4 manga with at least 1 rating
+
+// If we don't have enough top-rated manga, fall back to some default manga
+if (count($topRatedManga) < 4) {
+    // Simplified approach to avoid SQL errors
+    $defaultManga = [];
+
+    // Fetch manga with ID 1 (Zeikin de Katta Hon)
+    $defaultManga[1] = getMangaInfo(1);
+
+    // Fetch manga with ID 2 (Kaoru Hana wa Rin to Saku)
+    $defaultManga[2] = getMangaInfo(2);
+
+    // Fetch manga with ID 3 (Sousou no Frieren)
+    $defaultManga[3] = getMangaInfo(3);
+
+    // Fill in any missing slots with default manga
+    for ($i = count($topRatedManga); $i < 4; $i++) {
+        $defaultId = $i + 1;
+        if (isset($defaultManga[$defaultId])) {
+            $topRatedManga[] = $defaultManga[$defaultId];
+        }
+    }
+}
+
+// Format the manga array for the carousel
 $allManga = [];
+foreach ($topRatedManga as $index => $manga) {
+    $mangaId = $manga['MangaID'];
+    $allManga[$mangaId] = $manga;
 
-// Fetch manga with ID 1 (Zeikin de Katta Hon)
-$allManga[1] = getMangaInfo(1);
+    // Add additional information
+    $allManga[$mangaId]['tags'] = getTags($mangaId);
+    $allManga[$mangaId]['authors'] = getMangaAuthors($mangaId);
+    $allManga[$mangaId]['artists'] = getMangaArtists($mangaId);
 
-// Fetch manga with ID 2 (Kaoru Hana wa Rin to Saku)
-$allManga[2] = getMangaInfo(2);
-
-// Fetch manga with ID 3 (Sousou no Frieren)
-$allManga[3] = getMangaInfo(3);
-
-// Get tags for each manga
-foreach ($allManga as $id => $manga) {
-    if ($manga) {
-        $allManga[$id]['tags'] = getTags($id);
-        $allManga[$id]['authors'] = getMangaAuthors($id);
-        $allManga[$id]['artists'] = getMangaArtists($id);
+    // Add rating information if available
+    if (isset($manga['AvgRating'])) {
+        $allManga[$mangaId]['AvgRating'] = round($manga['AvgRating'], 1);
+        $allManga[$mangaId]['RatingCount'] = $manga['RatingCount'];
     }
 }
 
@@ -45,50 +68,43 @@ foreach ($recentlyAddedManga as $key => $manga) {
     $recentlyAddedManga[$key]['artists'] = getMangaArtists($mangaID);
 }
 
-// Get latest manga updates using getUpdates function
+// Get latest manga updates using getUpdates function - similar to latestUpdates_controller.php
 try {
-    // Lấy 12 chapter mới nhất
-    $latestChapters = getUpdates(12, 0);
+    // Get a large number of recent chapters to ensure we have enough
+    $latestChapters = getUpdates(1000, 0);
 
-    // Tạo mảng để lưu trữ thông tin manga không trùng lặp
+    // Process each chapter to add comment data
+    foreach ($latestChapters as &$chapter) {
+        $commentData = getComments($chapter['ChapterID']);
+        $chapter['NumOfComments'] = $commentData["NumOfComments"] ?? 0;
+        $chapter['CommentSectionID'] = $commentData["CommentSectionID"] ?? 0;
+    }
+
+    // Sort all chapters by upload time (most recent first)
+    usort($latestChapters, function($a, $b) {
+        return strtotime($b['UploadTime']) - strtotime($a['UploadTime']);
+    });
+
+    // Take only the first 24 chapters (or less if there aren't enough)
+    // This will allow us to display 6 chapters in each of the 4 columns
+    $latestChapters = array_slice($latestChapters, 0, 24);
+
+    // Format the chapters for display
     $latestUpdates = [];
-    $processedMangaIDs = [];
-
-    // Xử lý từng chapter để lấy thông tin manga
     foreach ($latestChapters as $chapter) {
-        $mangaID = $chapter['MangaID'];
-
-        // Chỉ xử lý mỗi manga một lần
-        if (!in_array($mangaID, $processedMangaIDs)) {
-            // Thêm manga vào danh sách đã xử lý
-            $processedMangaIDs[] = $mangaID;
-
-            // Lấy số lượng comment cho chapter
-            $commentData = getComments($chapter['ChapterID']);
-
-            // Lấy thông tin manga từ chapter
-            $manga = [
-                'MangaID' => $mangaID,
-                'MangaNameOG' => $chapter['MangaNameOG'],
-                'CoverLink' => $chapter['CoverLink'],
-                'LatestChapter' => [
-                    'ChapterID' => $chapter['ChapterID'],
-                    'ChapterNumber' => $chapter['ChapterNumber'],
-                    'ChapterName' => $chapter['ChapterName'],
-                    'UploadTime' => $chapter['UploadTime'],
-                    'ScangroupName' => $chapter['ScangroupName'],
-                    'NumOfComments' => $commentData['NumOfComments'] ?? 0
-                ]
-            ];
-
-            // Thêm manga vào danh sách latest updates
-            $latestUpdates[] = $manga;
-
-            // Nếu đã đủ 12 manga, dừng vòng lặp
-            if (count($latestUpdates) >= 12) {
-                break;
-            }
-        }
+        $latestUpdates[] = [
+            'MangaID' => $chapter['MangaID'],
+            'MangaNameOG' => $chapter['MangaNameOG'],
+            'CoverLink' => $chapter['CoverLink'],
+            'Chapter' => [
+                'ChapterID' => $chapter['ChapterID'],
+                'ChapterNumber' => $chapter['ChapterNumber'],
+                'ChapterName' => $chapter['ChapterName'],
+                'UploadTime' => $chapter['UploadTime'],
+                'ScangroupName' => $chapter['ScangroupName'],
+                'NumOfComments' => $chapter['NumOfComments'] ?? 0
+            ]
+        ];
     }
 } catch (Exception $e) {
     // Fallback if there's an error

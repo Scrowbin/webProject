@@ -103,10 +103,29 @@
         return pdo_query_value($sql,$mangaID);
     }
     function getTotalComments($mangaID){
-        $sql = 'SELECT COUNT(*) FROM commentsection cs 
+        $sql = 'SELECT COUNT(*) FROM commentsection cs
                 JOIN chapter c ON cs.ChapterID = c.ChapterID
                 JOIN comment co ON cs.CommentSectionID = co.CommentSectionID
                 WHERE MangaID = ?';
         return pdo_query_value($sql,$mangaID);
+    }
+
+    /**
+     * Get manga with the highest average ratings
+     *
+     * @param int $limit Number of manga to return
+     * @param int $minRatings Minimum number of ratings required for a manga to be included
+     * @return array Array of manga with their average ratings
+     */
+    function getTopRatedManga($limit = 4, $minRatings = 3) {
+        $sql = 'SELECT m.*, AVG(r.Rating) as AvgRating, COUNT(r.Rating) as RatingCount
+                FROM manga m
+                JOIN rating r ON m.MangaID = r.MangaID
+                GROUP BY m.MangaID
+                HAVING COUNT(r.Rating) >= ?
+                ORDER BY AVG(r.Rating) DESC, RatingCount DESC
+                LIMIT ?';
+
+        return pdo_query_int($sql, $minRatings, $limit);
     }
 ?>

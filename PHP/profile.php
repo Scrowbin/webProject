@@ -30,15 +30,9 @@ $profile_update_message = $profile_update_message ?? null;
                 <ul class="list-group mb-2 sticky-top profile-nav"> 
                     <li class="list-group-item fw-bold">Your account</li>
                     <li class="list-group-item active"><i class="bi bi-person"></i> Profile</li>
-                    <li class="list-group-item"><i class="bi bi-bell"></i> Notifications</li>
-                    <li class="list-group-item"><i class="bi bi-hand-thumbs-up"></i> Reactions Received</li>
-                    <li class="list-group-item"><i class="bi bi-bookmark"></i> Bookmarks</li>
-                </ul>
                 <ul class="list-group mb-2 sticky-top profile-nav"> 
                     <li class="list-group-item fw-bold">Settings</li>
-                    <li class="list-group-item"><i class="bi bi-person-gear"></i> Account</li>
-                    <li class="list-group-item"><i class="bi bi-shield-lock"></i> Privacy</li>
-                    <li class="list-group-item"><i class="bi bi-sliders"></i> Preferences</li>
+                    <li class="list-group-item"><i class="bi bi-person-gear"></i> Profile detail</li>
                 </ul>
                 <ul class="list-group sticky-top profile-nav"> 
                     <li class="list-group-item fw-bold">
@@ -111,12 +105,6 @@ $profile_update_message = $profile_update_message ?? null;
                         <label for="location" class="col-sm-3 col-form-label text-end">Location:</label> 
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="location" name="location" value="<?php echo htmlspecialchars($user_data['location'] ?? ''); ?>"> 
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                         <label for="website" class="col-sm-3 col-form-label text-end">Website:</label> 
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="website" name="website" value="<?php echo htmlspecialchars($user_data['website'] ?? ''); ?>"> 
                         </div>
                     </div>
                     <div class="row mb-3">
