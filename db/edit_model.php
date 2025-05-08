@@ -15,6 +15,7 @@
     }
     
     function getMangaAuthors($mangaID) {
+        $authorNames = [];
         $authors =pdo_query('SELECT AuthorName FROM author
         JOIN manga_author ON author.AuthorID = manga_author.AuthorID
         WHERE manga_author.mangaID = ?', $mangaID);
@@ -26,6 +27,7 @@
     }
 
     function getMangaArtists($mangaID) {
+        $authorNames = [];
         $authors = pdo_query('SELECT ArtistName FROM artist
                           JOIN manga_artist ON artist.ArtistID = manga_artist.ArtistID
                           WHERE manga_artist.mangaID = ?', $mangaID);
