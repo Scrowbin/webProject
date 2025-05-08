@@ -215,7 +215,7 @@
       document.querySelector('input[name="chapter-number"]').value = chapterData.ChapterNumber || '';
       document.querySelector('input[name="scangroup-name"]').value = chapterData.ScangroupName || '';
       document.querySelector('input[name="chapter-name"]').value = chapterData.ChapterName || '';
-      document.querySelector('select[name="language"]').value = 'English';
+      document.querySelector('select[name="language"]').value = chapterData.Language;
 
       <?php
         $chapterNumber = truncateNumber($chapterInfo["ChapterNumber"]);

@@ -22,7 +22,7 @@ function editInfo($chapterID, $volume, $chapterScangroup, $chapterName, $chapter
                 `ScangroupName` = ?, 
                 `ChapterName` = ?, 
                 `ChapterNumber` = ?,
-                `Language` = ?,
+                `Language` = ?
             WHERE `ChapterID` = ?";
     pdo_execute($sql, $volume, $chapterScangroup, $chapterName, $chapterNumber,$language, $chapterID);
 }

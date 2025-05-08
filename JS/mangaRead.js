@@ -437,4 +437,34 @@ document.addEventListener("DOMContentLoaded", () => {
           alert('Something went wrong while sending the report.');
         });
       });
+
+
+    //for uuuh view count on local storage    
+
+    function getViewedChapters() {
+        return JSON.parse(localStorage.getItem('viewedChapters') || '[]');
+    }
+    
+    function saveViewedChapters(viewed) {
+        localStorage.setItem('viewedChapters', JSON.stringify(viewed));
+    }
+    
+    function updateViewedChapters(chapterID) {
+        let viewed = getViewedChapters();
+    
+        // Remove if already exists
+        viewed = viewed.filter(id => id !== chapterID);
+    
+        // Add to end (most recent)
+        viewed.push(chapterID);
+    
+        // Optional: limit to last 50 chapters
+        if (viewed.length > 50) {
+            viewed.shift(); // remove oldest
+        }
+    
+        saveViewedChapters(viewed);
+    }
+    
+    updateViewedChapters(chapterID);
 });

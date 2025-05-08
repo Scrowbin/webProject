@@ -97,7 +97,7 @@ function getFlagHome($language) {
         case "kr":
             return '<img src="https://mangadex.org/img/flags/kr.svg" class="flag-icon" alt="KR">'; // English - Great Britain
         case "vn":
-            return '<img src="https://mangadex.org/img/flags/kr.svg" class="flag-icon" alt="VN">'; // English - Great Britain
+            return '<img src="https://mangadex.org/img/flags/vn.svg" class="flag-icon" alt="VN">'; // English - Great Britain
         case "English":
             return '<img class="flag" src="https://mangadex.org/img/flags/gb.svg">'; // English - Great Britain
         case "Japanese":

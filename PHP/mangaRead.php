@@ -273,24 +273,25 @@
                 <label for="reportReason" class="form-label">Reason</label>
                 <select class="form-select dropdown-reason" id="reportReason" name="reason" required>
                     <option selected disabled value="">Choose a reason</option>
-                    <option value="credit_page_middle">Credit page in the middle of the chapter</option>
-                    <option value="duplicate_upload">Duplicate upload from same user/group</option>
-                    <option value="offensive_content">Extraneous political/race-baiting/offensive content</option>
-                    <option value="fake_spam">Fake/Spam chapter</option>
-                    <option value="group_lock_evasion">Group lock evasion</option>
-                    <option value="images_not_loading">Images not loading</option>
-                    <option value="incorrect_chapter_number">Incorrect chapter number</option>
-                    <option value="incorrect_group">Incorrect group</option>
-                    <option value="duplicate_pages">Incorrect or duplicate pages</option>
-                    <option value="missing_chapter_title">Incorrect or missing chapter title</option>
-                    <option value="missing_volume_number">Incorrect or missing volume number</option>
-                    <option value="missing_pages">Missing pages</option>
-                    <option value="naming_rules_broken">Naming rules broken</option>
-                    <option value="official_release_raw">Official release/Raw</option>
-                    <option value="pages_out_of_order">Pages out of order</option>
-                    <option value="premature_release">Released before raws released</option>
-                    <option value="wrong_manga">Uploaded on wrong manga</option>
-                    <option value="watermarked_images">Watermarked images</option>
+                    <option value="Credit page in the middle">Credit page in the middle of the chapter</option>
+                    <option value="Duplicate upload">Duplicate upload from same user/group</option>
+                    <option value="Offensive content">Extraneous political/race-baiting/offensive content</option>
+                    <option value="Fake or Spam">Fake/Spam chapter</option>
+                    <option value="Group lock evasion">Group lock evasion</option>
+                    <option value="Images not loading">Images not loading</option>
+                    <option value="Incorrect chapter number">Incorrect chapter number</option>
+                    <option value="Incorrect group">Incorrect group</option>
+                    <option value="Incorrect or duplicate pages">Incorrect or duplicate pages</option>
+                    <option value="Incorrect or missing chapter title">Incorrect or missing chapter title</option>
+                    <option value="Incorrect or missing volume number">Incorrect or missing volume number</option>
+                    <option value="Missing pages">Missing pages</option>
+                    <option value="Naming rules broken">Naming rules broken</option>
+                    <option value="Official release/Raw">Official release/Raw</option>
+                    <option value="Pages out of order">Pages out of order</option>
+                    <option value="Released before raws">Released before raws released</option>
+                    <option value="Wrong manga">Uploaded on wrong manga</option>
+                    <option value="Watermarked">Watermarked images</option>
+                    <option value="Other">Other</option>
                 </select>
             </div>
             

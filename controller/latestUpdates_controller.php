@@ -11,13 +11,13 @@
     $chapters = getUpdates(1000,0);
     $isLatestUpdates = true;
     $pathPrefix = '../'; // Define path prefix for includes relative to controller directory
-    // Group chapters by MangaID
+
     $grouped = [];
     foreach ($chapters as $chapter) {
         $manga = $chapter['MangaID'];
-        $commentOfChapter = getComments($chapter['ChapterID']);
-        $chapter['NumOfComments'] = $commentOfChapter["NumOfComments"] ?? 0;
-        $chapter['CommentSectionID'] = $commentOfChapter["CommentSectionID"] ?? 0;
+        $commentSectionID =   getCommentSectionID($chapter['ChapterID']) ?? 0;
+        $chapter['CommentSectionID'] = $commentSectionID;
+        $chapter['NumOfComments'] = getNumOfComment($commentSectionID)  ?? 0;
         $grouped[$manga][] = $chapter;
     }
         // Now sort and trim each manga's chapter list

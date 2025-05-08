@@ -79,4 +79,12 @@
                 LIMIT ?";
         return pdo_query_int($sql,$userID,$limit);
     }
+    function getCommentSectionID($chapterID){
+        $sql = "SELECT CommentSectionID from commentsection WHERE ChapterID = ?";
+        return pdo_query_value($sql, $chapterID);
+    }
+    function getNumOfComment($commentSectionID){
+        $sql = "SELECT COUNT(*) AS NumOfComments from comment WHERE CommentSectionID = ?";
+        return pdo_query_value($sql, $commentSectionID);
+    }
 ?>
