@@ -9,6 +9,7 @@
         $chapterScangroup = $_POST['scangroup-name'] ?? "Anonymous"; 
         $chapterNum = $_POST['chapter-number'] ?? 0;
         $chapterName = $_POST['chapter-name'] ?? '';
+        $language = $_POST['language'] ?? 'en';
 
         if (!ChapterExist($chapterID)){
             $msg = "This chapter doesnt exist.";
@@ -18,7 +19,7 @@
         }
 
         // Save chapter
-        editInfo($chapterID, $volume, $chapterScangroup, $chapterName, $chapterNum);
+        editInfo($chapterID, $volume, $chapterScangroup, $chapterName, $chapterNum,$language);
         
         // Upload directory
         if (empty($_FILES['pages']['name']) || count(array_filter($_FILES['pages']['name'])) === 0) {

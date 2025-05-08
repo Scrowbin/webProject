@@ -16,14 +16,15 @@ function getChapterInfo($chapterID){
     return pdo_query_one($sql,$chapterID);
 }
 
-function editInfo($chapterID, $volume, $chapterScangroup, $chapterName, $chapterNumber) {
+function editInfo($chapterID, $volume, $chapterScangroup, $chapterName, $chapterNumber, $language) {
     $sql = "UPDATE `chapter` 
             SET `Volume` = ?, 
                 `ScangroupName` = ?, 
                 `ChapterName` = ?, 
-                `ChapterNumber` = ?
+                `ChapterNumber` = ?,
+                `Language` = ?,
             WHERE `ChapterID` = ?";
-    pdo_execute($sql, $volume, $chapterScangroup, $chapterName, $chapterNumber, $chapterID);
+    pdo_execute($sql, $volume, $chapterScangroup, $chapterName, $chapterNumber,$language, $chapterID);
 }
 
 function deleteOldPages($chapterID){
