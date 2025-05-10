@@ -47,6 +47,18 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Sidebar section functionality
+    // All sections are expanded by default
+    // Only the Titles section is clickable to redirect to upload manga page
+    const titlesSectionTitle = document.querySelector('.sidebar-section .section-title[data-section="titles"]');
+
+    if (titlesSectionTitle) {
+        titlesSectionTitle.addEventListener('click', () => {
+            // Allow the default link behavior (redirect to upload manga page)
+            // No need to prevent default or toggle visibility
+        });
+    }
+
     // User Modal functionality
     const userAvatarBtn = document.getElementById('user-avatar-btn');
     const userModalElement = document.getElementById('user-modal');
