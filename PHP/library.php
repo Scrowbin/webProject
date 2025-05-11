@@ -57,35 +57,59 @@
 
                 <!-- Right: Details -->
                 <div class="manga-details">
-                    <?php
-                        switch ($pubStatus) {
-                            case "Ongoing":
-                                echo "<span class='grid-pub-status text-success'><strong>● " . strtoupper($pubStatus) . "</strong></span>";
-                                break;
-                            case "Completed":
-                                echo "<span class='grid-pub-status text-primary'><strong>● " . strtoupper($pubStatus) . "</strong></span>";
-                                break;
-                            case "Hiatus":
-                                echo "<span class='grid-pub-status text-warning'><strong>● " . strtoupper($pubStatus) . "</strong></span>";
-                                break;
-                        }
-                    ?>
-                    <div class="manga-header">
-                        <div class="manga-title">
+                    <div class="manga-title-row">
+                        <div class="flag-title">
                             <?php echo getFlag($mangaLanguage);?>
-
-                            <!-- <img class="flag" src="https://mangadex.org/img/flags/jp.svg"> -->
-                            <a href="../controller/mangaInfo_controller.php?MangaID=<?=$mangaID?>" class=""><strong><?=$mangaName?></strong></a>
+                            <a href="../controller/mangaInfo_controller.php?MangaID=<?=$mangaID?>" class="manga-title-link"><strong><?=$mangaName?></strong></a>
+                        </div>
+                        <div class="manga-status">
+                            <?php
+                                switch ($pubStatus) {
+                                    case "Ongoing":
+                                        echo "<span class='status-badge status-ongoing'>● " . strtoupper($pubStatus) . "</span>";
+                                        break;
+                                    case "Completed":
+                                        echo "<span class='status-badge status-completed'>● " . strtoupper($pubStatus) . "</span>";
+                                        break;
+                                    case "Hiatus":
+                                        echo "<span class='status-badge status-hiatus'>● " . strtoupper($pubStatus) . "</span>";
+                                        break;
+                                }
+                            ?>
                         </div>
                     </div>
-                    <div class="badge-bar">
+                    <div class="manga-stats-bar">
+                        <?php if (isset($m['CommentSectionID']) && $m['CommentSectionID']): ?>
+                            <a href="../controller/comments_controller.php?commentsID=<?= $m['CommentSectionID'] ?>" class="stat-item-link">
+                                <span class="stat-item"><i class="bi bi-chat-fill"></i> <?= $m['CommentCount'] ?? 0 ?></span>
+                            </a>
+                        <?php else: ?>
+                            <span class="stat-item"><i class="bi bi-chat-fill"></i> <?= $m['CommentCount'] ?? 0 ?></span>
+                        <?php endif; ?>
+                        <span class="stat-item"><i class="bi bi-bookmark-fill"></i> <?= $m['FollowCount'] ?? 0 ?></span>
+                        <span class="stat-item"><i class="bi bi-star-fill"></i> <?= number_format($m['AvgRating'] ?? 0, 1) ?></span>
+                    </div>
+                    <div class="tag-container">
                         <?php
-                            foreach($m['tags'] as $tag){
-                                echo "<span class='badge'>".strtoupper($tag)."</span>";
+                            $tags = $m['tags'];
+                            $displayTags = array_slice($tags, 0, 5);
+                            $remainingTags = count($tags) - count($displayTags);
+
+                            foreach($displayTags as $tag){
+                                echo "<span class='tag-badge'>".strtoupper($tag)."</span>";
+                            }
+
+                            if($remainingTags > 0) {
+                                echo "<span class='more-tags-btn'>MORE</span>";
+                                echo "<div class='hidden-tags'>";
+                                for($i = 5; $i < count($tags); $i++) {
+                                    echo "<span class='tag-badge'>".strtoupper($tags[$i])."</span>";
+                                }
+                                echo "</div>";
                             }
                         ?>
                     </div>
-                    <div class="manga-desc">
+                    <div class="manga-description">
                         <?=$mangaDesc?>
                     </div>
                 </div>

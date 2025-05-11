@@ -19,7 +19,7 @@
           <div class="sub-links">
               <a href="<?= $pathPrefix ?>controller/follows_controller.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'follows.php' || (isset($isFollows) && $isFollows) ? 'active' : '' ?>">Updates</a>
               <a href="<?= $pathPrefix ?>controller/library_controller.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'library.php' || (isset($isLibrary) && $isLibrary) ? 'active' : '' ?>">Library</a>
-              <a href="#" class="nav-link">Reading History</a>
+              <a href="<?= $pathPrefix ?>controller/readingHistory_controller.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'readingHistory_controller.php' || (isset($isReadingHistory) && $isReadingHistory) ? 'active' : '' ?>">Reading History</a>
           </div>
       </div>
 

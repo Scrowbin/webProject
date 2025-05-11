@@ -1,5 +1,5 @@
 <?php
-    require_once('helper.php');
+    require_once 'helper.php';
 ?>
 
 <!DOCTYPE html>
@@ -15,30 +15,30 @@
 
 </head>
 <body>
-   
-    <style>
-        .page-btn {
-    margin: 0 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-}
+    <?php include('includes/navbar.php'); ?>
+    <?php include('includes/sidebar.php'); ?>
 
-.page-btn.active {
-    background-color: #007bff;
-    color: white;
-    border: none;
-}
-    </style>
-    <div class="container-xxl pt-5 mt-4" id="manga-container">
+    <div class="page-wrapper">
+        <style>
+            .page-btn {
+                margin: 0 5px;
+                padding: 5px 10px;
+                cursor: pointer;
+            }
 
-    </div>
+            .page-btn.active {
+                background-color: #FF6740;
+                color: white;
+                border: none;
+            }
+        </style>
 
-    <div id="pagination" class="pagination-controls mt-4 text-center"></div>
+        <div class="container-xxl pt-5 mt-4" id="manga-container">
+            <!-- Content will be loaded by JavaScript -->
+        </div>
 
-    <!-- <div class="d-flex justify-content-center mt-4">
-   
-    </div> -->
-
+    <div id="pagination" class="pagination-controls mt-4 text-center mb-5"></div>
+    </div> <!-- Close page-wrapper -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../JS/navbar.js"></script>

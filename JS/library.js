@@ -39,4 +39,28 @@ document.addEventListener('DOMContentLoaded', function() {
         // If no preference is saved, default to list view
         document.querySelector('.list-view').classList.add('active');
     }
+
+    // Handle "MORE" button for tags
+    const moreTagsButtons = document.querySelectorAll('.more-tags-btn');
+
+    moreTagsButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const hiddenTags = this.nextElementSibling;
+
+            if (hiddenTags.style.display === 'flex') {
+                hiddenTags.style.display = 'none';
+            } else {
+                hiddenTags.style.display = 'flex';
+            }
+
+            // Close when clicking outside
+            document.addEventListener('click', function closeHiddenTags(event) {
+                if (!hiddenTags.contains(event.target) && event.target !== button) {
+                    hiddenTags.style.display = 'none';
+                    document.removeEventListener('click', closeHiddenTags);
+                }
+            });
+        });
+    });
 });

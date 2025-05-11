@@ -110,6 +110,14 @@
         return pdo_query_value($sql,$mangaID);
     }
 
+    function getFirstChapter($mangaID) {
+        $sql = 'SELECT ChapterID FROM chapter
+                WHERE MangaID = ?
+                ORDER BY ChapterNumber ASC
+                LIMIT 1';
+        return pdo_query_one($sql, $mangaID);
+    }
+
     /**
      * Get manga with the highest average ratings
      *
