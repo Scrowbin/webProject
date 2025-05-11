@@ -27,7 +27,7 @@
       <div class="sidebar-section">
           <a href="<?= $pathPrefix ?>controller/create_controller.php" class="nav-link section-title" data-section="titles"><i class="bi bi-book-fill"></i> <span>Titles</span> <i class="bi bi-plus-lg float-end"></i></a>
           <div class="sub-links">
-              <a href="#" class="nav-link">Advanced Search</a>
+              <a href="<?= $pathPrefix ?>controller/advanced_search_controller.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'advanced_search.php' || (isset($isAdvancedSearch) && $isAdvancedSearch) ? 'active' : '' ?>">Advanced Search</a>
               <a href="<?= $pathPrefix ?>controller/recently_added_controller.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'recently_added_controller.php' || (isset($isRecentlyAdded) && $isRecentlyAdded) ? 'active' : '' ?>">Recently Added</a>
               <a href="<?= $pathPrefix ?>controller/latestUpdates_controller.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'latestUpdates.php' || (isset($isLatestUpdates) && $isLatestUpdates) ? 'active' : '' ?>">Latest Updates</a>
               <a href="<?= $pathPrefix ?>controller/random_manga_controller.php" class="nav-link">Random</a>

@@ -1,10 +1,8 @@
 <?php
-require_once('pdo.php');
+require_once 'pdo.php';
+require_once 'mangaInfoPdo.php';
 
-function getCommentSectionID($chapterID){
-    $sql = "SELECT CommentSectionID FROM commentsection WHERE ChapterID = ?";
-    return pdo_query_value($sql,$chapterID);
-}
+// Function getCommentSectionID moved to mangaInfoPdo.php to avoid duplication
 function deleteChapterPages($chapterID){
     $sql = "DELETE FROM chapter_pages WHERE ChapterID = ?";
     pdo_execute($sql,$chapterID);

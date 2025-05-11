@@ -3,7 +3,7 @@
         session_start();
     }
 
-    require_once('pdo.php');
+    require_once 'pdo.php';
     $isLoggedIn = isset($_SESSION['userID']);
     function getUserID ($username){
         $userID = pdo_query_one('SELECT user.UserID FROM account join user on
@@ -118,6 +118,12 @@
         return pdo_query_one($sql, $mangaID);
     }
 
+    function getCommentSectionID($chapterID) {
+        $sql = 'SELECT CommentSectionID FROM commentsection WHERE ChapterID = ?';
+        $result = pdo_query_one($sql, $chapterID);
+        return $result ? $result['CommentSectionID'] : null;
+    }
+
     /**
      * Get manga with the highest average ratings
      *
@@ -136,4 +142,3 @@
 
         return pdo_query_int($sql, $minRatings, $limit);
     }
-?>
