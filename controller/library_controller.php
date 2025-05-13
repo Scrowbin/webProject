@@ -2,6 +2,7 @@
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
+    require_once('../db/account_db.php');
     require_once('../db/latestUpdates_model.php');
     require_once("../db/mangaInfoPdo.php");
 

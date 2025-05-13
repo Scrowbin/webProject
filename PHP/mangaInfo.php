@@ -166,7 +166,7 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
                     <i class="bi bi-trash me-2"></i>
                     <span class="d-none d-md-inline">Delete Manga</span>
                 </button>
-                <button class="btn btn-outline-secondary d-flex align-items-center" onclick="window.location.href='edit_manga.php?MangaID=<?=$mangaID?>'">
+                <button class="btn btn-outline-secondary d-flex align-items-center" onclick="window.location.href='/admin/edit-manga/<?=$mangaID?>'">
                     <i class="bi bi-pencil-square me-2"></i>
                     <span class="d-none d-md-inline">Edit Manga</span>
                 </button>

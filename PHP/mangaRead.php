@@ -56,7 +56,7 @@
             <div id="topReadBar" class="top-read-bar">
                 <?php echo displayNameOrChapter($chapterName,$chapterNumber)?>
                 <div>
-                    <a class="mangaInfo" href="mangaInfo_Controller.php?MangaID=<?=$mangaID?>">
+                    <a class="mangaInfo" href="/manga/<?= $mangaID ?>">
                         <strong><?=$mangaName?></strong>
                     </a>
                 </div>

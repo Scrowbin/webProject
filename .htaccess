@@ -1,0 +1,22 @@
+RewriteEngine On
+RewriteBase /
+
+
+RewriteRule ^manga/([0-9]+)$ controller/mangaInfo_Controller.php?MangaID=$1 [QSA,L]
+RewriteRule ^read/([0-9]+)$ controller/mangaRead_controller.php?chapterID=$1 [QSA,L]
+RewriteRule ^my-follows$ controller/follows_controller.php [QSA,L]
+RewriteRule ^library$ controller/library_controller.php [QSA,L]
+RewriteRule ^reading-history$ controller/readingHistory_controller.php [QSA,L]
+RewriteRule ^search$ controller/advanced_search_controller.php [QSA,L]
+RewriteRule ^recently\-added$ controller/recently_added_controller.php [QSA,L]
+RewriteRule ^latest\-updates$ controller/latestUpdates_controller.php [QSA,L]
+RewriteRule ^random$ controller/random_manga_controller.php [QSA,L]
+# Admin routes
+RewriteRule ^admin/create-announcements$ controller/announcement_controller.php [QSA,L]
+RewriteRule ^admin/view-reports$ controller/report_controller.php [QSA,L]
+RewriteRule ^admin/add-manga$ controller/create_controller.php [QSA,L]
+RewriteRule ^admin/edit-manga/([0-9]+)$ controller/edit_manga.php?MangaID=$1 [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.+)$ index.php?route=$1 [QSA,L]
