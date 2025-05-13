@@ -14,9 +14,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const nextChButton = document.getElementById("nextCh-btn");
     const prevChButton = document.getElementById("prevCh-btn");
     const pageContainer = document.getElementById("page-container");
-    const toastElement = document.getElementById('loginToast');
-    const toast = new bootstrap.Toast(toastElement);
     const reportForm = document.getElementById('reportForm');
+
 
     let currentIndex= 0;
     let  isInLongStrip = true; // default is inlongstrip
@@ -409,34 +408,57 @@ document.addEventListener("DOMContentLoaded", () => {
     //report form
     reportForm.addEventListener('submit', function (e) {
         e.preventDefault();
-    
-        if (userID == 0 || userID==null) {
-            toast.show();
-            return;
+
+        const loginToastEl  = document.getElementById('loginToast');
+        const reportToastEl = document.getElementById('reportToast');
+        const loginToastMsg = loginToastEl.querySelector('.toast-body');
+        const reportToastMsg = reportToastEl.querySelector('.toast-body');
+        const loginToast  = new bootstrap.Toast(loginToastEl);
+        const reportToast = new bootstrap.Toast(reportToastEl);
+
+        // 1) Not logged in?
+        if (!userID) {
+            loginToastMsg.textContent = 'You must be logged in to send a report.';
+            loginToastEl.classList.remove('bg-success','bg-danger');
+            loginToastEl.classList.add('bg-warning');
+            return loginToast.show();
         }
+
+        // 2) Submit report
         document.getElementById("hiddenChapterID").value = chapterID;
         const formData = new FormData(this);
-    
+
         fetch('../controller/report_chapter.php', {
-          method: 'POST',
-          body: formData
+            method: 'POST',
+            body: formData
         })
-        .then(response => response.json()) // expect JSON from backend
+        .then(res => res.json())
         .then(data => {
-          if (data.success) {
-            alert('Report sent successfully!');
-            const modal = bootstrap.Modal.getInstance(document.getElementById('reportModal'));
-            modal.hide();
+            if (data.success) {
+            reportToastMsg.textContent = 'Report sent successfully!';
+            reportToastEl.classList.remove('bg-danger','bg-warning');
+            reportToastEl.classList.add('bg-success');
+            console.log("Attempting to show report toast");
+            console.log(reportToastEl);
+            reportToast.show();
+
             this.reset();
-          } else {
-            alert('Error: ' + data.message);
-          }
+            } else {
+            reportToastMsg.textContent = 'Error: ' + data.message;
+            reportToastEl.classList.remove('bg-success','bg-warning');
+            reportToastEl.classList.add('bg-danger');
+            reportToast.show();
+            }
         })
-        .catch(error => {
-          console.error('Error:', error);
-          alert('Something went wrong while sending the report.');
+        .catch(err => {
+            console.error(err);
+            reportToastMsg.textContent = 'Something went wrong while sending the report.';
+            reportToastEl.classList.remove('bg-success','bg-warning');
+            reportToastEl.classList.add('bg-danger');
+            reportToast.show();
         });
-      });
+        });
+
 
 
     //for uuuh view count on local storage    

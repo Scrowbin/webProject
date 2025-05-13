@@ -6,6 +6,18 @@ function getChapterPages($chapterID){
     return array_column($result, 'PageLink');
 
 }
+function insertPage($chapterID, $filePath, $order) {
+    $sql = "INSERT INTO chapter_pages (ChapterID, PageNumber, PageLink) VALUES (?, ?, ?)";
+    pdo_execute($sql, $chapterID, $order, $filePath);
+}
+
+function getMangaID($chapterID): string{
+    $sql = "SELECT MangaID FROM chapter WHERE ChapterID = ?";
+    $result = pdo_query_value($sql,$chapterID);
+    return $result;
+
+}
+
 function chapterExist($chapterID){
     $sql = "SELECT 1 FROM chapter WHERE ChapterID = ?";
     $result = pdo_query($sql, $chapterID);

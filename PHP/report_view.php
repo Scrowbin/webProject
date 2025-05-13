@@ -104,7 +104,7 @@ $(document).ready(function() {
                 // Update pagination
                 pageNum.textContent = `Page ${page}`;
                 prevButton.disabled = page <= 1;
-                nextButton.disabled = !data.has_more;
+                nextButton.disabled = !data.mangaHasMore;
 
                 // Update page
                 mangaPage = page;
@@ -142,7 +142,7 @@ $(document).ready(function() {
                 // Update pagination
                 pageNum.textContent = `Page ${page}`;
                 prevButton.disabled = page <= 1;
-                nextButton.disabled = !data.has_more;
+                nextButton.disabled = !data.chapterHasMore;
 
                 // Update page
                 chapterPage = page;

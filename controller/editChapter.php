@@ -3,11 +3,14 @@
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
+    function cleanNumber($n) {
+        return (is_numeric($n) && floor($n) == $n) ? intval($n) : floatval($n);
+    }
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $chapterID = $_POST['chapterID'];
         $volume = $_POST['volume'] ?? null;
         $chapterScangroup = $_POST['scangroup-name'] ?? "Anonymous"; 
-        $chapterNum = $_POST['chapter-number'] ?? 0;
+        $chapterNum = cleanNumber($_POST['chapter-number']) ?? 0;
         $chapterName = $_POST['chapter-name'] ?? '';
         $language = $_POST['language'] ?? 'en';
 
@@ -29,6 +32,7 @@
             exit();
         }
 
+        $mangaID = getMangaID($chapterID);
         $uploadDir = "../IMG/$mangaID/$chapterNum/";
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777, true);

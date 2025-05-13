@@ -3,6 +3,9 @@
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
+    function cleanNumber($n) {
+        return (is_numeric($n) && floor($n) == $n) ? intval($n) : floatval($n);
+    }
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $userID = $_SESSION['userID'] ?? 0;
         if ($userID==0){
@@ -18,7 +21,7 @@
         $mangaID = $_POST['MangaID'];
         $volume = $_POST['volume'] ?? null;
         $chapterScangroup = $_POST['scangroup-name'] ?? "Anonymous"; 
-        $chapterNum = $_POST['chapter-number'] ?? 0;
+        $chapterNum = cleanNumber($_POST['chapter-number']) ?? 0;
         $chapterName = $_POST['chapter-name'] ?? '';
         $language = $_POST['language'];
 
