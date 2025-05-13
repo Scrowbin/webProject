@@ -1,6 +1,5 @@
 <?php
 require_once('../db/fetchChapter.php');
-require_once('../db/commentsPdo.php');
 
 // Get JSON input from JavaScript
 $data = json_decode(file_get_contents('php://input'), true);
