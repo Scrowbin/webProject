@@ -1,17 +1,18 @@
 <?php
-    require_once('pdo.php');
+    require_once 'pdo.php';
+    require_once 'mangaInfoPdo.php';
 
     //này sẽ lấy mấy cái gần nhất trong vòng 1 ngày từ cùng 1 manga mà thôi
     function getUpdates($limit, $offset) {
         $sql = "
-            SELECT 
-                c.*, 
-                m.MangaNameOG, 
+            SELECT
+                c.*,
+                m.MangaNameOG,
                 m.CoverLink
             FROM chapter c
             JOIN (
-                SELECT 
-                    MangaID, 
+                SELECT
+                    MangaID,
                     MAX(UploadTime) as LatestUpload
                 FROM chapter
                 GROUP BY MangaID
@@ -31,10 +32,10 @@
                 FROM
                 commentsection cs
                 JOIN
-                comment c 
+                comment c
                 ON
                 cs.CommentSectionID = c.CommentSectionID
-                WHERE 
+                WHERE
                 cs.ChapterID = ?
                 GROUP BY
                 cs.CommentSectionID
@@ -43,14 +44,14 @@
     }
     function getUpdatesBookmark($userID,$limit, $offset) {
         $sql = "
-            SELECT 
-                c.*, 
-                m.MangaNameOG, 
+            SELECT
+                c.*,
+                m.MangaNameOG,
                 m.CoverLink
             FROM chapter c
             JOIN (
-                SELECT 
-                    MangaID, 
+                SELECT
+                    MangaID,
                     MAX(UploadTime) as LatestUpload
                 FROM chapter
                 GROUP BY MangaID
@@ -72,17 +73,14 @@
     }
     function getLibrary($userID,$limit){
         $sql = "SELECT m.* from manga m
-                JOIN bookmark b 
+                JOIN bookmark b
                 ON m.MangaID = b.MangaID
                 WHERE b.UserID = ?
                 ORDER BY m.MangaID DESC
                 LIMIT ?";
         return pdo_query_int($sql,$userID,$limit);
     }
-    function getCommentSectionID($chapterID){
-        $sql = "SELECT CommentSectionID from commentsection WHERE ChapterID = ?";
-        return pdo_query_value($sql, $chapterID);
-    }
+    // Function getCommentSectionID moved to mangaInfoPdo.php to avoid duplication
     function getNumOfComment($commentSectionID){
         $sql = "SELECT COUNT(*) AS NumOfComments from comment WHERE CommentSectionID = ?";
         return pdo_query_value($sql, $commentSectionID);

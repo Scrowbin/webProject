@@ -3,7 +3,7 @@
         session_start();
     }
 
-    require_once('pdo.php');
+    require_once 'pdo.php';
     $isLoggedIn = isset($_SESSION['userID']);
    
     function getMangaInfo($mangaID){
@@ -104,6 +104,20 @@
         return pdo_query_value($sql,$mangaID);
     }
 
+    function getFirstChapter($mangaID) {
+        $sql = 'SELECT ChapterID FROM chapter
+                WHERE MangaID = ?
+                ORDER BY ChapterNumber ASC
+                LIMIT 1';
+        return pdo_query_one($sql, $mangaID);
+    }
+
+    function getCommentSectionID($chapterID) {
+        $sql = 'SELECT CommentSectionID FROM commentsection WHERE ChapterID = ?';
+        $result = pdo_query_one($sql, $chapterID);
+        return $result ? $result['CommentSectionID'] : null;
+    }
+
     /**
      * Get manga with the highest average ratings
      *
@@ -122,4 +136,3 @@
 
         return pdo_query_int($sql, $minRatings, $limit);
     }
-?>

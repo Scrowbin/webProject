@@ -136,7 +136,21 @@ document.addEventListener("DOMContentLoaded", function () {
     .then(res => res.json())
     .then(grouped => {
         groupedData = grouped;
-        renderPage(currentPage);
+
+        // Check if there's any reading history
+        if (grouped.length === 0) {
+            const container = document.getElementById('manga-container');
+            container.innerHTML = `
+                <h2 class="mb-4">Reading History</h2>
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle me-2"></i>
+                    You haven't read any manga yet. Start reading to see your history here!
+                </div>
+            `;
+            document.getElementById('pagination').style.display = 'none';
+        } else {
+            renderPage(currentPage);
+        }
     })
     .catch(err => console.error('Failed to load viewed chapters:', err));
 });

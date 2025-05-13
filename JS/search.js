@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchDropdown = document.getElementById('search-dropdown');
     const searchBox = document.querySelector('.search-box');
     const searchClose = document.getElementById('search-close');
+    const viewAllLink = document.querySelector('.view-all-link');
 
     // Keyboard shortcut for search (Ctrl+K)
     document.addEventListener('keydown', function(e) {
@@ -50,6 +51,19 @@ document.addEventListener('DOMContentLoaded', function() {
         searchClose.addEventListener('click', function(e) {
             e.stopPropagation();
             closeSearch();
+        });
+    }
+
+    // Handle advanced search link click
+    if (viewAllLink) {
+        viewAllLink.addEventListener('click', function(e) {
+            const query = searchInput.value.trim();
+            if (query.length > 0) {
+                // If there's a query, redirect to advanced search with the query
+                const basePath = getBasePath();
+                e.preventDefault();
+                window.location.href = `${basePath}controller/advanced_search_controller.php?query=${encodeURIComponent(query)}`;
+            }
         });
     }
 

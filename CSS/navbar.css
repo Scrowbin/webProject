@@ -193,6 +193,11 @@ body.sidebar-open #nav-sidebar {
   flex-grow: 1; /* Allow nav to fill remaining space */
 }
 
+/* Add spacing after Home link */
+.sidebar-nav > a.nav-link {
+  margin-bottom: 0.75rem;
+}
+
 .sidebar-nav .nav-link {
   display: flex; /* Use flex for icon alignment */
   align-items: center; /* Align icon and text */
@@ -204,7 +209,9 @@ body.sidebar-open #nav-sidebar {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.sidebar-nav .nav-link i {
+/* Style for all icons in the sidebar (both nav-link and section-title) */
+.sidebar-nav .nav-link i:not(.float-end),
+.sidebar-section .section-title i:not(.float-end) {
   margin-right: 0.75rem;
   width: 20px;
   text-align: center;
@@ -218,39 +225,102 @@ body.sidebar-open #nav-sidebar {
 }
 
 .sidebar-section {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   border-top: 1px solid #333;
   padding-top: 1rem;
+  padding-bottom: 0.5rem;
 }
 
 .sidebar-section .section-title {
   font-weight: bold;
   color: #e0e0e0;
   padding: 0.75rem 1rem; /* Match nav-link padding */
-  display: block; /* Make it block for padding */
-  margin-bottom: 0.25rem;
+  display: flex; /* Use flex for icon alignment */
+  align-items: center; /* Align icon and text */
+  justify-content: space-between; /* Space between text and plus icon */
+  margin-bottom: 0.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: default; /* Default cursor for non-clickable sections */
+  font-size: 1rem;
+  /* Remove transition for non-clickable sections */
 }
 
-.sidebar-section .section-title:hover {
-  background-color: transparent; /* No hover effect like links */
+/* Make only Titles section appear clickable */
+.sidebar-section .section-title[data-section="titles"] {
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Active state for all section titles */
+.sidebar-section .section-title.active {
+  background-color: #FF6740;
+  color: #fff;
+}
+
+/* Explicitly disable hover effects for non-Titles sections */
+.sidebar-section .section-title:not([data-section="titles"]):hover {
+  background-color: transparent;
+  color: #e0e0e0;
+}
+
+/* Style for the plus icon in Titles section */
+.sidebar-section .section-title[data-section="titles"] .float-end {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+  margin-left: auto; /* Push to the right */
+}
+
+.sidebar-section .section-title[data-section="titles"]:hover .float-end {
+  opacity: 1;
+}
+
+/* Ensure consistent text alignment in all section titles */
+.sidebar-section .section-title {
+  position: relative;
+}
+
+/* Ensure all section titles have the same width for text */
+.sidebar-section .section-title span {
+  flex: 1;
+  text-align: left;
+}
+
+/* Only apply hover effect to the Titles section */
+.sidebar-section .section-title[data-section="titles"]:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Subtle hover effect */
   color: #fff;
 }
 
 .sidebar-section .sub-links {
-  padding-left: calc(1rem + 20px + 0.75rem); /* Indent past icon */
-  margin-top: 0.5rem;
+  padding-left: 0; /* Remove left padding */
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
 }
 
 .sidebar-section .sub-links .nav-link {
-  padding: 0.5rem 0; /* Adjust padding */
+  padding: 0.75rem 1rem; /* Full width padding */
   font-size: 0.9rem;
   color: #aaa;
-  margin-bottom: 0.1rem;
+  margin-bottom: 0.25rem;
+  transition: all 0.2s ease;
+  display: block;
+  border-radius: 4px;
+  text-decoration: none;
 }
 
 .sidebar-section .sub-links .nav-link:hover {
-  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0.05);
   color: #fff;
+}
+
+/* Active subsection styling to match the reference image */
+.sidebar-section .sub-links .nav-link.active {
+  background-color: #FF6740;
+  color: #fff;
+  font-weight: 500;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .sidebar-footer {

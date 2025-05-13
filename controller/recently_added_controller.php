@@ -18,7 +18,7 @@ $username = $_SESSION['username'] ?? null;
 if (!isset($_SESSION['userID'])) {
     if ($username != null){
         $userID = getUserID($_SESSION['username']);
-        $_SESSION['userID'] = $userID;        
+        $_SESSION['userID'] = $userID;
     }
 }
 
@@ -46,9 +46,22 @@ $totalMangaCount = count($allRecentManga);
 // Get manga for current page
 $manga = getRecent(1000);
 foreach($manga as $i => $m){
-    $manga[$i]['tags'] = getTags($m["MangaID"]);
-    $manga[$i]['authors'] = getMangaAuthors($m["MangaID"]);
-    $manga[$i]['artists'] = getMangaArtists($m["MangaID"]);
+    $mangaID = $m["MangaID"];
+    $manga[$i]['tags'] = getTags($mangaID);
+    $manga[$i]['authors'] = getMangaAuthors($mangaID);
+    $manga[$i]['artists'] = getMangaArtists($mangaID);
+
+    // Add real stats data
+    $manga[$i]['CommentCount'] = getTotalComments($mangaID) ?? 0;
+    $manga[$i]['FollowCount'] = getTotalFollows($mangaID) ?? 0;
+    $manga[$i]['AvgRating'] = getAverageRating($mangaID) ?? 0;
+
+    // Get the first chapter's comment section ID for direct comment link
+    $firstChapter = getFirstChapter($mangaID);
+    if ($firstChapter) {
+        $commentSectionID = getCommentSectionID($firstChapter['ChapterID']);
+        $manga[$i]['CommentSectionID'] = $commentSectionID;
+    }
 }
 
 // Slice for pagination

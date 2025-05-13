@@ -10,15 +10,24 @@
     </button>
   </div>
   <nav class="sidebar-nav">
-      <a href="<?= $pathPrefix ?>index.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : '' ?>"><i class="bi bi-house-door-fill"></i> Home</a>
-      <a href="<?= $pathPrefix ?>controller/follows_controller.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'follows.php' || (isset($isFollows) && $isFollows) ? 'active' : '' ?>"><i class="bi bi-arrow-repeat"></i> Updates</a>
-      <a href="<?= $pathPrefix ?>controller/library_controller.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'library.php' || (isset($isLibrary) && $isLibrary) ? 'active' : '' ?>"><i class="bi bi-collection-fill"></i> Library</a>
-      <a href="#" class="nav-link"><i class="bi bi-list-ul"></i> MDLists</a>
+      <!-- Home as a standalone section -->
+      <a href="<?= $pathPrefix ?>index.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : '' ?>"><i class="bi bi-house-door-fill"></i> <span>Home</span></a>
 
+      <!-- Follows section with subsections -->
       <div class="sidebar-section">
-          <a href="<?= $pathPrefix ?>controller/create_controller.php" class="nav-link section-title"><i class="bi bi-book-fill"></i> Titles <i class="bi bi-plus-lg float-end"></i></a>
+          <div class="nav-link section-title <?= basename($_SERVER['PHP_SELF']) == 'follows.php' || (isset($isFollows) && $isFollows) ? 'active' : '' ?>" data-section="follows"><i class="bi bi-bookmark-fill"></i> <span>Follows</span></div>
           <div class="sub-links">
-              <a href="#" class="nav-link">Advanced Search</a>
+              <a href="<?= $pathPrefix ?>controller/follows_controller.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'follows.php' || (isset($isFollows) && $isFollows) ? 'active' : '' ?>">Updates</a>
+              <a href="<?= $pathPrefix ?>controller/library_controller.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'library.php' || (isset($isLibrary) && $isLibrary) ? 'active' : '' ?>">Library</a>
+              <a href="<?= $pathPrefix ?>controller/readingHistory_controller.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'readingHistory_controller.php' || (isset($isReadingHistory) && $isReadingHistory) ? 'active' : '' ?>">Reading History</a>
+          </div>
+      </div>
+
+      <!-- Titles section (unchanged) -->
+      <div class="sidebar-section">
+          <a href="<?= $pathPrefix ?>controller/create_controller.php" class="nav-link section-title" data-section="titles"><i class="bi bi-book-fill"></i> <span>Titles</span> <i class="bi bi-plus-lg float-end"></i></a>
+          <div class="sub-links">
+              <a href="<?= $pathPrefix ?>controller/advanced_search_controller.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'advanced_search.php' || (isset($isAdvancedSearch) && $isAdvancedSearch) ? 'active' : '' ?>">Advanced Search</a>
               <a href="<?= $pathPrefix ?>controller/recently_added_controller.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'recently_added_controller.php' || (isset($isRecentlyAdded) && $isRecentlyAdded) ? 'active' : '' ?>">Recently Added</a>
               <a href="<?= $pathPrefix ?>controller/latestUpdates_controller.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'latestUpdates.php' || (isset($isLatestUpdates) && $isLatestUpdates) ? 'active' : '' ?>">Latest Updates</a>
               <a href="<?= $pathPrefix ?>controller/random_manga_controller.php" class="nav-link">Random</a>
@@ -28,7 +37,7 @@
 
       <!-- MangaDex Section - Visible to all users -->
       <div class="sidebar-section">
-          <a href="#" class="nav-link section-title"><i class="bi bi-speedometer2"></i> MangaDex</a>
+          <div class="nav-link section-title" data-section="mangadex"><i class="bi bi-speedometer2"></i> <span>MangaDex</span></div>
            <div class="sub-links">
               <a href="<?= $pathPrefix ?>controller/announcement_controller.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'announcement.php' ? 'active' : '' ?>">Announcements</a>
               <!-- Report link - Visible to all but only admins can access -->
@@ -39,7 +48,7 @@
       <?php if (isset($role) && $role === 'admin'): ?>
       <!-- Admin Section - Only visible to admins -->
       <div class="sidebar-section">
-          <a href="#" class="nav-link section-title"><i class="bi bi-shield-lock-fill"></i> Admin</a>
+          <div class="nav-link section-title" data-section="admin"><i class="bi bi-shield-lock-fill"></i> <span>Admin</span></div>
            <div class="sub-links">
               <a href="<?= $pathPrefix ?>controller/announcement_controller.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'announcement.php' ? 'active' : '' ?>">Create Announcement</a>
            </div>

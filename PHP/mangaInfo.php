@@ -171,7 +171,7 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
                     <span class="d-none d-md-inline">Edit Manga</span>
                 </button>
 
-            <?php  
+            <?php
                 }
             ?>
     </div>
@@ -198,7 +198,7 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
                     <span class="badge bg-danger mb-1" style="background-color: #ff4040"><?= strtoupper($tagName) ?></span>
                     <?php
                 }
-                
+
                 foreach ($normalTags as $tagName) {
                     ?>
                     <span class="badge mb-1"><?= strtoupper($tagName) ?></span>
@@ -226,7 +226,7 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
 
     <!-- chapters part -->
 
-    <div class="volumes-and-chapters container">
+    <div id="comments" class="volumes-and-chapters container">
     <?php
         foreach ($grouped as $group) {
             $volume = truncateNumber($group[0]['Volume']);
@@ -253,7 +253,7 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
                         <div class="info-left">
                             <div>
                                 <img class="icon" src="../IMG/eye.svg">
-                            
+
                                 <?php echo getFlag($chapters["Language"]);?>
 
                                 <span class="chapter-title">
@@ -394,7 +394,7 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
         const mangaID = <?= json_encode($mangaID) ?>;
     </script>
     <script src="../JS/mangaInfo.js"></script>
-    
+
 
 </body>
 </html>
