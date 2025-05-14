@@ -6,6 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 require_once __DIR__ . '/../db/account_db.php';
+require_once __DIR__ . '/../db/upload_model.php'; // Để sử dụng hàm getUsername
 
 // --- Handler Functions ---
 
@@ -18,8 +19,8 @@ function handleLogin(): void
         unset($_SESSION['forgot_password_message']);
     }
 
-    if (isset($_SESSION['username'])) { 
-        header('Location: ../index.php'); 
+    if (isset($_SESSION['userID'])) {
+        header('Location: ../index.php');
         exit;
     }
 
@@ -35,23 +36,30 @@ function handleLogin(): void
         }
 
         if (empty($errors)) {
-            $user = account_find_by_username_or_email($usernameOrEmail); 
+            $user = account_find_by_username_or_email($usernameOrEmail);
 
             if ($user) {
                 if (password_verify($password, $user['password'])) {
                     if ($user['activated']) {
-                        $_SESSION['username'] = $user['username']; 
+                        $_SESSION['username'] = $user['username'];
+
+                        // Get and store userID in session
+                        $userID = getUserID($user['username']);
+                        if ($userID) {
+                            $_SESSION['userID'] = $userID;
+                        }
+
                         session_regenerate_id(true);
 
                         // --- Redirect back using session or fallback ---
                         $redirectUrl = $_SESSION['login_return_url'] ?? '../index.php';
                         unset($_SESSION['login_return_url']); // Clear after use
-                        
+
                         // Basic check to prevent redirection loops to auth controller itself
                         if (str_contains($redirectUrl, 'auth_controller.php')) {
                              $redirectUrl = '../index.php';
                         }
-                        header("Location: " . $redirectUrl); 
+                        header("Location: " . $redirectUrl);
                         // --- End Redirect logic ---
                         exit;
                     } else {
@@ -133,12 +141,12 @@ function handleRegister(): void
             $activation_link = "{$scheme}://{$host}{$script_path}?action=activate&token=" . $activation_token;
 
             if (account_add($username, $hashed_password, $email, $activation_token)) {
-                if (user_add($username)) { 
+                if (user_add($username)) {
                     $success_data = [
                         'message' => "Registration successful! Please check your email to activate your account.",
                         'activation_link_html' => "Activation Link (for testing): <a href='{$activation_link}'>{$activation_link}</a>"
                     ];
-                    $post_data = []; 
+                    $post_data = [];
                     // TODO: Implement actual email sending for activation link
                     error_log("Activation link for {$username}: {$activation_link}"); // For testing
                 } else {
@@ -195,12 +203,12 @@ function handleForgotPassword(): void
             $user = account_find_by_username_or_email($usernameOrEmail);
             if ($user) {
                  // TODO: Implement password reset token generation, storage, and email sending.
-                 error_log("Password reset requested for user: " . $user['username']); 
+                 error_log("Password reset requested for user: " . $user['username']);
                  $_SESSION['forgot_password_message'] = "If an account with that username or email exists, password reset instructions have been sent.";
                  header("Location: auth_controller.php?action=login");
                  exit;
             } else {
-                $errors['credentials'] = 'Username or email not found.'; 
+                $errors['credentials'] = 'Username or email not found.';
             }
         }
     }
@@ -210,13 +218,26 @@ function handleProfile(): void
 {
     global $user_data;
 
-    if (!isset($_SESSION['username'])) { 
+    if (!isset($_SESSION['userID'])) {
         header("Location: auth_controller.php?action=login");
         exit;
     }
 
-    $username = $_SESSION['username'];
-    $user_data = account_find_by_username($username);
+    $userID = $_SESSION['userID'];
+
+    // Lấy thông tin người dùng từ userID
+    $user_data = account_find_by_userID($userID);
+
+    // Nếu không tìm thấy thông tin người dùng, thử lấy từ username
+    if (!$user_data && isset($_SESSION['username'])) {
+        $username = $_SESSION['username'];
+        $user_data = account_find_by_username($username);
+    }
+
+    // Nếu vẫn không tìm thấy, đảm bảo username được lưu trong session
+    if ($user_data && !isset($_SESSION['username'])) {
+        $_SESSION['username'] = $user_data['username'];
+    }
 
     if (!$user_data) {
         session_unset();
@@ -229,9 +250,13 @@ function handleProfile(): void
 function handleUpdateProfile(): void {
     global $user_data, $profile_update_message, $profile_errors;
 
-    if (!isset($user_data)) { 
+    if (!isset($_SESSION['userID'])) {
          header("Location: auth_controller.php?action=login");
          exit;
+    }
+
+    if (!isset($user_data)) {
+        handleProfile(); // Lấy thông tin người dùng nếu chưa có
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -244,7 +269,7 @@ function handleUpdateProfile(): void {
          // Example: $profile_errors['dob'] = 'Invalid date format';
 
          if(empty($profile_errors)) {
-             // --- TODO: Implement Database Update for Profile --- 
+             // --- TODO: Implement Database Update for Profile ---
              // Requires a model function like account_update_profile($_SESSION['username'], $updateData)
              // This function would update fields in 'account' and/or 'user' table.
              $profile_update_message = "Profile update submitted (Backend logic needed)."; // Placeholder message
@@ -339,11 +364,11 @@ switch ($action) {
 
         session_unset();
         session_destroy();
-        header("Location: " . $redirectUrl); 
+        header("Location: " . $redirectUrl);
         exit;
     default:
         header("Location: auth_controller.php?action=login");
         exit;
 }
 
-?> 
+?>

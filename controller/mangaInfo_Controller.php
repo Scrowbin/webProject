@@ -7,18 +7,8 @@ require('../db/account_db.php');
 
 $userID = $_SESSION['userID'] ?? null;
 $username = $_SESSION['username'] ?? null;
-if (!isset($_SESSION['userID'])) {
-    if ($username != null){
-        $userID = getUserID($_SESSION['username']);
-        $_SESSION['userID'] = $userID;        
-    }
-}
 
-
-$isLoggedIn = false;
-if ($userID !=null || $username!= null){
-    $isLoggedIn =true;
-}
+$isLoggedIn = isset($_SESSION['userID']);
 $role = "user";
 if ($isLoggedIn){
     $role = get_role($userID);

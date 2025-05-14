@@ -112,4 +112,16 @@ function get_role(string $userID){
     return pdo_query_value($sql, $userID);
 }
 
+/**
+ * Finds account details by userID.
+ */
+function account_find_by_userID(int $userID): array|false
+{
+    $sql = "SELECT a.username, a.email, a.activated
+            FROM account a
+            JOIN user u ON a.username = u.Username
+            WHERE u.UserID = ? LIMIT 1";
+    return pdo_query_one($sql, $userID);
+}
+
 ?>

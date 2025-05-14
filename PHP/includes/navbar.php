@@ -3,8 +3,8 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-$is_logged_in = isset($_SESSION['username']);
-$username = $is_logged_in ? htmlspecialchars($_SESSION['username']) : 'Guest';
+$is_logged_in = isset($_SESSION['userID']);
+$username = $is_logged_in && isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Guest';
 
 // Define path prefix, default to empty string if not set by the including controller
 $pathPrefix = $pathPrefix ?? '';

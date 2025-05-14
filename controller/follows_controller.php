@@ -9,18 +9,7 @@
     $userID = $_SESSION['userID'] ?? null;
     $username = $_SESSION['username'] ?? null;
 
-    // Nếu không có userID nhưng có username, lấy userID từ username
-    if (!$userID && $username) {
-        $userID = getUserID($username);
-        if ($userID) {
-            $_SESSION['userID'] = $userID;
-        }
-    }
-
-    $isLoggedIn = false;
-    if ($userID != null || $username != null){
-        $isLoggedIn = true;
-    }
+    $isLoggedIn = isset($_SESSION['userID']);
 
     $isFollows = true; // Set flag for active menu item in sidebar
 
