@@ -1,5 +1,9 @@
 <?php 
     require_once('pdo.php');
+    function getMangaIDFromSlug($slug){
+        $sql = 'SELECT MangaID from manga WHERE Slug = ?';
+        return pdo_query_value($sql,$slug);
+    }
     function getMangaInfo($mangaID){
         $mangaInfo= pdo_query_one('select * from manga where mangaID = ?',$mangaID);
         return $mangaInfo;

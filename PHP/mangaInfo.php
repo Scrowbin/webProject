@@ -11,7 +11,7 @@ $mangaNameEN = $mangaInfo['MangaNameEN'];
 $mangaDesc= $mangaInfo['MangaDiscription'];
 $priorityTags = [];
 $normalTags = [];
-$cover = "../IMG/$mangaID/$image";
+$cover = "/IMG/$mangaID/$image";
 foreach ($tags as $tagName) {
     if (in_array(strtolower($tagName), ['gore', 'sexual violence'])) {
         $priorityTags[] = $tagName;
@@ -29,8 +29,8 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
 
-    <link rel="stylesheet" href="../CSS/navbar.css">
-    <link rel="stylesheet" href="../CSS/mangaInfo.css">
+    <link rel="stylesheet" href="/CSS/navbar.css">
+    <link rel="stylesheet" href="/CSS/mangaInfo.css">
     <title><?=$mangaNameOG?> - Mangadax</title>
 </head>
 <body>
@@ -92,7 +92,7 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
     <div class="container mt-3 ">
         <div class="d-flex align-items-center gap-2 flex-wrap">
             <div class="btn-wrapper">
-                <form method="POST" action="../controller/addToLibrary.php"
+                <form method="POST" action="/controller/addToLibrary.php"
                     class="m-0" id="add-form"
                     data-logged-in="<?= $isLoggedIn ? 'true' : 'false' ?>"
                     data-bookmarked="<?= $isBookmarked ? 'true' : 'false' ?>">
@@ -109,7 +109,7 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
                 </form>
             </div>
             <div class="btn-wrapper">
-                <form method="POST" action="../controller/submitRating.php"
+                <form method="POST" action="/controller/submitRating.php"
                     id="rating-form" class="m-0"
                     data-logged-in="<?= $isLoggedIn ? 'true' : 'false' ?>">
                     <input type="hidden" name="rating" id="rating-input" value="">
@@ -154,11 +154,11 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
             <?php
                 if ($role==="admin"){
             ?>
-                <button class="btn btn-outline-secondary d-flex align-items-center" onclick="window.location.href='upload_controller.php?MangaID=<?=$mangaID?>'">
+                <button class="btn btn-outline-secondary d-flex align-items-center" onclick="window.location.href='/upload/<?= $slug ?>'">
                     <i class="bi bi-upload me-2"></i>
                     <span class="d-none d-md-inline">Upload Chapter</span>
                 </button>
-                <button class="btn btn-outline-secondary d-flex align-items-center" onclick="window.location.href='delete_chapter_controller.php?MangaID=<?=$mangaID?>'">
+                <button class="btn btn-outline-secondary d-flex align-items-center" onclick="window.location.href='/admin/delete-chapter/<?=$slug?>'">
                     <i class="bi bi-trash me-2"></i>
                     <span class="d-none d-md-inline">Delete Chapter</span>
                 </button>
@@ -166,7 +166,7 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
                     <i class="bi bi-trash me-2"></i>
                     <span class="d-none d-md-inline">Delete Manga</span>
                 </button>
-                <button class="btn btn-outline-secondary d-flex align-items-center" onclick="window.location.href='/admin/edit-manga/<?=$mangaID?>'">
+                <button class="btn btn-outline-secondary d-flex align-items-center" onclick="window.location.href='/admin/edit-manga/<?=$slug?>'">
                     <i class="bi bi-pencil-square me-2"></i>
                     <span class="d-none d-md-inline">Edit Manga</span>
                 </button>
@@ -246,13 +246,14 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
             ';
             foreach($group as $chapters){
                 $chapterNum = truncateNumber($chapters['ChapterNumber']);
-
+                $chapterNumber = str_replace('.', '-', $chapterNum) ;
+                $chapterSlug = '/read/'.$slug.'/chapter-'.$chapterNumber;
                 ?>
-                <div class="chapter-container mt-1 "onclick="window.location.href='../controller/mangaRead_controller.php?chapterID=<?=$chapters['ChapterID']?>'">
+                <div class="chapter-container mt-1 "onclick="window.location.href='<?=$chapterSlug?>'">
                     <div class="chapter-info p-2">
                         <div class="info-left">
                             <div>
-                                <img class="icon" src="../IMG/eye.svg">
+                                <img class="icon" src="/IMG/eye.svg">
 
                                 <?php echo getFlag($chapters["Language"]);?>
 
@@ -262,30 +263,33 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
                             </div>
 
                             <a href="#" class="scan-group">
-                                <img src="../IMG/avatar.svg" alt="" class="icon">
+                                <img src="/IMG/avatar.svg" alt="" class="icon">
                                 <?=$chapters['ScangroupName']?>
                             </a>
                         </div>
 
                         <div class="info-middle">
                             <span class="time">
-                                <img src="../IMG/clock.svg" class="icon">
+                                <img src="/IMG/clock.svg" class="icon">
 
                                 <?=timeAgo($chapters['UploadTime'])?>
                             </span>
                             <span class="uploader">
-                                <img src="../IMG/avatar.svg" alt="" class="icon">
+                                <img src="/IMG/avatar.svg" alt="" class="icon">
                                 <a href="#"><?=$chapters['UploaderName']?></a>
                             </span>
                         </div>
 
                         <div class="info-right">
                             <span class="views">
-                                <img class="icon" src="../IMG/eye.svg">
+                                <img class="icon" src="/IMG/eye.svg">
                                 <strong>N/A</strong>
                             </span>
-                            <a href="../controller/comments_controller.php?commentsID=<?=$chapters['CommentSectionID']?>" class="comments">
-                                <img src="../IMG/comment.svg" alt="">
+                            <?php
+                                $commmentSlug ="/comments/" . $slug . '/chapter-'.$chapterNumber;
+                            ?>
+                            <a href="<?=$commmentSlug?>" class="comments">
+                                <img src="/IMG/comment.svg" alt="">
                                 <strong><?=$chapters['NumOfComments']?></strong>
                             </a>
                         </div>
@@ -388,12 +392,12 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../JS/navbar.js"></script> <!-- JS for Navbar/Sidebar -->
-    <script src="../JS/search.js"></script> <!-- JS for Search -->
+    <script src="/JS/navbar.js"></script> <!-- JS for Navbar/Sidebar -->
+    <script src="/JS/search.js"></script> <!-- JS for Search -->
     <script>
         const mangaID = <?= json_encode($mangaID) ?>;
     </script>
-    <script src="../JS/mangaInfo.js"></script>
+    <script src="/JS/mangaInfo.js"></script>
 
 
 </body>

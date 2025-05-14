@@ -1,6 +1,9 @@
 <?php
     require_once("../db/mangaInfoPdo.php");
-    $mangaID = $_GET['MangaID'] ?? null;
+    
+    $slug = $_GET['slug'] ?? null;
+
+    $mangaID = getMangaIDFromSlug($slug);
     if ($mangaID === null){
         exit('No mangaID found');
     }
@@ -14,6 +17,7 @@
     $image = $mangaInfo['CoverLink'];
     $pubStatus = $mangaInfo['PublicationStatus'];
     $mangaNameOG = $mangaInfo['MangaNameOG'];
+
     include("../PHP/upload.php");
 
 ?>

@@ -51,56 +51,63 @@ document.addEventListener("DOMContentLoaded", function () {
             const mangaHTML = `
                 <div class="manga-card">
                     <div class="manga-cover">
-                        <a href="../manga/${manga.Slug}">
-                            <img src="../IMG/${manga.MangaID}/${manga.CoverLink}" alt="Manga Cover">
+                        <a href="/manga/${manga.Slug}">
+                            <img src="/IMG/${manga.MangaID}/${manga.CoverLink}" alt="Manga Cover">
                         </a>
                     </div>
                     <div class="manga-details">
                         <div class="manga-header">
                             ${getFlag(manga.OriginalLanguage)}
-                            <a href="../manga/${manga.Slug}" class="manga-title"><strong>${manga.MangaNameOG}</strong></a>
+                            <a href="/manga/${manga.Slug}" class="manga-title"><strong>${manga.MangaNameOG}</strong></a>
                         </div>
                         <hr>
-                        ${mangaGroup.map(chapter => `
-                            <div class="chapter-container mb-1" onclick="window.location.href='../controller/mangaRead_controller.php?chapterID=${chapter.ChapterID}'">
-                                <div class="chapter-info">
-                                    <div class="info-left">
-                                        <div class="chapter-title">
-                                            ${getFlag(chapter.Language)}
-                                            <strong>Ch. ${truncateNumber(chapter.ChapterNumber)} - ${chapter.ChapterName}</strong>
+                        ${mangaGroup.map(chapter => {
+                            const chapterNum = truncateNumber(chapter.ChapterNumber);
+                            const chapterNumber = chapterNum.replace('.', '-');
+                            const chapterSlug = '/read/' + manga.Slug + '/chapter-' + chapterNumber;
+                            const CommentSectionSlug = '/comments/' + manga.Slug + '/chapter-' + chapterNumber;
+                            return `
+                                <div class="chapter-container mb-1" onclick="window.location.href='${chapterSlug}'">
+                                    <div class="chapter-info">
+                                        <div class="info-left">
+                                            <div class="chapter-title">
+                                                ${getFlag(chapter.Language)}
+                                                <strong>Ch. ${chapterNum} - ${chapter.ChapterName}</strong>
+                                            </div>
+                                            <div class="scan-group">
+                                                <a href="#">
+                                                    <img src="/IMG/avatar.svg" class="icon">
+                                                    <span>${chapter.ScangroupName}</span>
+                                                </a>
+                                            </div>
                                         </div>
-                                        <div class="scan-group">
-                                            <a href="#">
-                                                <img src="../IMG/avatar.svg" class="icon">
-                                                <span>${chapter.ScangroupName}</span>
-                                            </a>
+                                        <div class="info-middle">
+                                            <div class="time">
+                                                <img src="/IMG/clock.svg" class="icon">
+                                                <strong>${timeAgo(chapter.UploadTime)}</strong>
+                                            </div>
+                                            <div class="uploader">
+                                                <img src="/IMG/avatar.svg" class="icon">
+                                                <a href="#">${chapter.UploaderName}</a>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="info-middle">
-                                        <div class="time">
-                                            <img src="../IMG/clock.svg" class="icon">
-                                            <strong>${timeAgo(chapter.UploadTime)}</strong>
-                                        </div>
-                                        <div class="uploader">
-                                            <img src="../IMG/avatar.svg" class="icon">
-                                            <a href="#">${chapter.UploaderName}</a>
-                                        </div>
-                                    </div>
-                                    <div class="info-right">
-                                        <div class="views">
-                                            <img class="icon" src="../IMG/eye.svg">
-                                            <strong>N/A</strong>
-                                        </div>
-                                        <div class="comments">
-                                            <a href="../controller/comments_controller.php?commentsID=${chapter.CommentSectionID}">
-                                                <img src="../IMG/comment.svg">
-                                                <strong>${chapter.NumOfComments}</strong>
-                                            </a>
+                                        <div class="info-right">
+                                            <div class="views">
+                                                <img class="icon" src="/IMG/eye.svg">
+                                                <strong>N/A</strong>
+                                            </div>
+                                            <div class="comments">
+                                                <a href="${CommentSectionSlug}">
+                                                    <img src="/IMG/comment.svg">
+                                                    <strong>${chapter.NumOfComments}</strong>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        `).join('')}
+                            `;
+                        }).join('')}
+
                     </div>
                 </div>
             `;
@@ -128,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    fetch('../controller/fetchChapter.php', {
+    fetch('/controller/fetchChapter.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ chapterIDs: JSON.parse(localStorage.getItem('viewedChapters') || '[]') })

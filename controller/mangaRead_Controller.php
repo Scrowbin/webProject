@@ -21,9 +21,8 @@
     $userID = $_SESSION['userID'] ?? 0;
     $username = $_SESSION['username'] ?? null;
     $role = get_role($userID)??"user";
-    $nextChapterID = getNextChapter($chapterID);
-    $prevChapterID = getPrevChapter($chapterID);
-
+    $nextChapterNumber = getNextChapter($chapterID);
+    $prevChapterNumber = getPrevChapter($chapterID);
     $chapters = getChapters($chapterID);
     $mangaInfo = getMangaInfo($chapterID);
     $chapterInfo = getChapterInfo($chapterID);

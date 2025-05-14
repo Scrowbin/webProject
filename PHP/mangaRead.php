@@ -16,6 +16,7 @@
     $chapterDropdownValues = [];
     foreach($chapters as $chapter){
         $chapterDropdownValues[] = truncateNumber($chapter['ChapterNumber']);
+
     }
 
     function displayTitle($name,$number){
@@ -96,10 +97,11 @@
                 <div class="p-bar-number hidden" id = 'p-bar-number-high'><?=$lastPageNumber?></div>
             </nav>
             <?php
-                if ($nextChapterID) {
-                    echo "<button id='next-chapter' onclick=\"location.href='mangaRead_Controller.php?chapterID=$nextChapterID'\">Next Chapter</button>";
+                if ($nextChapterNumber) {
+                    $nextChapterSlug = "/read/" . $mangaSlug . "/chapter-" . str_replace(".","-",truncateNumber($nextChapterNumber));
+                    echo "<button id='next-chapter' onclick=\"location.href='$nextChapterSlug'\">Next Chapter</button>";
                 } else {
-                    echo "<button id='next-chapter' onclick=\"location.href='mangaInfo_Controller.php?MangaID=$mangaID'\">Back to Info</button>";
+                    echo "<button id='next-chapter' onclick=\"location.href='manga/$mangaSlug'\">Back to Info</button>";
                 }
             ?>
 
@@ -126,7 +128,11 @@
                         <span><?=$chapterName?></span>
                     </div>
                     <?php if ($role == "admin"):?>
-                        <button class="btn reader-btn" id = "editBtn" onclick="window.location.href='../controller/editChapter_controller.php?ChapterID=<?=$chapterID?>'; return false;"><i class = "bi bi-pencil"></i>Edit Chapter</button>
+                        <?php
+                            $chapterSlug ="/admin/edit-chapter/" . $mangaSlug . '/chapter-'. str_replace(".","-",$chapterNumber);
+                        ?>
+                        
+                        <button class="btn reader-btn" id = "editBtn" onclick="window.location.href='<?=$chapterSlug?>'; return false;"><i class = "bi bi-pencil"></i>Edit Chapter</button>
                     <?php endif;?>
 
                 </div>
@@ -158,10 +164,12 @@
                         <select class="dropdown" name="chapter" id="chapter-dropdown">
                             <?php
                             foreach ($chapters as $chapter) {
-                                $val = $chapter['ChapterID'];
                                 $display = truncateNumber($chapter['ChapterNumber']);
-                                $selected = ($val == $chapterID) ? 'selected' : '';
-                                echo "<option value=\"$val\" $selected>Chapter $display</option>";
+                                $chapterNumberSlug = str_replace('.', '-', $display); // Slug-friendly
+                                $chapterSlugDropdown = "/read/{$mangaSlug}/chapter-{$chapterNumberSlug}";
+                                $selected = ($display == $chapterNumber) ? 'selected' : '';
+
+                                echo "<option value=\"$chapterSlugDropdown\" $selected>Chapter $display</option>";
                             }
                             ?>
                         </select>
@@ -178,7 +186,10 @@
                 <hr>
 
                 <!-- Comments -->
-                <a href="comments_controller.php?commentsID=<?=$commentSection['CommentSectionID']?>">
+                <?php
+                    $commmentSlug ="/comments/" . $mangaSlug . '/chapter-'.$chapterNumber;
+                ?>
+                <a href = "<?=$commmentSlug?>">
                     <button class="btn" id = "comment-btn">
                         <i class="bi bi-chat-left"></i> <?=$commentSection['NumOfComments']?> Comments
                     </button>
@@ -338,10 +349,10 @@
 <script>
     const userID = <?=json_encode($userID) ?>;
     const chapterID = <?=json_encode($chapterID) ?>;
-    console.log(userID);
     const mangaID = <?= json_encode($mangaID) ?>;
-    const prevChapterID = <?= json_encode($prevChapterID) ?>;
-    const nextChapterID = <?= json_encode($nextChapterID) ?>;
+    const prevChapterSlug = <?= ($prevChapterNumber === null) ? json_encode(null) : json_encode("/read/" . $mangaSlug . "/chapter-" . str_replace(".","-",truncateNumber($prevChapterNumber)))?>;
+    const nextChapterSlug = <?= ($nextChapterNumber === null) ? json_encode(null) : json_encode("/read/" . $mangaSlug . "/chapter-" . str_replace(".","-",truncateNumber($nextChapterNumber))) ?>;
+    const mangaSlug = <?= json_encode("/manga/$mangaSlug") ?>;
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

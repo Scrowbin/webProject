@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const formData = new FormData(commentForm);
 
-            fetch('../controller/submitComment.php', {
+            fetch('/controller/submitComment.php', {
                 method: 'POST',
                 body: formData
             })
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const commentsPerPage = 5;
 
     function fetchComments(page = 1) {
-        fetch(`fetchComments.php?commentsID=${commentsID}&page=${page}`)
+        fetch(`/controller/fetchComments.php?commentsID=${commentsID}&page=${page}`)
             .then(response => response.json())
             .then(data => {
                 console.log("Loaded data:", data);
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     div.innerHTML = `
                         <div class="d-flex align-items-start mb-2">
-                            <img class="avatar" src=../IMG/${comment.Avatar} alt="User Avatar" class="rounded me-3" width="50" height="75">
+                            <img class="avatar" src=/IMG/${comment.Avatar} alt="User Avatar" class="rounded me-3" width="50" height="75">
                             <div class="user-info flex-grow-1">
                                 <div class="fw-bold text-warning">${comment.Username}</div>
                             </div>

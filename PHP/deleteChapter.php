@@ -27,8 +27,8 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
 
-    <link rel="stylesheet" href="../CSS/navbar.css">
-    <link rel="stylesheet" href="../CSS/mangaInfo.css">
+    <link rel="stylesheet" href="/CSS/navbar.css">
+    <link rel="stylesheet" href="/CSS/mangaInfo.css">
     <style>
         body {
             padding-top: 0;
@@ -38,11 +38,11 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
 <body class="bg-light">
 <?php
     // Set the path prefix for the navbar
-    $pathPrefix = '../';
+    $pathPrefix = '/';
     include 'includes/navbar_minimal.php';
 ?>
     <div class = "manga-container">
-        <a href="../controller/mangaInfo_Controller.php?MangaID=<?=$mangaID?>">
+        <a href="/manga/<?=$slug?>">
             <div class="bg-image">
                 <style>
                 .bg-image{
@@ -57,7 +57,7 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
                     rgba(0, 0, 0, 0.7) 10%,
                     rgba(0, 0, 0, 0.45) 50%,   /* Midpoint transition */
                     rgba(0, 0, 0, 0) 90%),   /* Fully transparent near the right */
-                    url("../IMG/<?=$mangaID?>/<?=$image?>");  /* Background image - KEEP DYNAMIC */
+                    url("/IMG/<?=$mangaID?>/<?=$image?>");  /* Background image - KEEP DYNAMIC */
                     background-position: center 20%;
                     background-repeat: no-repeat;
                     background-size: cover;
@@ -68,7 +68,7 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
             <div class="manga-card">
                 <!-- Left: Cover Image -->
                 <div class="manga-cover">
-                        <img src="../IMG/<?=$mangaID?>/<?=$image?>" alt="Manga Cover">
+                        <img src="/IMG/<?=$mangaID?>/<?=$image?>" alt="Manga Cover">
                 </div>
 
                 <!-- Right: Details -->
@@ -95,7 +95,7 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
                 <strong>Warning:</strong> Deleting chapters will permanently remove them and all associated comments. This action cannot be undone.
             </div>
 
-            <form action="../controller/deleteChapter.php" method="POST">
+            <form action="/controller/deleteChapter.php" method="POST">
             <input type="hidden" name="MangaID" value="<?= $mangaID ?>">
             <label for="chapterSelect" class="form-label">Select Chapter(s):</label>
                 <select name="chapterIds[]" id="chapterSelect" class="form-select" multiple size="10">
@@ -117,7 +117,7 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
                 <div class="form-text">Hold Ctrl (Windows) or Command (Mac) to select multiple chapters.</div>
 
                 <div class="d-flex justify-content-between mt-3">
-                    <a href="../controller/mangaInfo_Controller.php?MangaID=<?=$mangaID?>" class="btn btn-secondary">
+                    <a href="/controller/mangaInfo_Controller.php?MangaID=<?=$mangaID?>" class="btn btn-secondary">
                         <i class="bi bi-arrow-left"></i> Back to Manga
                     </a>
                     <button type="submit" class="btn btn-danger">

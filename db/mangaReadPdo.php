@@ -7,7 +7,11 @@
     }
     
     function getChapterID($mangaSlug, $chapterNumber){
-        $sql = 'SELECT ChapterID  FROM chapter JOIN manga WHERE manga.Slug = ? AND ChapterNumber = ?';
+        $sql = 'SELECT ChapterID
+                FROM chapter c
+                JOIN manga m
+                ON c.MangaID = m.MangaID
+                WHERE m.Slug = ? AND c.ChapterNumber = ?';
         return pdo_query_value($sql,$mangaSlug,$chapterNumber);
     }
 
@@ -36,13 +40,13 @@
     
         // Find the next chapter
         $next = pdo_query_one(
-            'SELECT ChapterID FROM chapter 
+            'SELECT ChapterNumber FROM chapter 
              WHERE MangaID = ? AND ChapterNumber > ? 
              ORDER BY ChapterNumber ASC LIMIT 1',
             $current['MangaID'], $current['ChapterNumber']
         );
     
-        return $next['ChapterID'] ?? null;
+        return $next['ChapterNumber'] ?? null;
     }
     
     function getPrevChapter($chapterID) {
@@ -52,13 +56,13 @@
     
         // Find the previous chapter
         $prev = pdo_query_one(
-            'SELECT ChapterID FROM chapter 
+            'SELECT ChapterNumber FROM chapter 
              WHERE MangaID = ? AND ChapterNumber < ? 
              ORDER BY ChapterNumber DESC LIMIT 1',
             $current['MangaID'], $current['ChapterNumber']
         );
     
-        return $prev['ChapterID'] ?? null;
+        return $prev['ChapterNumber'] ?? null;
     }
 
     

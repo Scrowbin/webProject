@@ -4,6 +4,7 @@ RewriteBase /
 
 RewriteRule ^manga/([a-zA-Z0-9\-]+)$ controller/mangaInfo_Controller.php?slug=$1 [QSA,L]
 RewriteRule ^read/([^/]+)/chapter-([0-9\-]+)$ /controller/mangaRead_controller.php?slug=$1&chapter=$2 [L,QSA]
+RewriteRule ^upload/([^/]+)$ /controller/upload_controller.php?slug=$1 [L,QSA]
 RewriteRule ^my-follows$ controller/follows_controller.php [QSA,L]
 RewriteRule ^library$ controller/library_controller.php [QSA,L]
 RewriteRule ^reading-history$ controller/readingHistory_controller.php [QSA,L]
@@ -11,11 +12,15 @@ RewriteRule ^search$ controller/advanced_search_controller.php [QSA,L]
 RewriteRule ^recently\-added$ controller/recently_added_controller.php [QSA,L]
 RewriteRule ^latest\-updates$ controller/latestUpdates_controller.php [QSA,L]
 RewriteRule ^random$ controller/random_manga_controller.php [QSA,L]
+RewriteRule ^comments/([^/]+)/chapter-([0-9\-]+)$ /controller/comments_controller.php?slug=$1&chapter=$2 [L,QSA]
+
 # Admin routes
 RewriteRule ^admin/create-announcements$ controller/announcement_controller.php [QSA,L]
 RewriteRule ^admin/view-reports$ controller/report_controller.php [QSA,L]
 RewriteRule ^admin/add-manga$ controller/create_controller.php [QSA,L]
-RewriteRule ^admin/edit-manga/([0-9]+)$ controller/edit_manga.php?MangaID=$1 [QSA,L]
+RewriteRule ^admin/edit-manga/([a-zA-Z0-9\-]+)$ controller/edit_manga.php?slug=$1 [QSA,L]
+RewriteRule ^admin/edit-chapter/([^/]+)/chapter-([0-9\-]+)$ /controller/editChapter_controller.php?slug=$1&chapter=$2 [L,QSA]
+RewriteRule ^admin/delete-chapter/([^/]+)$ /controller/delete_chapter_controller.php?slug=$1 [L,QSA]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

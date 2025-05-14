@@ -3,16 +3,16 @@
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
-    if (!isset($_GET['commentsID'])){
-        exit('Invalid comment section');
-    }
+
     $userID = $_SESSION['userID'] ?? null;
     $username = $_SESSION['username'] ?? null;
     $isLoggedIn = false;
     if ($userID !=null || $username!= null){
         $isLoggedIn =true;
     }
-    $commentsID = $_GET['commentsID'];
+    $mangaSlug = $_GET['slug'];
+    $chapter = str_replace("-",".",$_GET['chapter'])??null;
+    $commentsID = getCommentSectionIDBySlug($mangaSlug,$chapter) ?? 0;
     if ($commentsID==null || $commentsID==0){
         exit('This comment section doesnt exist yet');
     }

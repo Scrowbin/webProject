@@ -10,7 +10,7 @@ $username = $is_logged_in && isset($_SESSION['username']) ? htmlspecialchars($_S
 $pathPrefix = $pathPrefix ?? '';
 
 // Corrected path for default avatar
-$user_avatar = $pathPrefix . 'IMG/avatar_default.png'; // Path relative to index.php
+$user_avatar = '/IMG/avatar_default.png'; // Path relative to index.php
 ?>
 
 <!-- Navigation Bar -->
@@ -20,9 +20,9 @@ $user_avatar = $pathPrefix . 'IMG/avatar_default.png'; // Path relative to index
       <i class="bi bi-list fs-3"></i>
     </button>
     <?php // Link to index.php (homepage controller) ?>
-    <a class="navbar-brand text-white fw-bold d-flex align-items-center" href="<?= $pathPrefix ?>index.php">
+    <a class="navbar-brand text-white fw-bold d-flex align-items-center" href="/">
        <?php // Corrected path for logo ?>
-       <img src="<?= $pathPrefix ?>IMG/logo.png" alt="Logo" style="height: 30px; margin-right: 8px;">
+       <img src="/IMG/logo.png" alt="Logo" style="height: 30px; margin-right: 8px;">
        MangaDax
     </a>
 
@@ -39,7 +39,7 @@ $user_avatar = $pathPrefix . 'IMG/avatar_default.png'; // Path relative to index
     <button class="btn text-white p-0" type="button" id="user-avatar-btn" data-bs-toggle="modal" data-bs-target="#user-modal">
       <?php if ($is_logged_in): ?>
         <?php // Path to avatar is correct now ?>
-        <img src="<?php echo $user_avatar; ?>" alt="User Avatar" class="rounded-circle" width="32" height="32">
+        <img src="<?=$user_avatar?>" alt="User Avatar" class="rounded-circle" width="32" height="32">
       <?php else: ?>
         <i class="bi bi-person-circle fs-3"></i> <?php /* Display default icon */ ?>
       <?php endif; ?>
