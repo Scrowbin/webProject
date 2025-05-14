@@ -1,5 +1,6 @@
+/* Modal styles */
 .modal-backdrop {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.7);
 }
 
 /* Center cropping image inside modal */
@@ -8,57 +9,164 @@
     max-height: 300px;
     overflow: hidden;
 }
-#cropper-container1{
-    max-width: 500px;
+
+#cropper-container1 {
+    max-width: 100%;
     max-height: 500px;
     overflow: hidden;
-
 }
-#previewAvatar{
+
+#previewAvatar {
     margin: 0 auto;
-}/* Custom Styles */
-body {
-    background-color: #f8f9fa;
 }
 
+/* Dark theme styles */
+body {
+    background-color: #121212;
+    color: #f8f9fa;
+}
+
+/* Sidebar styles */
 .list-group-item {
-    border-color: #dee2e6;
+    background-color: #212529;
+    border-color: #343a40;
+    color: #f8f9fa;
 }
 
 .list-group-item.fw-bold {
-    background-color: #e9ecef;
+    background-color: #343a40;
 }
 
+.list-group-item.active {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.list-group-item a {
+    color: #f8f9fa;
+}
+
+/* Avatar styles */
 .avatar {
     display: block;
-    margin-bottom: 5px;
     width: 150px;
     height: 150px;
     object-fit: cover;
-    border: 1px solid #ddd;
-    
+    border: 1px solid #343a40;
+    border-radius: 4px;
 }
 
+.avatar-wrapper {
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.avatar-wrapper:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
+}
+
+/* Banner styles */
 .banner {
     max-width: 100%;
     height: auto;
     display: block;
-    margin-bottom: 5px;
+    border-radius: 4px;
+    border: 1px solid #343a40;
+}
 
+.banner-container img {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.banner-container img:hover {
+    opacity: 0.9;
+}
+
+/* Form control styles */
+.form-control {
+    background-color: #212529;
+    border-color: #343a40;
+    color: #f8f9fa;
+}
+
+.form-control:focus {
+    background-color: #212529;
+    border-color: #495057;
+    color: #f8f9fa;
+    box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
 }
 
 .form-control:read-only {
-    background-color: #e9ecef;
+    background-color: #1a1a1a;
 }
 
+.form-select {
+    background-color: #212529;
+    border-color: #343a40;
+    color: #f8f9fa;
+}
+
+.form-select:focus {
+    border-color: #495057;
+    box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+}
+
+/* Button styles */
+.btn-warning {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #212529;
+}
+
+.btn-warning:hover {
+    background-color: #ffca2c;
+    border-color: #ffc720;
+}
+
+.btn-outline-danger {
+    color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+/* Modal styles */
 .modal-content {
-    border-radius: 10px;
+    border-radius: 8px;
+    background-color: #212529;
+    color: #f8f9fa;
 }
 
 .modal-header {
-    border-bottom: 1px solid #dee2e6;
+    border-bottom: 1px solid #343a40;
 }
 
 .modal-footer {
-    border-top: 1px solid #dee2e6;
+    border-top: 1px solid #343a40;
+}
+
+/* TinyMCE custom styles */
+.tox-tinymce {
+    border-color: #343a40 !important;
+    border-radius: 4px !important;
+}
+
+.tox .tox-toolbar,
+.tox .tox-toolbar__primary,
+.tox .tox-toolbar__overflow {
+    background-color: #212529 !important;
+}
+
+.tox .tox-tbtn {
+    color: #f8f9fa !important;
+}
+
+.tox .tox-tbtn:hover {
+    background-color: #343a40 !important;
 }

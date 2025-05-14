@@ -63,16 +63,16 @@ $user_avatar = $pathPrefix . 'IMG/avatar_default.png'; // Path relative to index
           </div>
 
           <nav class="nav flex-column user-modal-nav mb-2">
-            <?php // Link to profile controller action ?>
-            <a class="nav-link text-white" href="<?= $pathPrefix ?>controller/auth_controller.php?action=profile"><i class="bi bi-person me-2"></i> My Profile</a>
+            <?php // Link to user profile controller action ?>
+            <a class="nav-link text-white" href="<?= $pathPrefix ?>controller/auth_controller.php?action=user_profile"><i class="bi bi-person me-2"></i> My Profile</a>
             <a class="nav-link text-white" href="<?= $pathPrefix ?>controller/follows_controller.php"><i class="bi bi-bookmark me-2"></i> My Follows</a>
           </nav>
 
           <hr class="user-modal-divider mt-2 mb-2">
 
           <div class="d-flex justify-content-between mb-2 user-modal-actions px-2">
-            <?php // Link to profile controller action ?>
-            <a href="<?= $pathPrefix ?>controller/auth_controller.php?action=profile" class="text-decoration-none text-white d-flex align-items-center"><i class="bi bi-gear me-2"></i> Settings</a>
+            <?php // Link to profile settings controller action ?>
+            <a href="<?= $pathPrefix ?>controller/auth_controller.php?action=profile" class="text-decoration-none text-white d-flex align-items-center"><i class="bi bi-gear me-2"></i> Profile Settings</a>
           </div>
 
           <hr class="user-modal-divider mt-2 mb-3">

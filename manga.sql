@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 11, 2025 lúc 10:06 AM
+-- Thời gian đã tạo: Th5 14, 2025 lúc 10:08 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -43,7 +43,8 @@ INSERT INTO `account` (`username`, `password`, `email`, `activated`, `activate_t
 ('Bababoey', '$2y$10$bZvprCGXt2ZMVpAADu8vruEi6QTApeWj6J83RZEJfxmusNnTmGGXi', 'hjiisan8man@gmail.com', b'1', ''),
 ('Nguvlra', '$2y$10$Ly0RDyKhACCP1E.0ig0bqukOoLQ4/MbzppV0xJcEmcYfrk.Fwvj6S', 'kongudau2@gmail.com', b'1', ''),
 ('Nguvlra123', '$2y$10$axNk07NbQlXWnREo2fSbAe366RF1fxQcT1zFCIFrocbXT5NQaLYgu', 'hjiisanman@gmail.com', b'1', '195b52feb560d30cd7f03d52c5c6b808c13671614d8565eb65bf1b82ec36c395'),
-('damian123', '$2y$10$q6lb251QxROh9hGCoALU2euTGfI2fjnPCETVRRwcIzxBCZtkPW5ca', 'damian123@gmail.com', b'1', '');
+('damian123', '$2y$10$q6lb251QxROh9hGCoALU2euTGfI2fjnPCETVRRwcIzxBCZtkPW5ca', 'damian123@gmail.com', b'1', ''),
+('eugene123', '$2y$10$8YhmYqWV7xHFvgsPSskYRumMhOTveyUXFyZA4qEC7Pod2Ns0sQKTi', 'eugene123@gmail.com', b'1', '');
 
 -- --------------------------------------------------------
 
@@ -150,7 +151,9 @@ INSERT INTO `bookmark` (`MangaID`, `UserID`) VALUES
 (19, 4),
 (21, 4),
 (22, 3),
-(19, 3);
+(19, 3),
+(23, 3),
+(23, 5);
 
 -- --------------------------------------------------------
 
@@ -489,7 +492,8 @@ INSERT INTO `comment` (`CommentID`, `CommentSectionID`, `CommentText`, `UserID`,
 (9, 8, 'wowza', 3, 7, '2025-04-15 16:41:09'),
 (10, 9, 'whats up people', 3, 0, '2025-05-02 14:15:44'),
 (11, 15, 'I have no enemies', 3, 0, '2025-05-02 15:01:42'),
-(12, 8, 'hello', 3, 9, '2025-05-11 13:50:37');
+(12, 8, 'hello', 3, 9, '2025-05-11 13:50:37'),
+(13, 41, 'hehehehe', 3, 0, '2025-05-11 15:48:49');
 
 -- --------------------------------------------------------
 
@@ -726,7 +730,8 @@ INSERT INTO `rating` (`UserID`, `MangaID`, `Rating`) VALUES
 (3, 19, '10'),
 (4, 19, '10'),
 (3, 22, '7'),
-(3, 21, '8');
+(3, 21, '8'),
+(3, 23, '10');
 
 -- --------------------------------------------------------
 
@@ -879,18 +884,20 @@ CREATE TABLE `user` (
   `Username` varchar(20) NOT NULL,
   `Joined` datetime NOT NULL DEFAULT current_timestamp(),
   `Avatar` varchar(50) NOT NULL DEFAULT 'avatar_default.png',
-  `Role` varchar(10) NOT NULL DEFAULT 'user'
+  `Role` varchar(10) NOT NULL DEFAULT 'user',
+  `banner` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Đang đổ dữ liệu cho bảng `user`
 --
 
-INSERT INTO `user` (`UserID`, `Username`, `Joined`, `Avatar`, `Role`) VALUES
-(1, 'Nguvlra', '2025-04-09 15:58:19', 'avatar_default.png', 'user'),
-(2, 'Bababoey', '2025-04-10 07:28:54', 'avatar_default.png', 'user'),
-(3, 'Nguvlra123', '2025-04-15 16:35:13', 'avatar_default.png', 'admin'),
-(4, 'damian123', '2025-05-08 07:50:49', 'avatar_default.png', 'user');
+INSERT INTO `user` (`UserID`, `Username`, `Joined`, `Avatar`, `Role`, `banner`) VALUES
+(1, 'Nguvlra', '2025-04-09 15:58:19', 'avatar_default.png', 'user', ''),
+(2, 'Bababoey', '2025-04-10 07:28:54', 'avatar_default.png', 'user', ''),
+(3, 'Nguvlra123', '2025-04-15 16:35:13', 'avatar_default.png', 'admin', ''),
+(4, 'damian123', '2025-05-08 07:50:49', 'avatar_default.png', 'user', ''),
+(5, 'eugene123', '2025-05-14 12:00:56', 'avatar_default.png', 'user', '');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -1000,7 +1007,7 @@ ALTER TABLE `chapter`
 -- AUTO_INCREMENT cho bảng `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `CommentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `CommentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT cho bảng `commentsection`
@@ -1036,7 +1043,7 @@ ALTER TABLE `tag`
 -- AUTO_INCREMENT cho bảng `user`
 --
 ALTER TABLE `user`
-  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

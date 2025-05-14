@@ -1,0 +1,88 @@
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: Arial, sans-serif;
+}
+
+.profile-banner {
+    height: 250px;
+    overflow: hidden;
+    position: relative;
+}
+
+.profile-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-container {
+    background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0));
+    width: 100%;
+}
+
+.profile-info {
+    padding-top: 10px !important;
+}
+
+.user-status, .user-activity {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.profile-actions .btn {
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 1px solid #333;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+.avatar-wrapper {
+    border: none;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.card {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    color: #e0e0e0;
+    border-radius: 5px;
+}
+
+.card-header {
+    border-bottom: 1px solid #333;
+    padding: 15px;
+}
+
+.card-title {
+    color: #fff;
+    margin-bottom: 0;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+h6 {
+    color: #aaa;
+    font-size: 1rem;
+}
+
+.btn-dark {
+    background-color: #1e1e1e;
+    border-color: #333;
+}
+
+.alert-info {
+    background-color: #1e3a5a;
+    border-color: #2a5885;
+    color: #9bbade;
+}

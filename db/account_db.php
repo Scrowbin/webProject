@@ -117,11 +117,97 @@ function get_role(string $userID){
  */
 function account_find_by_userID(int $userID): array|false
 {
-    $sql = "SELECT a.username, a.email, a.activated
+    $sql = "SELECT a.username, a.email, a.activated, u.Avatar, u.banner, u.DateOfBirth as dob, u.Location as location, u.AboutField as About, u.Joined as created_at
             FROM account a
             JOIN user u ON a.username = u.Username
             WHERE u.UserID = ? LIMIT 1";
     return pdo_query_one($sql, $userID);
 }
 
-?>
+/**
+ * Updates user profile information
+ */
+function update_user_profile(int $userID, array $data): bool
+{
+    try {
+        // Update user table
+        $userFields = [];
+        $userParams = [];
+
+        if (isset($data['dob'])) {
+            $userFields[] = "DateOfBirth = ?";
+            $userParams[] = $data['dob'];
+        }
+
+        if (isset($data['location'])) {
+            $userFields[] = "Location = ?";
+            $userParams[] = $data['location'];
+        }
+
+        if (isset($data['about'])) {
+            $userFields[] = "AboutField = ?";
+            $userParams[] = $data['about'];
+        }
+
+        if (isset($data['avatar'])) {
+            $userFields[] = "Avatar = ?";
+            $userParams[] = $data['avatar'];
+        }
+
+        if (isset($data['banner'])) {
+            $userFields[] = "banner = ?";
+            $userParams[] = $data['banner'];
+        }
+
+        if (!empty($userFields)) {
+            $userParams[] = $userID; // Add userID as the last parameter
+            $userSql = "UPDATE user SET " . implode(", ", $userFields) . " WHERE UserID = ?";
+            pdo_execute($userSql, ...$userParams);
+        }
+
+        // Update preferences table if needed (for email preferences, DOB visibility, etc.)
+        // This would require creating a new preferences table
+
+        return true;
+    } catch (PDOException $e) {
+        error_log("Profile Update Failed: " . $e->getMessage());
+        return false;
+    }
+}
+
+/**
+ * Saves a base64 image to the server and returns the filename
+ */
+function save_base64_image(string $base64Data, string $folder, int $userID): string
+{
+    // Extract the image data from the base64 string
+    if (preg_match('/^data:image\/(\w+);base64,/', $base64Data, $matches)) {
+        $imageType = $matches[1];
+        $base64Data = substr($base64Data, strpos($base64Data, ',') + 1);
+        $decodedData = base64_decode($base64Data);
+
+        if ($decodedData === false) {
+            throw new Exception("Failed to decode base64 image data");
+        }
+
+        // Create directory if it doesn't exist
+        $uploadDir = __DIR__ . "/../IMG/{$folder}/";
+        if (!file_exists($uploadDir)) {
+            mkdir($uploadDir, 0755, true);
+        }
+
+        // Generate a unique filename
+        $filename = "{$folder}_{$userID}_" . time() . ".{$imageType}";
+        $filePath = "{$uploadDir}{$filename}";
+
+        // Save the file
+        if (file_put_contents($filePath, $decodedData) === false) {
+            throw new Exception("Failed to save image file");
+        }
+
+        return $filename;
+    } else {
+        throw new Exception("Invalid base64 image data");
+    }
+}
+

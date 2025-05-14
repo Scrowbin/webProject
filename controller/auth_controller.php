@@ -260,22 +260,69 @@ function handleUpdateProfile(): void {
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-         $dob = $_POST['DOB'] ?? null;
-         $location = trim($_POST['location'] ?? '');
-         $website = trim($_POST['website'] ?? '');
-         $about = trim($_POST['userText'] ?? '');
+        // Get date of birth components
+        $dobDay = $_POST['dobDay'] ?? '';
+        $dobMonth = $_POST['dobMonth'] ?? '';
+        $dobYear = $_POST['dobYear'] ?? '';
 
-         // --- TODO: Add Server-Side Validation for Profile Fields ---
-         // Example: $profile_errors['dob'] = 'Invalid date format';
+        // Combine date components if all are provided
+        $dob = null;
+        if (!empty($dobYear) && !empty($dobMonth) && !empty($dobDay)) {
+            $dob = sprintf('%04d-%02d-%02d', $dobYear, $dobMonth, $dobDay);
+            // Validate the date
+            if (!checkdate((int)$dobMonth, (int)$dobDay, (int)$dobYear)) {
+                $profile_errors['dob'] = 'Invalid date of birth.';
+            }
+        }
 
-         if(empty($profile_errors)) {
-             // --- TODO: Implement Database Update for Profile ---
-             // Requires a model function like account_update_profile($_SESSION['username'], $updateData)
-             // This function would update fields in 'account' and/or 'user' table.
-             $profile_update_message = "Profile update submitted (Backend logic needed)."; // Placeholder message
-             // Optionally: Refresh $user_data after successful update
-             // $user_data = account_find_by_username($_SESSION['username']);
-         }
+        // Get other form fields
+        $location = trim($_POST['location'] ?? '');
+        $about = trim($_POST['userText'] ?? '');
+        $receiveEmails = isset($_POST['receiveEmails']) ? 1 : 0;
+        $showDobDay = isset($_POST['showDobDay']) ? 1 : 0;
+        $showDobYear = isset($_POST['showDobYear']) ? 1 : 0;
+
+        // Handle avatar and banner data
+        $avatarData = $_POST['avatarData'] ?? null;
+        $bannerData = $_POST['bannerData'] ?? null;
+
+        if(empty($profile_errors)) {
+            // Prepare update data
+            $updateData = [
+                'dob' => $dob,
+                'location' => $location,
+                'about' => $about
+                // Email preferences and DOB visibility would go to a separate preferences table
+            ];
+
+            // Handle avatar and banner uploads if provided
+            try {
+                if ($avatarData) {
+                    // Process and save avatar image
+                    $avatarFilename = save_base64_image($avatarData, 'avatars', $_SESSION['userID']);
+                    $updateData['avatar'] = $avatarFilename;
+                }
+
+                if ($bannerData) {
+                    // Process and save banner image
+                    $bannerFilename = save_base64_image($bannerData, 'banners', $_SESSION['userID']);
+                    $updateData['banner'] = $bannerFilename;
+                }
+
+                // Update the profile in the database
+                if (update_user_profile($_SESSION['userID'], $updateData)) {
+                    $profile_update_message = "Profile settings updated successfully.";
+
+                    // Refresh user data after successful update
+                    $user_data = account_find_by_userID($_SESSION['userID']);
+                } else {
+                    $profile_errors['db'] = "Failed to update profile. Please try again.";
+                }
+            } catch (Exception $e) {
+                $profile_errors['image'] = "Error processing images: " . $e->getMessage();
+                error_log("Profile Image Error: " . $e->getMessage());
+            }
+        }
     }
 }
 
@@ -289,6 +336,40 @@ $message_type = 'info';
 $user_data = null;
 $profile_update_message = null;
 $profile_errors = [];
+
+// Function to handle user profile page
+function handleUserProfile(): void
+{
+    global $user_data;
+
+    if (!isset($_SESSION['userID'])) {
+        header("Location: auth_controller.php?action=login");
+        exit;
+    }
+
+    $userID = $_SESSION['userID'];
+
+    // Lấy thông tin người dùng từ userID
+    $user_data = account_find_by_userID($userID);
+
+    // Nếu không tìm thấy thông tin người dùng, thử lấy từ username
+    if (!$user_data && isset($_SESSION['username'])) {
+        $username = $_SESSION['username'];
+        $user_data = account_find_by_username($username);
+    }
+
+    if (!$user_data) {
+        session_unset();
+        session_destroy();
+        header("Location: auth_controller.php?action=login&message=Profile+data+not+found.");
+        exit;
+    }
+
+    // Add created_at if it doesn't exist
+    if (!isset($user_data['created_at']) && isset($user_data['Joined'])) {
+        $user_data['created_at'] = $user_data['Joined'];
+    }
+}
 
 // --- Routing ---
 $action = $_GET['action'] ?? 'login';
@@ -334,6 +415,10 @@ switch ($action) {
     case 'forgotPassword':
         handleForgotPassword();
         include __DIR__ . '/../PHP/forgot.php';
+        break;
+    case 'user_profile':
+        handleUserProfile();
+        include __DIR__ . '/../PHP/user_profile.php';
         break;
     case 'profile':
         handleProfile();

@@ -1,12 +1,15 @@
+// Avatar elements
 const avatarInput = document.getElementById("avatarInput");
 const previewAvatar = document.getElementById("previewAvatar");
-const avatar = document.getElementById("avatar");
+const avatarWrapper = document.querySelector(".avatar-wrapper");
 const saveAvatar = document.getElementById("saveAvatar");
 const avatarModal = document.getElementById("avatarModal");
 const cropAvatarBtn = document.getElementById("cropAvatarBtn");
+
+// Banner elements
 const bannerInput = document.getElementById("bannerInput");
 const previewBanner = document.getElementById("previewBanner");
-const banner = document.getElementById("banner");
+const currentBanner = document.getElementById("currentBanner");
 const saveBanner = document.getElementById("saveBanner");
 const bannerModal = document.getElementById("bannerModal");
 const cropBannerBtn = document.getElementById("cropBannerBtn");
@@ -32,11 +35,17 @@ function initCropper(imageElement, aspectRatio = null) {
     cropper = new Cropper(imageElement, options);
 }
 
-// Initialize avatar preview with current avatar
-previewAvatar.src = avatar.src;
+// Initialize avatar preview with current avatar (if available)
+if (previewAvatar) {
+    // Use the first letter of username as fallback
+    const firstLetter = avatarWrapper ? avatarWrapper.textContent.trim() : 'U';
+    previewAvatar.setAttribute('data-initial', firstLetter);
+}
 
 // Initialize banner preview with current banner
-previewBanner.src = banner.src;
+if (previewBanner && currentBanner) {
+    previewBanner.src = currentBanner.src;
+}
 
 // Handle avatar image selection
 avatarInput.addEventListener("change", function (event) {
@@ -74,14 +83,50 @@ saveAvatar.addEventListener("click", function () {
             width: 150,
             height: 150,
         });
-        avatar.src = croppedCanvas.toDataURL("image/png");
-        previewAvatar.src = croppedCanvas.toDataURL("image/png"); // Update preview
+
+        // Get the data URL of the cropped image
+        const imageDataUrl = croppedCanvas.toDataURL("image/png");
+
+        // Update the avatar wrapper with the new image
+        if (avatarWrapper) {
+            // Create a new image element
+            const img = document.createElement('img');
+            img.src = imageDataUrl;
+            img.className = 'w-100 h-100';
+            img.style.objectFit = 'cover';
+
+            // Clear the avatar wrapper and add the new image
+            avatarWrapper.innerHTML = '';
+            avatarWrapper.appendChild(img);
+
+            // Hide the text content (first letter)
+            avatarWrapper.style.fontSize = '0';
+            avatarWrapper.style.lineHeight = 'normal';
+        }
+
+        // Update the preview
+        previewAvatar.src = imageDataUrl;
+
+        // Clean up
         cropper.destroy();
         cropper = null;
         saveAvatar.style.display = "none";
+
+        // Close the modal
         let modalElement = document.getElementById("avatarModal");
         let modalInstance = bootstrap.Modal.getInstance(modalElement);
         modalInstance.hide();
+
+        // Add a hidden input to the form to submit the avatar data
+        let avatarDataInput = document.getElementById('avatarData');
+        if (!avatarDataInput) {
+            avatarDataInput = document.createElement('input');
+            avatarDataInput.type = 'hidden';
+            avatarDataInput.name = 'avatarData';
+            avatarDataInput.id = 'avatarData';
+            document.querySelector('form').appendChild(avatarDataInput);
+        }
+        avatarDataInput.value = imageDataUrl;
     }
 });
 
@@ -117,14 +162,41 @@ cropBannerBtn.addEventListener("click", function () {
 // Handle saving the cropped banner
 saveBanner.addEventListener("click", function () {
     if (cropper) {
-        const croppedCanvas = cropper.getCroppedCanvas();
-        banner.src = croppedCanvas.toDataURL("image/png");
-        previewBanner.src = croppedCanvas.toDataURL("image/png"); // Update preview
+        const croppedCanvas = cropper.getCroppedCanvas({
+            width: 1200,
+            height: 300
+        });
+
+        // Get the data URL of the cropped image
+        const imageDataUrl = croppedCanvas.toDataURL("image/png");
+
+        // Update the banner image
+        if (currentBanner) {
+            currentBanner.src = imageDataUrl;
+        }
+
+        // Update the preview
+        previewBanner.src = imageDataUrl;
+
+        // Clean up
         cropper.destroy();
         cropper = null;
         saveBanner.style.display = "none";
+
+        // Close the modal
         let modalElement = document.getElementById("bannerModal");
         let modalInstance = bootstrap.Modal.getInstance(modalElement);
         modalInstance.hide();
+
+        // Add a hidden input to the form to submit the banner data
+        let bannerDataInput = document.getElementById('bannerData');
+        if (!bannerDataInput) {
+            bannerDataInput = document.createElement('input');
+            bannerDataInput.type = 'hidden';
+            bannerDataInput.name = 'bannerData';
+            bannerDataInput.id = 'bannerData';
+            document.querySelector('form').appendChild(bannerDataInput);
+        }
+        bannerDataInput.value = imageDataUrl;
     }
 });
