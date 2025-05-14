@@ -10,7 +10,8 @@ function getChapterInfo($chapterIDs){
                 c.*,
                 m.MangaNameOG,
                 m.CoverLink,
-                m.OriginalLanguage
+                m.OriginalLanguage,
+                m.Slug
             FROM chapter c
             JOIN manga m
             ON c.MangaID = m.MangaID

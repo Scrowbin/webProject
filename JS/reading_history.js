@@ -51,14 +51,14 @@ document.addEventListener("DOMContentLoaded", function () {
             const mangaHTML = `
                 <div class="manga-card">
                     <div class="manga-cover">
-                        <a href="../controller/mangaInfo_controller.php?MangaID=${manga.MangaID}">
+                        <a href="../manga/${manga.Slug}">
                             <img src="../IMG/${manga.MangaID}/${manga.CoverLink}" alt="Manga Cover">
                         </a>
                     </div>
                     <div class="manga-details">
                         <div class="manga-header">
                             ${getFlag(manga.OriginalLanguage)}
-                            <a href="../controller/mangaInfo_controller.php?MangaID=${manga.MangaID}" class="manga-title"><strong>${manga.MangaNameOG}</strong></a>
+                            <a href="../manga/${manga.Slug}" class="manga-title"><strong>${manga.MangaNameOG}</strong></a>
                         </div>
                         <hr>
                         ${mangaGroup.map(chapter => `

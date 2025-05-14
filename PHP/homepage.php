@@ -136,7 +136,7 @@ require("helper.php");
           ?>
           <!-- Slide <?= $index + 1 ?> -->
           <div class="carousel-item <?= $isActive ?>">
-            <div class="featured-manga" data-bg-src="<?= $coverImage ?>" onclick="window.location='controller/mangaInfo_Controller.php?MangaID=<?= $mangaId ?>'">
+            <div class="featured-manga" data-bg-src="<?= $coverImage ?>" onclick="window.location='../manga/<?=$manga['Slug']?>'">
               <div class="background-overlay"></div>
               <div class="featured-manga-content row g-0">
                 <div class="col-md-3 featured-cover-col">
@@ -571,7 +571,7 @@ require("helper.php");
           <?php foreach ($recentlyAddedManga as $manga): ?>
           <!-- Manga Item -->
           <div class="swiper-slide item">
-            <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>">
+            <a href="manga/<?=$manga['Slug'] ?>">
               <div class="image-container">
                 <img src="IMG/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?> Cover">
                 <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">

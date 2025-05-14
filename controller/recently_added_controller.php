@@ -55,13 +55,6 @@ foreach($manga as $i => $m){
     $manga[$i]['CommentCount'] = getTotalComments($mangaID) ?? 0;
     $manga[$i]['FollowCount'] = getTotalFollows($mangaID) ?? 0;
     $manga[$i]['AvgRating'] = getAverageRating($mangaID) ?? 0;
-
-    // Get the first chapter's comment section ID for direct comment link
-    $firstChapter = getFirstChapter($mangaID);
-    if ($firstChapter) {
-        $commentSectionID = getCommentSectionID($firstChapter['ChapterID']);
-        $manga[$i]['CommentSectionID'] = $commentSectionID;
-    }
 }
 
 // Slice for pagination

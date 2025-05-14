@@ -5,9 +5,14 @@
         $pages = pdo_query('SELECT *  FROM chapter_pages WHERE ChapterID = ?',$chapterID);
         return $pages;
     }
-   
+    
+    function getChapterID($mangaSlug, $chapterNumber){
+        $sql = 'SELECT ChapterID  FROM chapter JOIN manga WHERE manga.Slug = ? AND ChapterNumber = ?';
+        return pdo_query_value($sql,$mangaSlug,$chapterNumber);
+    }
+
     function getMangaInfo($chapterID){
-        $mangaName = pdo_query_one('SELECT MangaNameOG,manga.MangaID FROM manga JOIN chapter ON manga.MangaID = chapter.MangaID WHERE chapter.ChapterID = ?',$chapterID);
+        $mangaName = pdo_query_one('SELECT MangaNameOG,manga.MangaID,manga.Slug FROM manga JOIN chapter ON manga.MangaID = chapter.MangaID WHERE chapter.ChapterID = ?',$chapterID);
         return $mangaName ?? null; // return null if not found
     }
 

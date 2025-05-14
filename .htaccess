@@ -2,8 +2,8 @@ RewriteEngine On
 RewriteBase /
 
 
-RewriteRule ^manga/([0-9]+)$ controller/mangaInfo_Controller.php?MangaID=$1 [QSA,L]
-RewriteRule ^read/([0-9]+)$ controller/mangaRead_controller.php?chapterID=$1 [QSA,L]
+RewriteRule ^manga/([a-zA-Z0-9\-]+)$ controller/mangaInfo_Controller.php?slug=$1 [QSA,L]
+RewriteRule ^read/([^/]+)/chapter-([0-9\-]+)$ /controller/mangaRead_controller.php?slug=$1&chapter=$2 [L,QSA]
 RewriteRule ^my-follows$ controller/follows_controller.php [QSA,L]
 RewriteRule ^library$ controller/library_controller.php [QSA,L]
 RewriteRule ^reading-history$ controller/readingHistory_controller.php [QSA,L]

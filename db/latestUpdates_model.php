@@ -8,7 +8,8 @@
             SELECT
                 c.*,
                 m.MangaNameOG,
-                m.CoverLink
+                m.CoverLink,
+                m.Slug
             FROM chapter c
             JOIN (
                 SELECT
@@ -47,7 +48,8 @@
             SELECT
                 c.*,
                 m.MangaNameOG,
-                m.CoverLink
+                m.CoverLink,
+                m.Slug
             FROM chapter c
             JOIN (
                 SELECT

@@ -11,7 +11,7 @@
     }
 
     function getMangaReports($limit, $offset){
-        $sql = "SELECT r.*, u.Username, m.CoverLink,m.MangaNameOG
+        $sql = "SELECT r.*, u.Username, m.CoverLink,m.MangaNameOG,m.Slug
         FROM report_manga r 
         JOIN user u ON r.UserID = u.UserID 
         JOIN manga m ON m.MangaID = r.MangaID 

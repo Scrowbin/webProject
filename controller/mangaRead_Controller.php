@@ -4,7 +4,11 @@
     }
     require_once('../db/mangaReadPdo.php');
     require_once('../db/account_db.php');
-    $chapterID = $_GET['chapterID'] ?? null;
+    $mangaSlug = $_GET['slug'];
+    $chapterNumber = str_replace('-', '.', $_GET['chapter']);
+    $chapterID = getChapterID($mangaSlug,$chapterNumber) ?? null;
+    
+    
     if (!$chapterID) {
         die('chapterID not found');
     }

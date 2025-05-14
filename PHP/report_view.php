@@ -91,8 +91,8 @@ $(document).ready(function() {
                     row.setAttribute('data-type', "manga");
 
                     row.innerHTML = `
-                        <td><a href="../controller/mangaInfo_Controller.php?MangaID=${report.MangaID}"><img src="../IMG/${report.MangaID}/${report.CoverLink}" height="50"></a></td>
-                        <td><a href="../controller/mangaInfo_Controller.php?MangaID=${report.MangaID}">${report.MangaNameOG}</a></td>
+                        <td><a href="/manga/${report.Slug}"><img src="../IMG/${report.MangaID}/${report.CoverLink}" height="50"></a></td>
+                        <td><a href="/manga/${report.Slug}">${report.MangaNameOG}</a></td>
                         <td>${report.ReportType}</td>
                         <td>${report.Username}</td>
                         <td>${report.Description}</td>

@@ -217,10 +217,11 @@
                     $pubStatus = $m["PublicationStatus"];
                     $mangaDesc = $m["MangaDiscription"];
                     $mangaLanguage = $m["OriginalLanguage"];
+                    $mangaSlug = $m["Slug"];
                 ?>
                     <div class="manga-card">
                         <div class="manga-cover">
-                            <a href="../controller/mangaInfo_controller.php?MangaID=<?=$mangaID?>">
+                            <a href="../manga/<?=$mangaSlug?>">
                                 <img src="../IMG/<?=$mangaID?>/<?=$CoverLink?>" alt="Manga Cover">
                             </a>
                         </div>
@@ -230,7 +231,7 @@
                             <div class="manga-title-row">
                                 <div class="flag-title">
                                     <?php echo getFlag($mangaLanguage);?>
-                                    <a href="../controller/mangaInfo_controller.php?MangaID=<?=$mangaID?>" class="manga-title-link"><strong><?=$mangaName?></strong></a>
+                                    <a href="../manga/<?=$mangaSlug?>" class="manga-title-link"><strong><?=$mangaName?></strong></a>
                                 </div>
                                 <div class="manga-status">
                                     <?php

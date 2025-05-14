@@ -36,6 +36,7 @@
 
             foreach($grouped as $manga){
                 $mangaID = $manga[0]['MangaID'];
+                $mangaSlug = $manga[0]['Slug'];
                 $mangaCover =  $manga[0]['CoverLink'];
                 $mangaName = $manga[0]['MangaNameOG'];
         ?>
@@ -43,7 +44,7 @@
             <div class="manga-card">
                 <!-- Left: Cover Image -->
                 <div class="manga-cover">
-                    <a href="../controller/mangaInfo_controller.php?MangaID=<?=$mangaID?>">
+                    <a href="../manga/<?=$mangaSlug?>">
                         <img src="../IMG/<?=$mangaID?>/<?=$mangaCover?>" alt="Manga Cover">
                     </a>
                 </div>
@@ -52,7 +53,7 @@
                 <div class="manga-details">
                     <div class="manga-header">
                         <img class="flag" src="https://mangadex.org/img/flags/jp.svg">
-                        <a href="../controller/mangaInfo_controller.php?MangaID=<?=$mangaID?>" class="manga-title"><strong><?=$mangaName?></strong></a>
+                        <a href="../manga/<?=$mangaSlug?>" class="manga-title"><strong><?=$mangaName?></strong></a>
                     </div>
                     <hr>
                     <?php
