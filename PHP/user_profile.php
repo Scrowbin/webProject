@@ -20,10 +20,9 @@ if (!isset($user_data)) {
     // Define path prefix for navbar
     $pathPrefix = '../';
     include 'includes/navbar_minimal.php';
-    include 'includes/sidebar.php';
     ?>
 
-    <div class="container-fluid p-0 mt-5">
+    <div class="container-fluid mt-5">
         <!-- Profile Banner -->
         <div class="profile-banner position-relative">
             <?php if (!empty($user_data['banner'])): ?>
@@ -64,14 +63,13 @@ if (!isset($user_data)) {
 
             <div class="profile-actions position-absolute top-0 end-0 p-3">
                 <button class="btn btn-dark btn-sm me-2">Report</button>
-                <a href="../controller/auth_controller.php?action=profile" class="btn btn-danger btn-sm">Edit profile banner</a>
+                <a href="../controller/auth_controller.php?action=profile" class="btn btn-danger btn-sm">Edit profile</a>
             </div>
         </div>
 
         <!-- Profile Content -->
         <div class="container mt-4">
             <div class="row">
-                <!-- About Section -->
                 <div class="col-12">
                     <div class="card bg-dark text-white border-secondary">
                         <div class="card-header bg-dark border-secondary">
@@ -106,6 +104,5 @@ if (!isset($user_data)) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../JS/user_profile.js"></script>
     <script src="../JS/navbar.js"></script>
-    <script src="../JS/sidebar.js"></script>
 </body>
 </html>

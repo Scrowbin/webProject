@@ -46,11 +46,48 @@ body {
     color: #f8f9fa;
 }
 
+/* Custom Profile Menu Styles */
+.profile-nav .list-group-item {
+    border-radius: 0;
+    margin-bottom: 0;
+    border: none;
+}
+
+/* Setting header */
+.profile-nav .bg-setting {
+    background-color: #ff6347 !important; /* Tomato color */
+    border: none;
+}
+
+/* Your profile link */
+.profile-nav .text-setting {
+    color: #ff6347 !important; /* Tomato color */
+}
+
+/* Account details (current page) */
+.profile-nav .bg-account-details {
+    background-color: #808080 !important; /* Gray color */
+    border: none;
+}
+
+/* Logout link */
+.profile-nav .text-logout {
+    color: #ff6347 !important; /* Tomato color */
+}
+
+.profile-nav a.list-group-item-action:hover {
+    opacity: 0.9;
+}
+
+.profile-nav .bg-dark {
+    background-color: #222 !important; /* Dark background */
+}
+
 /* Avatar styles */
 .avatar {
     display: block;
-    width: 150px;
-    height: 150px;
+    width: 100%;
+    height: auto;
     object-fit: cover;
     border: 1px solid #343a40;
     border-radius: 4px;
@@ -60,11 +97,65 @@ body {
     cursor: pointer;
     border-radius: 4px;
     transition: all 0.2s ease;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.default-avatar {
+    background-color: #ff6347;
+    color: white;
+    font-size: 48px;
+    text-align: center;
 }
 
 .avatar-wrapper:hover {
     opacity: 0.9;
     transform: scale(1.02);
+}
+
+.avatar-preview-container {
+    width: 120px;
+    height: 120px;
+    border: 1px solid #343a40;
+    overflow: hidden;
+    position: relative;
+    background-color: #000;
+}
+
+.draggable-avatar {
+    position: absolute;
+    cursor: move;
+    height: 100%; /* Luôn vừa với chiều cao của container */
+    width: auto; /* Giữ tỷ lệ khung hình */
+    top: 0;
+    left: 0;
+}
+
+/* Avatar modal styles */
+.bg-avatar {
+    background-color: #ff6347 !important; /* Tomato color to match the setting header */
+}
+
+.modal-content {
+    border: none;
+}
+
+.form-check-input:checked {
+    background-color: #ff6347;
+    border-color: #ff6347;
+}
+
+#deleteAvatar {
+    color: #ff6347;
+    border-color: #ff6347;
+}
+
+#deleteAvatar:hover {
+    background-color: rgba(255, 99, 71, 0.1);
 }
 
 /* Banner styles */
@@ -76,13 +167,45 @@ body {
     border: 1px solid #343a40;
 }
 
+.banner-container {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 4px;
+    border: 1px solid #343a40;
+}
+
 .banner-container img {
     cursor: pointer;
     transition: all 0.2s ease;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
 }
 
 .banner-container img:hover {
     opacity: 0.9;
+}
+
+.banner-preview-container {
+    width: 100%;
+    height: 200px;
+    border: 1px solid #343a40;
+    overflow: hidden;
+    position: relative;
+    background-color: #000;
+}
+
+.draggable-banner {
+    position: absolute;
+    cursor: move;
+    width: 100%; /* Luôn vừa với chiều rộng của container */
+    height: auto; /* Giữ tỷ lệ khung hình */
+    left: 0;
+    top: 0;
 }
 
 /* Form control styles */

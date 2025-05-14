@@ -29,27 +29,32 @@ $profile_update_message ??= null;
     // Define path prefix for navbar
     $pathPrefix = '../';
     include 'includes/navbar_minimal.php';
-    include 'includes/sidebar.php';
     ?>
-
+    <!-- menu -->
     <div class="container-fluid mt-5">
         <div class="row">
             <div class="col-md-3 col-lg-2">
-                <ul class="list-group mb-2 sticky-top profile-nav">
-                    <li class="list-group-item fw-bold">Your account</li>
-                    <li class="list-group-item"><a href="../controller/auth_controller.php?action=user_profile" class="text-decoration-none text-dark"><i class="bi bi-person"></i> Profile</a></li>
-                    <li class="list-group-item active"><i class="bi bi-gear"></i> Profile Settings</li>
-                <ul class="list-group mb-2 sticky-top profile-nav">
-                    <li class="list-group-item fw-bold">Settings</li>
-                    <li class="list-group-item"><i class="bi bi-person-gear"></i> Profile detail</li>
-                </ul>
-                <ul class="list-group sticky-top profile-nav">
-                    <li class="list-group-item fw-bold">
-                        <a href="../controller/auth_controller.php?action=logout" class="text-danger text-decoration-none">
-                            <i class="bi bi-box-arrow-right"></i> Logout
-                        </a>
-                    </li>
-                </ul>
+                <div class="sticky-top profile-nav">
+                    <!-- Menu Header -->
+                    <div class="list-group-item bg-setting text-white py-3 ps-4 fw-bold">
+                        Setting
+                    </div>
+
+                    <!-- Your Profile Link -->
+                    <a href="../controller/auth_controller.php?action=user_profile" class="list-group-item list-group-item-action bg-dark text-setting py-3 ps-4">
+                        <i class="bi bi-person-circle me-2"></i> Your profile
+                    </a>
+
+                    <!-- Account Details (Current Page) -->
+                    <div class="list-group-item bg-account-details text-white py-3 ps-4">
+                        <i class="bi bi-person me-2"></i> Account details
+                    </div>
+
+                    <!-- Logout Link -->
+                    <a href="../controller/auth_controller.php?action=logout" class="list-group-item list-group-item-action bg-dark text-logout py-3 ps-4">
+                        <i class="bi bi-box-arrow-right me-2"></i> Log out
+                    </a>
+                </div>
             </div>
 
             <div class="col-md-9 col-lg-10">
@@ -101,7 +106,7 @@ $profile_update_message ??= null;
                             <label for="avatar" class="col-sm-3 col-form-label">Avatar:</label>
                             <div class="col-sm-9">
                                 <div class="avatar-container mb-2">
-                                    <div class="avatar-wrapper bg-warning text-center d-inline-block" style="width: 100px; height: 100px; line-height: 100px; font-size: 48px; color: white;" id="avatar">
+                                    <div class="avatar-wrapper bg-warning text-center d-inline-block" style="width: 100px; height: 100px; line-height: 100px; font-size: 48px; color: white;" id="avatar" data-username="<?php echo htmlspecialchars($user_data['username']); ?>">
                                         <?php if (!empty($user_data['Avatar']) && $user_data['Avatar'] !== 'avatar_default.png'): ?>
                                             <img src="../IMG/avatars/<?php echo htmlspecialchars($user_data['Avatar']); ?>" class="w-100 h-100" style="object-fit: cover;">
                                         <?php else: ?>
@@ -120,9 +125,9 @@ $profile_update_message ??= null;
                             <div class="col-sm-9">
                                 <div class="banner-container mb-2">
                                     <?php if (!empty($user_data['banner'])): ?>
-                                        <img src="../IMG/banners/<?php echo htmlspecialchars($user_data['banner']); ?>" alt="Profile Banner" class="img-fluid rounded" style="max-height: 100px; width: 100%;" id="currentBanner">
+                                        <img src="../IMG/banners/<?php echo htmlspecialchars($user_data['banner']); ?>" alt="Profile Banner" class="img-fluid rounded" id="currentBanner">
                                     <?php else: ?>
-                                        <img src="../IMG/loginBG.png" alt="Profile Banner" class="img-fluid rounded" style="max-height: 100px; width: 100%;" id="currentBanner">
+                                        <img src="../IMG/loginBG.png" alt="Profile Banner" class="img-fluid rounded" id="currentBanner">
                                     <?php endif; ?>
                                 </div>
                                 <div>
@@ -230,29 +235,47 @@ $profile_update_message ??= null;
     <div class="modal fade" id="avatarModal" tabindex="-1" aria-labelledby="avatarModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content bg-dark text-white">
-                <div class="modal-header border-secondary">
-                    <h5 class="modal-title" id="avatarModalLabel">Change Avatar</h5>
+                <div class="modal-header bg-avatar border-0">
+                    <h5 class="modal-title text-white" id="avatarModalLabel">AVATAR</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body text-center">
-                    <div id="cropper-container">
-                        <?php if (!empty($user_data['Avatar']) && $user_data['Avatar'] !== 'avatar_default.png'): ?>
-                            <img id="previewAvatar" src="../IMG/avatars/<?php echo htmlspecialchars($user_data['Avatar']); ?>" class="avatar mb-3">
-                        <?php else: ?>
-                            <img id="previewAvatar" src="../IMG/avatar_default.png" class="avatar mb-3">
-                        <?php endif; ?>
-                    </div>
-                    <div class="d-flex flex-row flex-wrap align-items-center justify-content-center gap-3 mt-3">
-                        <button type="button" class="btn btn-warning" id="cropAvatarBtn">Crop</button>
-                        <label class="btn btn-outline-light">
-                            Upload Image
-                            <input type="file" class="d-none" id="avatarInput" accept="image/*">
-                        </label>
+                <div class="modal-body p-4">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div id="avatar-preview-container" class="avatar-preview-container mb-3">
+                                <?php if (!empty($user_data['Avatar']) && $user_data['Avatar'] !== 'avatar_default.png'): ?>
+                                    <img id="previewAvatar" src="../IMG/avatars/<?php echo htmlspecialchars($user_data['Avatar']); ?>" class="avatar draggable-avatar">
+                                <?php else: ?>
+                                    <img id="previewAvatar" src="../IMG/avatar_default.png" class="avatar">
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="custom-avatar-option mb-3">
+                                <div class="d-flex align-items-center mb-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="avatarOption" id="customAvatarOption" checked>
+                                        <label class="form-check-label text-white" for="customAvatarOption">
+                                            Use a custom avatar
+                                        </label>
+                                    </div>
+                                </div>
+                                <p class="text-muted small mb-2">Drag this image to crop it, then click <span class="text-light">Okay</span> to confirm, or upload a new avatar below.</p>
+
+                                <div class="mb-3">
+                                    <label class="form-label text-white">Upload new custom avatar:</label>
+                                    <input type="file" class="form-control bg-dark text-white border-secondary" id="avatarInput" accept="image/*">
+                                </div>
+                                <p class="text-muted small">It is recommended that you use an image that is at least 400×400 pixels.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="modal-footer border-secondary">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-warning" id="saveAvatar" style="display: none;">Save Changes</button>
+                <div class="modal-footer border-0 justify-content-center">
+                    <button type="button" class="btn btn-light px-4" id="saveAvatar">Okay</button>
+                    <button type="button" class="btn btn-outline-danger" id="deleteAvatar">
+                        <i class="bi bi-trash"></i> Delete
+                    </button>
                 </div>
             </div>
         </div>
@@ -262,29 +285,32 @@ $profile_update_message ??= null;
     <div class="modal fade" id="bannerModal" tabindex="-1" aria-labelledby="bannerModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content bg-dark text-white">
-                <div class="modal-header border-secondary">
-                    <h5 class="modal-title" id="bannerModalLabel">Change Profile Banner</h5>
+                <div class="modal-header bg-avatar border-0">
+                    <h5 class="modal-title text-white" id="bannerModalLabel">PROFILE BANNER</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <div id="cropper-container1">
+                <div class="modal-body p-4">
+                    <p class="text-muted small mb-3">You can drag the image to change the focal point of the banner, then click Okay to confirm.</p>
+
+                    <div id="banner-preview-container" class="banner-preview-container mb-3">
                         <?php if (!empty($user_data['banner'])): ?>
-                            <img id="previewBanner" src="../IMG/banners/<?php echo htmlspecialchars($user_data['banner']); ?>" class="img-fluid mb-3">
+                            <img id="previewBanner" src="../IMG/banners/<?php echo htmlspecialchars($user_data['banner']); ?>" class="draggable-banner">
                         <?php else: ?>
-                            <img id="previewBanner" src="../IMG/loginBG.png" class="img-fluid mb-3">
+                            <img id="previewBanner" src="../IMG/loginBG.png" class="draggable-banner">
                         <?php endif; ?>
                     </div>
-                    <div class="d-flex flex-row flex-wrap align-items-center justify-content-center gap-3 mt-3">
-                        <button type="button" class="btn btn-warning" id="cropBannerBtn">Crop</button>
-                        <label class="btn btn-outline-light">
-                            Upload Image
-                            <input type="file" class="d-none" id="bannerInput" accept="image/*">
-                        </label>
+
+                    <div class="mt-4">
+                        <label class="form-label text-white">Upload new profile banner:</label>
+                        <input type="file" class="form-control bg-dark text-white border-secondary" id="bannerInput" accept="image/*">
+                        <p class="text-muted small mt-2">It is recommended that you use an image with a 4:1 aspect ratio (e.g., 1200×300 pixels).</p>
                     </div>
                 </div>
-                <div class="modal-footer border-secondary">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-warning" id="saveBanner" style="display: none;">Save Changes</button>
+                <div class="modal-footer border-0 justify-content-center">
+                    <button type="button" class="btn btn-light px-4" id="saveBanner">Okay</button>
+                    <button type="button" class="btn btn-outline-danger" id="deleteBanner">
+                        <i class="bi bi-trash"></i> Delete
+                    </button>
                 </div>
             </div>
         </div>

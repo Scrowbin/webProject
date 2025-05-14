@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 14, 2025 lúc 02:54 PM
--- Phiên bản máy phục vụ: 10.4.32-MariaDB
--- Phiên bản PHP: 8.0.30
+-- Host: 127.0.0.1
+-- Generation Time: May 14, 2025 at 01:05 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `manga`
+-- Database: `manga`
 --
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `account`
+-- Table structure for table `account`
 --
 
 CREATE TABLE `account` (
@@ -36,20 +36,19 @@ CREATE TABLE `account` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
--- Đang đổ dữ liệu cho bảng `account`
+-- Dumping data for table `account`
 --
 
 INSERT INTO `account` (`username`, `password`, `email`, `activated`, `activate_token`) VALUES
 ('Bababoey', '$2y$10$bZvprCGXt2ZMVpAADu8vruEi6QTApeWj6J83RZEJfxmusNnTmGGXi', 'hjiisan8man@gmail.com', b'1', ''),
 ('Nguvlra', '$2y$10$Ly0RDyKhACCP1E.0ig0bqukOoLQ4/MbzppV0xJcEmcYfrk.Fwvj6S', 'kongudau2@gmail.com', b'1', ''),
 ('Nguvlra123', '$2y$10$axNk07NbQlXWnREo2fSbAe366RF1fxQcT1zFCIFrocbXT5NQaLYgu', 'hjiisanman@gmail.com', b'1', '195b52feb560d30cd7f03d52c5c6b808c13671614d8565eb65bf1b82ec36c395'),
-('damian123', '$2y$10$q6lb251QxROh9hGCoALU2euTGfI2fjnPCETVRRwcIzxBCZtkPW5ca', 'damian123@gmail.com', b'1', ''),
-('eugene123', '$2y$10$8YhmYqWV7xHFvgsPSskYRumMhOTveyUXFyZA4qEC7Pod2Ns0sQKTi', 'eugene123@gmail.com', b'1', '');
+('damian123', '$2y$10$q6lb251QxROh9hGCoALU2euTGfI2fjnPCETVRRwcIzxBCZtkPW5ca', 'damian123@gmail.com', b'1', '');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `announcement`
+-- Table structure for table `announcement`
 --
 
 CREATE TABLE `announcement` (
@@ -60,7 +59,7 @@ CREATE TABLE `announcement` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
--- Đang đổ dữ liệu cho bảng `announcement`
+-- Dumping data for table `announcement`
 --
 
 INSERT INTO `announcement` (`announcementID`, `content`, `expirteAt`, `isActive`) VALUES
@@ -71,7 +70,7 @@ INSERT INTO `announcement` (`announcementID`, `content`, `expirteAt`, `isActive`
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `artist`
+-- Table structure for table `artist`
 --
 
 CREATE TABLE `artist` (
@@ -80,7 +79,7 @@ CREATE TABLE `artist` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
--- Đang đổ dữ liệu cho bảng `artist`
+-- Dumping data for table `artist`
 --
 
 INSERT INTO `artist` (`ArtistID`, `ArtistName`) VALUES
@@ -96,12 +95,13 @@ INSERT INTO `artist` (`ArtistID`, `ArtistName`) VALUES
 (16, 'Araki Hirohiko'),
 (17, 'Miura Kouji'),
 (18, 'Fuji Ryousuke'),
-(19, 'Oda Eiichiro');
+(19, 'Oda Eiichiro'),
+(20, 'Sako Toshio');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `author`
+-- Table structure for table `author`
 --
 
 CREATE TABLE `author` (
@@ -110,7 +110,7 @@ CREATE TABLE `author` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
--- Đang đổ dữ liệu cho bảng `author`
+-- Dumping data for table `author`
 --
 
 INSERT INTO `author` (`AuthorID`, `AuthorName`) VALUES
@@ -127,12 +127,13 @@ INSERT INTO `author` (`AuthorID`, `AuthorName`) VALUES
 (18, 'Araki Hirohiko'),
 (19, 'Miura Kouji'),
 (20, 'katarina'),
-(21, 'Oda Eiichiro');
+(21, 'Oda Eiichiro'),
+(22, 'Sako Toshio');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `bookmark`
+-- Table structure for table `bookmark`
 --
 
 CREATE TABLE `bookmark` (
@@ -141,24 +142,21 @@ CREATE TABLE `bookmark` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
--- Đang đổ dữ liệu cho bảng `bookmark`
+-- Dumping data for table `bookmark`
 --
 
 INSERT INTO `bookmark` (`MangaID`, `UserID`) VALUES
-(3, 3),
 (1, 3),
+(3, 3),
 (5, 3),
 (19, 4),
 (21, 4),
-(22, 3),
-(19, 3),
-(23, 3),
-(23, 5);
+(22, 3);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `chapter`
+-- Table structure for table `chapter`
 --
 
 CREATE TABLE `chapter` (
@@ -174,7 +172,7 @@ CREATE TABLE `chapter` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
--- Đang đổ dữ liệu cho bảng `chapter`
+-- Dumping data for table `chapter`
 --
 
 INSERT INTO `chapter` (`ChapterID`, `MangaID`, `Volume`, `ScangroupName`, `UploaderName`, `UploadTime`, `ChapterName`, `ChapterNumber`, `Language`) VALUES
@@ -189,7 +187,6 @@ INSERT INTO `chapter` (`ChapterID`, `MangaID`, `Volume`, `ScangroupName`, `Uploa
 (12, 3, 1.0, 'Kirei Cake', 'UnChosen', '2025-04-15 14:58:38', 'The Priest\'s Lie', 2.0, 'en'),
 (13, 3, 1.0, 'Kirei Cake', 'Bored_Pray', '2025-04-15 14:59:52', 'Blue Moonweed', 3.0, 'en'),
 (14, 3, 1.0, 'Kirei Cake', 'UnChosen', '2025-04-15 14:59:52', 'The Mage\'s Secret', 4.0, 'en'),
-(22, 1, 2.0, 'ScanGroup', 'Anonymous', '2025-04-15 21:56:10', 'fake chapter', 8.0, 'en'),
 (24, 5, 1.0, 'Normanni', 'Anonymous', '2025-04-28 11:56:42', 'Normander', 1.0, 'en'),
 (37, 19, 1.0, '', 'Nguvlra123', '2025-05-08 07:04:54', 'Mechanisms', 1.0, 'en'),
 (38, 20, 1.0, '', 'Nguvlra123', '2025-05-08 07:15:36', 'First touchs', 1.0, 'en'),
@@ -204,12 +201,13 @@ INSERT INTO `chapter` (`ChapterID`, `MangaID`, `Volume`, `ScangroupName`, `Uploa
 (47, 22, 1.0, '', 'Nguvlra123', '2025-05-08 08:04:33', 'Night Fight', 3.0, 'en'),
 (48, 22, 1.0, '', 'Nguvlra123', '2025-05-08 08:05:31', 'A Unique Chain Reaction', 4.0, 'en'),
 (49, 2, 1.0, '', 'Nguvlra123', '2025-05-08 08:08:03', 'Rintaro and Kaoruko', 1.0, 'en'),
-(50, 23, 1.0, '', 'Nguvlra123', '2025-05-08 08:12:38', 'Romance Dawn', 1.0, 'en');
+(50, 23, 1.0, '', 'Nguvlra123', '2025-05-08 08:12:38', 'Romance Dawn', 1.0, 'en'),
+(51, 1, 9.0, '', 'Nguvlra123', '2025-05-10 12:18:53', 'Vol. 9 Extras', 70.5, 'en');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `chapter_pages`
+-- Table structure for table `chapter_pages`
 --
 
 CREATE TABLE `chapter_pages` (
@@ -219,7 +217,7 @@ CREATE TABLE `chapter_pages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
--- Đang đổ dữ liệu cho bảng `chapter_pages`
+-- Dumping data for table `chapter_pages`
 --
 
 INSERT INTO `chapter_pages` (`ChapterID`, `PageNumber`, `PageLink`) VALUES
@@ -333,9 +331,6 @@ INSERT INTO `chapter_pages` (`ChapterID`, `PageNumber`, `PageLink`) VALUES
 (11, 33, '33.png'),
 (11, 34, '34.png'),
 (11, 35, '35.png'),
-(22, 1, '1.png'),
-(22, 2, '2.png'),
-(22, 3, '3.png'),
 (24, 1, '1.jfif'),
 (24, 2, '2.jfif'),
 (24, 3, '3.jfif'),
@@ -461,12 +456,18 @@ INSERT INTO `chapter_pages` (`ChapterID`, `PageNumber`, `PageLink`) VALUES
 (50, 27, '27.jpeg'),
 (50, 28, '28.jpeg'),
 (50, 29, '29.jpeg'),
-(50, 30, '30.jpeg');
+(50, 30, '30.jpeg'),
+(51, 1, '1.png'),
+(51, 2, '2.png'),
+(51, 3, '3.png'),
+(51, 4, '4.png'),
+(51, 5, '5.png'),
+(51, 6, '6.png');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `comment`
+-- Table structure for table `comment`
 --
 
 CREATE TABLE `comment` (
@@ -479,7 +480,7 @@ CREATE TABLE `comment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
--- Đang đổ dữ liệu cho bảng `comment`
+-- Dumping data for table `comment`
 --
 
 INSERT INTO `comment` (`CommentID`, `CommentSectionID`, `CommentText`, `UserID`, `ReplyID`, `CreatedAt`) VALUES
@@ -492,13 +493,12 @@ INSERT INTO `comment` (`CommentID`, `CommentSectionID`, `CommentText`, `UserID`,
 (9, 8, 'wowza', 3, 7, '2025-04-15 16:41:09'),
 (10, 9, 'whats up people', 3, 0, '2025-05-02 14:15:44'),
 (11, 15, 'I have no enemies', 3, 0, '2025-05-02 15:01:42'),
-(12, 8, 'hello', 3, 9, '2025-05-11 13:50:37'),
-(13, 41, 'hehehehe', 3, 0, '2025-05-11 15:48:49');
+(12, 40, 'hello', 3, 0, '2025-05-10 12:25:48');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `commentsection`
+-- Table structure for table `commentsection`
 --
 
 CREATE TABLE `commentsection` (
@@ -507,7 +507,7 @@ CREATE TABLE `commentsection` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
--- Đang đổ dữ liệu cho bảng `commentsection`
+-- Dumping data for table `commentsection`
 --
 
 INSERT INTO `commentsection` (`CommentSectionID`, `ChapterID`) VALUES
@@ -535,12 +535,13 @@ INSERT INTO `commentsection` (`CommentSectionID`, `ChapterID`) VALUES
 (38, 47),
 (39, 48),
 (40, 49),
-(41, 50);
+(41, 50),
+(42, 51);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `manga`
+-- Table structure for table `manga`
 --
 
 CREATE TABLE `manga` (
@@ -553,29 +554,31 @@ CREATE TABLE `manga` (
   `ContentRating` enum('Safe','Suggestive','Erotica','Suggestive/Erotica') NOT NULL,
   `MagazineDemographic` enum('Shounen','Shoujo','Seinen','Josei','None') NOT NULL,
   `PublicationYear` int(4) NOT NULL,
-  `PublicationStatus` enum('Ongoing','Completed','Hiatus','Cancelled') NOT NULL
+  `PublicationStatus` enum('Ongoing','Completed','Hiatus','Cancelled') NOT NULL,
+  `Slug` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
--- Đang đổ dữ liệu cho bảng `manga`
+-- Dumping data for table `manga`
 --
 
-INSERT INTO `manga` (`MangaID`, `MangaNameOG`, `MangaNameEN`, `MangaDiscription`, `CoverLink`, `OriginalLanguage`, `ContentRating`, `MagazineDemographic`, `PublicationYear`, `PublicationStatus`) VALUES
-(1, 'Zeikin de Katta Hon', 'Books Bought With Taxes', '<p>Ishidaira is a delinquent who visited the library for the first time since elementary school. But then, he was pointed out by Hayasemaru and Shirai, who works at the library, that he has not returned a book that he borrowed ten years ago. A manga about how Ishidaira went from trying to borrow a book from a library to working there instead.</p>', 'm1.jpg', 'Japanese', 'Safe', 'Seinen', 2021, 'Ongoing'),
-(2, 'Kaoru Hana wa Rin to Saku', 'The Fragrant Flower Blooms With Dignity', 'In a certain place, there are two neighboring high schools. Chidori High School, a bottom-feeder boys\' school where idiots gather, and Kikyo Girls\' School, a well-established girls\' school. Rintaro Tsumugi, a strong and quiet second year student at Chidori High School, meets Kaoruko Waguri, a girl who comes as a customer while helping out at his family\'s cake shop. Rintaro feels comfortable spending time with Kaoruko, but she is a student at Kikyo Girls, a neighboring school that thoroughly dislikes Chidori High.', 'm2.jpg', 'Japanese', 'Safe', 'Shounen', 2021, 'Ongoing'),
-(3, 'Sousou no Frieren\r\n\r\n', 'Frieren at the Funeral\r\n', 'The adventure is over but life goes on for an elf mage just beginning to learn what living is all about. Elf mage Frieren and her courageous fellow adventurers have defeated the Demon King and brought peace to the land. With the great struggle over, they all go their separate ways to live a quiet life. But as an elf, Frieren, nearly immortal, will long outlive the rest of her former party. How will she come to terms with the mortality of her friends? How can she find fulfillment in her own life, and can she learn to understand what life means to the humans around her? Frieren begins a new journey to find the answer.', 'm3.jpg', 'Japanese', 'Safe', 'Shounen', 2020, 'Hiatus'),
-(4, 'Mizudako-chan kara wa Nigerarenai!', 'You Can\'t Escape from Mizudako-chan!', 'Akigai Kanisuke is an ordinary high school boy. His daily life changes when Mizuda Yuuko (a.k.a. Mizudako-chan), a demi-human girl, transfers to his school.', 'm4.jpg', 'Japanese', 'Safe', 'Seinen', 2023, 'Ongoing'),
-(5, 'Vinland Saga', 'Vinland Saga', 'As a child, Thorfinn sat at the feet of the great Leif Ericson and thrilled to wild tales of a land far to the west. But his youthful fantasies were shattered by a mercenary raid. Raised by the Vikings who murdered his family, Thorfinn became a terrifying warrior, forever seeking to kill the band\'s leader, Askeladd, and avenge his father. Sustaining Thorfinn through his ordeal are his pride in his family and his dreams of a fertile westward land, a land without war or slavery… the land Leif called Vinland.', 'm5.jpg', 'Japanese', 'Suggestive', 'Seinen', 2005, 'Ongoing'),
-(19, 'JoJo\'s Bizarre Adventure Part 9 - The JOJOLands', 'ジョジョの奇妙な冒険 Part9 The JOJOLands', '<p>O&rsquo;ahu, present day. Dua Lipa is the trending musician, and COVID is still a major concern. On this island lives a 15-year-old boy named Jodio Joestar. Living with his brother and mother, he acts as a dealer for certain illegal substances. One day, his employer comes and shows him an excellent find: a Japanese person has landed in Hawaii with a diamond worth over six million dollars. Normally it would be impossible to steal, but for someone with a stand&hellip;</p>\r\n<p>This is a story of a young boy and his quest to become rich.</p>', 'm19.jpg', 'English', 'Safe', 'Shounen', 2023, 'Ongoing'),
-(20, 'Ao Ashi', 'アオアシ', '<p style=\"text-align: justify;\">Aoi Ashito is a third year middle school student from Ehime. Behind his raw game hides his immense talent, but Ashito suffers a huge setback because of his overly straightforward personality.</p>\r\n<p style=\"text-align: justify;\">One day the youth team manager of J1 club Tokyo City Esperion, Fukuda Tetsuya, appears in front of him. Fukuda sees his limitless potential and invites him to take part in his team\'s tryouts in Tokyo.</p>\r\n<p style=\"text-align: justify;\">The story of the boy who will revolutionize football in Japan rapidly begins to unfold.</p>', 'm20.jpg', 'English', 'Safe', 'Shounen', 2015, 'Ongoing'),
-(21, 'Ao no Hako', 'Blue Box', '<p>Taiki Inomata is on the boys\' badminton team at sports powerhouse Eimei Junior and Senior High. He\'s in love with basketball player Chinatsu Kano, the older girl he trains alongside every morning in the gym. One Spring day, their relationship takes a sharp turn ... And thus begins this brand-new series of love, sports and youth!</p>', 'm21.jpg', 'English', 'Safe', 'Shounen', 2021, 'Ongoing'),
-(22, 'Shangri-La Frontier ~Kusoge Hunter, Kamige ni Idoman to su~', 'Shangri-La Frontier: From Trash Game Hunter to God-Tier Gamer!', '<p style=\"text-align: justify;\">Second-year high school student Rakuro Hizutome loves nothing more than finding so-called \"trash games\" and beating the crap out of them. When he decides to change things up by playing a new, \"god-tier\" VR game known as Shangri-La Frontier (aka. SLF), he does what he does best: min-maxes, skips the prologue, and jumps straight into action! Rakuro may be a seasoned gamer, but a meeting with an old rival will change the fate of every SLF player forever.</p>\r\n<p style=\"text-align: justify;\">Clad in nothing but shorts and a bird mask, Rakuro (player name: Sunraku) launches into the world of SLF. Things are going well at first as he takes down a goblin, a bunny, and even a python. But then Sunraku comes up against a huge, hard-hitting wolf known as Lycagon the Nightslayer. Will Sunraku\'s years of \"trash game\" experience be enough, or is he about to suffer a rude awakening just a few hours into his SLF adventure?</p>', 'm22.webp', 'Japanese', 'Safe', 'Shounen', 2020, 'Ongoing'),
-(23, 'ワンピース', 'One Piece', '<p style=\"text-align: justify;\">Gol D. Roger, a man referred to as the \"Pirate King,\" is set to be executed by the World Government. But just before his demise, he confirms the existence of a great treasure, One Piece, located somewhere within the vast ocean known as the Grand Line. Announcing that One Piece can be claimed by anyone worthy enough to reach it, the Pirate King is executed and the Great Age of Pirates begins.</p>\r\n<p style=\"text-align: justify;\">Twenty-two years later, a young man by the name of Monkey D. Luffy is ready to embark on his own adventure, searching for One Piece and striving to become the new Pirate King. Armed with just a straw hat, a small boat, and an elastic body, he sets out on a fantastic journey to gather his own crew and a worthy ship that will take them across the Grand Line to claim the greatest status on the high seas.</p>', 'm23.jpg', 'Japanese', 'Suggestive', 'Shounen', 1997, 'Ongoing');
+INSERT INTO `manga` (`MangaID`, `MangaNameOG`, `MangaNameEN`, `MangaDiscription`, `CoverLink`, `OriginalLanguage`, `ContentRating`, `MagazineDemographic`, `PublicationYear`, `PublicationStatus`, `Slug`) VALUES
+(1, 'Zeikin de Katta Hon', 'Books Bought With Taxes', '<p>Ishidaira is a delinquent who visited the library for the first time since elementary school. But then, he was pointed out by Hayasemaru and Shirai, who works at the library, that he has not returned a book that he borrowed ten years ago. A manga about how Ishidaira went from trying to borrow a book from a library to working there instead.</p>', 'm1.jpg', 'Japanese', 'Safe', 'Seinen', 2021, 'Ongoing', 'zeikin-de-katta-hon'),
+(2, 'Kaoru Hana wa Rin to Saku', 'The Fragrant Flower Blooms With Dignity', 'In a certain place, there are two neighboring high schools. Chidori High School, a bottom-feeder boys\' school where idiots gather, and Kikyo Girls\' School, a well-established girls\' school. Rintaro Tsumugi, a strong and quiet second year student at Chidori High School, meets Kaoruko Waguri, a girl who comes as a customer while helping out at his family\'s cake shop. Rintaro feels comfortable spending time with Kaoruko, but she is a student at Kikyo Girls, a neighboring school that thoroughly dislikes Chidori High.', 'm2.jpg', 'Japanese', 'Safe', 'Shounen', 2021, 'Ongoing', 'kaoru-hana-wa-rin-to-saku'),
+(3, 'Sousou no Frieren\r\n\r\n', 'Frieren at the Funeral\r\n', 'The adventure is over but life goes on for an elf mage just beginning to learn what living is all about. Elf mage Frieren and her courageous fellow adventurers have defeated the Demon King and brought peace to the land. With the great struggle over, they all go their separate ways to live a quiet life. But as an elf, Frieren, nearly immortal, will long outlive the rest of her former party. How will she come to terms with the mortality of her friends? How can she find fulfillment in her own life, and can she learn to understand what life means to the humans around her? Frieren begins a new journey to find the answer.', 'm3.jpg', 'Japanese', 'Safe', 'Shounen', 2020, 'Hiatus', 'sousou-no-frieren'),
+(4, 'Mizudako-chan kara wa Nigerarenai!', 'You Can\'t Escape from Mizudako-chan!', 'Akigai Kanisuke is an ordinary high school boy. His daily life changes when Mizuda Yuuko (a.k.a. Mizudako-chan), a demi-human girl, transfers to his school.', 'm4.jpg', 'Japanese', 'Safe', 'Seinen', 2023, 'Ongoing', 'mizudako-chan-kara-wa-nigerarenai'),
+(5, 'Vinland Saga', 'Vinland Saga', 'As a child, Thorfinn sat at the feet of the great Leif Ericson and thrilled to wild tales of a land far to the west. But his youthful fantasies were shattered by a mercenary raid. Raised by the Vikings who murdered his family, Thorfinn became a terrifying warrior, forever seeking to kill the band\'s leader, Askeladd, and avenge his father. Sustaining Thorfinn through his ordeal are his pride in his family and his dreams of a fertile westward land, a land without war or slavery… the land Leif called Vinland.', 'm5.jpg', 'Japanese', 'Suggestive', 'Seinen', 2005, 'Ongoing', 'vinland-saga'),
+(19, 'JoJo\'s Bizarre Adventure Part 9 - The JOJOLands', 'ジョジョの奇妙な冒険 Part9 The JOJOLands', '<p>O&rsquo;ahu, present day. Dua Lipa is the trending musician, and COVID is still a major concern. On this island lives a 15-year-old boy named Jodio Joestar. Living with his brother and mother, he acts as a dealer for certain illegal substances. One day, his employer comes and shows him an excellent find: a Japanese person has landed in Hawaii with a diamond worth over six million dollars. Normally it would be impossible to steal, but for someone with a stand&hellip;</p>\r\n<p>This is a story of a young boy and his quest to become rich.</p>', 'm19.jpg', 'English', 'Safe', 'Shounen', 2023, 'Ongoing', 'jojos-bizarre-adventure-part-9-the-jojolands'),
+(20, 'Ao Ashi', 'アオアシ', '<p style=\"text-align: justify;\">Aoi Ashito is a third year middle school student from Ehime. Behind his raw game hides his immense talent, but Ashito suffers a huge setback because of his overly straightforward personality.</p>\r\n<p style=\"text-align: justify;\">One day the youth team manager of J1 club Tokyo City Esperion, Fukuda Tetsuya, appears in front of him. Fukuda sees his limitless potential and invites him to take part in his team\'s tryouts in Tokyo.</p>\r\n<p style=\"text-align: justify;\">The story of the boy who will revolutionize football in Japan rapidly begins to unfold.</p>', 'm20.jpg', 'English', 'Safe', 'Shounen', 2015, 'Ongoing', 'ao-ashi'),
+(21, 'Ao no Hako', 'Blue Box', '<p>Taiki Inomata is on the boys\' badminton team at sports powerhouse Eimei Junior and Senior High. He\'s in love with basketball player Chinatsu Kano, the older girl he trains alongside every morning in the gym. One Spring day, their relationship takes a sharp turn ... And thus begins this brand-new series of love, sports and youth!</p>', 'm21.jpg', 'English', 'Safe', 'Shounen', 2021, 'Ongoing', 'ao-no-hako'),
+(22, 'Shangri-La Frontier ~Kusoge Hunter, Kamige ni Idoman to su~', 'Shangri-La Frontier: From Trash Game Hunter to God-Tier Gamer!', '<p style=\"text-align: justify;\">Second-year high school student Rakuro Hizutome loves nothing more than finding so-called \"trash games\" and beating the crap out of them. When he decides to change things up by playing a new, \"god-tier\" VR game known as Shangri-La Frontier (aka. SLF), he does what he does best: min-maxes, skips the prologue, and jumps straight into action! Rakuro may be a seasoned gamer, but a meeting with an old rival will change the fate of every SLF player forever.</p>\r\n<p style=\"text-align: justify;\">Clad in nothing but shorts and a bird mask, Rakuro (player name: Sunraku) launches into the world of SLF. Things are going well at first as he takes down a goblin, a bunny, and even a python. But then Sunraku comes up against a huge, hard-hitting wolf known as Lycagon the Nightslayer. Will Sunraku\'s years of \"trash game\" experience be enough, or is he about to suffer a rude awakening just a few hours into his SLF adventure?</p>', 'm22.webp', 'Japanese', 'Safe', 'Shounen', 2020, 'Ongoing', 'shangri-la-frontier-kusoge-hunter-kamige-ni-idoman-to-su'),
+(23, 'ワンピース', 'One Piece', '<p style=\"text-align: justify;\">Gol D. Roger, a man referred to as the \"Pirate King,\" is set to be executed by the World Government. But just before his demise, he confirms the existence of a great treasure, One Piece, located somewhere within the vast ocean known as the Grand Line. Announcing that One Piece can be claimed by anyone worthy enough to reach it, the Pirate King is executed and the Great Age of Pirates begins.</p>\r\n<p style=\"text-align: justify;\">Twenty-two years later, a young man by the name of Monkey D. Luffy is ready to embark on his own adventure, searching for One Piece and striving to become the new Pirate King. Armed with just a straw hat, a small boat, and an elastic body, he sets out on a fantastic journey to gather his own crew and a worthy ship that will take them across the Grand Line to claim the greatest status on the high seas.</p>', 'm23.jpg', 'Japanese', 'Suggestive', 'Shounen', 1997, 'Ongoing', 'one-piece'),
+(24, 'Usogui', 'Lie Eater', '<p>There are gamblers out there who even bet their lives as ante. But to secure the integrity of these life-threatening gambles, a violent and powerful organization by the name of &ldquo;Kakerou&rdquo; referees these games as a neutral party. Follow Baku Madarame a.k.a. Usogui (The Lie Eater) as he gambles against maniacal opponents at games &ndash; such as Escape the Abandoned Building, Old Maid, and Hangman &ndash; to ultimately &ldquo;out-gamble&rdquo; and control the neutral organization of Kakerou itself.</p>', 'm24.jpg', 'Japanese', 'Suggestive', 'Seinen', 2008, 'Completed', 'usogui');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `manga_artist`
+-- Table structure for table `manga_artist`
 --
 
 CREATE TABLE `manga_artist` (
@@ -584,7 +587,7 @@ CREATE TABLE `manga_artist` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
--- Đang đổ dữ liệu cho bảng `manga_artist`
+-- Dumping data for table `manga_artist`
 --
 
 INSERT INTO `manga_artist` (`MangaID`, `ArtistID`) VALUES
@@ -592,19 +595,17 @@ INSERT INTO `manga_artist` (`MangaID`, `ArtistID`) VALUES
 (3, 2),
 (4, 3),
 (5, 4),
-(6, 11),
-(6, 15),
-(6, 15),
 (19, 16),
 (20, 15),
 (21, 17),
 (22, 18),
-(23, 19);
+(23, 19),
+(24, 20);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `manga_author`
+-- Table structure for table `manga_author`
 --
 
 CREATE TABLE `manga_author` (
@@ -613,7 +614,7 @@ CREATE TABLE `manga_author` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
--- Đang đổ dữ liệu cho bảng `manga_author`
+-- Dumping data for table `manga_author`
 --
 
 INSERT INTO `manga_author` (`MangaID`, `AuthorID`) VALUES
@@ -622,19 +623,17 @@ INSERT INTO `manga_author` (`MangaID`, `AuthorID`) VALUES
 (3, 2),
 (4, 5),
 (5, 6),
-(6, 13),
-(6, 17),
-(6, 17),
 (19, 18),
 (20, 17),
 (21, 19),
 (22, 20),
-(23, 21);
+(23, 21),
+(24, 22);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `manga_tag`
+-- Table structure for table `manga_tag`
 --
 
 CREATE TABLE `manga_tag` (
@@ -643,23 +642,27 @@ CREATE TABLE `manga_tag` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
--- Đang đổ dữ liệu cho bảng `manga_tag`
+-- Dumping data for table `manga_tag`
 --
 
 INSERT INTO `manga_tag` (`MangaID`, `TagID`) VALUES
-(2, 28),
+(1, 16),
+(1, 18),
+(1, 30),
+(1, 43),
 (2, 16),
 (2, 18),
-(2, 63),
+(2, 28),
 (2, 30),
+(2, 63),
 (3, 4),
-(3, 54),
-(3, 40),
 (3, 14),
-(3, 50),
 (3, 18),
 (3, 19),
 (3, 30),
+(3, 40),
+(3, 50),
+(3, 54),
 (4, 16),
 (4, 28),
 (4, 30),
@@ -680,13 +683,6 @@ INSERT INTO `manga_tag` (`MangaID`, `TagID`) VALUES
 (5, 52),
 (5, 66),
 (5, 74),
-(6, 1),
-(6, 4),
-(6, 18),
-(6, 30),
-(6, 36),
-(6, 63),
-(6, 4),
 (19, 6),
 (19, 8),
 (20, 4),
@@ -703,15 +699,19 @@ INSERT INTO `manga_tag` (`MangaID`, `TagID`) VALUES
 (23, 17),
 (23, 18),
 (23, 19),
-(1, 16),
-(1, 18),
-(1, 30),
-(1, 43);
+(24, 13),
+(24, 18),
+(24, 26),
+(24, 27),
+(24, 32),
+(24, 49),
+(24, 51),
+(24, 74);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `rating`
+-- Table structure for table `rating`
 --
 
 CREATE TABLE `rating` (
@@ -721,45 +721,67 @@ CREATE TABLE `rating` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
--- Đang đổ dữ liệu cho bảng `rating`
+-- Dumping data for table `rating`
 --
 
 INSERT INTO `rating` (`UserID`, `MangaID`, `Rating`) VALUES
 (3, 1, '10'),
 (3, 3, '9'),
 (3, 19, '10'),
-(4, 19, '10'),
-(3, 22, '7'),
 (3, 21, '8'),
-(3, 23, '10');
+(3, 22, '7'),
+(4, 19, '10');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `report_chapter`
+-- Table structure for table `report_chapter`
 --
 
 CREATE TABLE `report_chapter` (
   `ReportID` int(11) NOT NULL,
   `UserID` int(11) NOT NULL,
   `ChapterID` int(11) NOT NULL,
-  `ReportType` varchar(30) NOT NULL,
+  `ReportType` varchar(50) NOT NULL,
   `Description` varchar(255) NOT NULL,
   `Resolved` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
--- Đang đổ dữ liệu cho bảng `report_chapter`
+-- Dumping data for table `report_chapter`
 --
 
 INSERT INTO `report_chapter` (`ReportID`, `UserID`, `ChapterID`, `ReportType`, `Description`, `Resolved`) VALUES
-(1, 3, 1, 'incorrect_group', '', 0),
-(2, 3, 22, 'fake_spam', 'comments are bugged', 0);
+(1, 3, 1, 'incorrect_group', '', 1),
+(3, 3, 51, 'Incorrect group', 'itss the wrong group !!!', 1),
+(4, 3, 51, 'Other', 'a', 1),
+(5, 3, 50, 'Missing pages', '', 1),
+(6, 3, 50, 'Missing pages', '', 1),
+(7, 3, 50, 'Missing pages', '', 1),
+(8, 3, 50, 'Other', '', 1),
+(9, 3, 50, 'Other', '', 1),
+(10, 3, 50, 'Missing pages', '', 1),
+(11, 3, 50, 'Other', '', 1),
+(12, 3, 51, 'Missing pages', '', 1),
+(13, 3, 51, 'Official release/Raw', '', 1),
+(14, 3, 51, 'Incorrect or duplicate pages', '', 1),
+(15, 3, 51, 'Pages out of order', '', 1),
+(16, 3, 51, 'Other', '', 1),
+(17, 3, 51, 'Other', '', 1),
+(18, 3, 51, 'Other', '', 1),
+(19, 3, 51, 'Wrong manga', '', 1),
+(20, 3, 51, 'Watermarked', '', 1),
+(21, 3, 2, 'Other', '', 1),
+(22, 3, 2, 'Watermarked', '', 1),
+(23, 3, 2, 'Watermarked', '', 1),
+(24, 3, 2, 'Released before raws', '', 1),
+(25, 3, 2, 'Released before raws', '', 1),
+(26, 3, 2, 'Wrong manga', '', 1);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `report_manga`
+-- Table structure for table `report_manga`
 --
 
 CREATE TABLE `report_manga` (
@@ -772,17 +794,17 @@ CREATE TABLE `report_manga` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
--- Đang đổ dữ liệu cho bảng `report_manga`
+-- Dumping data for table `report_manga`
 --
 
 INSERT INTO `report_manga` (`ReportID`, `UserID`, `MangaID`, `ReportType`, `Description`, `Resolved`) VALUES
-(1, 3, 14, 'duplicate', '', 1),
-(2, 3, 1, 'missing_cover', '', 1);
+(2, 3, 1, 'missing_cover', '', 1),
+(3, 3, 19, 'duplicate', '', 0);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `tag`
+-- Table structure for table `tag`
 --
 
 CREATE TABLE `tag` (
@@ -792,7 +814,7 @@ CREATE TABLE `tag` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
--- Đang đổ dữ liệu cho bảng `tag`
+-- Dumping data for table `tag`
 --
 
 INSERT INTO `tag` (`TagID`, `TagGroup`, `TagName`) VALUES
@@ -876,7 +898,7 @@ INSERT INTO `tag` (`TagID`, `TagGroup`, `TagName`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -884,169 +906,296 @@ CREATE TABLE `user` (
   `Username` varchar(20) NOT NULL,
   `Joined` datetime NOT NULL DEFAULT current_timestamp(),
   `Avatar` varchar(50) NOT NULL DEFAULT 'avatar_default.png',
-  `Role` varchar(10) NOT NULL DEFAULT 'user',
-  `banner` varchar(50) NOT NULL,
-  `DateOfBirth` date DEFAULT NULL,
-  `Location` varchar(100) NOT NULL,
-  `AboutField` text NOT NULL
+  `Role` varchar(10) NOT NULL DEFAULT 'user'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
--- Đang đổ dữ liệu cho bảng `user`
+-- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`UserID`, `Username`, `Joined`, `Avatar`, `Role`, `banner`, `DateOfBirth`, `Location`, `AboutField`) VALUES
-(1, 'Nguvlra', '2025-04-09 15:58:19', 'avatar_default.png', 'user', '', NULL, '', ''),
-(2, 'Bababoey', '2025-04-10 07:28:54', 'avatar_default.png', 'user', '', NULL, '', ''),
-(3, 'Nguvlra123', '2025-04-15 16:35:13', 'avatars_3_1747215027.png', 'admin', 'banners_3_1747220539.png', '2005-07-15', '', '<p>hello hehehe</p>'),
-(4, 'damian123', '2025-05-08 07:50:49', 'avatar_default.png', 'user', '', NULL, '', ''),
-(5, 'eugene123', '2025-05-14 12:00:56', 'avatar_default.png', 'user', '', NULL, '', '');
+INSERT INTO `user` (`UserID`, `Username`, `Joined`, `Avatar`, `Role`) VALUES
+(1, 'Nguvlra', '2025-04-09 15:58:19', 'avatar_default.png', 'user'),
+(2, 'Bababoey', '2025-04-10 07:28:54', 'avatar_default.png', 'user'),
+(3, 'Nguvlra123', '2025-04-15 16:35:13', 'avatar_default.png', 'admin'),
+(4, 'damian123', '2025-05-08 07:50:49', 'avatar_default.png', 'user');
 
 --
--- Chỉ mục cho các bảng đã đổ
+-- Indexes for dumped tables
 --
 
 --
--- Chỉ mục cho bảng `account`
+-- Indexes for table `account`
 --
 ALTER TABLE `account`
   ADD PRIMARY KEY (`username`);
 
 --
--- Chỉ mục cho bảng `announcement`
+-- Indexes for table `announcement`
 --
 ALTER TABLE `announcement`
   ADD PRIMARY KEY (`announcementID`);
 
 --
--- Chỉ mục cho bảng `artist`
+-- Indexes for table `artist`
 --
 ALTER TABLE `artist`
   ADD PRIMARY KEY (`ArtistID`);
 
 --
--- Chỉ mục cho bảng `author`
+-- Indexes for table `author`
 --
 ALTER TABLE `author`
   ADD PRIMARY KEY (`AuthorID`);
 
 --
--- Chỉ mục cho bảng `chapter`
+-- Indexes for table `bookmark`
+--
+ALTER TABLE `bookmark`
+  ADD PRIMARY KEY (`MangaID`,`UserID`),
+  ADD KEY `UserID` (`UserID`);
+
+--
+-- Indexes for table `chapter`
 --
 ALTER TABLE `chapter`
-  ADD PRIMARY KEY (`ChapterID`);
+  ADD PRIMARY KEY (`ChapterID`),
+  ADD KEY `MangaID` (`MangaID`);
 
 --
--- Chỉ mục cho bảng `comment`
+-- Indexes for table `chapter_pages`
+--
+ALTER TABLE `chapter_pages`
+  ADD PRIMARY KEY (`ChapterID`,`PageNumber`);
+
+--
+-- Indexes for table `comment`
 --
 ALTER TABLE `comment`
-  ADD PRIMARY KEY (`CommentID`);
+  ADD PRIMARY KEY (`CommentID`),
+  ADD KEY `CommentSectionID` (`CommentSectionID`);
 
 --
--- Chỉ mục cho bảng `commentsection`
+-- Indexes for table `commentsection`
 --
 ALTER TABLE `commentsection`
-  ADD PRIMARY KEY (`CommentSectionID`);
+  ADD PRIMARY KEY (`CommentSectionID`),
+  ADD KEY `ChapterID` (`ChapterID`);
 
 --
--- Chỉ mục cho bảng `manga`
+-- Indexes for table `manga`
 --
 ALTER TABLE `manga`
   ADD PRIMARY KEY (`MangaID`);
 
 --
--- Chỉ mục cho bảng `report_chapter`
+-- Indexes for table `manga_artist`
+--
+ALTER TABLE `manga_artist`
+  ADD PRIMARY KEY (`MangaID`,`ArtistID`),
+  ADD KEY `ArtistID` (`ArtistID`);
+
+--
+-- Indexes for table `manga_author`
+--
+ALTER TABLE `manga_author`
+  ADD PRIMARY KEY (`MangaID`,`AuthorID`),
+  ADD KEY `AuthorID` (`AuthorID`);
+
+--
+-- Indexes for table `manga_tag`
+--
+ALTER TABLE `manga_tag`
+  ADD PRIMARY KEY (`MangaID`,`TagID`),
+  ADD KEY `TagID` (`TagID`);
+
+--
+-- Indexes for table `rating`
+--
+ALTER TABLE `rating`
+  ADD PRIMARY KEY (`UserID`,`MangaID`),
+  ADD KEY `MangaID` (`MangaID`);
+
+--
+-- Indexes for table `report_chapter`
 --
 ALTER TABLE `report_chapter`
-  ADD PRIMARY KEY (`ReportID`);
+  ADD PRIMARY KEY (`ReportID`),
+  ADD KEY `UserID` (`UserID`,`ChapterID`),
+  ADD KEY `ChapterID` (`ChapterID`);
 
 --
--- Chỉ mục cho bảng `report_manga`
+-- Indexes for table `report_manga`
 --
 ALTER TABLE `report_manga`
-  ADD PRIMARY KEY (`ReportID`);
+  ADD PRIMARY KEY (`ReportID`),
+  ADD KEY `MangaID` (`MangaID`),
+  ADD KEY `UserID` (`UserID`);
 
 --
--- Chỉ mục cho bảng `tag`
+-- Indexes for table `tag`
 --
 ALTER TABLE `tag`
   ADD PRIMARY KEY (`TagID`);
 
 --
--- Chỉ mục cho bảng `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`UserID`);
+  ADD PRIMARY KEY (`UserID`),
+  ADD KEY `Username` (`Username`);
 
 --
--- AUTO_INCREMENT cho các bảng đã đổ
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT cho bảng `announcement`
+-- AUTO_INCREMENT for table `announcement`
 --
 ALTER TABLE `announcement`
   MODIFY `announcementID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT cho bảng `artist`
+-- AUTO_INCREMENT for table `artist`
 --
 ALTER TABLE `artist`
-  MODIFY `ArtistID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `ArtistID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT cho bảng `author`
+-- AUTO_INCREMENT for table `author`
 --
 ALTER TABLE `author`
-  MODIFY `AuthorID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `AuthorID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
--- AUTO_INCREMENT cho bảng `chapter`
+-- AUTO_INCREMENT for table `chapter`
 --
 ALTER TABLE `chapter`
-  MODIFY `ChapterID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `ChapterID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
--- AUTO_INCREMENT cho bảng `comment`
+-- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `CommentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `CommentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT cho bảng `commentsection`
+-- AUTO_INCREMENT for table `commentsection`
 --
 ALTER TABLE `commentsection`
-  MODIFY `CommentSectionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `CommentSectionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
--- AUTO_INCREMENT cho bảng `manga`
+-- AUTO_INCREMENT for table `manga`
 --
 ALTER TABLE `manga`
-  MODIFY `MangaID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `MangaID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- AUTO_INCREMENT cho bảng `report_chapter`
+-- AUTO_INCREMENT for table `report_chapter`
 --
 ALTER TABLE `report_chapter`
-  MODIFY `ReportID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ReportID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
--- AUTO_INCREMENT cho bảng `report_manga`
+-- AUTO_INCREMENT for table `report_manga`
 --
 ALTER TABLE `report_manga`
-  MODIFY `ReportID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ReportID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT cho bảng `tag`
+-- AUTO_INCREMENT for table `tag`
 --
 ALTER TABLE `tag`
   MODIFY `TagID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
--- AUTO_INCREMENT cho bảng `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `bookmark`
+--
+ALTER TABLE `bookmark`
+  ADD CONSTRAINT `bookmark_ibfk_1` FOREIGN KEY (`MangaID`) REFERENCES `manga` (`MangaID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `bookmark_ibfk_2` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `chapter`
+--
+ALTER TABLE `chapter`
+  ADD CONSTRAINT `chapter_ibfk_1` FOREIGN KEY (`MangaID`) REFERENCES `manga` (`MangaID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `chapter_pages`
+--
+ALTER TABLE `chapter_pages`
+  ADD CONSTRAINT `chapter_pages_ibfk_1` FOREIGN KEY (`ChapterID`) REFERENCES `chapter` (`ChapterID`);
+
+--
+-- Constraints for table `comment`
+--
+ALTER TABLE `comment`
+  ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`CommentSectionID`) REFERENCES `commentsection` (`CommentSectionID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `commentsection`
+--
+ALTER TABLE `commentsection`
+  ADD CONSTRAINT `commentsection_ibfk_1` FOREIGN KEY (`ChapterID`) REFERENCES `chapter` (`ChapterID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `manga_artist`
+--
+ALTER TABLE `manga_artist`
+  ADD CONSTRAINT `manga_artist_ibfk_1` FOREIGN KEY (`MangaID`) REFERENCES `manga` (`MangaID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `manga_artist_ibfk_2` FOREIGN KEY (`ArtistID`) REFERENCES `artist` (`ArtistID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `manga_author`
+--
+ALTER TABLE `manga_author`
+  ADD CONSTRAINT `manga_author_ibfk_1` FOREIGN KEY (`AuthorID`) REFERENCES `author` (`AuthorID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `manga_author_ibfk_2` FOREIGN KEY (`MangaID`) REFERENCES `manga` (`MangaID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `manga_tag`
+--
+ALTER TABLE `manga_tag`
+  ADD CONSTRAINT `manga_tag_ibfk_1` FOREIGN KEY (`TagID`) REFERENCES `tag` (`TagID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `manga_tag_ibfk_2` FOREIGN KEY (`MangaID`) REFERENCES `manga` (`MangaID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `rating`
+--
+ALTER TABLE `rating`
+  ADD CONSTRAINT `rating_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `rating_ibfk_2` FOREIGN KEY (`MangaID`) REFERENCES `manga` (`MangaID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `report_chapter`
+--
+ALTER TABLE `report_chapter`
+  ADD CONSTRAINT `report_chapter_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `report_chapter_ibfk_2` FOREIGN KEY (`ChapterID`) REFERENCES `chapter` (`ChapterID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `report_manga`
+--
+ALTER TABLE `report_manga`
+  ADD CONSTRAINT `report_manga_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `report_manga_ibfk_2` FOREIGN KEY (`MangaID`) REFERENCES `manga` (`MangaID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `user`
+--
+ALTER TABLE `user`
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`Username`) REFERENCES `account` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -4,6 +4,30 @@ body {
     font-family: Arial, sans-serif;
 }
 
+/* Custom Profile Menu Styles */
+.profile-nav .list-group-item {
+    border-radius: 0;
+    margin-bottom: 2px;
+    border: 1px solid #000;
+}
+
+.profile-nav .bg-warning {
+    background-color: #ff7f00 !important;
+    border-color: #000;
+}
+
+.profile-nav a.list-group-item-action:hover {
+    opacity: 0.9;
+}
+
+.profile-nav .bg-dark {
+    background-color: #333 !important;
+}
+
+.profile-nav a.bg-dark:hover {
+    background-color: #444 !important;
+}
+
 .profile-banner {
     height: 250px;
     overflow: hidden;

@@ -9,8 +9,24 @@ $username = $is_logged_in && isset($_SESSION['username']) ? htmlspecialchars($_S
 // Define path prefix, default to empty string if not set by the including controller
 $pathPrefix = $pathPrefix ?? '';
 
-// Corrected path for default avatar
-$user_avatar = '/IMG/avatar_default.png'; // Path relative to index.php
+// Default avatar path
+$user_avatar = $pathPrefix . 'IMG/avatar_default.png'; // Path relative to index.php
+
+// If user is logged in, fetch their avatar from the database
+if ($is_logged_in && isset($_SESSION['userID'])) {
+    // Make sure we have access to the account_find_by_userID function
+    if (!function_exists('account_find_by_userID')) {
+        require_once __DIR__ . '/../../db/account_db.php';
+    }
+
+    // Get user data including avatar
+    $user_data = account_find_by_userID($_SESSION['userID']);
+
+    // If user has a custom avatar, use it
+    if ($user_data && !empty($user_data['Avatar']) && $user_data['Avatar'] !== 'avatar_default.png') {
+        $user_avatar = $pathPrefix . 'IMG/avatars/' . htmlspecialchars($user_data['Avatar']);
+    }
+}
 ?>
 
 <!-- Navigation Bar -->
@@ -20,9 +36,9 @@ $user_avatar = '/IMG/avatar_default.png'; // Path relative to index.php
       <i class="bi bi-list fs-3"></i>
     </button>
     <?php // Link to index.php (homepage controller) ?>
-    <a class="navbar-brand text-white fw-bold d-flex align-items-center" href="/">
+    <a class="navbar-brand text-white fw-bold d-flex align-items-center" href="<?= $pathPrefix ?>index.php">
        <?php // Corrected path for logo ?>
-       <img src="/IMG/logo.png" alt="Logo" style="height: 30px; margin-right: 8px;">
+       <img src="<?= $pathPrefix ?>IMG/logo.png" alt="Logo" style="height: 30px; margin-right: 8px;">
        MangaDax
     </a>
 
@@ -38,8 +54,8 @@ $user_avatar = '/IMG/avatar_default.png'; // Path relative to index.php
     </div>
     <button class="btn text-white p-0" type="button" id="user-avatar-btn" data-bs-toggle="modal" data-bs-target="#user-modal">
       <?php if ($is_logged_in): ?>
-        <?php // Path to avatar is correct now ?>
-        <img src="<?=$user_avatar?>" alt="User Avatar" class="rounded-circle" width="32" height="32">
+        <?php // Using the user's avatar from database ?>
+        <img src="<?php echo $user_avatar; ?>" alt="User Avatar" class="rounded-circle" width="32" height="32">
       <?php else: ?>
         <i class="bi bi-person-circle fs-3"></i> <?php /* Display default icon */ ?>
       <?php endif; ?>

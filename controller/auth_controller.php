@@ -301,12 +301,18 @@ function handleUpdateProfile(): void {
                     // Process and save avatar image
                     $avatarFilename = save_base64_image($avatarData, 'avatars', $_SESSION['userID']);
                     $updateData['avatar'] = $avatarFilename;
+                } elseif (isset($_POST['deleteAvatar']) && $_POST['deleteAvatar'] == '1') {
+                    // Set avatar to default if delete was requested
+                    $updateData['avatar'] = 'avatar_default.png';
                 }
 
                 if ($bannerData) {
                     // Process and save banner image
                     $bannerFilename = save_base64_image($bannerData, 'banners', $_SESSION['userID']);
                     $updateData['banner'] = $bannerFilename;
+                } elseif (isset($_POST['deleteBanner']) && $_POST['deleteBanner'] == '1') {
+                    // Set banner to default if delete was requested
+                    $updateData['banner'] = 'loginBG.png';
                 }
 
                 // Update the profile in the database

@@ -130,6 +130,9 @@ function account_find_by_userID(int $userID): array|false
 function update_user_profile(int $userID, array $data): bool
 {
     try {
+        // Get current user data to check for existing avatar/banner
+        $currentUserData = pdo_query_one("SELECT Avatar, banner FROM user WHERE UserID = ?", $userID);
+
         // Update user table
         $userFields = [];
         $userParams = [];
@@ -149,14 +152,33 @@ function update_user_profile(int $userID, array $data): bool
             $userParams[] = $data['about'];
         }
 
+        // Handle avatar update and delete old file
         if (isset($data['avatar'])) {
             $userFields[] = "Avatar = ?";
             $userParams[] = $data['avatar'];
+
+            // Delete old avatar file if it exists and is not the default
+            if ($currentUserData && !empty($currentUserData['Avatar']) &&
+                $currentUserData['Avatar'] !== 'avatar_default.png') {
+                $oldAvatarPath = __DIR__ . "/../IMG/avatars/" . $currentUserData['Avatar'];
+                if (file_exists($oldAvatarPath)) {
+                    @unlink($oldAvatarPath); // Use @ to suppress errors if file can't be deleted
+                }
+            }
         }
 
+        // Handle banner update and delete old file
         if (isset($data['banner'])) {
             $userFields[] = "banner = ?";
             $userParams[] = $data['banner'];
+
+            // Delete old banner file if it exists
+            if ($currentUserData && !empty($currentUserData['banner'])) {
+                $oldBannerPath = __DIR__ . "/../IMG/banners/" . $currentUserData['banner'];
+                if (file_exists($oldBannerPath)) {
+                    @unlink($oldBannerPath); // Use @ to suppress errors if file can't be deleted
+                }
+            }
         }
 
         if (!empty($userFields)) {
