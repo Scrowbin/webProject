@@ -5,16 +5,11 @@
     header("Location: ../controller/comments_controller.php?commentsID=$commentSectionID");
     require('../db/commentsPdo.php');
     require('../db/LibraryAndRating.php');
-    
-    
+
+
     if (!isset($_SESSION['userID'])) {
-        $userID = getUserID($_SESSION['username']);
-        if ($userID==null){
-            http_response_code(401);
-            exit("You must be logged in to rate.");
-        }
-        
-        $_SESSION['userID'] = $userID;        
+        http_response_code(401);
+        exit("You must be logged in to comment.");
     }
 
     $userID = $_SESSION['userID'];

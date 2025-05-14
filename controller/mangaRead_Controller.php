@@ -8,21 +8,14 @@
     if (!$chapterID) {
         die('chapterID not found');
     }
-    
+
     $pages = getPages($chapterID);
     if (!$pages) {
         die("chapter not found.");
     }
 
-    $userID = $_SESSION['userID'] ?? null;
+    $userID = $_SESSION['userID'] ?? 0;
     $username = $_SESSION['username'] ?? null;
-    if (!isset($_SESSION['userID'])) {
-        if ($username != null){
-            $userID = getUserID($_SESSION['username']);
-            $_SESSION['userID'] = $userID;        
-        }
-        else $userID=0;
-    }
     $role = get_role($userID)??"user";
     $nextChapterID = getNextChapter($chapterID);
     $prevChapterID = getPrevChapter($chapterID);
@@ -41,8 +34,8 @@
     }
 
 
-    
-    
+
+
 ?>
 
 <?php include('../PHP/mangaRead.php')?>

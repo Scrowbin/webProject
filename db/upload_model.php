@@ -1,5 +1,6 @@
 <?php
 require_once 'pdo.php';
+require_once 'account_db.php'; // Thêm để sử dụng hàm getUserID từ account_db.php
 
 function chapterExist($mangaID, $number){
     $sql = "SELECT 1 FROM chapter WHERE MangaID = ? AND ChapterNumber = ?";
@@ -10,7 +11,7 @@ function chapterExist($mangaID, $number){
 function insertChapter($mangaID, $volume, $scangroupName, $uploaderName, $chapterName, $chapterNum,$language) {
     $sql = "INSERT INTO chapter (MangaID, Volume, ScangroupName, UploaderName, ChapterName, ChapterNumber, Language)
             VALUES (?, ?, ?, ?, ?, ?,?)";
-    
+
     return pdo_execute_return_id($sql,$mangaID, $volume, $scangroupName, $uploaderName, $chapterName, $chapterNum,$language);
 }
 
@@ -23,12 +24,7 @@ function getUsername($userID){
     $sql = "SELECT Username FROM user where UserID = ?";
     return pdo_query_value($sql,$userID);
 }
-function getUserID ($username){
-    $userID = pdo_query_one('SELECT user.UserID FROM account join user on
-    account.username = user.Username where account.username = ?', $username);
-    if ($userID===null or $userID==='') return null;
-    return $userID['UserID'];
-}
+// Đã xóa hàm getUserID vì đã được định nghĩa trong account_db.php
 
 function makeComment($chapterID){
     $sql = 'INSERT INTO commentsection (ChapterID) VALUES (?)';

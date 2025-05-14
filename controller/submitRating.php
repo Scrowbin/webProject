@@ -8,13 +8,9 @@
 
     // Check login
     if (!isset($_SESSION['userID'])) {
-        $userID = getUserID($_SESSION['username']);
-        if (!$userID) {
-            http_response_code(401);
-            echo json_encode(["success" => false, "message" => "Not logged in"]);
-            exit;
-        }
-        $_SESSION['userID'] = $userID;
+        http_response_code(401);
+        echo json_encode(["success" => false, "message" => "Not logged in"]);
+        exit;
     }
 
     $userID = $_SESSION['userID'];
@@ -44,5 +40,5 @@
         echo json_encode(["success" => true, "rating" => (int)$ratingInDB]);
     }
     exit;
-    
+
 ?>

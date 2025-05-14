@@ -1,16 +1,11 @@
 <?php
     require_once('pdo.php');
-    function getUserID ($username){
-        $userID = pdo_query_one('SELECT user.UserID FROM account join user on
-        account.username = user.Username where account.username = ?', $username);
-        if ($userID===null || $userID==='' || $userID === false) return null;
-        return $userID['UserID'];
-    }
+    require_once('account_db.php'); // Thêm để sử dụng hàm getUserID từ account_db.php
 
     function addToLibrary($mangaID,$userID){
         $sql = 'INSERT INTO bookmark (MangaID, UserID) VALUES (?,?);';
         pdo_execute($sql,$mangaID,$userID);
-        
+
     }
     function removeBookmark($mangaID, $userID){
         $sql = 'DELETE FROM bookmark WHERE MangaID = ? AND UserID = ?';
