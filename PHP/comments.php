@@ -19,13 +19,16 @@ $chapterNumber = truncateNumber($chapterNumber);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="../CSS/comments.css">
+    <link rel="stylesheet" href="/CSS/comments.css">
 </head>
 <body class="p-4">
 
 <div class="container" id="comment-section">
     <div class = "manga-container">
-        <a href = "mangaRead_controller.php?chapterID=<?=$chapterID?>">
+        <?php
+            $chapterSlug = "/read/" . $mangaSlug . "/chapter-" . str_replace(".","-",$chapterNumber);
+        ?>
+        <a href = "<?=$chapterSlug?>">
             <div class="bg-image">
                 <style>
                     .bg-image{
@@ -40,7 +43,7 @@ $chapterNumber = truncateNumber($chapterNumber);
                         rgba(0, 0, 0, 0.7) 10%, 
                         rgba(0, 0, 0, 0.45) 50%,   
                         rgba(0, 0, 0, 0) 90%),   
-                        url("../IMG/<?=$mangaID?>/<?=$mangaCover?>");  
+                        url("/IMG/<?=$mangaID?>/<?=$mangaCover?>");  
                         background-position: center 20%; 
                         background-repeat: no-repeat;
                         background-size: cover;
@@ -51,7 +54,7 @@ $chapterNumber = truncateNumber($chapterNumber);
             <div class="manga-card">
                 <!-- Left: Cover Image -->
                 <div class="manga-cover">
-                        <img src="../IMG/<?=$mangaID?>/<?=$mangaCover?>" alt="Manga Cover">
+                        <img src="/IMG/<?=$mangaID?>/<?=$mangaCover?>" alt="Manga Cover">
                 </div>
         
                 <!-- Right: Details -->
@@ -81,7 +84,7 @@ $chapterNumber = truncateNumber($chapterNumber);
             id = "comment-form"
             data-section-id="<?= $commentsID ?>"
             data-logged-in="<?= $isLoggedIn ? 'true' : 'false' ?>"
-            data-url="../controller/addComment_controller.php">
+            data-url="/controller/addComment_controller.php">
             <div class="mb-3" id = "post-comment">
                 <label for="commentText" class="form-label fw-bold text-light">Post a Reply</label>
                 <div id="reply-preview" class="mb-2"></div>
@@ -116,6 +119,6 @@ $chapterNumber = truncateNumber($chapterNumber);
 <script>
     const commentsID = <?=json_encode($commentsID)?>;
 </script>
-<script src="../JS/comments.JS"></script>
+<script src="/JS/comments.JS"></script>
 </body>
 </html>

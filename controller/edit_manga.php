@@ -5,7 +5,8 @@ require '../db/edit_model.php'; // Your database connection
 
 // Set mode to edit for the create.php template
 $mode = "edit";
-$mangaID = $_GET['MangaID'] ?? null;
+$slug = $_GET['slug'] ?? null;
+$mangaID = getMangaIDFromSlug($slug) ?? null;
 if (!$mangaID) {
     echo "No manga ID provided.";
     exit;
@@ -21,7 +22,7 @@ if (!$manga) {
 // Get related data
 $authorsRaw = getMangaAuthors($mangaID);
 $artistsRaw = getMangaArtists($mangaID);
-$coverLink = "../IMG/" . $mangaID . "/" . $manga["CoverLink"];
+$coverLink = "/IMG/" . $mangaID . "/" . $manga["CoverLink"];
 $selectedTags = getTags($mangaID);
 
 // Define path prefix for includes (same as in create.php)

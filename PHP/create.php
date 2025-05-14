@@ -21,8 +21,8 @@
   <title><?=$mode==="create"? "Upload Manga":"Edit Manga"?> - MangaDax</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
-  <link rel="stylesheet" href="../CSS/navbar.css">
-  <link rel="stylesheet" href="../CSS/create.css">
+  <link rel="stylesheet" href="/CSS/navbar.css">
+  <link rel="stylesheet" href="/CSS/create.css">
   <!-- TinyMCE CDN with API Key -->
   <script src="https://cdn.tiny.cloud/1/wx4008qjjx7niu643lrzyglnb9byz72numg3c3jss5gk1noi/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 </head>
@@ -35,9 +35,9 @@
     <?php
       if ($mode==="edit"){
     ?>
-    <a href="../controller/mangaInfo_Controller.php?MangaID=<?=$mangaID?>">
+    <a href="/manga/<?=$slug?>">
     <div class="d-flex align-items-center border rounded p-3 mb-4">
-      <img src="../IMG/<?=$mangaID?>/<?=$image?>" alt="Manga Cover" class="me-3" style="width: 60px; height: 90px; object-fit: cover;">
+      <img src="/IMG/<?=$mangaID?>/<?=$image?>" alt="Manga Cover" class="me-3" style="width: 60px; height: 90px; object-fit: cover;">
       <div>
         <strong><?=$mangaNameOG?></strong><br>
         <?=$mangaAuthors?>
@@ -303,7 +303,7 @@
       autosave_retention: '2m',
       image_advtab: true,
       link_list: [
-        { title: 'MangaDax Homepage', value: '../index.php' }
+        { title: 'MangaDax Homepage', value: '/index.php' }
       ],
       setup: function(editor) {
         editor.on('KeyUp', function(e) {
@@ -360,7 +360,7 @@
     const toastBody = document.getElementById('uploadToastBody');
 
     // Decide the action based on mode: create or edit
-    const actionUrl = <?php echo json_encode($mode === 'create' ? '../controller/handle_create.php' : '../controller/handle_edit.php'); ?>;
+    const actionUrl = <?php echo json_encode($mode === 'create' ? '/controller/handle_create.php' : '/controller/handle_edit.php'); ?>;
 
     fetch(actionUrl, {
       method: 'POST',

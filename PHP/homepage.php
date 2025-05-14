@@ -12,10 +12,10 @@ require("helper.php");
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
   <?php /* Corrected CSS paths relative to index.php */ ?>
-  <link rel="stylesheet" href="CSS/navbar.css">
-  <link rel="stylesheet" href="CSS/home.css" />
+  <link rel="stylesheet" href="/CSS/navbar.css">
+  <link rel="stylesheet" href="/CSS/home.css" />
   <?php if (isset($activeAnnouncement) && $activeAnnouncement): ?>
-  <link rel="stylesheet" href="CSS/announcement.css" />
+  <link rel="stylesheet" href="/CSS/announcement.css" />
   <?php endif; ?>
   <style>
     .rating-badge {
@@ -136,7 +136,7 @@ require("helper.php");
           ?>
           <!-- Slide <?= $index + 1 ?> -->
           <div class="carousel-item <?= $isActive ?>">
-            <div class="featured-manga" data-bg-src="<?= $coverImage ?>" onclick="window.location='controller/mangaInfo_Controller.php?MangaID=<?= $mangaId ?>'">
+            <div class="featured-manga" data-bg-src="<?= $coverImage ?>" onclick="window.location='../manga/<?=$manga['Slug']?>'">
               <div class="background-overlay"></div>
               <div class="featured-manga-content row g-0">
                 <div class="col-md-3 featured-cover-col">
@@ -221,8 +221,12 @@ require("helper.php");
           foreach ($latestUpdates as $index => $manga):
             if ($count >= 6) break; // Limit to 6 items in first column
             $count++;
+            $chapterNum = htmlspecialchars(truncateNumber($manga['Chapter']['ChapterNumber']));
+            $chapterNumber = str_replace('.', '-', $chapterNum);
+            $slug = $manga["MangaSlug"];
+            $chapterSlug = '/read/'.$slug.'/chapter-'.$chapterNumber;
           ?>
-              <a href="controller/mangaRead_controller.php?chapterID=<?= $manga['Chapter']['ChapterID'] ?>" class="latest-item">
+              <a href="<?=$chapterSlug?>" class="latest-item">
                 <img src="IMG/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?> Cover" class="latest-cover">
                 <div class="latest-details">
                   <div class="latest-title"><?= htmlspecialchars($manga['MangaNameOG']) ?></div>
@@ -571,7 +575,7 @@ require("helper.php");
           <?php foreach ($recentlyAddedManga as $manga): ?>
           <!-- Manga Item -->
           <div class="swiper-slide item">
-            <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>">
+            <a href="manga/<?=$manga['Slug'] ?>">
               <div class="image-container">
                 <img src="IMG/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?> Cover">
                 <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">

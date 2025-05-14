@@ -4,6 +4,7 @@
     }
     require_once('../db/latestUpdates_model.php');
     require_once('../db/mangaInfoPdo.php');
+    require_once('../db/account_db.php');
 
     $userID = $_SESSION['userID'] ?? null;
     $username = $_SESSION['username'] ?? null;

@@ -1,7 +1,11 @@
 <?php
     require_once("../db/mangaInfoPdo.php");
     require_once("../db/editChapter.php");
-    $chapterID = $_GET['ChapterID'] ?? null;
+
+    $slug = $_GET['slug'] ?? null;
+    $mangaID = getMangaIDFromSlug($slug);
+    $chapterNumber = str_replace('-', '.', $_GET['chapter']);
+    $chapterID = getChapterID($slug,$chapterNumber) ?? null;
     if ($chapterID === null){
         exit('No chapterID found');
     }

@@ -6,6 +6,10 @@
     require_once 'pdo.php';
     $isLoggedIn = isset($_SESSION['userID']);
    
+    function getMangaIDFromSlug($slug){
+        $sql = 'SELECT MangaID from manga WHERE Slug = ?';
+        return pdo_query_value($sql,$slug);
+    }
     function getMangaInfo($mangaID){
         $mangaInfo= pdo_query_one('select * from manga where mangaID = ?',$mangaID);
         return $mangaInfo;
@@ -136,3 +140,7 @@
 
         return pdo_query_int($sql, $minRatings, $limit);
     }
+    function getRandomManga() {
+    $sql = "SELECT Slug FROM manga ORDER BY RAND() LIMIT 1";
+    return pdo_query_value($sql);
+}

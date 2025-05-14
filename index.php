@@ -94,6 +94,7 @@ try {
     foreach ($latestChapters as $chapter) {
         $latestUpdates[] = [
             'MangaID' => $chapter['MangaID'],
+            'MangaSlug' => $chapter['Slug'],
             'MangaNameOG' => $chapter['MangaNameOG'],
             'CoverLink' => $chapter['CoverLink'],
             'Chapter' => [
@@ -107,6 +108,8 @@ try {
             ]
         ];
     }
+    // var_dump($chapter); // check if 'Slug' exists
+
 } catch (Exception $e) {
     // Fallback if there's an error
     $latestUpdates = [];

@@ -87,10 +87,8 @@ document.addEventListener("DOMContentLoaded", () => {
     //chapter dropdwown change redirect
     //
     document.getElementById("chapter-dropdown").addEventListener("change", function () {
-        const selectedChapterID = this.value;
-        const url = new URL(window.location.href);
-        url.searchParams.set("chapterID", selectedChapterID);
-        window.location.href = url.toString();
+        const selectedSlug = this.value;
+        window.location.href = selectedSlug;
     });
 
 
@@ -133,16 +131,16 @@ document.addEventListener("DOMContentLoaded", () => {
     // functions to show the pages
     function showImage(goToPage){
         if (goToPage < 0) {
-            if (prevChapterID)
-                window.location.href = "mangaRead_Controller.php?chapterID=" + prevChapterID;
+            if (prevChapterSlug)
+                window.location.href = prevChapterSlug;
             else 
-                window.location.href = "mangaInfo_Controller.php?MangaID=" + mangaID;
+                window.location.href = mangaSlug;
             return;
         } else if (goToPage >= images.length) {
-            if (nextChapterID)
-                window.location.href = "mangaRead_Controller.php?chapterID=" + nextChapterID;
+            if (nextChapterSlug)
+                window.location.href = nextChapterSlug;
             else 
-                window.location.href = "mangaInfo_Controller.php?MangaID=" + mangaID;
+                window.location.href = mangaSlug;
             return;
         }
     

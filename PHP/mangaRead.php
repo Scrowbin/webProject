@@ -1,7 +1,6 @@
 <?php
     require_once('helper.php');
     //Chapter info
-    $chapterID = $_GET['chapterID'] ?? null;
     $chapterName = $chapterInfo['ChapterName'];
     $chapterVolume = truncateNumber($chapterInfo['Volume']);
     $chapterNumber = truncateNumber($chapterInfo['ChapterNumber']);
@@ -9,7 +8,7 @@
     $chapterUploader = $chapterInfo['UploaderName'];
     $mangaName = $mangaInfo['MangaNameOG'];
     $mangaID = $mangaInfo['MangaID'];
-
+    $mangaSlug = $mangaInfo['Slug'];
 
 
     $lastPageNumber = $pages[count($pages)-1]["PageNumber"];
@@ -17,6 +16,7 @@
     $chapterDropdownValues = [];
     foreach($chapters as $chapter){
         $chapterDropdownValues[] = truncateNumber($chapter['ChapterNumber']);
+
     }
 
     function displayTitle($name,$number){
@@ -35,8 +35,8 @@
     <?php echo displayTitle($chapterName,$chapterNumber)?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
-    <link rel="stylesheet" href="../CSS/navbar.css">
-    <link rel="stylesheet" href="../CSS/mangaRead.css">
+    <link rel="stylesheet" href="/CSS/navbar.css">
+    <link rel="stylesheet" href="/CSS/mangaRead.css">
 </head>
 
 <body>
@@ -56,7 +56,7 @@
             <div id="topReadBar" class="top-read-bar">
                 <?php echo displayNameOrChapter($chapterName,$chapterNumber)?>
                 <div>
-                    <a class="mangaInfo" href="/manga/<?= $mangaID ?>">
+                    <a class="mangaInfo" href="/manga/<?= $mangaSlug ?>">
                         <strong><?=$mangaName?></strong>
                     </a>
                 </div>
@@ -79,7 +79,7 @@
 
                     for($i=0;$i<count($pages);$i++){
                         ?>
-                        <img src="../IMG/<?=$mangaID?>/<?=$chapterNumber?>/<?=$pageLinks[$i]?>" class="img-fit-width" id="page-<?=$i+1?>" alt="Page <?=$i+1?>">
+                        <img src="/IMG/<?=$mangaID?>/<?=$chapterNumber?>/<?=$pageLinks[$i]?>" class="img-fit-width" id="page-<?=$i+1?>" alt="Page <?=$i+1?>">
                         <?php
                     }
                     ?>
@@ -97,10 +97,11 @@
                 <div class="p-bar-number hidden" id = 'p-bar-number-high'><?=$lastPageNumber?></div>
             </nav>
             <?php
-                if ($nextChapterID) {
-                    echo "<button id='next-chapter' onclick=\"location.href='mangaRead_Controller.php?chapterID=$nextChapterID'\">Next Chapter</button>";
+                if ($nextChapterNumber) {
+                    $nextChapterSlug = "/read/" . $mangaSlug . "/chapter-" . str_replace(".","-",truncateNumber($nextChapterNumber));
+                    echo "<button id='next-chapter' onclick=\"location.href='$nextChapterSlug'\">Next Chapter</button>";
                 } else {
-                    echo "<button id='next-chapter' onclick=\"location.href='mangaInfo_Controller.php?MangaID=$mangaID'\">Back to Info</button>";
+                    echo "<button id='next-chapter' onclick=\"location.href='manga/$mangaSlug'\">Back to Info</button>";
                 }
             ?>
 
@@ -116,7 +117,7 @@
                     <div class="right-manga-info">
                         <i class="bi bi-book"></i>
                         <span class="right-manga">
-                            <a href="mangaInfo_Controller.php?MangaID=<?=$mangaID?>">
+                            <a href="/manga/<?=$mangaSlug?>">
                                 <strong><?=$mangaName?></strong>
                             </a>
                         </span>
@@ -127,7 +128,11 @@
                         <span><?=$chapterName?></span>
                     </div>
                     <?php if ($role == "admin"):?>
-                        <button class="btn reader-btn" id = "editBtn" onclick="window.location.href='../controller/editChapter_controller.php?ChapterID=<?=$chapterID?>'; return false;"><i class = "bi bi-pencil"></i>Edit Chapter</button>
+                        <?php
+                            $chapterSlug ="/admin/edit-chapter/" . $mangaSlug . '/chapter-'. str_replace(".","-",$chapterNumber);
+                        ?>
+                        
+                        <button class="btn reader-btn" id = "editBtn" onclick="window.location.href='<?=$chapterSlug?>'; return false;"><i class = "bi bi-pencil"></i>Edit Chapter</button>
                     <?php endif;?>
 
                 </div>
@@ -159,10 +164,12 @@
                         <select class="dropdown" name="chapter" id="chapter-dropdown">
                             <?php
                             foreach ($chapters as $chapter) {
-                                $val = $chapter['ChapterID'];
                                 $display = truncateNumber($chapter['ChapterNumber']);
-                                $selected = ($val == $chapterID) ? 'selected' : '';
-                                echo "<option value=\"$val\" $selected>Chapter $display</option>";
+                                $chapterNumberSlug = str_replace('.', '-', $display); // Slug-friendly
+                                $chapterSlugDropdown = "/read/{$mangaSlug}/chapter-{$chapterNumberSlug}";
+                                $selected = ($display == $chapterNumber) ? 'selected' : '';
+
+                                echo "<option value=\"$chapterSlugDropdown\" $selected>Chapter $display</option>";
                             }
                             ?>
                         </select>
@@ -179,7 +186,10 @@
                 <hr>
 
                 <!-- Comments -->
-                <a href="comments_controller.php?commentsID=<?=$commentSection['CommentSectionID']?>">
+                <?php
+                    $commmentSlug ="/comments/" . $mangaSlug . '/chapter-'.$chapterNumber;
+                ?>
+                <a href = "<?=$commmentSlug?>">
                     <button class="btn" id = "comment-btn">
                         <i class="bi bi-chat-left"></i> <?=$commentSection['NumOfComments']?> Comments
                     </button>
@@ -228,7 +238,7 @@
         <div class="chapter-info p-2">
             <div class="info-left">
                 <div>
-                    <img class="icon" src="../IMG/eye.svg">
+                    <img class="icon" src="/IMG/eye.svg">
 
                     <img class="flag" src="https://mangadex.org/img/flags/gb.svg">
 
@@ -238,30 +248,30 @@
                 </div>
 
                 <div class="scan-group">
-                    <img src="../IMG/avatar.svg" alt="" class="icon">
+                    <img src="/IMG/avatar.svg" alt="" class="icon">
                     <?=$chapterScangroup?>
                 </div>
             </div>
 
             <div class="info-middle">
                 <span class="time">
-                    <img src="../IMG/clock.svg" class="icon">
+                    <img src="/IMG/clock.svg" class="icon">
 
                     <?=timeAgo($chapterInfo['UploadTime'])?>
                 </span>
                 <span class="uploader">
-                    <img src="../IMG/avatar.svg" alt="" class="icon">
+                    <img src="/IMG/avatar.svg" alt="" class="icon">
                     <div ><?=$chapterUploader?></div>
                 </span>
             </div>
 
             <div class="info-right">
                 <span class="views">
-                    <img class="icon" src="../IMG/eye.svg">
+                    <img class="icon" src="/IMG/eye.svg">
                     <strong>N/A</strong>
                 </span>
                 <div class="comments">
-                    <img src="../IMG/comment.svg" alt="">
+                    <img src="/IMG/comment.svg" alt="">
                     <strong><?=$commentSection['NumOfComments']?></strong>
                 </div>
             </div>
@@ -339,16 +349,16 @@
 <script>
     const userID = <?=json_encode($userID) ?>;
     const chapterID = <?=json_encode($chapterID) ?>;
-    console.log(userID);
     const mangaID = <?= json_encode($mangaID) ?>;
-    const prevChapterID = <?= json_encode($prevChapterID) ?>;
-    const nextChapterID = <?= json_encode($nextChapterID) ?>;
+    const prevChapterSlug = <?= ($prevChapterNumber === null) ? json_encode(null) : json_encode("/read/" . $mangaSlug . "/chapter-" . str_replace(".","-",truncateNumber($prevChapterNumber)))?>;
+    const nextChapterSlug = <?= ($nextChapterNumber === null) ? json_encode(null) : json_encode("/read/" . $mangaSlug . "/chapter-" . str_replace(".","-",truncateNumber($nextChapterNumber))) ?>;
+    const mangaSlug = <?= json_encode("/manga/$mangaSlug") ?>;
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../JS/navbar.js"></script>
-<script src="../JS/search.js"></script>
-<script src="../JS/mangaRead.js"></script>
+<script src="/JS/navbar.js"></script>
+<script src="/JS/search.js"></script>
+<script src="/JS/mangaRead.js"></script>
 
 
 </html>

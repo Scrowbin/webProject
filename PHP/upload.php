@@ -10,7 +10,7 @@
   <title><?=$mode==="upload" ? "Upload" : "Edit"?> Chapter - MangaDax</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
-  <link rel="stylesheet" href="../CSS/navbar.css">
+  <link rel="stylesheet" href="/CSS/navbar.css">
   <style>
     .upload-box {
       border: 2px dashed #ccc;
@@ -32,7 +32,7 @@
 <body class="bg-light">
 <?php
   // Set the path prefix for the navbar
-  $pathPrefix = '../';
+  $pathPrefix = '/';
   include 'includes/navbar_minimal.php';
 ?>
 
@@ -43,9 +43,9 @@
   </div>
 
   <!-- Manga Details (static preview) -->
-  <a href="../controller/mangaInfo_Controller.php?MangaID=<?=$mangaID?>">
+  <a href="/manga/<?=$slug?>">
     <div class="d-flex align-items-center border rounded p-3 mb-4">
-        <img src="../IMG/<?=$mangaID?>/<?=$image?>" alt="Manga Cover" class="me-3" style="width: 60px; height: 90px; object-fit: cover;">
+        <img src="/IMG/<?=$mangaID?>/<?=$image?>" alt="Manga Cover" class="me-3" style="width: 60px; height: 90px; object-fit: cover;">
         <div>
           <strong><?=$mangaNameOG?></strong><br>
           <?=$mangaAuthors?>
@@ -120,7 +120,7 @@
 
     <!-- Buttons -->
     <div class="d-flex justify-content-between">
-      <a href="../controller/mangaInfo_Controller.php?MangaID=<?=$mangaID?>" class="btn btn-secondary">
+      <a href="/controller/mangaInfo_Controller.php?MangaID=<?=$mangaID?>" class="btn btn-secondary">
         <i class="bi bi-arrow-left"></i> Back to Manga
       </a>
       <button type="submit" class="btn btn-primary"><?=$mode==="upload" ? "Upload" : "Edit"?></button>
@@ -133,9 +133,9 @@
   const form = document.getElementById('chapterForm');
 
   if (mode === "edit") {
-    form.action = "../controller/editChapter.php";
+    form.action = "/controller/editChapter.php";
   } else {
-    form.action = "../controller/uploadChapter.php";
+    form.action = "/controller/uploadChapter.php";
   }
     const fileInput = document.getElementById('fileInput');
     const box = document.querySelector('.upload-box p');
@@ -219,7 +219,7 @@
 
       <?php
         $chapterNumber = truncateNumber($chapterInfo["ChapterNumber"]);
-        $chapterDir = "../IMG/$mangaID/$chapterNumber"; // adjust as needed
+        $chapterDir = "/IMG/$mangaID/$chapterNumber"; // adjust as needed
       ?>
       const previewContainer = document.getElementById('pagePreview');
       previewContainer.innerHTML = '';

@@ -14,12 +14,11 @@ if ($isLoggedIn){
     $role = get_role($userID);
 }
 
-
-
-$mangaID = $_GET['MangaID'] ?? null;
+$slug = $_GET['slug'] ?? null;
+$mangaID = getMangaIDFromSlug($slug) ?? null;
 
 if (!$mangaID) {
-    die("Missing MangaID.");
+    die("Invalid manga.");
 }
 
 $isBookmarked = false;

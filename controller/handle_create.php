@@ -10,7 +10,24 @@ function extractArtists($input) {
 }
 
 $response = [];
+function containsJapanese(string $text): bool {
+    return preg_match('/[\p{Hiragana}\p{Katakana}\p{Han}]/u', $text) === 1;
+}
+function createSlug(string $title): string {
+    // Convert to lowercase
+    $slug = mb_strtolower($title, 'UTF-8');
 
+    // Remove apostrophes (e.g., "JoJo's" → "Jojos")
+    $slug = str_replace("'", '', $slug);
+
+    // Replace any non-letter/digit (including spaces, dashes, etc.) with a hyphen
+    $slug = preg_replace('/[^a-z0-9]+/i', '-', $slug);
+
+    // Trim leading and trailing hyphens
+    $slug = trim($slug, '-');
+
+    return $slug;
+}
 try {
     if ($_SERVER["REQUEST_METHOD"] !== "POST") {
         throw new Exception("Invalid request method.");
@@ -28,9 +45,8 @@ try {
     $publication_year = intval($_POST["year"] ?? 0);
     $publication_status = $_POST["status"] ?? '';
     $tags = $_POST["tags"] ?? [];
-
-    error_log("Step 1: Collected and validated POST data.");
-
+    $slugSource = containsJapanese($name_original) ? $name_english : $title;
+    $slug = createSlug($slugSource);
     if (
         empty($name_original) || empty($name_english) || empty($authors) ||
         empty($artists) || empty($demographic) || empty($content_rating) ||
@@ -57,8 +73,6 @@ try {
         error_log("Checking artist: $a");
         $artistsID[] = artistExist($a) ?: insertArtist($a);
     }
-
-    error_log("Step 2: Authors and artists processed.");
 
     // Step 3: Handle image upload
     $targetDir = "../IMG/" . $mangaID . "/";
@@ -88,10 +102,8 @@ try {
         throw new Exception("Failed to move uploaded file.");
     }
 
-    error_log("Step 3: Image uploaded successfully.");
-
     // Step 4: Insert manga
-    insertManga( $mangaID,$name_original, $name_english, $mangaDesc,$original_language, $coverLink,$demographic, $content_rating, $publication_year, $publication_status);
+    insertManga( $mangaID,$name_original, $name_english, $mangaDesc,$original_language, $coverLink,$demographic, $content_rating, $publication_year, $publication_status,$slug);
     error_log("Step 4: Manga inserted.");
 
     // Step 5: Link authors and artists
@@ -103,15 +115,11 @@ try {
         assignArtistManga($mangaID, $aID);
     }
 
-    error_log("Step 5: Author and artist linked.");
-
     // Step 6: Link tags
     foreach ($tags as $tag) {
         $tagID = getTagID($tag);
         mapMangaWithTag($mangaID, $tagID);
     }
-
-    error_log("Step 6: Tags linked.");
 
     $response = [
         'success' => true,
@@ -119,7 +127,6 @@ try {
         'mangaID' => $mangaID
     ];
 
-    error_log("Upload completed successfully.");
 } catch (Exception $e) {
     http_response_code(400); // Bad request
     $response = [

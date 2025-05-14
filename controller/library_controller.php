@@ -42,11 +42,7 @@
         $manga[$i]['AvgRating'] = getAverageRating($mangaID) ?? 0;
 
         // Get the first chapter's comment section ID for direct comment link
-        $firstChapter = getFirstChapter($mangaID);
-        if ($firstChapter) {
-            $commentSectionID = getCommentSectionID($firstChapter['ChapterID']);
-            $manga[$i]['CommentSectionID'] = $commentSectionID;
-        }
+        //thằng l vibe coder đánh m chết  quá
     }
 
     // Slice for pagination

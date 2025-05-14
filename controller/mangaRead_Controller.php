@@ -4,7 +4,11 @@
     }
     require_once('../db/mangaReadPdo.php');
     require_once('../db/account_db.php');
-    $chapterID = $_GET['chapterID'] ?? null;
+    $mangaSlug = $_GET['slug'];
+    $chapterNumber = str_replace('-', '.', $_GET['chapter']);
+    $chapterID = getChapterID($mangaSlug,$chapterNumber) ?? null;
+    
+    
     if (!$chapterID) {
         die('chapterID not found');
     }
@@ -17,9 +21,8 @@
     $userID = $_SESSION['userID'] ?? 0;
     $username = $_SESSION['username'] ?? null;
     $role = get_role($userID)??"user";
-    $nextChapterID = getNextChapter($chapterID);
-    $prevChapterID = getPrevChapter($chapterID);
-
+    $nextChapterNumber = getNextChapter($chapterID);
+    $prevChapterNumber = getPrevChapter($chapterID);
     $chapters = getChapters($chapterID);
     $mangaInfo = getMangaInfo($chapterID);
     $chapterInfo = getChapterInfo($chapterID);

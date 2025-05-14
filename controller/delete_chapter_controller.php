@@ -21,10 +21,11 @@ if($role !== "admin"){
     exit('Must be admin');
 }
 
-$mangaID = $_GET['MangaID'] ?? null;
+$slug = $_GET['slug']??null;
+$mangaID = getMangaIDFromSlug($slug) ?? null;
 
 if (!$mangaID) {
-    die("Missing MangaID.");
+    die("Missing Manga.");
 }
 
 $mangaInfo = getMangaInfo($mangaID);

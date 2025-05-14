@@ -1,10 +1,10 @@
 <?php
     require_once("pdo.php");
 
-    function insertManga($MangaID,$NameOG, $NameEN, $mangaDesc,$OGLanguage, $coverLink, $demographic, $content_rating, $publication_year, $publication_status) {
-        $sql = "INSERT INTO manga (MangaID,MangaNameOG, MangaNameEN, MangaDiscription, OriginalLanguage, CoverLink, MagazineDemographic, ContentRating, PublicationYear, PublicationStatus)
-                VALUES (?,?, ?, ?, ?, ?, ?, ?,?,?)";
-        pdo_execute($sql,$MangaID, $NameOG, $NameEN, $mangaDesc,$OGLanguage, $coverLink, $demographic, $content_rating, $publication_year, $publication_status);
+    function insertManga($MangaID,$NameOG, $NameEN, $mangaDesc,$OGLanguage, $coverLink, $demographic, $content_rating, $publication_year, $publication_status,$slug) {
+        $sql = "INSERT INTO manga (MangaID,MangaNameOG, MangaNameEN, MangaDiscription, OriginalLanguage, CoverLink, MagazineDemographic, ContentRating, PublicationYear, PublicationStatus, Slug)
+                VALUES (?,?, ?, ?, ?, ?, ?, ?,?, ?, ?)";
+        pdo_execute($sql,$MangaID, $NameOG, $NameEN, $mangaDesc,$OGLanguage, $coverLink, $demographic, $content_rating, $publication_year, $publication_status, $slug);
     }
 
     function mangaExist($mangaNameEN,$mangaNameOG){
