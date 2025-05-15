@@ -47,7 +47,7 @@ if ($is_logged_in && isset($_SESSION['userID'])) {
         <i class="bi bi-search text-white ms-2"></i>
         <button type="button" class="btn-close text-white d-none" id="search-close"></button>
       </div>
-      <?php include 'includes/search_modal.php'; ?>
+      <?php include 'search_modal.php'; ?>
     </div>
     <button class="btn text-white p-0" type="button" id="user-avatar-btn" data-bs-toggle="modal" data-bs-target="#user-modal">
       <?php if ($is_logged_in): ?>
