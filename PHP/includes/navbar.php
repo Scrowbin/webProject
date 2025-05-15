@@ -6,11 +6,8 @@ if (session_status() === PHP_SESSION_NONE) {
 $is_logged_in = isset($_SESSION['userID']);
 $username = $is_logged_in && isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Guest';
 
-// Define path prefix, default to empty string if not set by the including controller
-$pathPrefix = $pathPrefix ?? '';
-
 // Default avatar path
-$user_avatar =  '/IMG/avatar_default.png'; // Path relative to index.php
+$user_avatar = 'IMG/avatar_default.png'; // Path relative to index.php
 
 // If user is logged in, fetch their avatar from the database
 if ($is_logged_in && isset($_SESSION['userID'])) {
@@ -24,7 +21,7 @@ if ($is_logged_in && isset($_SESSION['userID'])) {
 
     // If user has a custom avatar, use it
     if ($user_data && !empty($user_data['Avatar']) && $user_data['Avatar'] !== 'avatar_default.png') {
-        $user_avatar = '/IMG/avatars/' . htmlspecialchars($user_data['Avatar']);
+        $user_avatar = 'IMG/avatars/' . htmlspecialchars($user_data['Avatar']);
     }
 }
 ?>
@@ -36,9 +33,9 @@ if ($is_logged_in && isset($_SESSION['userID'])) {
       <i class="bi bi-list fs-3"></i>
     </button>
     <?php // Link to index.php (homepage controller) ?>
-    <a class="navbar-brand text-white fw-bold d-flex align-items-center" href="<?= $pathPrefix ?>index.php">
+    <a class="navbar-brand text-white fw-bold d-flex align-items-center" href="index.php">
        <?php // Corrected path for logo ?>
-       <img src="/IMG/logo.png" alt="Logo" style="height: 30px; margin-right: 8px;">
+       <img src="IMG/logo.png" alt="Logo" style="height: 30px; margin-right: 8px;">
        MangaDax
     </a>
 
@@ -50,7 +47,7 @@ if ($is_logged_in && isset($_SESSION['userID'])) {
         <i class="bi bi-search text-white ms-2"></i>
         <button type="button" class="btn-close text-white d-none" id="search-close"></button>
       </div>
-      <?php include $pathPrefix . 'PHP/includes/search_modal.php'; ?>
+      <?php include 'includes/search_modal.php'; ?>
     </div>
     <button class="btn text-white p-0" type="button" id="user-avatar-btn" data-bs-toggle="modal" data-bs-target="#user-modal">
       <?php if ($is_logged_in): ?>
@@ -80,22 +77,22 @@ if ($is_logged_in && isset($_SESSION['userID'])) {
 
           <nav class="nav flex-column user-modal-nav mb-2">
             <?php // Link to user profile controller action ?>
-            <a class="nav-link text-white" href="<?= $pathPrefix ?>controller/auth_controller.php?action=user_profile"><i class="bi bi-person me-2"></i> My Profile</a>
-            <a class="nav-link text-white" href="<?= $pathPrefix ?>controller/follows_controller.php"><i class="bi bi-bookmark me-2"></i> My Follows</a>
+            <a class="nav-link text-white" href="user-profile"><i class="bi bi-person me-2"></i> My Profile</a>
+            <a class="nav-link text-white" href="controller/follows_controller.php"><i class="bi bi-bookmark me-2"></i> My Follows</a>
           </nav>
 
           <hr class="user-modal-divider mt-2 mb-2">
 
           <div class="d-flex justify-content-between mb-2 user-modal-actions px-2">
             <?php // Link to profile settings controller action ?>
-            <a href="<?= $pathPrefix ?>controller/auth_controller.php?action=profile" class="text-decoration-none text-white d-flex align-items-center"><i class="bi bi-gear me-2"></i> Profile Settings</a>
+            <a href="profile" class="text-decoration-none text-white d-flex align-items-center"><i class="bi bi-gear me-2"></i> Profile Settings</a>
           </div>
 
           <hr class="user-modal-divider mt-2 mb-3">
 
           <div class="d-grid gap-2 px-2">
              <?php // Link to logout controller action ?>
-             <a href="<?= $pathPrefix ?>controller/auth_controller.php?action=logout" class="btn btn-sm btn-outline-light d-flex align-items-center justify-content-center" type="button"><i class="bi bi-box-arrow-right me-2"></i> Sign Out</a>
+             <a href="controller/auth_controller.php?action=logout" class="btn btn-sm btn-outline-light d-flex align-items-center justify-content-center" type="button"><i class="bi bi-box-arrow-right me-2"></i> Sign Out</a>
           </div>
           <!---------- END LOGGED IN VIEW ---------->
 
@@ -112,9 +109,9 @@ if ($is_logged_in && isset($_SESSION['userID'])) {
           <hr class="user-modal-divider mb-3">
           <div class="d-grid gap-2">
             <?php // Link to login controller action ?>
-            <a href="<?= $pathPrefix ?>controller/auth_controller.php?action=login" class="btn btn-primary btn-user-action sign-in-btn" type="button">Sign In</a>
+            <a href="controller/auth_controller.php?action=login" class="btn btn-primary btn-user-action sign-in-btn" type="button">Sign In</a>
             <?php // Link to register controller action ?>
-            <a href="<?= $pathPrefix ?>controller/auth_controller.php?action=register" class="text-center text-white-50 text-decoration-none small">Register</a>
+            <a href="controller/auth_controller.php?action=register" class="text-center text-white-50 text-decoration-none small">Register</a>
           </div>
           <!---------- END GUEST VIEW ---------->
         <?php endif; ?>

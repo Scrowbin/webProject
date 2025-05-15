@@ -14,6 +14,10 @@ RewriteRule ^latest\-updates$ controller/latestUpdates_controller.php [QSA,L]
 RewriteRule ^random$ controller/random_manga_controller.php [QSA,L]
 RewriteRule ^comments/([^/]+)/chapter-([0-9\-]+)$ /controller/comments_controller.php?slug=$1&chapter=$2 [L,QSA]
 
+# User profile routes
+RewriteRule ^profile$ controller/auth_controller.php?action=profile [QSA,L]
+RewriteRule ^user-profile$ controller/auth_controller.php?action=user_profile [QSA,L]
+
 # Admin routes
 RewriteRule ^admin/create-announcements$ controller/announcement_controller.php [QSA,L]
 RewriteRule ^admin/view-reports$ controller/report_controller.php [QSA,L]

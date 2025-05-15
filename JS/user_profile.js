@@ -4,21 +4,21 @@ document.addEventListener('DOMContentLoaded', function() {
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl)
     });
-    
+
     // Handle tab switching
     var tabLinks = document.querySelectorAll('#profileTabs .nav-link');
     tabLinks.forEach(function(tabLink) {
         tabLink.addEventListener('click', function(e) {
             e.preventDefault();
-            
+
             // Remove active class from all tabs
             tabLinks.forEach(function(link) {
                 link.classList.remove('active');
             });
-            
+
             // Add active class to clicked tab
             this.classList.add('active');
-            
+
             // Show corresponding tab content
             var targetId = this.getAttribute('data-bs-target').substring(1);
             var tabContents = document.querySelectorAll('.tab-pane');
@@ -30,13 +30,13 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     });
-    
+
     // Handle edit profile banner button
     var editBannerBtn = document.querySelector('.profile-actions button:last-child');
     if (editBannerBtn) {
         editBannerBtn.addEventListener('click', function() {
             // Redirect to profile settings page
-            window.location.href = '../controller/auth_controller.php?action=profile_settings';
+            window.location.href = '/profile';
         });
     }
 });
