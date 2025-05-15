@@ -10,7 +10,7 @@ $username = $is_logged_in && isset($_SESSION['username']) ? htmlspecialchars($_S
 $pathPrefix = $pathPrefix ?? '';
 
 // Default avatar path
-$user_avatar = $pathPrefix . 'IMG/avatar_default.png'; // Path relative to index.php
+$user_avatar = '/IMG/avatar_default.png'; // Path relative to index.php
 
 // If user is logged in, fetch their avatar from the database
 if ($is_logged_in && isset($_SESSION['userID'])) {
@@ -24,7 +24,7 @@ if ($is_logged_in && isset($_SESSION['userID'])) {
 
     // If user has a custom avatar, use it
     if ($user_data && !empty($user_data['Avatar']) && $user_data['Avatar'] !== 'avatar_default.png') {
-        $user_avatar = $pathPrefix . 'IMG/avatars/' . htmlspecialchars($user_data['Avatar']);
+        $user_avatar = '/IMG/avatars/' . htmlspecialchars($user_data['Avatar']);
     }
 }
 ?>
@@ -35,7 +35,7 @@ if ($is_logged_in && isset($_SESSION['userID'])) {
     <?php // Link to index.php (homepage controller) ?>
     <a class="navbar-brand text-white fw-bold d-flex align-items-center" href="<?= $pathPrefix ?>index.php">
        <?php // Corrected path for logo ?>
-       <img src="<?= $pathPrefix ?>IMG/logo.png" alt="Logo" style="height: 30px; margin-right: 8px;">
+       <img src = "/IMG/logo.png" alt="Logo" style="height: 30px; margin-right: 8px;">
        MangaDax
     </a>
 

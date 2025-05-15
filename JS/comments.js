@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     div.innerHTML = `
                         <div class="d-flex align-items-start mb-2">
-                            <img class="avatar" src=/IMG/${comment.Avatar} alt="User Avatar" class="rounded me-3" width="50" height="75">
+                            <img class="avatar" src=/IMG/avatars/${comment.Avatar} alt="User Avatar" class="rounded me-3" width="50" height="75">
                             <div class="user-info flex-grow-1">
                                 <div class="fw-bold text-warning">${comment.Username}</div>
                             </div>

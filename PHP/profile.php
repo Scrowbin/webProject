@@ -12,8 +12,8 @@ $profile_update_message ??= null;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../CSS/profile.css">
-    <link rel="stylesheet" href="../CSS/navbar.css">
+    <link rel="stylesheet" href="/CSS/profile.css">
+    <link rel="stylesheet" href="/CSS/navbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
@@ -27,7 +27,7 @@ $profile_update_message ??= null;
 <body class="bg-dark">
     <?php
     // Define path prefix for navbar
-    $pathPrefix = '../';
+    $pathPrefix = '/';
     include 'includes/navbar_minimal.php';
     ?>
     <!-- menu -->
@@ -41,7 +41,7 @@ $profile_update_message ??= null;
                     </div>
 
                     <!-- Your Profile Link -->
-                    <a href="../controller/auth_controller.php?action=user_profile" class="list-group-item list-group-item-action bg-dark text-setting py-3 ps-4">
+                    <a href="/controller/auth_controller.php?action=user_profile" class="list-group-item list-group-item-action bg-dark text-setting py-3 ps-4">
                         <i class="bi bi-person-circle me-2"></i> Your profile
                     </a>
 
@@ -51,14 +51,14 @@ $profile_update_message ??= null;
                     </div>
 
                     <!-- Logout Link -->
-                    <a href="../controller/auth_controller.php?action=logout" class="list-group-item list-group-item-action bg-dark text-logout py-3 ps-4">
+                    <a href="/controller/auth_controller.php?action=logout" class="list-group-item list-group-item-action bg-dark text-logout py-3 ps-4">
                         <i class="bi bi-box-arrow-right me-2"></i> Log out
                     </a>
                 </div>
             </div>
 
             <div class="col-md-9 col-lg-10">
-                <form action="../controller/auth_controller.php?action=profile" method="POST" class="profile-form">
+                <form action="/controller/auth_controller.php?action=profile" method="POST" class="profile-form">
                      <?php if ($profile_update_message): ?>
                         <div class="alert alert-success"><?php echo htmlspecialchars($profile_update_message); ?></div>
                      <?php endif; ?>
@@ -108,7 +108,7 @@ $profile_update_message ??= null;
                                 <div class="avatar-container mb-2">
                                     <div class="avatar-wrapper bg-warning text-center d-inline-block" style="width: 100px; height: 100px; line-height: 100px; font-size: 48px; color: white;" id="avatar" data-username="<?php echo htmlspecialchars($user_data['username']); ?>">
                                         <?php if (!empty($user_data['Avatar']) && $user_data['Avatar'] !== 'avatar_default.png'): ?>
-                                            <img src="../IMG/avatars/<?php echo htmlspecialchars($user_data['Avatar']); ?>" class="w-100 h-100" style="object-fit: cover;">
+                                            <img src="/IMG/avatars/<?php echo htmlspecialchars($user_data['Avatar']); ?>" class="w-100 h-100" style="object-fit: cover;">
                                         <?php else: ?>
                                             <?php echo strtoupper(substr($user_data['username'], 0, 1)); ?>
                                         <?php endif; ?>
@@ -125,9 +125,9 @@ $profile_update_message ??= null;
                             <div class="col-sm-9">
                                 <div class="banner-container mb-2">
                                     <?php if (!empty($user_data['banner'])): ?>
-                                        <img src="../IMG/banners/<?php echo htmlspecialchars($user_data['banner']); ?>" alt="Profile Banner" class="img-fluid rounded" id="currentBanner">
+                                        <img src="/IMG/banners/<?php echo htmlspecialchars($user_data['banner']); ?>" alt="Profile Banner" class="img-fluid rounded" id="currentBanner">
                                     <?php else: ?>
-                                        <img src="../IMG/loginBG.png" alt="Profile Banner" class="img-fluid rounded" id="currentBanner">
+                                        <img src="/IMG/loginBG.png" alt="Profile Banner" class="img-fluid rounded" id="currentBanner">
                                     <?php endif; ?>
                                 </div>
                                 <div>
@@ -244,9 +244,9 @@ $profile_update_message ??= null;
                         <div class="col-md-4">
                             <div id="avatar-preview-container" class="avatar-preview-container mb-3">
                                 <?php if (!empty($user_data['Avatar']) && $user_data['Avatar'] !== 'avatar_default.png'): ?>
-                                    <img id="previewAvatar" src="../IMG/avatars/<?php echo htmlspecialchars($user_data['Avatar']); ?>" class="avatar draggable-avatar">
+                                    <img id="previewAvatar" src="/IMG/avatars/<?php echo htmlspecialchars($user_data['Avatar']); ?>" class="avatar draggable-avatar">
                                 <?php else: ?>
-                                    <img id="previewAvatar" src="../IMG/avatar_default.png" class="avatar">
+                                    <img id="previewAvatar" src="/IMG/avatar_default.png" class="avatar">
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -294,9 +294,9 @@ $profile_update_message ??= null;
 
                     <div id="banner-preview-container" class="banner-preview-container mb-3">
                         <?php if (!empty($user_data['banner'])): ?>
-                            <img id="previewBanner" src="../IMG/banners/<?php echo htmlspecialchars($user_data['banner']); ?>" class="draggable-banner">
+                            <img id="previewBanner" src="/IMG/banners/<?php echo htmlspecialchars($user_data['banner']); ?>" class="draggable-banner">
                         <?php else: ?>
-                            <img id="previewBanner" src="../IMG/loginBG.png" class="draggable-banner">
+                            <img id="previewBanner" src="/IMG/loginBG.png" class="draggable-banner">
                         <?php endif; ?>
                     </div>
 
@@ -319,9 +319,9 @@ $profile_update_message ??= null;
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../JS/profile.js"></script>
-    <script src="../JS/navbar.js"></script>
-    <script src="../JS/sidebar.js"></script>
+    <script src="/JS/profile.js"></script>
+    <script src="/JS/navbar.js"></script>
+    <script src="/JS/sidebar.js"></script>
 
     <script>
         // Initialize TinyMCE for the About You section
