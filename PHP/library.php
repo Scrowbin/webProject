@@ -20,7 +20,7 @@
         <div class="library-header">
             <?php if ($isLibrary):?>
             <div class="back-button">
-                <a href="../controller/follows_controller.php">
+                <a href="/my-follows">
                     <i class="bi bi-arrow-left"></i>
                 </a>
             </div>

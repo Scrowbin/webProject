@@ -99,18 +99,39 @@ function getFlagHome($language) {
         case "vn":
             return '<img src="https://mangadex.org/img/flags/vn.svg" class="flag-icon" alt="VN">'; // English - Great Britain
         case "English":
-            return '<img class="flag" src="https://mangadex.org/img/flags/gb.svg">'; // English - Great Britain
+            return '<img class="flag-icon" src="https://mangadex.org/img/flags/gb.svg">'; // English - Great Britain
         case "Japanese":
-            return '<img class="flag" src="https://mangadex.org/img/flags/jp.svg">'; // Japanese - Japan
+            return '<img class="flag-icon" src="https://mangadex.org/img/flags/jp.svg">'; // Japanese - Japan
         case "Korean":
-            return '<img class="flag" src="https://mangadex.org/img/flags/kr.svg">'; // Japanese - Japan
+            return '<img class="flag-icon" src="https://mangadex.org/img/flags/kr.svg">'; // Japanese - Japan
         case "Vietnamese":
             return '<img src="https://mangadex.org/img/flags/vn.svg" class="flag-icon" alt="VN">'; // English - Great Britain
         default:
             return '<img src="https://mangadex.org/img/flags/gb.svg" class="flag-icon" alt="EN">'; // English - Great Britain
     }
 }
-
+function getFlagFeature($language) {
+    switch ($language) {
+        case "en":
+            return '<img src="https://mangadex.org/img/flags/gb.svg" class="flag flag-featured" alt="GB">'; // English - Great Britain
+        case "jp":
+            return '<img src="https://mangadex.org/img/flags/jp.svg" class="flag flag-featured" alt="JP">'; // English - Great Britain
+        case "kr":
+            return '<img src="https://mangadex.org/img/flags/kr.svg" class="flag flag-featured" alt="KR">'; // English - Great Britain
+        case "vn":
+            return '<img src="https://mangadex.org/img/flags/vn.svg" class="flag flag-featured" alt="VN">'; // English - Great Britain
+        case "English":
+            return '<img class="flag flag-featured" src="https://mangadex.org/img/flags/gb.svg">'; // English - Great Britain
+        case "Japanese":
+            return '<img class="flag flag-featured" src="https://mangadex.org/img/flags/jp.svg">'; // Japanese - Japan
+        case "Korean":
+            return '<img class="flag flag-featured" src="https://mangadex.org/img/flags/kr.svg">'; // Japanese - Japan
+        case "Vietnamese":
+            return '<img src="https://mangadex.org/img/flags/vn.svg" class="flag flag-featured" alt="VN">'; // English - Great Britain
+        default:
+            return '<img src="https://mangadex.org/img/flags/gb.svg" class="flag flag-featured" alt="EN">'; // English - Great Britain
+    }
+}
     //Trả về value là int nếu là int hoặc float nếu là float
     // ex: 6.00 -> 6, 3.5 -> 3.5 
 function truncateNumber($number){

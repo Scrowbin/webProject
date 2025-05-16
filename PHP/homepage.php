@@ -133,6 +133,8 @@ require("helper.php");
 
             // Get manga description
             $mangaDesc = $manga['MangaDiscription'] ?? "No description available.";
+            $mangaLanguage = $manga['OriginalLanguage'];
+
           ?>
           <!-- Slide <?= $index + 1 ?> -->
           <div class="carousel-item <?= $isActive ?>">
@@ -141,7 +143,9 @@ require("helper.php");
               <div class="featured-manga-content row g-0">
                 <div class="col-md-3 featured-cover-col">
                   <img src="<?= $coverImage ?>" alt="<?= $mangaTitle ?>" class="img-fluid rounded featured-cover">
-                  <img class="flag flag-featured" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
+                  <?php
+                    echo getFlagFeature($mangaLanguage)
+                  ?>
                 </div>
                 <div class="col-md-9 featured-details">
                   <h3 class="title"><?= $mangaTitle ?></h3>
@@ -590,21 +594,23 @@ require("helper.php");
             <a href="manga/<?=$manga['Slug'] ?>">
               <div class="image-container">
                 <img src="IMG/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?> Cover">
-                <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
+                <?php
+                  echo getFlag($manga["OriginalLanguage"])
+                ?>
                 <div class="overlay">
                   <div class="description-box">
                     <?= $manga['MangaDiscription'] ?? 'No description available.' ?>
                   </div>
                   <div class="overlay-actions">
                     <div class="overlay-buttons">
-                      <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                      <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                      <a href="manga/<?=$manga['Slug'] ?>" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                      <a href="manga/<?=$manga['Slug'] ?>" class="more-button"><i class="bi bi-arrow-right"></i></a>
                     </div>
                   </div>
                 </div>
               </div>
             </a>
-            <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>" class="item-title-link">
+            <a href="manga/<?=$manga['Slug'] ?>" class="item-title-link">
               <h3 class="item-title"><?= htmlspecialchars($manga['MangaNameOG']) ?></h3>
             </a>
           </div>
@@ -655,7 +661,9 @@ require("helper.php");
               <a href="manga/<?=$manga['Slug'] ?>">
                 <div class="image-container">
                   <img src="IMG/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?> Cover">
-                  <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
+                  <?php
+                    echo getFlag($manga["OriginalLanguage"])
+                  ?>
                   <div class="overlay">
                     <div class="description-box">
                       <?php if (!empty($manga['Note'])): ?>

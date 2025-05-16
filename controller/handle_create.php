@@ -45,7 +45,7 @@ try {
     $publication_year = intval($_POST["year"] ?? 0);
     $publication_status = $_POST["status"] ?? '';
     $tags = $_POST["tags"] ?? [];
-    $slugSource = containsJapanese($name_original) ? $name_english : $title;
+    $slugSource = containsJapanese($name_original) ? $name_english : $name_original;
     $slug = createSlug($slugSource);
     if (
         empty($name_original) || empty($name_english) || empty($authors) ||

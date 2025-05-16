@@ -20,10 +20,12 @@
 
     <div class="page-wrapper">
         <style>
+            
             .page-btn {
                 margin: 0 5px;
-                padding: 5px 10px;
+                padding: 8px 13px;
                 cursor: pointer;
+                border-radius: 5px;
             }
 
             .page-btn.active {

@@ -120,7 +120,7 @@
 
     <!-- Buttons -->
     <div class="d-flex justify-content-between">
-      <a href="/controller/mangaInfo_Controller.php?MangaID=<?=$mangaID?>" class="btn btn-secondary">
+      <a href="/manga/<?=$slug?>" class="btn btn-secondary">
         <i class="bi bi-arrow-left"></i> Back to Manga
       </a>
       <button type="submit" class="btn btn-primary"><?=$mode==="upload" ? "Upload" : "Edit"?></button>

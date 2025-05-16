@@ -52,7 +52,7 @@ function isStaffPick($mangaID) {
  * @return array Array of staff picks with manga details
  */
 function getStaffPicks($limit = null, $offset = 0) {
-    $sql = "SELECT sp.*, m.MangaNameOG, m.MangaNameEN, m.CoverLink, m.Slug, m.MangaDiscription, 
+    $sql = "SELECT sp.*, m.MangaNameOG, m.MangaNameEN, m.CoverLink, m.Slug, m.MangaDiscription, m.OriginalLanguage,
                    u.Username as AdminName
             FROM staff_picks sp
             JOIN manga m ON sp.MangaID = m.MangaID

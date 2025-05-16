@@ -46,7 +46,7 @@ $allManga = [];
 foreach ($topRatedManga as $index => $manga) {
     $mangaId = $manga['MangaID'];
     $allManga[$mangaId] = $manga;
-
+    
     // Add additional information
     $allManga[$mangaId]['tags'] = getTags($mangaId);
     $allManga[$mangaId]['authors'] = getMangaAuthors($mangaId);
