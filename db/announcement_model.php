@@ -17,15 +17,21 @@ function createAnnouncement($content, $expireAt = null) {
  * Get all announcements
  *
  * @param bool $activeOnly Whether to return only active announcements
+ * @param int|null $limit Maximum number of announcements to return
  * @return array Array of announcements
  */
-function getAllAnnouncements($activeOnly = false) {
+function getAllAnnouncements($activeOnly = false, $limit = null) {
     $sql = "SELECT * FROM announcement";
     if ($activeOnly) {
         $sql .= " WHERE isActive = 1";
         $sql .= " AND (expirteAt IS NULL OR expirteAt > NOW())";
     }
     $sql .= " ORDER BY announcementID DESC";
+
+    if ($limit !== null && is_numeric($limit)) {
+        $sql .= " LIMIT " . intval($limit);
+    }
+
     return pdo_query($sql);
 }
 

@@ -1,0 +1,159 @@
+/* Announcement Modal Styles */
+.announcement-modal {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 500px;
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  z-index: 1060;
+  overflow: hidden;
+  display: none;
+  border: 1px solid #FF6740;
+}
+
+.announcement-modal-header {
+  background-color: #1a1a1a;
+  color: white;
+  padding: 15px 20px;
+  border-bottom: 1px solid #333;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.announcement-modal-content {
+  padding: 20px;
+  color: #e0e0e0;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.announcement-modal-footer {
+  display: flex;
+  justify-content: center;
+  padding: 15px 20px;
+  border-top: 1px solid #333;
+}
+
+.announcement-modal-footer button {
+  padding: 8px 20px;
+  border-radius: 4px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+/* Announcement List Modal Styles */
+.announcement-list-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 500px;
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  z-index: 1060;
+  overflow: hidden;
+  display: none;
+  border: 1px solid #FF6740;
+}
+
+.announcement-list-header {
+  background-color: #1a1a1a;
+  color: white;
+  padding: 15px 20px;
+  border-bottom: 1px solid #333;
+  font-weight: bold;
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.announcement-list-content {
+  padding: 0;
+  color: #e0e0e0;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.announcement-list-item {
+  padding: 15px 20px;
+  border-bottom: 1px solid #333;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.announcement-list-item:hover {
+  background-color: #2a2a2a;
+}
+
+.announcement-list-item:last-child {
+  border-bottom: none;
+}
+
+.announcement-list-item-time {
+  font-size: 0.8rem;
+  color: #999;
+  margin-bottom: 5px;
+}
+
+.announcement-list-item-content {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn-hide {
+  background-color: #FF6740;
+  color: white;
+}
+
+.btn-hide:hover {
+  background-color: #e65c30;
+}
+
+/* Backdrop removed as per request */
+.announcement-backdrop {
+  display: none;
+}
+
+/* Announcement Navbar Indicator */
+.announcement-indicator {
+  position: relative;
+  cursor: pointer;
+}
+
+.announcement-indicator .indicator-dot {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  background-color: #FF6740;
+  border-radius: 50%;
+}
+
+/* Scrollbar styling for the modal content */
+.announcement-modal-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.announcement-modal-content::-webkit-scrollbar-track {
+  background: #2a2a2a;
+}
+
+.announcement-modal-content::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 3px;
+}
+
+.announcement-modal-content::-webkit-scrollbar-thumb:hover {
+  background-color: #777;
+}

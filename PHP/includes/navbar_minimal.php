@@ -45,6 +45,12 @@ if ($is_logged_in && isset($_SESSION['userID'])) {
 
     <div class="ms-auto"></div> <!-- Spacer -->
 
+    <!-- Announcement Indicator - Always visible -->
+    <div id="navbar-announcement-indicator" class="announcement-indicator me-3">
+      <i class="bi bi-megaphone fs-5 text-white"></i>
+      <span class="indicator-dot" style="display: none;"></span>
+    </div>
+
     <button class="btn text-white p-0" type="button" id="user-avatar-btn" data-bs-toggle="modal" data-bs-target="#user-modal">
       <?php if ($is_logged_in): ?>
         <?php // Using the user's avatar from database ?>

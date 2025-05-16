@@ -61,6 +61,7 @@
                     <th>Content</th>
                     <th>Status</th>
                     <th>Expires</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -87,11 +88,16 @@
                             <span class="text-muted">Never</span>
                           <?php endif; ?>
                         </td>
+                        <td>
+                          <button class="btn btn-sm btn-danger delete-announcement" data-id="<?= $announcement['announcementID'] ?>">
+                            <i class="bi bi-trash"></i> Delete
+                          </button>
+                        </td>
                       </tr>
                     <?php endforeach; ?>
                   <?php else: ?>
                     <tr>
-                      <td colspan="4" class="text-center">No announcements found</td>
+                      <td colspan="5" class="text-center">No announcements found</td>
                     </tr>
                   <?php endif; ?>
                 </tbody>
@@ -168,7 +174,7 @@
           if (!tableBody) return;
 
           if (data.length === 0) {
-            tableBody.innerHTML = '<tr><td colspan="4" class="text-center">No announcements found</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="5" class="text-center">No announcements found</td></tr>';
             return;
           }
 
@@ -202,6 +208,11 @@
                 </td>
                 <td>${statusBadge}</td>
                 <td>${expiresText}</td>
+                <td>
+                  <button class="btn btn-sm btn-danger delete-announcement" data-id="${announcement.announcementID}">
+                    <i class="bi bi-trash"></i> Delete
+                  </button>
+                </td>
               </tr>
             `;
           });
@@ -224,6 +235,61 @@
 
     // Initial load of announcements table
     refreshAnnouncementsTable();
+
+    // Handle delete announcement
+    document.addEventListener('click', function(e) {
+      if (e.target.closest('.delete-announcement')) {
+        const button = e.target.closest('.delete-announcement');
+        const announcementId = button.getAttribute('data-id');
+
+        if (confirm('Are you sure you want to delete this announcement?')) {
+          // Disable the button to prevent multiple clicks
+          button.disabled = true;
+          button.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Deleting...';
+
+          // Send delete request
+          fetch('../controller/delete_announcement.php', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ announcementID: announcementId })
+          })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            if (data.success) {
+              // Show success message
+              const toastBody = document.getElementById('announcementToastBody');
+              toastBody.textContent = 'Announcement deleted successfully!';
+              const toast = new bootstrap.Toast(document.getElementById('announcementToast'));
+              toast.show();
+
+              // Refresh the announcements table
+              refreshAnnouncementsTable();
+            } else {
+              throw new Error(data.error || 'Failed to delete announcement');
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            // Show error message
+            const toastBody = document.getElementById('announcementToastBody');
+            toastBody.textContent = `Error: ${error.message}`;
+            const toast = new bootstrap.Toast(document.getElementById('announcementToast'));
+            toast.show();
+
+            // Re-enable the button
+            button.disabled = false;
+            button.innerHTML = '<i class="bi bi-trash"></i> Delete';
+          });
+        }
+      }
+    });
 
     // Handle form submission
     document.getElementById('announcementForm').addEventListener('submit', function(e) {

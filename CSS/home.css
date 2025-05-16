@@ -637,8 +637,7 @@ main.container-xxl > .section-container:first-child,
 
 /* --- General Swiper Overlay Styles (for others like Self-Published, Featured Items, Recently Added) --- */
 .self-published-swiper .overlay .description-box,
-.featured-items-swiper .overlay .description-box,
-.recently-added-swiper .overlay .description-box {
+.featured-items-swiper .overlay .description-box {
   color: #ffffff; /* Brighter text color for better contrast */
   font-size: 0.8rem; /* Smaller font for these sections */
   line-height: 1.4;
@@ -649,6 +648,48 @@ main.container-xxl > .section-container:first-child,
   margin-bottom: 0.5rem; /* Add some space below description */
   max-height: calc(0.8rem * 1.4 * 3); /* Match line clamp */
   text-shadow: 0px 1px 2px rgba(0,0,0,0.8); /* Add subtle text shadow for better readability */
+}
+
+/* Recently Added Overlay slide-up effect */
+.recently-added-swiper .swiper-slide .overlay {
+  justify-content: space-between;
+  transform: translateY(100%);
+  /* Darker background gradient for better readability */
+  background: linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.9) 40%, rgba(0,0,0,0.8) 70%, rgba(0,0,0,0.5) 100%);
+}
+
+.recently-added-swiper .swiper-slide:hover .overlay {
+  transform: translateY(0);
+}
+
+/* Recently Added Description Box - Now matches Staff Picks */
+.recently-added-swiper .overlay .description-box {
+  color: #ffffff; /* Brighter text color for better contrast */
+  font-size: 1rem; /* Larger font size like Staff Picks */
+  line-height: 1.4;
+  overflow-y: auto; /* Make it scrollable */
+  max-height: 14.2rem; /* Same height as Staff Picks */
+  scrollbar-width: thin;
+  scrollbar-color: #4F4F4F transparent;
+  flex-grow: 0;
+  min-height: 0;
+  text-shadow: 0px 1px 2px rgba(0,0,0,0.8); /* Add subtle text shadow for better readability */
+  padding: 5px; /* Add a little padding */
+}
+
+.recently-added-swiper .overlay .description-box::-webkit-scrollbar {
+  width: 5px;
+}
+.recently-added-swiper .overlay .description-box::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 3px;
+}
+
+/* Recently Added Overlay Actions */
+.recently-added-swiper .overlay-actions {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 0.2rem 0.2rem;
 }
 
 /* Ensure the self-published item width is handled by Swiper */

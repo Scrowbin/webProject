@@ -14,9 +14,7 @@ require("helper.php");
   <?php /* Corrected CSS paths relative to index.php */ ?>
   <link rel="stylesheet" href="/CSS/navbar.css">
   <link rel="stylesheet" href="/CSS/home.css" />
-  <?php if (isset($activeAnnouncement) && $activeAnnouncement): ?>
-  <link rel="stylesheet" href="/CSS/announcement.css" />
-  <?php endif; ?>
+  <link rel="stylesheet" href="/CSS/announcement-modal.css" />
   <style>
     .rating-badge {
       background-color: #ffb400;
@@ -44,21 +42,34 @@ require("helper.php");
 
   <?php include 'includes/sidebar.php'; ?>
 
-  <?php if (isset($activeAnnouncement) && $activeAnnouncement && !empty($activeAnnouncement['content'])): ?>
-  <!-- Announcement Overlay -->
-  <div id="announcement-overlay" style="display: none;">
-    <div class="container-xxl position-relative">
-      <div class="announcement-content">
-        <?= $activeAnnouncement['content'] ?>
-      </div>
-      <button type="button" id="announcement-close" aria-label="Close">
-        <i class="bi bi-x"></i>
-      </button>
+  <!-- Announcement Modal -->
+  <div id="announcement-backdrop" class="announcement-backdrop"></div>
+  <div id="announcement-modal" class="announcement-modal">
+    <div class="announcement-modal-header">
+      MangaDex announcement
+    </div>
+    <div class="announcement-modal-content" id="announcement-modal-content">
+      <?php if (isset($activeAnnouncement) && $activeAnnouncement && !empty($activeAnnouncement['content'])): ?>
+      <?= $activeAnnouncement['content'] ?>
+      <?php endif; ?>
+    </div>
+    <div class="announcement-modal-footer">
+      <button id="btn-hide" class="btn-hide">Hide</button>
     </div>
   </div>
-  <script src="JS/announcement.js"></script>
-  <script src="JS/homepage-announcements.js"></script>
-  <?php endif; ?>
+
+  <!-- Announcement List Modal -->
+  <div id="announcement-list-modal" class="announcement-list-modal">
+    <div class="announcement-list-header">
+      Recent Announcements
+      <button type="button" class="btn-close btn-close-white" id="announcement-list-close"></button>
+    </div>
+    <div class="announcement-list-content" id="announcement-list-content">
+      <!-- Announcement items will be loaded here dynamically -->
+    </div>
+  </div>
+
+  <script src="JS/announcement-modal.js"></script>
 
   <!-- Thông báo xóa manga thành công -->
   <?php if (isset($_GET['status']) && $_GET['status'] === 'manga_deleted'): ?>

@@ -14,6 +14,7 @@ $profile_update_message ??= null;
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="CSS/profile.css">
     <link rel="stylesheet" href="CSS/navbar.css">
+    <link rel="stylesheet" href="CSS/announcement-modal.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
@@ -28,6 +29,30 @@ $profile_update_message ??= null;
     <?php
     include 'includes/navbar_minimal.php';
     ?>
+
+    <!-- Announcement Modal -->
+    <div id="announcement-backdrop" class="announcement-backdrop"></div>
+    <div id="announcement-modal" class="announcement-modal">
+      <div class="announcement-modal-header">
+        MangaDex announcement
+      </div>
+      <div class="announcement-modal-content" id="announcement-modal-content">
+      </div>
+      <div class="announcement-modal-footer">
+        <button id="btn-hide" class="btn-hide">Hide</button>
+      </div>
+    </div>
+
+    <!-- Announcement List Modal -->
+    <div id="announcement-list-modal" class="announcement-list-modal">
+      <div class="announcement-list-header">
+        Recent Announcements
+        <button type="button" class="btn-close btn-close-white" id="announcement-list-close"></button>
+      </div>
+      <div class="announcement-list-content" id="announcement-list-content">
+        <!-- Announcement items will be loaded here dynamically -->
+      </div>
+    </div>
     <!-- menu -->
     <div class="container-fluid mt-5">
         <div class="row">
@@ -322,6 +347,7 @@ $profile_update_message ??= null;
     <script src="JS/profile.js"></script>
     <script src="JS/navbar.js"></script>
     <script src="JS/sidebar.js"></script>
+    <script src="JS/announcement-modal.js"></script>
 
     <script>
         // Initialize TinyMCE for the About You section
