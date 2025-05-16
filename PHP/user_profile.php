@@ -10,8 +10,8 @@ if (!isset($user_data)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="CSS/user_profile.css">
-    <link rel="stylesheet" href="CSS/navbar.css">
+    <link rel="stylesheet" href="/CSS/user_profile.css">
+    <link rel="stylesheet" href="/CSS/navbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
     <title><?php echo htmlspecialchars($user_data['username']); ?> - User Profile</title>
 </head>
@@ -24,9 +24,9 @@ if (!isset($user_data)) {
         <!-- Profile Banner -->
         <div class="profile-banner position-relative">
             <?php if (!empty($user_data['banner'])): ?>
-                <img src="IMG/banners/<?php echo htmlspecialchars($user_data['banner']); ?>" alt="Profile Banner" class="w-100">
+                <img src="/IMG/banners/<?php echo htmlspecialchars($user_data['banner']); ?>" alt="Profile Banner" class="w-100">
             <?php else: ?>
-                <img src="IMG/loginBG.png" alt="Profile Banner" class="w-100">
+                <div class="empty-banner w-100" style="height: 200px; background-color: #343a40;"></div>
             <?php endif; ?>
 
             <!-- Profile layout with avatar on left and info on right -->
@@ -35,7 +35,7 @@ if (!isset($user_data)) {
                 <div class="profile-avatar me-3" style="z-index: 10;">
                     <?php if (!empty($user_data['Avatar']) && $user_data['Avatar'] !== 'avatar_default.png'): ?>
                         <div class="avatar-wrapper bg-warning text-center d-inline-block" style="width: 100px; height: 100px; border-radius: 0; overflow: hidden;">
-                            <img src="IMG/avatars/<?php echo htmlspecialchars($user_data['Avatar']); ?>" class="w-100 h-100" style="object-fit: cover;">
+                            <img src="/IMG/avatars/<?php echo htmlspecialchars($user_data['Avatar']); ?>" class="w-100 h-100" style="object-fit: cover;">
                         </div>
                     <?php else: ?>
                         <div class="avatar-wrapper bg-warning text-center d-inline-block" style="width: 100px; height: 100px; line-height: 100px; font-size: 48px; color: white; border-radius: 0;">
@@ -61,7 +61,7 @@ if (!isset($user_data)) {
 
             <div class="profile-actions position-absolute top-0 end-0 p-3">
                 <button class="btn btn-dark btn-sm me-2">Report</button>
-                <a href="profile" class="btn btn-danger btn-sm">Edit profile</a>
+                <a href="/profile" class="btn btn-danger btn-sm">Edit profile</a>
             </div>
         </div>
 
@@ -100,7 +100,7 @@ if (!isset($user_data)) {
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="JS/user_profile.js"></script>
-    <script src="JS/navbar.js"></script>
+    <script src="/JS/user_profile.js"></script>
+    <script src="/JS/navbar.js"></script>
 </body>
 </html>

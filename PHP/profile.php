@@ -125,7 +125,7 @@ $profile_update_message ??= null;
                                     <?php if (!empty($user_data['banner'])): ?>
                                         <img src="IMG/banners/<?php echo htmlspecialchars($user_data['banner']); ?>" alt="Profile Banner" class="img-fluid rounded" id="currentBanner">
                                     <?php else: ?>
-                                        <img src="IMG/loginBG.png" alt="Profile Banner" class="img-fluid rounded" id="currentBanner">
+                                        <div class="empty-banner rounded" id="currentBanner" style="height: 150px; background-color: #343a40; border: 1px dashed #6c757d;"></div>
                                     <?php endif; ?>
                                 </div>
                                 <div>
@@ -294,7 +294,9 @@ $profile_update_message ??= null;
                         <?php if (!empty($user_data['banner'])): ?>
                             <img id="previewBanner" src="IMG/banners/<?php echo htmlspecialchars($user_data['banner']); ?>" class="draggable-banner">
                         <?php else: ?>
-                            <img id="previewBanner" src="IMG/loginBG.png" class="draggable-banner">
+                            <div class="empty-banner-preview" style="height: 150px; background-color: #343a40; border: 1px dashed #6c757d; display: flex; align-items: center; justify-content: center;">
+                                <p class="text-muted">No banner image set</p>
+                            </div>
                         <?php endif; ?>
                     </div>
 

@@ -155,9 +155,34 @@ body.sidebar-open #nav-sidebar {
   margin-bottom: 0.25rem;
 }
 
-.sidebar-section .section-title:hover {
-  background-color: transparent; /* No hover effect like links */
+/* Style for non-clickable section titles (div elements) */
+.sidebar-section div.section-title {
+  cursor: default; /* Default cursor for non-clickable sections */
+  pointer-events: none; /* Disable all pointer events */
+  user-select: none; /* Prevent text selection */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  tabindex: -1; /* Remove from tab order */
+}
+
+/* We'll handle this with JavaScript instead */
+
+/* Style for clickable section titles (a elements) */
+.sidebar-section a.section-title:hover {
+  background-color: #FF6740;
   color: #fff;
+}
+
+/* No hover effect for non-clickable section titles */
+.sidebar-section div.section-title:hover,
+.sidebar-section div.section-title:focus,
+.sidebar-section div.section-title:active,
+.sidebar-section div.section-title.active {
+  background-color: transparent;
+  color: #e0e0e0;
+  outline: none;
+  box-shadow: none;
 }
 
 .sidebar-section .sub-links {
@@ -211,4 +236,4 @@ body:not(.sidebar-open) #hamburger-btn {
   display: inline-block;
   opacity: 1;
   visibility: visible;
-} 
+}

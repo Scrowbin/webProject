@@ -1,0 +1,132 @@
+/* CSS for Staff Picks Admin Page */
+body {
+    background-color: #111;
+    color: #e0e0e0;
+}
+
+.container-xxl {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.staff-pick-card {
+    background-color: #1a1a1a;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    transition: transform 0.2s ease;
+    border: 1px solid #333;
+}
+
+.staff-pick-card:hover {
+    transform: translateY(-5px);
+}
+
+.staff-pick-img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.staff-pick-body {
+    padding: 15px;
+}
+
+.staff-pick-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.staff-pick-meta {
+    font-size: 0.85rem;
+    color: #aaa;
+    margin-bottom: 10px;
+}
+
+.staff-pick-note {
+    background-color: #252525;
+    padding: 10px;
+    border-radius: 5px;
+    font-style: italic;
+    margin-top: 10px;
+}
+
+.manga-select {
+    background-color: #252525;
+    color: #e0e0e0;
+    border: 1px solid #333;
+}
+
+.manga-select option {
+    background-color: #252525;
+    color: #e0e0e0;
+}
+
+.card {
+    background-color: #1a1a1a !important;
+    border: 1px solid #333;
+}
+
+.card-header {
+    background-color: #252525 !important;
+    border-bottom: 1px solid #333;
+}
+
+.btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #bb2d3b;
+    border-color: #b02a37;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5c636a;
+    border-color: #565e64;
+}
+
+.form-control, .form-select {
+    background-color: #252525;
+    color: #e0e0e0;
+    border: 1px solid #333;
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.alert-success {
+    background-color: #0f5132;
+    color: #d1e7dd;
+    border-color: #0f5132;
+}
+
+.alert-danger {
+    background-color: #842029;
+    color: #f8d7da;
+    border-color: #842029;
+}
+
+.btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}

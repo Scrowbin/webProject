@@ -15,7 +15,7 @@
 
       <!-- Follows section with subsections -->
       <div class="sidebar-section">
-          <div class="nav-link section-title <?= basename($_SERVER['PHP_SELF']) == 'follows.php' || (isset($isFollows) && $isFollows) ? 'active' : '' ?>" data-section="follows"><i class="bi bi-bookmark-fill"></i> <span>Follows</span></div>
+          <div class="nav-link section-title" data-section="follows" tabindex="-1" aria-label="Follows section"><i class="bi bi-bookmark-fill"></i> <span>Follows</span></div>
           <div class="sub-links">
               <a href="/my-follows" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'follows.php' || (isset($isFollows) && $isFollows) ? 'active' : '' ?>">Updates</a>
               <a href="/library" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'library.php' || (isset($isLibrary) && $isLibrary) ? 'active' : '' ?>">Library</a>
@@ -37,7 +37,7 @@
 
       <!-- MangaDex Section - Visible to all users -->
       <div class="sidebar-section">
-          <div class="nav-link section-title" data-section="mangadex"><i class="bi bi-speedometer2"></i> <span>MangaDex</span></div>
+          <div class="nav-link section-title" data-section="mangadex" tabindex="-1" aria-label="MangaDex section"><i class="bi bi-speedometer2"></i> <span>MangaDex</span></div>
            <div class="sub-links">
               <a href="/admin/create-announcements" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'announcement.php' ? 'active' : '' ?>">Announcements</a>
               <!-- Repo/to all but only admins can access -->
@@ -48,9 +48,10 @@
       <?php if (isset($role) && $role === 'admin'): ?>
       <!-- Admin Section - Only visible to admins -->
       <div class="sidebar-section">
-          <div class="nav-link section-title" data-section="admin"><i class="bi bi-shield-lock-fill"></i> <span>Admin</span></div>
+          <div class="nav-link section-title" data-section="admin" tabindex="-1" aria-label="Admin section"><i class="bi bi-shield-lock-fill"></i> <span>Admin</span></div>
            <div class="sub-links">
               <a href="/admin/create-announcements" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'announcement.php' ? 'active' : '' ?>">Create Announcement</a>
+              <a href="/admin/staff-pick" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'staff_pick.php' ? 'active' : '' ?>">Staff Picks</a>
            </div>
       </div>
       <?php endif; ?>
@@ -71,3 +72,6 @@
       </div>
   </div>
 </aside>
+
+<!-- Script to handle Follows section highlighting -->
+<script src="/JS/sidebar-follows.js"></script>

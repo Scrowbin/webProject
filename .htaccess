@@ -22,6 +22,7 @@ RewriteRule ^user-profile$ controller/auth_controller.php?action=user_profile [Q
 RewriteRule ^admin/create-announcements$ controller/announcement_controller.php [QSA,L]
 RewriteRule ^admin/view-reports$ controller/report_controller.php [QSA,L]
 RewriteRule ^admin/add-manga$ controller/create_controller.php [QSA,L]
+RewriteRule ^admin/staff-pick$ controller/staff_pick_controller.php [QSA,L]
 RewriteRule ^admin/edit-manga/([a-zA-Z0-9\-]+)$ controller/edit_manga.php?slug=$1 [QSA,L]
 RewriteRule ^admin/edit-chapter/([^/]+)/chapter-([0-9\-]+)$ /controller/editChapter_controller.php?slug=$1&chapter=$2 [L,QSA]
 RewriteRule ^admin/delete-chapter/([^/]+)$ /controller/delete_chapter_controller.php?slug=$1 [L,QSA]

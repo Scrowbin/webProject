@@ -10,6 +10,8 @@ require_once __DIR__ . '/db/pdo.php';
 require_once __DIR__ . '/db/mangaInfoPdo.php'; // Contains getMangaInfo, getTags, getMangaAuthors, getMangaArtists
 require_once __DIR__ . '/db/latestUpdates_model.php'; // Contains getUpdates for latest manga chapters
 require_once __DIR__ . '/db/announcement_model.php'; // Contains announcement functions
+require_once __DIR__ . '/db/staff_picks_model.php'; // Contains staff picks functions
+require_once __DIR__ . '/db/account_db.php'; // For user role functions
 
 // --- Data Fetching for Homepage ---
 
@@ -67,6 +69,9 @@ foreach ($recentlyAddedManga as $key => $manga) {
     $recentlyAddedManga[$key]['authors'] = getMangaAuthors($mangaID);
     $recentlyAddedManga[$key]['artists'] = getMangaArtists($mangaID);
 }
+
+// Get staff picks for the Staff Picks carousel
+$staffPicksManga = getStaffPicks(10); // Get up to 10 staff picks
 
 // Get latest manga updates using getUpdates function - similar to latestUpdates_controller.php
 try {
@@ -126,6 +131,15 @@ $zeikinManga = $allManga[1] ?? null;
 // Get latest active announcement for initial load
 // (AJAX will handle updates after page load)
 $activeAnnouncement = getLatestActiveAnnouncement();
+
+// Get user role for sidebar display
+$userID = $_SESSION['userID'] ?? null;
+$username = $_SESSION['username'] ?? null;
+$isLoggedIn = isset($_SESSION['userID']);
+$role = "user";
+if ($isLoggedIn) {
+    $role = get_role($userID);
+}
 
 $pathPrefix = ''; // Define path prefix for includes relative to root
 

@@ -561,16 +561,16 @@ require("helper.php");
     </section>
 
     <!-- Recently Added Section -->
-    <section class="section-container staff-picks-section">
+    <section class="section-container recently-added-section">
       <div class="section-heading">
         <a href="controller/recently_added_controller.php" class="text-white text-decoration-none"><h2 class="text-white fw-bold mb-0">Recently Added</h2></a>
-        <a href="controller/recently_added_controller.php" class="see-all see-all-arrow staff-picks-next"> <!-- Changed class for Swiper navigation -->
+        <a href="controller/recently_added_controller.php" class="see-all see-all-arrow recently-added-next"> <!-- Changed class for Swiper navigation -->
           <i class="bi bi-arrow-right"></i>
         </a>
       </div>
 
       <!-- Swiper Container -->
-      <div class="swiper staff-picks-swiper">
+      <div class="swiper recently-added-swiper">
         <div class="swiper-wrapper">
           <?php foreach ($recentlyAddedManga as $manga): ?>
           <!-- Manga Item -->
@@ -600,7 +600,7 @@ require("helper.php");
         </div> <!-- End swiper-wrapper -->
 
         <!-- Add Pagination -->
-        <div class="swiper-pagination staff-picks-pagination"></div>
+        <div class="swiper-pagination recently-added-pagination"></div>
 
         <!-- Add Navigation Buttons (Hidden initially, controlled by Swiper) -->
         <!-- We'll use the existing arrow in the header as the 'next' button -->
@@ -611,8 +611,66 @@ require("helper.php");
       </div> <!-- End swiper container -->
     </section>
 
+    <!-- Staff Picks Section -->
+    <section class="section-container staff-picks-section">
+      <div class="section-heading">
+        <a href="admin/staff-pick" class="text-white text-decoration-none"><h2 class="text-white fw-bold mb-0">Staff Picks</h2></a>
+        <a href="admin/staff-pick" class="see-all see-all-arrow staff-picks-next"> <!-- Class for Swiper navigation -->
+          <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
 
+      <!-- Swiper Container -->
+      <div class="swiper staff-picks-swiper">
+        <div class="swiper-wrapper">
+          <?php if (empty($staffPicksManga)): ?>
+            <!-- Placeholder item if no staff picks are available -->
+            <div class="swiper-slide item">
+              <div class="image-container d-flex align-items-center justify-content-center" style="background-color: #252525;">
+                <div class="text-center p-3">
+                  <i class="bi bi-star text-warning" style="font-size: 2rem;"></i>
+                  <p class="mt-2 text-white">No staff picks yet</p>
+                </div>
+              </div>
+              <div class="item-title-link text-center">
+                <h3 class="item-title">Check back soon!</h3>
+              </div>
+            </div>
+          <?php else: ?>
+            <?php foreach ($staffPicksManga as $manga): ?>
+            <!-- Manga Item -->
+            <div class="swiper-slide item">
+              <a href="manga/<?=$manga['Slug'] ?>">
+                <div class="image-container">
+                  <img src="IMG/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?> Cover">
+                  <img class="flag" src="https://mangadex.org/img/flags/jp.svg" alt="JP">
+                  <div class="overlay">
+                    <div class="description-box">
+                      <?php if (!empty($manga['Note'])): ?>
+                        <strong>Staff Note:</strong> <?= htmlspecialchars($manga['Note']) ?><br><br>
+                      <?php endif; ?>
+                      <?= $manga['MangaDiscription'] ?? 'No description available.' ?>
+                    </div>
+                    <div class="overlay-actions">
+                      <div class="overlay-buttons">
+                        <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                        <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>" class="item-title-link">
+                <h3 class="item-title"><?= htmlspecialchars($manga['MangaNameOG']) ?></h3>
+              </a>
+            </div>
+            <?php endforeach; ?>
+          <?php endif; ?>
+        </div> <!-- End swiper-wrapper -->
 
+        <!-- Add Pagination -->
+        <div class="swiper-pagination staff-picks-pagination"></div>
+      </div> <!-- End swiper container -->
     </section>
   </main>
 

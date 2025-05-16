@@ -3,7 +3,7 @@
         $dburl = "mysql:host=localhost;dbname=manga;charset=utf8mb4";
         $username = 'root';
         $password = '';
-    
+
         $conn = new PDO($dburl, $username, $password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $conn;
@@ -19,7 +19,8 @@
         try{
             $conn = pdo_get_connection();
             $stmt = $conn->prepare($sql);
-            $stmt->execute($sql_args);
+            $result = $stmt->execute($sql_args);
+            return $result; // Return true if execution was successful
         }
         catch(PDOException $e){
             throw $e;
@@ -42,7 +43,7 @@
             $stmt = $conn->prepare($sql);
             $stmt->execute($sql_args);
             $rows = $stmt->fetchAll();
-            
+
             return $rows;
         }
         catch(PDOException $e){
@@ -75,7 +76,7 @@
             unset($conn);
         }
     }
-    
+
     // function pdo_query_value($sql){
     //     $sql_args = array_slice(func_get_args(), 1);
     //     try{
@@ -105,15 +106,15 @@
             $conn = pdo_get_connection();
             $stmt = $conn->prepare($sql);
             $stmt->execute($sql_args);
-            
+
             // Fetch the row, or return null if no row is found
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            
+
             // Check if $row is false (no result found)
             if ($row === false) {
                 return null;  // Return null if no rows are found
             }
-    
+
             // Return the first value from the associative array
             return array_values($row)[0];
         }
@@ -124,7 +125,7 @@
             unset($conn);
         }
     }
-    
+
     function pdo_execute_return_id($sql) {
         $sql_args = array_slice(func_get_args(), 1);
         try {
@@ -143,13 +144,13 @@
         try {
             $conn = pdo_get_connection();
             $stmt = $conn->prepare($sql);
-    
+
             // Bind parameters with proper types
             foreach ($sql_args as $i => $arg) {
                 $paramType = is_int($arg) ? PDO::PARAM_INT : PDO::PARAM_STR;
                 $stmt->bindValue($i + 1, $arg, $paramType);
             }
-    
+
             $stmt->execute();
             $rows = $stmt->fetchAll();
             return $rows;
