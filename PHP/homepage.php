@@ -312,8 +312,12 @@ require("helper.php");
             if ($index < 6) continue; // Skip first 6 items (shown in first column)
             if ($count >= 6) break; // Limit to 6 items in second column
             $count++;
+            $chapterNum = htmlspecialchars(truncateNumber($manga['Chapter']['ChapterNumber']));
+            $chapterNumber = str_replace('.', '-', $chapterNum);
+            $slug = $manga["MangaSlug"];
+            $chapterSlug = '/read/'.$slug.'/chapter-'.$chapterNumber;
           ?>
-              <a href="controller/mangaRead_controller.php?chapterID=<?= $manga['Chapter']['ChapterID'] ?>" class="latest-item">
+              <a href="<?= $chapterSlug ?>" class="latest-item">
                 <img src="IMG/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?> Cover" class="latest-cover">
                 <div class="latest-details">
                   <div class="latest-title"><?= htmlspecialchars($manga['MangaNameOG']) ?></div>
@@ -396,8 +400,12 @@ require("helper.php");
             if ($index < 12) continue; // Skip first 12 items (shown in first and second columns)
             if ($count >= 6) break; // Limit to 6 items in third column
             $count++;
+            $chapterNum = htmlspecialchars(truncateNumber($manga['Chapter']['ChapterNumber']));
+            $chapterNumber = str_replace('.', '-', $chapterNum);
+            $slug = $manga["MangaSlug"];
+            $chapterSlug = '/read/'.$slug.'/chapter-'.$chapterNumber;
           ?>
-              <a href="controller/mangaRead_controller.php?chapterID=<?= $manga['Chapter']['ChapterID'] ?>" class="latest-item">
+              <a href="<?=$chapterSlug?>" class="latest-item">
                 <img src="IMG/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?> Cover" class="latest-cover">
                 <div class="latest-details">
                   <div class="latest-title"><?= htmlspecialchars($manga['MangaNameOG']) ?></div>
@@ -480,8 +488,12 @@ require("helper.php");
             if ($index < 18) continue; // Skip first 18 items (shown in first, second, and third columns)
             if ($count >= 6) break; // Limit to 6 items in fourth column
             $count++;
+            $chapterNum = htmlspecialchars(truncateNumber($manga['Chapter']['ChapterNumber']));
+            $chapterNumber = str_replace('.', '-', $chapterNum);
+            $slug = $manga["MangaSlug"];
+            $chapterSlug = '/read/'.$slug.'/chapter-'.$chapterNumber;
           ?>
-              <a href="controller/mangaRead_controller.php?chapterID=<?= $manga['Chapter']['ChapterID'] ?>" class="latest-item">
+              <a href="<?= $chapterSlug ?>" class="latest-item">
                 <img src="IMG/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?> Cover" class="latest-cover">
                 <div class="latest-details">
                   <div class="latest-title"><?= htmlspecialchars($manga['MangaNameOG']) ?></div>
