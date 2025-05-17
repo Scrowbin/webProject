@@ -101,7 +101,7 @@
                     $nextChapterSlug = "/read/" . $mangaSlug . "/chapter-" . str_replace(".","-",truncateNumber($nextChapterNumber));
                     echo "<button id='next-chapter' onclick=\"location.href='$nextChapterSlug'\">Next Chapter</button>";
                 } else {
-                    echo "<button id='next-chapter' onclick=\"location.href='manga/$mangaSlug'\">Back to Info</button>";
+                    echo "<button id='next-chapter' onclick=\"location.href='/manga/$mangaSlug'\">Back to Info</button>";
                 }
             ?>
 
