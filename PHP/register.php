@@ -10,12 +10,25 @@ $is_success = !empty($success_data);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Create a new MangaDax account to access thousands of manga titles, track your reading progress, and join our community.">
-    <meta name="keywords" content="manga, register, sign up, create account, MangaDax">
-    <title>Register MangaDax</title>
+    <meta name="description" content="Create a free MangaDax account to access thousands of manga titles, track your reading progress, create custom reading lists, and join our vibrant manga community.">
+    <meta name="keywords" content="manga, register, sign up, create account, MangaDax, manga reader, manga community, free manga">
+    <title>Register for MangaDax | Free Manga Reading Account</title>
     <link rel="icon" href="../IMG/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../CSS/register.css">
+    <link rel="canonical" href="https://mangadax.local/register" />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mangadax.local/register">
+    <meta property="og:title" content="Register for MangaDax | Free Manga Reading Account">
+    <meta property="og:description" content="Create a free MangaDax account to access thousands of manga titles, track your reading progress, and join our community.">
+    <meta property="og:image" content="https://mangadax.local/IMG/logo.png">
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://mangadax.local/register">
+    <meta property="twitter:title" content="Register for MangaDax | Free Manga Reading Account">
+    <meta property="twitter:description" content="Create a free MangaDax account to access thousands of manga titles, track your reading progress, and join our community.">
+    <meta property="twitter:image" content="https://mangadax.local/IMG/logo.png">
 </head>
 <body>
     <div class="container login-page">
@@ -34,15 +47,14 @@ $is_success = !empty($success_data);
 
             <?php if ($is_success): ?>
                 <div class="alert alert-success">
-                    <?php echo htmlspecialchars($success_data['message']); ?><br>
-                    <?php echo $success_data['activation_link_html']; ?>
+                    <?php echo htmlspecialchars($success_data['message']); ?>
                 </div>
                  <div class="text-center mt-3">
                      <a href="../login" class="btn btn-primary">Proceed to Login</a>
                  </div>
             <?php else: ?>
             <div class="form-content">
-                <form novalidate action="../register" method="post">
+                <form novalidate onsubmit="return validInput()" action="../register" method="post">
                     <?php if (!empty($errors['db'])): ?>
                         <div class="mb-3 error-message active" style="text-align: center;"><?php echo htmlspecialchars($errors['db']); ?></div>
                     <?php endif; ?>
@@ -78,7 +90,54 @@ $is_success = !empty($success_data);
             <?php endif; ?>
         </div>
     </div>
-    <!-- Server side validation is primary -->
+    <!-- Client-side validation -->
+    <script src="../JS/register.js"></script>
+
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Register for MangaDax",
+        "description": "Create a free MangaDax account to access thousands of manga titles, track your reading progress, and join our vibrant manga community.",
+        "publisher": {
+            "@type": "Organization",
+            "name": "MangaDax",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://mangadax.local/IMG/logo.png"
+            }
+        },
+        "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://mangadax.local/"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Register",
+                    "item": "https://mangadax.local/register"
+                }
+            ]
+        },
+        "mainEntity": {
+            "@type": "WebApplication",
+            "name": "MangaDax",
+            "applicationCategory": "EntertainmentApplication",
+            "operatingSystem": "Web",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            }
+        }
+    }
+    </script>
 </body>
 </html>
 

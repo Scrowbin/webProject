@@ -23,6 +23,10 @@ RewriteRule ^user-profile$ controller/auth_controller.php?action=user_profile [Q
 RewriteRule ^login$ controller/auth_controller.php?action=login [QSA,L]
 RewriteRule ^register$ controller/auth_controller.php?action=register [QSA,L]
 RewriteRule ^forgot-password$ controller/auth_controller.php?action=forgotPassword [QSA,L]
+RewriteRule ^reset-password$ controller/auth_controller.php?action=resetPassword [QSA,L]
+RewriteRule ^reset-password/([^/]+)$ controller/auth_controller.php?action=resetPassword&token=$1 [QSA,L]
+RewriteRule ^activate$ controller/auth_controller.php?action=activate [QSA,L]
+RewriteRule ^activate/([^/]+)$ controller/auth_controller.php?action=activate&token=$1 [QSA,L]
 RewriteRule ^logout$ controller/auth_controller.php?action=logout [QSA,L]
 
 # Admin routes

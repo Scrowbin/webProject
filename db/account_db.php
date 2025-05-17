@@ -233,3 +233,63 @@ function save_base64_image(string $base64Data, string $folder, int $userID): str
     }
 }
 
+/**
+ * Stores a password reset token for a user.
+ *
+ * @param string $username The username
+ * @param string $reset_token The reset token
+ * @param int $expires_at Timestamp when the token expires
+ * @return bool True if successful, false otherwise
+ */
+function account_store_reset_token(string $username, string $reset_token, int $expires_at): bool
+{
+    try {
+        $sql = "UPDATE account SET reset_token = ?, reset_token_expiry = FROM_UNIXTIME(?) WHERE username = ?";
+        pdo_execute($sql, $reset_token, $expires_at, $username);
+        return true;
+    } catch (PDOException $e) {
+        error_log("Failed to store reset token: " . $e->getMessage());
+        return false;
+    }
+}
+
+/**
+ * Finds a user by their reset token.
+ *
+ * @param string $token The reset token
+ * @return array|false User data if found and token is valid, false otherwise
+ */
+function account_find_by_reset_token(string $token): array|false
+{
+    try {
+        $sql = "SELECT username, email FROM account
+                WHERE reset_token = ?
+                AND reset_token_expiry > NOW()
+                LIMIT 1";
+        return pdo_query_one($sql, $token);
+    } catch (PDOException $e) {
+        error_log("Error finding reset token: " . $e->getMessage());
+        return false;
+    }
+}
+
+/**
+ * Updates a user's password and clears their reset token.
+ *
+ * @param string $username The username
+ * @param string $hashed_password The new hashed password
+ * @return bool True if successful, false otherwise
+ */
+function account_update_password(string $username, string $hashed_password): bool
+{
+    try {
+        $sql = "UPDATE account
+                SET password = ?, reset_token = NULL, reset_token_expiry = NULL
+                WHERE username = ?";
+        pdo_execute($sql, $hashed_password, $username);
+        return true;
+    } catch (PDOException $e) {
+        error_log("Failed to update password: " . $e->getMessage());
+        return false;
+    }
+}

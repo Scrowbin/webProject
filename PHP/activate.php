@@ -8,10 +8,25 @@ $message_type = $message_type ?? 'info';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account Activation - MangaDax</title>
+    <meta name="description" content="Activate your MangaDax account to access thousands of manga titles, track your reading progress, and join our vibrant manga community.">
+    <meta name="keywords" content="manga, account activation, verify account, MangaDax, manga reader, manga community">
+    <title>Account Activation - MangaDax | Verify Your Account</title>
     <link rel="icon" href="../IMG/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../CSS/register.css">
+    <link rel="canonical" href="https://mangadax.local/activate" />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mangadax.local/activate">
+    <meta property="og:title" content="Account Activation - MangaDax | Verify Your Account">
+    <meta property="og:description" content="Activate your MangaDax account to access thousands of manga titles and join our community.">
+    <meta property="og:image" content="https://mangadax.local/IMG/logo.png">
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://mangadax.local/activate">
+    <meta property="twitter:title" content="Account Activation - MangaDax | Verify Your Account">
+    <meta property="twitter:description" content="Activate your MangaDax account to access thousands of manga titles and join our community.">
+    <meta property="twitter:image" content="https://mangadax.local/IMG/logo.png">
     <style>
         .activation-container {
             max-width: 600px;
@@ -70,5 +85,40 @@ $message_type = $message_type ?? 'info';
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Account Activation - MangaDax",
+        "description": "Activate your MangaDax account to access thousands of manga titles and join our community.",
+        "publisher": {
+            "@type": "Organization",
+            "name": "MangaDax",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://mangadax.local/IMG/logo.png"
+            }
+        },
+        "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://mangadax.local/"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Account Activation",
+                    "item": "https://mangadax.local/activate"
+                }
+            ]
+        }
+    }
+    </script>
 </body>
 </html>

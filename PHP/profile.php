@@ -111,6 +111,14 @@ $profile_update_message ??= null;
                         </div>
 
                         <div class="row mb-3">
+                            <label for="password" class="col-sm-3 col-form-label">Password:</label>
+                            <div class="col-sm-9">
+                                <a href="forgot-password" class="btn btn-warning">Reset Password</a>
+                                <small class="text-muted ms-2">You will receive a password reset link via email.</small>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Email options:</label>
                             <div class="col-sm-9">
                                 <div class="form-check">
@@ -118,9 +126,6 @@ $profile_update_message ??= null;
                                     <label class="form-check-label" for="receiveEmails">
                                         Receive news and update emails
                                     </label>
-                                </div>
-                                <div class="text-muted small mt-1">
-                                    You may find additional email options under <a href="#" class="text-info">Preferences</a>.
                                 </div>
                             </div>
                         </div>

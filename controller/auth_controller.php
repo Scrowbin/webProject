@@ -7,6 +7,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 require_once __DIR__ . '/../db/account_db.php';
 require_once __DIR__ . '/../db/upload_model.php'; // Để sử dụng hàm getUsername
+require_once __DIR__ . '/../utils/mail_utils.php'; // For email functionality
 
 // --- Handler Functions ---
 
@@ -55,8 +56,13 @@ function handleLogin(): void
                         $redirectUrl = $_SESSION['login_return_url'] ?? '../index.php';
                         unset($_SESSION['login_return_url']); // Clear after use
 
-                        // Basic check to prevent redirection loops to auth controller itself
-                        if (str_contains($redirectUrl, 'auth_controller.php')) {
+                        // Prevent redirection to auth-related pages
+                        if (str_contains($redirectUrl, 'auth_controller.php') ||
+                            str_contains($redirectUrl, '/activate') ||
+                            str_contains($redirectUrl, '/reset-password') ||
+                            str_contains($redirectUrl, '/forgot-password') ||
+                            str_contains($redirectUrl, '/register') ||
+                            str_contains($redirectUrl, '/login')) {
                              $redirectUrl = '../index.php';
                         }
                         header("Location: " . $redirectUrl);
@@ -137,18 +143,27 @@ function handleRegister(): void
 
             $scheme = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
             $host = $_SERVER['HTTP_HOST'];
-            $script_path = $_SERVER['SCRIPT_NAME'];
-            $activation_link = "{$scheme}://{$host}{$script_path}?action=activate&token=" . $activation_token;
+            $activation_link = "{$scheme}://{$host}/activate/{$activation_token}";
 
             if (account_add($username, $hashed_password, $email, $activation_token)) {
                 if (user_add($username)) {
+                    // Send activation email
+                    $email_sent = send_activation_email($email, $username, $activation_link);
+
                     $success_data = [
-                        'message' => "Registration successful! Please check your email to activate your account.",
-                        'activation_link_html' => "Activation Link (for testing): <a href='{$activation_link}'>{$activation_link}</a>"
+                        'message' => "Registration successful! Please check your email to activate your account."
                     ];
+
+                    // Log whether email was sent successfully
+                    if ($email_sent) {
+                        error_log("Activation email sent to {$email} for user {$username}");
+                    } else {
+                        error_log("Failed to send activation email to {$email} for user {$username}");
+                        // Still show success but add a note about possible email delivery issues
+                        $success_data['message'] .= " If you don't receive the email within a few minutes, please check your spam folder.";
+                    }
+
                     $post_data = [];
-                    // TODO: Implement actual email sending for activation link
-                    error_log("Activation link for {$username}: {$activation_link}"); // For testing
                 } else {
                     $errors['db'] = 'Registration partially failed (user record). Please contact support.';
                     error_log("CRITICAL: Failed to add user record for Username: {$username}");
@@ -202,13 +217,44 @@ function handleForgotPassword(): void
         } else {
             $user = account_find_by_username_or_email($usernameOrEmail);
             if ($user) {
-                 // TODO: Implement password reset token generation, storage, and email sending.
-                 error_log("Password reset requested for user: " . $user['username']);
-                 $_SESSION['forgot_password_message'] = "If an account with that username or email exists, password reset instructions have been sent.";
-                 header("Location: ../login");
-                 exit;
+                // Generate a reset token
+                $reset_token = generate_token();
+                $expires_at = time() + 3600; // Token expires in 1 hour
+
+                // Get user's email if we have a username
+                $email = filter_var($usernameOrEmail, FILTER_VALIDATE_EMAIL)
+                    ? $usernameOrEmail
+                    : account_find_by_username($usernameOrEmail)['email'];
+
+                // Create reset link
+                $scheme = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
+                $host = $_SERVER['HTTP_HOST'];
+                $reset_link = "{$scheme}://{$host}/reset-password/{$reset_token}";
+
+                // Store the token in the database
+                if (account_store_reset_token($user['username'], $reset_token, $expires_at)) {
+                    // Send the reset email
+                    $email_sent = send_password_reset_email($email, $user['username'], $reset_link);
+
+                    if ($email_sent) {
+                        error_log("Password reset email sent to {$email} for user {$user['username']}");
+                    } else {
+                        error_log("Failed to send password reset email to {$email} for user {$user['username']}");
+                    }
+
+                    // Always show the same message whether email was sent or not for security
+                    $_SESSION['forgot_password_message'] = "If an account with that username or email exists, password reset instructions have been sent.";
+                    header("Location: ../login");
+                    exit;
+                } else {
+                    $errors['credentials'] = 'An error occurred. Please try again later.';
+                    error_log("Failed to store reset token for user: " . $user['username']);
+                }
             } else {
-                $errors['credentials'] = 'Username or email not found.';
+                // For security, don't reveal whether the account exists
+                $_SESSION['forgot_password_message'] = "If an account with that username or email exists, password reset instructions have been sent.";
+                header("Location: ../login");
+                exit;
             }
         }
     }
@@ -332,6 +378,65 @@ function handleUpdateProfile(): void {
     }
 }
 
+/**
+ * Handles the password reset process.
+ */
+function handleResetPassword(): void
+{
+    global $errors, $post_data, $message, $message_type, $reset_token;
+
+    $reset_token = $_GET['token'] ?? '';
+
+    if (empty($reset_token)) {
+        $message = 'Reset token is missing.';
+        $message_type = 'danger';
+        return;
+    }
+
+    $user = account_find_by_reset_token($reset_token);
+    if (!$user) {
+        $message = 'Invalid or expired reset token.';
+        $message_type = 'danger';
+        return;
+    }
+
+    // If form is submitted
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['reset'])) {
+        $password = $_POST['password'] ?? '';
+        $cf_password = $_POST['cf_password'] ?? '';
+        $post_data = $_POST;
+
+        // Validate password
+        if (empty($password)) {
+            $errors['password'] = 'Please specify password.';
+        } elseif (strlen($password) < 8 || strlen($password) > 24) {
+            $errors['password'] = 'Password must be between 8 and 24 characters.';
+        } elseif (!preg_match('/[A-Za-z]/', $password) || !preg_match('/[0-9]/', $password) || !preg_match('/[@$!%*?&]/', $password)) {
+            $errors['password'] = 'Password must contain at least one letter, one number, and one special character (@$!%*?&).';
+        }
+
+        // Validate password confirmation
+        if (empty($cf_password)) {
+            $errors['cf_password'] = 'Please confirm your password.';
+        } elseif ($password !== $cf_password) {
+            $errors['cf_password'] = 'Passwords do not match.';
+        }
+
+        // Process password reset
+        if (empty($errors)) {
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+            if (account_update_password($user['username'], $hashed_password)) {
+                $message = 'Your password has been successfully reset. You can now log in with your new password.';
+                $message_type = 'success';
+                $post_data = [];
+            } else {
+                $errors['db'] = 'Failed to reset password. Please try again.';
+            }
+        }
+    }
+}
+
 // --- Initialize View Variables ---
 $errors = [];
 $post_data = [];
@@ -342,6 +447,7 @@ $message_type = 'info';
 $user_data = null;
 $profile_update_message = null;
 $profile_errors = [];
+$reset_token = '';
 
 // Function to handle user profile page
 function handleUserProfile(): void
@@ -386,11 +492,31 @@ switch ($action) {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $referer = $_SERVER['HTTP_REFERER'] ?? null;
             $host = $_SERVER['HTTP_HOST'];
+
+            // Clear login_return_url if coming from auth-related pages
+            if ($referer) {
+                $refererPath = parse_url($referer, PHP_URL_PATH) ?? '';
+                if (str_contains($refererPath, '/activate') ||
+                    str_contains($refererPath, '/reset-password') ||
+                    str_contains($refererPath, '/forgot-password') ||
+                    str_contains($refererPath, '/register') ||
+                    str_contains($refererPath, 'auth_controller.php')) {
+                    unset($_SESSION['login_return_url']);
+                }
+            }
+
+            // Only store non-auth URLs as return URL
             if ($referer) {
                 $refererHost = parse_url($referer, PHP_URL_HOST);
                 $refererPath = parse_url($referer, PHP_URL_PATH) ?? '';
-                 // Check if referer is on the same host and not an auth page itself
-                if ($refererHost && $refererHost === $host && !str_contains($refererPath, 'auth_controller.php')) {
+                 // Check if referer is on the same host and not an auth-related page
+                if ($refererHost && $refererHost === $host &&
+                    !str_contains($refererPath, 'auth_controller.php') &&
+                    !str_contains($refererPath, '/activate') &&
+                    !str_contains($refererPath, '/reset-password') &&
+                    !str_contains($refererPath, '/forgot-password') &&
+                    !str_contains($refererPath, '/register') &&
+                    !str_contains($refererPath, '/login')) {
                     $_SESSION['login_return_url'] = $referer;
                     // error_log("Stored login return URL: " . $_SESSION['login_return_url']); // For debugging
                 }
@@ -421,6 +547,10 @@ switch ($action) {
     case 'forgotPassword':
         handleForgotPassword();
         include __DIR__ . '/../PHP/forgot.php';
+        break;
+    case 'resetPassword':
+        handleResetPassword();
+        include __DIR__ . '/../PHP/reset_password.php';
         break;
     case 'user_profile':
         handleUserProfile();

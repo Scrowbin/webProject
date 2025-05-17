@@ -29,20 +29,45 @@ function validInput() {
         isValid = false;
     }
 
+    // Validate username
     if (username.value.trim() === '') {
+        usernameErr.textContent = 'Please specify user name.';
+        showError(username, usernameErr);
+    } else if (username.value.length > 24) {
+        usernameErr.textContent = 'Username cannot exceed 24 characters.';
+        showError(username, usernameErr);
+    } else if (!/^[a-zA-Z0-9_]+$/.test(username.value)) {
+        usernameErr.textContent = 'Username can only contain letters, numbers, and underscores.';
         showError(username, usernameErr);
     }
 
+    // Validate password
     if (password.value.trim() === '') {
+        passwordErr.textContent = 'Please specify password.';
+        showError(password, passwordErr);
+    } else if (password.value.length < 8 || password.value.length > 24) {
+        passwordErr.textContent = 'Password must be between 8 and 24 characters.';
+        showError(password, passwordErr);
+    } else if (!/[A-Za-z]/.test(password.value) || !/[0-9]/.test(password.value) || !/[@$!%*?&]/.test(password.value)) {
+        passwordErr.textContent = 'Password must contain at least one letter, one number, and one special character (@$!%*?&).';
         showError(password, passwordErr);
     }
 
-    else if (cfPassword.value !== password.value) {
-        cfPasswordErr.textContent = 'Passwords do NOT match.';
+    // Validate confirm password
+    if (cfPassword.value.trim() === '') {
+        cfPasswordErr.textContent = 'Please confirm your password.';
+        showError(cfPassword, cfPasswordErr);
+    } else if (cfPassword.value !== password.value) {
+        cfPasswordErr.textContent = 'Passwords do not match.';
         showError(cfPassword, cfPasswordErr);
     }
 
+    // Validate email
     if (email.value.trim() === '') {
+        emailErr.textContent = 'Please specify email.';
+        showError(email, emailErr);
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+        emailErr.textContent = 'Invalid email format.';
         showError(email, emailErr);
     }
 
