@@ -20,7 +20,7 @@
     </div>
     <div class="search-category-header">
       <h5>Manga</h5>
-      <a href="<?= $pathPrefix ?>controller/advanced_search_controller.php" class="view-all-link">
+      <a href="<?= $pathPrefix ?>advanced-search" class="view-all-link">
         Advanced Search
         <i class="bi bi-arrow-right"></i>
       </a>

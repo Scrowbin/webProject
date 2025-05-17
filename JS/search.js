@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // If there's a query, redirect to advanced search with the query
                 const basePath = getBasePath();
                 e.preventDefault();
-                window.location.href = `${basePath}controller/advanced_search_controller.php?query=${encodeURIComponent(query)}`;
+                window.location.href = `${basePath}advanced-search?query=${encodeURIComponent(query)}`;
             }
         });
     }

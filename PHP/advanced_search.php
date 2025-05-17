@@ -10,9 +10,9 @@
     <title>Advanced Search - Mangadax</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
-    <link rel="stylesheet" href="../CSS/navbar.css">
-    <link rel="stylesheet" href="../CSS/library.css">
-    <link rel="stylesheet" href="../CSS/advanced_search.css">
+    <link rel="stylesheet" href="<?= $pathPrefix ?>CSS/navbar.css">
+    <link rel="stylesheet" href="<?= $pathPrefix ?>CSS/library.css">
+    <link rel="stylesheet" href="<?= $pathPrefix ?>CSS/advanced_search.css">
 </head>
 <body>
     <?php include 'includes/navbar.php'; ?>
@@ -29,7 +29,7 @@
 
         <!-- Search Form -->
         <div class="search-container mb-4">
-            <form id="advanced-search-form" action="../controller/advanced_search_controller.php" method="GET">
+            <form id="advanced-search-form" action="../advanced-search" method="GET">
                 <div class="search-bar-container">
                     <div class="search-input-wrapper">
                         <input type="text" name="query" id="search-input" placeholder="Search" value="<?= htmlspecialchars($searchQuery) ?>">
@@ -221,8 +221,8 @@
                 ?>
                     <div class="manga-card">
                         <div class="manga-cover">
-                            <a href="../manga/<?=$mangaSlug?>">
-                                <img src="../IMG/<?=$mangaID?>/<?=$CoverLink?>" alt="Manga Cover">
+                            <a href="<?= $pathPrefix ?>manga/<?=$mangaSlug?>">
+                                <img src="<?= $pathPrefix ?>IMG/<?=$mangaID?>/<?=$CoverLink?>" alt="Manga Cover">
                             </a>
                         </div>
 
@@ -231,7 +231,7 @@
                             <div class="manga-title-row">
                                 <div class="flag-title">
                                     <?php echo getFlag($mangaLanguage);?>
-                                    <a href="../manga/<?=$mangaSlug?>" class="manga-title-link"><strong><?=$mangaName?></strong></a>
+                                    <a href="<?= $pathPrefix ?>manga/<?=$mangaSlug?>" class="manga-title-link"><strong><?=$mangaName?></strong></a>
                                 </div>
                                 <div class="manga-status">
                                     <?php
@@ -251,7 +251,7 @@
                             </div>
                             <div class="manga-stats-bar">
                                 <?php if (isset($m['CommentSectionID']) && $m['CommentSectionID']): ?>
-                                    <a href="../controller/comments_controller.php?commentsID=<?= $m['CommentSectionID'] ?>" class="stat-item-link">
+                                    <a href="<?= $pathPrefix ?>comments/<?= $mangaSlug ?>/chapter-1" class="stat-item-link">
                                         <span class="stat-item"><i class="bi bi-chat-fill"></i> <?= $m['CommentCount'] ?? 0 ?></span>
                                     </a>
                                 <?php else: ?>
@@ -362,9 +362,9 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../JS/navbar.js"></script>
-    <script src="../JS/search.js"></script>
-    <script src="../JS/library.js"></script>
-    <script src="../JS/advanced_search.js"></script>
+    <script src="<?= $pathPrefix ?>JS/navbar.js"></script>
+    <script src="<?= $pathPrefix ?>JS/search.js"></script>
+    <script src="<?= $pathPrefix ?>JS/library.js"></script>
+    <script src="<?= $pathPrefix ?>JS/advanced_search.js"></script>
 </body>
 </html>
