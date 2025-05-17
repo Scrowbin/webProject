@@ -19,6 +19,12 @@ RewriteRule ^comments/([^/]+)/chapter-([0-9\-]+)$ /controller/comments_controlle
 RewriteRule ^profile$ controller/auth_controller.php?action=profile [QSA,L]
 RewriteRule ^user-profile$ controller/auth_controller.php?action=user_profile [QSA,L]
 
+# Authentication routes
+RewriteRule ^login$ controller/auth_controller.php?action=login [QSA,L]
+RewriteRule ^register$ controller/auth_controller.php?action=register [QSA,L]
+RewriteRule ^forgot-password$ controller/auth_controller.php?action=forgotPassword [QSA,L]
+RewriteRule ^logout$ controller/auth_controller.php?action=logout [QSA,L]
+
 # Admin routes
 RewriteRule ^admin/create-announcements$ controller/announcement_controller.php [QSA,L]
 RewriteRule ^admin/view-reports$ controller/report_controller.php [QSA,L]

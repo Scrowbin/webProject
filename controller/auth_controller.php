@@ -205,7 +205,7 @@ function handleForgotPassword(): void
                  // TODO: Implement password reset token generation, storage, and email sending.
                  error_log("Password reset requested for user: " . $user['username']);
                  $_SESSION['forgot_password_message'] = "If an account with that username or email exists, password reset instructions have been sent.";
-                 header("Location: auth_controller.php?action=login");
+                 header("Location: ../login");
                  exit;
             } else {
                 $errors['credentials'] = 'Username or email not found.';
@@ -219,7 +219,7 @@ function handleProfile(): void
     global $user_data;
 
     if (!isset($_SESSION['userID'])) {
-        header("Location: auth_controller.php?action=login");
+        header("Location: ../login");
         exit;
     }
 
@@ -242,7 +242,7 @@ function handleProfile(): void
     if (!$user_data) {
         session_unset();
         session_destroy();
-        header("Location: auth_controller.php?action=login&message=Profile+data+not+found.");
+        header("Location: ../login?message=Profile+data+not+found");
         exit;
     }
 }
@@ -251,7 +251,7 @@ function handleUpdateProfile(): void {
     global $user_data, $profile_update_message, $profile_errors;
 
     if (!isset($_SESSION['userID'])) {
-         header("Location: auth_controller.php?action=login");
+         header("Location: ../login");
          exit;
     }
 
@@ -349,7 +349,7 @@ function handleUserProfile(): void
     global $user_data;
 
     if (!isset($_SESSION['userID'])) {
-        header("Location: auth_controller.php?action=login");
+        header("Location: ../login");
         exit;
     }
 
@@ -367,7 +367,7 @@ function handleUserProfile(): void
     if (!$user_data) {
         session_unset();
         session_destroy();
-        header("Location: auth_controller.php?action=login&message=Profile+data+not+found.");
+        header("Location: ../login?message=Profile+data+not+found");
         exit;
     }
 
@@ -414,7 +414,7 @@ switch ($action) {
         if (file_exists($activate_view)) {
             include $activate_view;
         } else {
-             echo "<h1>Account Activation</h1><p class='alert alert-" . ($message_type === 'success' ? 'success' : 'danger') . "'>" . htmlspecialchars($message) . "</p><a href='auth_controller.php?action=login'>Go to Login</a>";
+             echo "<h1>Account Activation</h1><p class='alert alert-" . ($message_type === 'success' ? 'success' : 'danger') . "'>" . htmlspecialchars($message) . "</p><a href='../login'>Go to Login</a>";
              error_log("Activation view not found: " . $activate_view);
         }
         break;
@@ -449,8 +449,7 @@ switch ($action) {
                 }
             }
         }
-        // Append logout message
-        $redirectUrl .= (str_contains($redirectUrl, '?') ? '&' : '?') . 'message=Logged+out';
+        // No need to append logout message to URL
         // --- End Redirect logic ---
 
         session_unset();
@@ -458,7 +457,7 @@ switch ($action) {
         header("Location: " . $redirectUrl);
         exit;
     default:
-        header("Location: auth_controller.php?action=login");
+        header("Location: ../login");
         exit;
 }
 

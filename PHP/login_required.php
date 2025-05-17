@@ -65,8 +65,8 @@
     <div class="login-container">
         <h3 class="login-message">You need to sign in to access this page.</h3>
         <div>
-            <a href="<?= $pathPrefix ?>controller/auth_controller.php?action=login" class="btn btn-signin">Sign In</a>
-            <a href="<?= $pathPrefix ?>controller/auth_controller.php?action=register" class="btn btn-register">Register</a>
+            <a href="<?= $pathPrefix ?>login" class="btn btn-signin">Sign In</a>
+            <a href="<?= $pathPrefix ?>register" class="btn btn-register">Register</a>
         </div>
     </div>
 

@@ -11,7 +11,7 @@ $message_type = $message_type ?? 'info';
     <title>Account Activation - MangaDax</title>
     <link rel="icon" href="../IMG/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../CSS/register.css"> 
+    <link rel="stylesheet" href="../CSS/register.css">
     <style>
         .activation-container {
             max-width: 600px;
@@ -21,7 +21,7 @@ $message_type = $message_type ?? 'info';
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            background-color: #2c2c2c; 
+            background-color: #2c2c2c;
         }
         .activation-icon {
             font-size: 3rem;
@@ -64,11 +64,11 @@ $message_type = $message_type ?? 'info';
             </div>
 
             <div class="mt-4">
-                <a href="../controller/auth_controller.php?action=login" class="btn btn-primary">Go to Login</a>
+                <a href="../login" class="btn btn-primary">Go to Login</a>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html> 
+</html>

@@ -108,8 +108,8 @@ if ($is_logged_in && isset($_SESSION['userID'])) {
           <hr class="user-modal-divider mt-2 mb-3">
 
           <div class="d-grid gap-2 px-2">
-             <?php // Link to logout controller action ?>
-             <a href="/controller/auth_controller.php?action=logout" class="btn btn-sm btn-outline-light d-flex align-items-center justify-content-center" type="button"><i class="bi bi-box-arrow-right me-2"></i> Sign Out</a>
+             <?php // Link to logout page ?>
+             <a href="/logout" class="btn btn-sm btn-outline-light d-flex align-items-center justify-content-center" type="button"><i class="bi bi-box-arrow-right me-2"></i> Sign Out</a>
           </div>
           <!---------- END LOGGED IN VIEW ---------->
 
@@ -125,10 +125,10 @@ if ($is_logged_in && isset($_SESSION['userID'])) {
           </div>
           <hr class="user-modal-divider mb-3">
           <div class="d-grid gap-2">
-            <?php // Link to login controller action ?>
-            <a href="/controller/auth_controller.php?action=login" class="btn btn-primary btn-user-action sign-in-btn" type="button">Sign In</a>
-            <?php // Link to register controller action ?>
-            <a href="/controller/auth_controller.php?action=register" class="text-center text-white-50 text-decoration-none small">Register</a>
+            <?php // Link to login page ?>
+            <a href="/login" class="btn btn-primary btn-user-action sign-in-btn" type="button">Sign In</a>
+            <?php // Link to register page ?>
+            <a href="/register" class="text-center text-white-50 text-decoration-none small">Register</a>
           </div>
           <!---------- END GUEST VIEW ---------->
         <?php endif; ?>
