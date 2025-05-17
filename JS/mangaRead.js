@@ -426,7 +426,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("hiddenChapterID").value = chapterID;
         const formData = new FormData(this);
 
-        fetch('../controller/report_chapter.php', {
+        fetch('/controller/report_chapter.php', {
             method: 'POST',
             body: formData
         })
