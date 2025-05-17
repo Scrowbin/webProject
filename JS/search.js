@@ -4,11 +4,11 @@ function getBasePath() {
 
     // If we're in a subdirectory like /controller/ or /PHP/
     if (path.includes('/controller/') || path.includes('/PHP/')) {
-        return '../';
+        return '/';
     }
 
     // If we're at the root
-    return '';
+    return '/';
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -162,10 +162,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const status = manga.PublicationStatus === 'Completed' ? 'completed' : 'ongoing';
             const rating = manga.AvgRating ? parseFloat(manga.AvgRating).toFixed(1) : 'N/A';
             const bookmarks = manga.BookmarkCount || Math.floor(Math.random() * 1000);
-
+            const mangaSlug = manga.Slug || "";
             const resultItem = document.createElement('a');
             const basePath = getBasePath();
-            resultItem.href = `${basePath}controller/mangaInfo_Controller.php?MangaID=${manga.MangaID}`;
+            resultItem.href = basePath + 'manga/' + mangaSlug;
             resultItem.className = 'search-result-item';
 
             resultItem.innerHTML = `
