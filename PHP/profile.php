@@ -74,7 +74,7 @@ $profile_update_message ??= null;
                     </div>
 
                     <!-- Logout Link -->
-                    <a href="controller/auth_controller.php?action=logout" class="list-group-item list-group-item-action bg-dark text-logout py-3 ps-4">
+                    <a href="logout" class="list-group-item list-group-item-action bg-dark text-logout py-3 ps-4">
                         <i class="bi bi-box-arrow-right me-2"></i> Log out
                     </a>
                 </div>

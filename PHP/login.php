@@ -9,6 +9,8 @@ $post_data = $post_data ?? [];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sign in to your MangaDax account to access your manga library, reading history, and personalized recommendations.">
+    <meta name="keywords" content="manga, login, sign in, MangaDax, account">
     <title>Sign in to MangaDax</title>
     <link rel="icon" href="../IMG/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -18,7 +20,7 @@ $post_data = $post_data ?? [];
 <body>
     <div class="container login-page">
         <div class="page-header text-center py-4">
-            <a href="../index.php" rel="nofollow"> 
+            <a href="../index.php" rel="nofollow">
                 <div class="logo-container d-flex align-items-center justify-content-center">
                     <img src="../IMG/logo.png" alt="MangaDax Logo" style="height: 40px; margin-right: 10px;">
                     <span id="md-wordmark">MangaDax</span>
@@ -38,7 +40,7 @@ $post_data = $post_data ?? [];
             <?php endif; ?>
 
             <div class="form-content">
-                <form novalidate class="login-form" action="../controller/auth_controller.php?action=login" method="post">
+                <form novalidate class="login-form" action="../login" method="post">
                     <div class="mb-3">
                         <label for="username" class="form-label">Username or email</label>
                         <input tabindex="1" id="username" class="form-control form-input <?php echo !empty($errors['credentials']) ? 'input-error' : ''; ?>" name="username" type="text" autofocus autocomplete="off" value="<?php echo isset($post_data['username']) ? htmlspecialchars($post_data['username']) : ''; ?>">
@@ -57,7 +59,7 @@ $post_data = $post_data ?? [];
                             <input tabindex="3" id="rememberMe" name="rememberMe" type="checkbox" class="form-check-input" <?php echo isset($post_data['rememberMe']) ? 'checked' : ''; ?>>
                             <label class="form-check-label" for="rememberMe">Remember me</label>
                         </div>
-                        <a href="../controller/auth_controller.php?action=forgotPassword" tabindex="5" style="font-size: 14px;">Forgot Password?</a>
+                        <a href="../forgot-password" tabindex="5" style="font-size: 14px;">Forgot Password?</a>
                     </div>
 
                     <div class="form-buttons">
@@ -65,10 +67,10 @@ $post_data = $post_data ?? [];
                     </div>
                 </form>
 
-                
+
 
                 <div class="text-center mt-3 signup-link">
-                    <span>New user? <a tabindex="6" href="../controller/auth_controller.php?action=register">Register</a></span>
+                    <span>New user? <a tabindex="6" href="../register">Register</a></span>
                 </div>
             </div>
         </div>

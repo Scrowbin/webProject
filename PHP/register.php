@@ -10,6 +10,8 @@ $is_success = !empty($success_data);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Create a new MangaDax account to access thousands of manga titles, track your reading progress, and join our community.">
+    <meta name="keywords" content="manga, register, sign up, create account, MangaDax">
     <title>Register MangaDax</title>
     <link rel="icon" href="../IMG/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -36,11 +38,11 @@ $is_success = !empty($success_data);
                     <?php echo $success_data['activation_link_html']; ?>
                 </div>
                  <div class="text-center mt-3">
-                     <a href="../controller/auth_controller.php?action=login" class="btn btn-primary">Proceed to Login</a>
+                     <a href="../login" class="btn btn-primary">Proceed to Login</a>
                  </div>
             <?php else: ?>
             <div class="form-content">
-                <form novalidate action="../controller/auth_controller.php?action=register" method="post">
+                <form novalidate action="../register" method="post">
                     <?php if (!empty($errors['db'])): ?>
                         <div class="mb-3 error-message active" style="text-align: center;"><?php echo htmlspecialchars($errors['db']); ?></div>
                     <?php endif; ?>
@@ -66,7 +68,7 @@ $is_success = !empty($success_data);
                         <div class="error-message <?php echo isset($errors['email']) ? 'active' : ''; ?>" id="email-error"><?php echo htmlspecialchars($errors['email'] ?? ''); ?></div>
                     </div>
                     <div class="mb-3">
-                        <a href="../controller/auth_controller.php?action=login" class="back-to-login">&laquo; Back to Login</a>
+                        <a href="../login" class="back-to-login">&laquo; Back to Login</a>
                     </div>
                     <div class="form-buttons">
                         <button tabindex="5" class="btn submit-btn w-100" name="register" type="submit">Register</button>
