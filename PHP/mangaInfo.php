@@ -340,7 +340,6 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
     </form>
 
     <!-- report modal -->
-    <!-- report modal -->
     <div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content rounded-4 shadow">
@@ -388,8 +387,18 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
             </div>
         </div>
     </div>
-
-
+    <!-- Toast report successfully  -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="reportToast" class="toast align-items-center border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+            <div id="reportToastBody" class="toast-body">
+                <!-- Message will be inserted dynamically -->
+            </div>
+            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/JS/navbar.js"></script> <!-- JS for Navbar/Sidebar -->

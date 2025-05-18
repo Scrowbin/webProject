@@ -119,20 +119,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 data: formData,            // The serialized form data
                 success: function(response) {
                     // Handle success
-                    console.log('Report submitted:', response);
-                    alert('Your report has been submitted successfully.');
+                    showReportToast('Your report has been submitted successfully.', 'success');
 
                     // Optionally, close the modal
                     $('#reportModal').modal('hide');
                 },
                 error: function(xhr, status, error) {
                     // Handle error
-                    console.log('Error submitting report:', error);
-                    alert('Failed to submit report. Please try again later.');
+                    showReportToast('Failed to submit report: ' + error, 'danger');
+
                 }
             });
         });
     });
+    function showReportToast(message, type) {
+        var toastEl = document.getElementById('reportToast');
+        var toastBody = document.getElementById('reportToastBody');
+
+        // Set the message
+        toastBody.textContent = message;
+
+        // Reset and apply appropriate background class
+        toastEl.className = 'toast align-items-center border-0 text-white';
+        toastEl.classList.add('text-bg-' + type); // 'success' or 'danger'
+
+        // Show the toast
+        var toast = new bootstrap.Toast(toastEl);
+        toast.show();
+    }
     document.getElementById("deleteMangaBtn").addEventListener("click", function () {
         const toastEl = document.getElementById("confirmDeleteToast");
         const toast = new bootstrap.Toast(toastEl);
