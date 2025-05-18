@@ -130,6 +130,7 @@ body .navbar {
     padding: 5px 1em;
     transition: 300ms ease-in-out;
     overflow: hidden;
+    overflow-y: auto;
     text-wrap: nowrap;
     position: sticky;
     background: #242424;
