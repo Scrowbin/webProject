@@ -8,10 +8,13 @@ $pubStatus = $mangaInfo['PublicationStatus'];
 $pubYear = $mangaInfo['PublicationYear'];
 $mangaNameOG = $mangaInfo['MangaNameOG'];
 $mangaNameEN = $mangaInfo['MangaNameEN'];
-$mangaDesc= $mangaInfo['MangaDiscription'];
+$mangaDesc = $mangaInfo['MangaDiscription'];
 $priorityTags = [];
 $normalTags = [];
 $cover = "/IMG/$mangaID/$image";
+
+// Split tags from comma-separated string
+$tags = explode(',', $mangaInfo['Tags']);
 foreach ($tags as $tagName) {
     if (in_array(strtolower($tagName), ['gore', 'sexual violence'])) {
         $priorityTags[] = $tagName;
@@ -19,7 +22,11 @@ foreach ($tags as $tagName) {
         $normalTags[] = $tagName;
     }
 }
-$mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
+
+// Split authors and artists from comma-separated strings
+$authors = explode(',', $mangaInfo['Authors']);
+$artists = explode(',', $mangaInfo['Artists']);
+$mangaAuthors = array_merge($authors, $artists);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -76,7 +83,12 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
                         <div class = "manga-title-english"><?=$mangaNameEN?></div>
                     </div>
                     <div class="artist-name">
-                        <?=$mangaAuthors?>
+                        <?php if (!empty($authors)) : ?>
+                            <span class="authors"><?= htmlspecialchars(implode(', ', $authors)) ?>,</span>
+                        <?php endif; ?>
+                        <?php if (!empty($artists)) : ?>
+                            <span class="artists"><?= htmlspecialchars(implode(', ', $artists)) ?></span>
+                        <?php endif; ?>
                     </div>
                     <div class="mt-2 d-flex align-items-center manga-data">
                         <span class="text-warning"><i class="bi bi-star-fill"></i> <?=$avgRating?></span>

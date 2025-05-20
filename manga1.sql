@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 20, 2025 lúc 04:40 PM
+-- Thời gian đã tạo: Th5 20, 2025 lúc 04:46 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -1260,64 +1260,6 @@ ALTER TABLE `staff_picks`
 --
 ALTER TABLE `user`
   ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`Username`) REFERENCES `account` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
-
-DELIMITER //
-
-CREATE PROCEDURE GetMangaDetails(IN manga_id INT)
-BEGIN
-    SELECT 
-        m.MangaID,
-        m.MangaNameOG,
-        m.MangaNameEN,
-        m.MangaDiscription,
-        m.CoverLink,
-        m.OriginalLanguage,
-        m.ContentRating,
-        m.MagazineDemographic,
-        m.PublicationYear,
-        m.PublicationStatus,
-        m.Slug,
-        GROUP_CONCAT(DISTINCT a.AuthorName) as Authors,
-        GROUP_CONCAT(DISTINCT ar.ArtistName) as Artists,
-        GROUP_CONCAT(DISTINCT t.TagName) as Tags,
-        AVG(CAST(r.Rating AS DECIMAL(3,1))) as AverageRating,
-        COUNT(DISTINCT b.UserID) as BookmarkCount
-    FROM manga m
-    LEFT JOIN manga_author ma ON m.MangaID = ma.MangaID
-    LEFT JOIN author a ON ma.AuthorID = a.AuthorID
-    LEFT JOIN manga_artist mar ON m.MangaID = mar.MangaID
-    LEFT JOIN artist ar ON mar.ArtistID = ar.ArtistID
-    LEFT JOIN manga_tag mt ON m.MangaID = mt.MangaID
-    LEFT JOIN tag t ON mt.TagID = t.TagID
-    LEFT JOIN rating r ON m.MangaID = r.MangaID
-    LEFT JOIN bookmark b ON m.MangaID = b.MangaID
-    WHERE m.MangaID = manga_id
-    GROUP BY m.MangaID;
-END //
-
-CREATE PROCEDURE GetChaptersWithCommentCount(IN manga_id INT)
-BEGIN
-    SELECT 
-        c.ChapterID,
-        c.MangaID,
-        c.Volume,
-        c.ScangroupName,
-        c.UploaderName,
-        c.UploadTime,
-        c.ChapterName,
-        c.ChapterNumber,
-        c.Language,
-        COUNT(cm.CommentID) AS NumOfComments
-    FROM chapter c
-    LEFT JOIN commentsection cs ON c.ChapterID = cs.ChapterID
-    LEFT JOIN comment cm ON cm.CommentSectionID = cs.CommentSectionID
-    WHERE c.MangaID = manga_id
-    GROUP BY c.ChapterID
-    ORDER BY c.ChapterNumber DESC;
-END //
-
-DELIMITER ;
-
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -20,10 +20,10 @@ if (!$manga) {
 }
 
 // Get related data
-$authorsRaw = getMangaAuthors($mangaID);
-$artistsRaw = getMangaArtists($mangaID);
+$authors = explode(',', $manga['Authors']);
+$artists = explode(',', $manga['Artists']);
 $coverLink = "/IMG/" . $mangaID . "/" . $manga["CoverLink"];
-$selectedTags = getTags($mangaID);
+$selectedTags = explode(',', $manga['Tags']);
 
 // Define path prefix for includes (same as in create.php)
 $pathPrefix = '../';
