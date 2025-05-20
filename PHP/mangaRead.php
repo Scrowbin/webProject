@@ -131,7 +131,7 @@
                         <?php
                             $chapterSlug ="/admin/edit-chapter/" . $mangaSlug . '/chapter-'. str_replace(".","-",$chapterNumber);
                         ?>
-                        
+
                         <button class="btn reader-btn" id = "editBtn" onclick="window.location.href='<?=$chapterSlug?>'; return false;"><i class = "bi bi-pencil"></i>Edit Chapter</button>
                     <?php endif;?>
 
@@ -233,7 +233,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        
+
         <!-- Chapter Info -->
         <div class="chapter-info p-2">
             <div class="info-left">
@@ -304,7 +304,7 @@
                     <option value="Other">Other</option>
                 </select>
             </div>
-            
+
             <input type="hidden" name="chapterID" id="hiddenChapterID">
             <!-- Additional Info -->
             <div class="mb-3">
@@ -357,6 +357,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/JS/navbar.js"></script>
+<script src="/JS/sidebar.js"></script>
 <script src="/JS/search.js"></script>
 <script src="/JS/mangaRead.js"></script>
 

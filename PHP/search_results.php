@@ -99,6 +99,7 @@
   <!-- Bootstrap JS, Custom JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="<?= $pathPrefix ?>JS/navbar.js"></script>
+  <script src="<?= $pathPrefix ?>JS/sidebar.js"></script>
   <script src="<?= $pathPrefix ?>JS/search.js"></script>
 </body>
 </html>

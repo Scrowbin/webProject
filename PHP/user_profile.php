@@ -102,5 +102,6 @@ if (!isset($user_data)) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/JS/user_profile.js"></script>
     <script src="/JS/navbar.js"></script>
+    <script src="/JS/sidebar.js"></script>
 </body>
 </html>

@@ -35,16 +35,6 @@
       </div>
 
 
-      <!-- MangaDex Section - Visible to all users -->
-      <div class="sidebar-section">
-          <div class="nav-link section-title" data-section="mangadex" tabindex="-1" aria-label="MangaDex section"><i class="bi bi-speedometer2"></i> <span>MangaDex</span></div>
-           <div class="sub-links">
-              <a href="/admin/create-announcements" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'announcement.php' ? 'active' : '' ?>">Announcements</a>
-              <!-- Repo/to all but only admins can access -->
-              <a href="/admin/view-reports" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'report_controller.php' || basename($_SERVER['PHP_SELF']) == 'report_view.php' ? 'active' : '' ?>">Report</a>
-           </div>
-      </div>
-
       <?php if (isset($role) && $role === 'admin'): ?>
       <!-- Admin Section - Only visible to admins -->
       <div class="sidebar-section">
@@ -52,6 +42,7 @@
            <div class="sub-links">
               <a href="/admin/create-announcements" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'announcement.php' ? 'active' : '' ?>">Create Announcement</a>
               <a href="/admin/staff-pick" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'staff_pick.php' ? 'active' : '' ?>">Staff Picks</a>
+              <a href="/admin/view-reports" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'report_controller.php' || basename($_SERVER['PHP_SELF']) == 'report_view.php' ? 'active' : '' ?>">Report</a>
            </div>
       </div>
       <?php endif; ?>
@@ -73,5 +64,5 @@
   </div>
 </aside>
 
-<!-- Script to handle Follows section highlighting -->
-<script src="/JS/sidebar-follows.js"></script>
+<!-- Script for all sidebar functionality -->
+<script src="/JS/sidebar.js"></script>

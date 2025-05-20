@@ -710,6 +710,7 @@ require("helper.php");
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <?php /* Corrected JS paths relative to index.php */ ?>
   <script src="JS/navbar.js"></script>
+  <script src="JS/sidebar.js"></script>
   <script src="JS/home.js"></script>
   <script src="JS/search.js"></script>
   <script>

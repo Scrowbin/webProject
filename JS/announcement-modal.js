@@ -61,6 +61,9 @@ document.addEventListener('DOMContentLoaded', function() {
   // Function to show the announcement list modal
   function showAnnouncementListModal() {
     if (announcementListModal) {
+      // Position the modal relative to the megaphone icon
+      positionAnnouncementListModal();
+
       // Fetch recent announcements
       fetch('controller/get_recent_announcements.php')
         .then(response => {
@@ -87,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
               const tempDiv = document.createElement('div');
               tempDiv.innerHTML = announcement.content;
               const textContent = tempDiv.textContent || tempDiv.innerText || '';
-              const contentPreview = textContent.substring(0, 100) + (textContent.length > 100 ? '...' : '');
+              const contentPreview = textContent.substring(0, 150) + (textContent.length > 150 ? '...' : '');
 
               item.innerHTML = `
                 <div class="announcement-list-item-time">${formattedDate}</div>
@@ -110,6 +113,22 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => {
           console.error('Error fetching recent announcements:', error);
         });
+    }
+  }
+
+  // Function to position the announcement list modal below the megaphone icon
+  function positionAnnouncementListModal() {
+    if (navbarAnnouncementIndicator && announcementListModal) {
+      // Get the position of the megaphone icon
+      const rect = navbarAnnouncementIndicator.getBoundingClientRect();
+
+      // Position the modal below the icon
+      // We're using CSS for most positioning, but we can fine-tune if needed
+      // This is a fallback in case the CSS positioning needs adjustment
+      if (window.innerWidth <= 768) {
+        // For mobile, center it more
+        announcementListModal.style.right = '10px';
+      }
     }
   }
 

@@ -50,11 +50,11 @@
 /* Announcement List Modal Styles */
 .announcement-list-modal {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90%;
-  max-width: 500px;
+  top: 60px; /* Position below navbar */
+  right: 70px; /* Position to the right, aligned with megaphone icon */
+  transform: none; /* Remove the centering transform */
+  width: 300px; /* Narrower width for vertical rectangle */
+  max-height: 80vh; /* Limit height */
   background-color: #1a1a1a;
   border-radius: 8px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
@@ -67,19 +67,32 @@
 .announcement-list-header {
   background-color: #1a1a1a;
   color: white;
-  padding: 15px 20px;
+  padding: 12px 15px;
   border-bottom: 1px solid #333;
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
+/* Add a small arrow at the top of the modal to point to the megaphone icon */
+.announcement-list-modal::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  right: 25px; /* Position to align with the megaphone icon */
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid #FF6740;
+}
+
 .announcement-list-content {
   padding: 0;
   color: #e0e0e0;
-  max-height: 60vh;
+  max-height: 70vh; /* Increased height for vertical layout */
   overflow-y: auto;
 }
 
@@ -105,9 +118,12 @@
 }
 
 .announcement-list-item-content {
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Show 3 lines of text */
+  -webkit-box-orient: vertical;
+  line-height: 1.4;
 }
 
 .btn-hide {
@@ -141,19 +157,45 @@
 }
 
 /* Scrollbar styling for the modal content */
-.announcement-modal-content::-webkit-scrollbar {
+.announcement-modal-content::-webkit-scrollbar,
+.announcement-list-content::-webkit-scrollbar {
   width: 6px;
 }
 
-.announcement-modal-content::-webkit-scrollbar-track {
+.announcement-modal-content::-webkit-scrollbar-track,
+.announcement-list-content::-webkit-scrollbar-track {
   background: #2a2a2a;
 }
 
-.announcement-modal-content::-webkit-scrollbar-thumb {
+.announcement-modal-content::-webkit-scrollbar-thumb,
+.announcement-list-content::-webkit-scrollbar-thumb {
   background-color: #555;
   border-radius: 3px;
 }
 
-.announcement-modal-content::-webkit-scrollbar-thumb:hover {
+.announcement-modal-content::-webkit-scrollbar-thumb:hover,
+.announcement-list-content::-webkit-scrollbar-thumb:hover {
   background-color: #777;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .announcement-list-modal {
+    top: 60px;
+    right: 10px;
+    width: calc(100% - 20px);
+    max-width: 350px;
+  }
+
+  .announcement-list-modal::before {
+    right: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .announcement-list-modal {
+    width: calc(100% - 20px);
+    max-width: none;
+    right: 10px;
+  }
 }
