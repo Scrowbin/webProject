@@ -363,10 +363,15 @@ function handleUpdateProfile(): void {
 
                 // Update the profile in the database
                 if (update_user_profile($_SESSION['userID'], $updateData)) {
-                    $profile_update_message = "Profile settings updated successfully.";
+                    // Store success message in session
+                    $_SESSION['profile_update_message'] = "Profile settings updated successfully.";
 
                     // Refresh user data after successful update
                     $user_data = account_find_by_userID($_SESSION['userID']);
+                    
+                    // Redirect to SEO-friendly URL
+                    header("Location: /profile");
+                    exit;
                 } else {
                     $profile_errors['db'] = "Failed to update profile. Please try again.";
                 }

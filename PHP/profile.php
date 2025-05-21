@@ -4,7 +4,10 @@ if (!isset($user_data)) {
     die('Error: Profile data not available.');
 }
 $profile_errors ??= [];
-$profile_update_message ??= null;
+$profile_update_message ??= $_SESSION['profile_update_message'] ?? null;
+if (isset($_SESSION['profile_update_message'])) {
+    unset($_SESSION['profile_update_message']); // Clear the message after displaying
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

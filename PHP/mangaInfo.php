@@ -26,7 +26,7 @@ foreach ($tags as $tagName) {
 // Split authors and artists from comma-separated strings
 $authors = explode(',', $mangaInfo['Authors']);
 $artists = explode(',', $mangaInfo['Artists']);
-$mangaAuthors = array_merge($authors, $artists);
+$mangaAuthors = array_unique(array_merge($authors, $artists));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -83,12 +83,7 @@ $mangaAuthors = array_merge($authors, $artists);
                         <div class = "manga-title-english"><?=$mangaNameEN?></div>
                     </div>
                     <div class="artist-name">
-                        <?php if (!empty($authors)) : ?>
-                            <span class="authors"><?= htmlspecialchars(implode(', ', $authors)) ?>,</span>
-                        <?php endif; ?>
-                        <?php if (!empty($artists)) : ?>
-                            <span class="artists"><?= htmlspecialchars(implode(', ', $artists)) ?></span>
-                        <?php endif; ?>
+                        <span class="authors"><?= htmlspecialchars(implode(', ', $mangaAuthors)) ?></span>
                     </div>
                     <div class="mt-2 d-flex align-items-center manga-data">
                         <span class="text-warning"><i class="bi bi-star-fill"></i> <?=$avgRating?></span>

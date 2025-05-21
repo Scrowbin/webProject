@@ -60,7 +60,6 @@ if (!isset($user_data)) {
             </div>
 
             <div class="profile-actions position-absolute top-0 end-0 p-3">
-                <button class="btn btn-dark btn-sm me-2">Report</button>
                 <a href="/profile" class="btn btn-danger btn-sm">Edit profile</a>
             </div>
         </div>
