@@ -33,7 +33,7 @@
             header("Location: /upload/$slug&status=$status&msg=" . urlencode($msg));
             exit();
         }
-        if (chapterExist($mangaID, $chapterNum)){
+        if (chapterExist($mangaID, $chapterNum,$language)){
             $msg = "This chapter already exists.";
             $status = "failed";
             header("Location: /upload/$slug&status=$status&msg=" . urlencode($msg));

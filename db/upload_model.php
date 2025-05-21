@@ -7,9 +7,9 @@ function getSlugFromMangaID($mangaID){
     $result = pdo_query_value($sql, $mangaID);
     return $result;
 }
-function chapterExist($mangaID, $number){
-    $sql = "SELECT 1 FROM chapter WHERE MangaID = ? AND ChapterNumber = ?";
-    $result = pdo_query($sql, $mangaID, $number);
+function chapterExist($mangaID, $number,$language){
+    $sql = "SELECT 1 FROM chapter WHERE MangaID = ? AND ChapterNumber = ? AND Language = ?" ;
+    $result = pdo_query($sql, $mangaID, $number,$language);
     return !empty($result);
 }
 
