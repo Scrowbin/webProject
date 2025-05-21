@@ -87,6 +87,10 @@
                           <?php else: ?>
                             <span class="text-muted">Never</span>
                           <?php endif; ?>
+                          <?php if ($announcement['created_at']): ?>
+                            <br>
+                            <small class="text-muted">Posted <?= date('Y-m-d H:i', strtotime($announcement['created_at'])) ?></small>
+                          <?php endif; ?>
                         </td>
                         <td>
                           <button class="btn btn-sm btn-danger delete-announcement" data-id="<?= $announcement['announcementID'] ?>">
@@ -160,6 +164,39 @@
       content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 16px; }'
     });
 
+    // Function to format relative time
+    function getRelativeTimeString(date) {
+      const now = new Date();
+      const diffInSeconds = Math.floor((now - date) / 1000);
+      
+      if (diffInSeconds < 60) {
+        return `${diffInSeconds} seconds ago`;
+      }
+      
+      const diffInMinutes = Math.floor(diffInSeconds / 60);
+      if (diffInMinutes < 60) {
+        return `${diffInMinutes} minutes ago`;
+      }
+      
+      const diffInHours = Math.floor(diffInMinutes / 60);
+      if (diffInHours < 24) {
+        return `${diffInHours} hours ago`;
+      }
+      
+      const diffInDays = Math.floor(diffInHours / 24);
+      if (diffInDays < 30) {
+        return `${diffInDays} days ago`;
+      }
+      
+      const diffInMonths = Math.floor(diffInDays / 30);
+      if (diffInMonths < 12) {
+        return `${diffInMonths} months ago`;
+      }
+      
+      const diffInYears = Math.floor(diffInMonths / 12);
+      return `${diffInYears} years ago`;
+    }
+
     // Function to refresh the announcements table
     function refreshAnnouncementsTable() {
       fetch('../controller/get_announcements.php')
@@ -198,6 +235,10 @@
               });
             }
 
+            // Format created time
+            const createdDate = new Date(announcement.created_at || announcement.createdAt || Date.now());
+            const createdTime = getRelativeTimeString(createdDate);
+
             html += `
               <tr>
                 <td>${announcement.announcementID}</td>
@@ -207,7 +248,10 @@
                   </div>
                 </td>
                 <td>${statusBadge}</td>
-                <td>${expiresText}</td>
+                <td>
+                  <div>${expiresText}</div>
+                  <small class="text-muted">Posted ${createdTime}</small>
+                </td>
                 <td>
                   <button class="btn btn-sm btn-danger delete-announcement" data-id="${announcement.announcementID}">
                     <i class="bi bi-trash"></i> Delete
