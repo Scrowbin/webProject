@@ -2,6 +2,11 @@
 require_once 'pdo.php';
 require_once 'account_db.php'; // Thêm để sử dụng hàm getUserID từ account_db.php
 
+function getSlugFromMangaID($mangaID){
+    $sql = "SELECT Slug FROM manga WHERE MangaID = ?";
+    $result = pdo_query_value($sql, $mangaID);
+    return $result;
+}
 function chapterExist($mangaID, $number){
     $sql = "SELECT 1 FROM chapter WHERE MangaID = ? AND ChapterNumber = ?";
     $result = pdo_query($sql, $mangaID, $number);

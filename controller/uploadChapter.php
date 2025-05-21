@@ -24,17 +24,20 @@
         $chapterNum = cleanNumber($_POST['chapter-number']) ?? 0;
         $chapterName = $_POST['chapter-name'] ?? '';
         $language = $_POST['language'];
-
+        $slug = getSlugFromMangaID($mangaID);
+        header("Location: /upload/$slug&status=$status&msg=" . urlencode($msg));
+        
         if (empty($_FILES['pages']['name']) || count(array_filter($_FILES['pages']['name'])) === 0) {
             $msg = "No files were uploaded.";
             $status = "failed";
-            header("Location: ../controller/upload_controller.php?MangaID=$mangaID&status=$status&msg=" . urlencode($msg));
+            header("Location: /upload/$slug&status=$status&msg=" . urlencode($msg));
             exit();
         }
         if (chapterExist($mangaID, $chapterNum)){
             $msg = "This chapter already exists.";
             $status = "failed";
-            header("Location: ../controller/upload_controller.php?MangaID=$mangaID&status=$status&msg=" . urlencode($msg));
+            header("Location: /upload/$slug&status=$status&msg=" . urlencode($msg));
+
             exit();
         }
 
@@ -72,7 +75,7 @@
         $status = $hasError ? 'partial' : 'success';
         $msg = $hasError ? 'Some pages may not have uploaded properly.' : '';
 
-        header("Location: ../controller/upload_controller.php?MangaID=$mangaID&status=$status&msg=" . urlencode($msg));
+        header("Location: /upload/$slug&status=$status&msg=" . urlencode($msg));
         exit;
     }
 ?>  
