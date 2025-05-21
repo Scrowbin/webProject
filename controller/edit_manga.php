@@ -14,14 +14,15 @@ if (!$mangaID) {
 
 // Get manga information
 $manga = getMangaInfo($mangaID);
+// var_dump($manga);
 if (!$manga) {
     echo "Manga not found.";
     exit;
 }
 
 // Get related data
-$authors = explode(',', $manga['Authors']);
-$artists = explode(',', $manga['Artists']);
+$authorsRaw = explode(',', $manga['Authors']);
+$artistsRaw = explode(',', $manga['Artists']);
 $coverLink = "/IMG/" . $mangaID . "/" . $manga["CoverLink"];
 $selectedTags = explode(',', $manga['Tags']);
 

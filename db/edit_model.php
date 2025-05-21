@@ -5,7 +5,8 @@
         return pdo_query_value($sql,$slug);
     }
     function getMangaInfo($mangaID){
-        $mangaInfo= pdo_query_one('select * from manga where mangaID = ?',$mangaID);
+        $sql = 'CALL GetMangaDetails(?)';
+        $mangaInfo = pdo_query_one($sql, $mangaID);
         return $mangaInfo;
     }
     function getTags($mangaID){
