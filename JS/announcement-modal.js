@@ -20,6 +20,39 @@ document.addEventListener('DOMContentLoaded', function() {
   // Get the hidden announcements from localStorage
   const hiddenAnnouncements = JSON.parse(localStorage.getItem('hiddenAnnouncements') || '[]');
 
+  // Function to format relative time
+  function getRelativeTimeString(date) {
+    const now = new Date();
+    const diffInSeconds = Math.floor((now - date) / 1000);
+    
+    if (diffInSeconds < 60) {
+      return `${diffInSeconds} seconds ago`;
+    }
+    
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    if (diffInMinutes < 60) {
+      return `${diffInMinutes} minutes ago`;
+    }
+    
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    if (diffInHours < 24) {
+      return `${diffInHours} hours ago`;
+    }
+    
+    const diffInDays = Math.floor(diffInHours / 24);
+    if (diffInDays < 30) {
+      return `${diffInDays} days ago`;
+    }
+    
+    const diffInMonths = Math.floor(diffInDays / 30);
+    if (diffInMonths < 12) {
+      return `${diffInMonths} months ago`;
+    }
+    
+    const diffInYears = Math.floor(diffInMonths / 12);
+    return `${diffInYears} years ago`;
+  }
+
   // Function to show the announcement modal
   function showAnnouncementModal(announcement) {
     if (announcementContent) {
@@ -83,8 +116,8 @@ document.addEventListener('DOMContentLoaded', function() {
               item.className = 'announcement-list-item';
 
               // Format the date
-              const date = new Date(announcement.createdAt || Date.now());
-              const formattedDate = date.toLocaleString();
+              const date = new Date(announcement.created_at || announcement.createdAt || Date.now());
+              const formattedDate = getRelativeTimeString(date);
 
               // Create a preview of the content (strip HTML and limit length)
               const tempDiv = document.createElement('div');
@@ -159,8 +192,12 @@ document.addEventListener('DOMContentLoaded', function() {
           // Check if this announcement is in the hidden list
           const isHidden = hiddenAnnouncements.includes(announcement.announcementID.toString());
 
-          // Always show the indicator if there's an announcement
-          showNavbarIndicator();
+          // Only show the indicator if there's a new announcement that hasn't been hidden
+          if (isNewAnnouncement && !isHidden) {
+            showNavbarIndicator();
+          } else {
+            hideNavbarIndicator();
+          }
 
           // Only show the modal if it's a new announcement and not hidden
           if (isNewAnnouncement && !isHidden) {
@@ -173,6 +210,9 @@ document.addEventListener('DOMContentLoaded', function() {
               showAnnouncementModal(announcement);
             }
           }
+        } else {
+          // No announcements, hide the indicator
+          hideNavbarIndicator();
         }
       })
       .catch(error => {
@@ -197,6 +237,9 @@ document.addEventListener('DOMContentLoaded', function() {
           localStorage.setItem('hiddenAnnouncements', JSON.stringify(hiddenList));
         }
       }
+
+      // Hide the indicator since the user has read the announcement
+      hideNavbarIndicator();
     });
   }
 
