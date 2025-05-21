@@ -86,13 +86,13 @@ $chapterNumber = truncateNumber($chapterNumber);
             data-logged-in="<?= $isLoggedIn ? 'true' : 'false' ?>"
             data-url="/controller/addComment_controller.php">
             <div class="mb-3" id = "post-comment">
-                <label for="commentText" class="form-label fw-bold text-light">Post a Reply</label>
+                <label for="commentText" class="form-label fw-bold text-light">Write a comment</label>
                 <div id="reply-preview" class="mb-2"></div>
                 
 
                 <input type="hidden" name="CommentSectionID" value="<?= $commentsID ?>">
                 <input type="hidden" name="replyID" id="replyID" value ="0">
-                <textarea class="form-control" id="commentText" name="commentText" rows="4" placeholder="Write your reply here..." required></textarea>
+                <textarea class="form-control" id="commentText" name="commentText" rows="4" placeholder="Write your comment here..." required></textarea>
             </div>
             <button type="submit" class="btn btn-orange"><i class="bi bi-send me-1"></i>Post Comment</button>
         </form>
