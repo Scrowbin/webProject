@@ -1,8 +1,8 @@
 <aside id="nav-sidebar">
   <div class="sidebar-header">
-  <a class="navbar-brand text-white fw-bold d-flex align-items-center" href="<?= $pathPrefix ?>index.php">
+  <a class="navbar-brand text-white fw-bold d-flex align-items-center" href="/index.php">
        <?php // Corrected path for logo ?>
-       <img src="<?= $pathPrefix ?>IMG/logo.png" alt="Logo" style="height: 30px; margin-right: 8px;">
+       <img src="/IMG/logo.png" alt="Logo" style="height: 30px; margin-right: 8px;">
        MangaDax
     </a>
     <button class="btn text-white close-btn" type="button">
@@ -11,7 +11,7 @@
   </div>
   <nav class="sidebar-nav">
       <!-- Home as a standalone section -->
-      <a href="<?= $pathPrefix ?>index.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : '' ?>"><i class="bi bi-house-door-fill"></i> <span>Home</span></a>
+      <a href="/index.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : '' ?>"><i class="bi bi-house-door-fill"></i> <span>Home</span></a>
 
       <!-- Follows section with subsections -->
       <div class="sidebar-section">
