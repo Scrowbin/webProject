@@ -1,5 +1,14 @@
 <?php
 require_once("pdo.php");
+function getSlugFromChapterID($chapterID){
+    $sql = "SELECT Slug FROM manga m 
+            JOIN chapter c
+            ON m.MangaID = c.MangaID
+            WHERE c.ChapterID = ?
+            ";
+    $result = pdo_query_value($sql, $chapterID);
+    return $result;
+}
 function getChapterID($mangaSlug, $chapterNumber){
         $sql = 'SELECT ChapterID
                 FROM chapter c

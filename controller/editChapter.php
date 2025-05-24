@@ -13,11 +13,12 @@
         $chapterNum = cleanNumber($_POST['chapter-number']) ?? 0;
         $chapterName = $_POST['chapter-name'] ?? '';
         $language = $_POST['language'] ?? 'en';
-
+        $slug = getSlugFromChapterID($chapterID);
+        $slugChapterNumber = str_replace(".","-",$chapterNum);
         if (!ChapterExist($chapterID)){
             $msg = "This chapter doesnt exist.";
             $status = "failed";
-            header("Location: ../controller/editChapter_controller.php?ChapterID=$chapterID&status=$status&msg=" . urlencode($msg));
+            header("Location: /admin/edit-chapter/$slug/$slugChapterNumber&status=$status&msg=" . urlencode($msg));
             exit();
         }
 
@@ -28,7 +29,7 @@
         if (empty($_FILES['pages']['name']) || count(array_filter($_FILES['pages']['name'])) === 0) {
             $msg = "Edited.";
             $status = "success";
-            header("Location: ../controller/editChapter_controller.php?ChapterID=$chapterID&status=$status&msg=" . urlencode($msg));
+            header("Location: /admin/edit-chapter/$slug/$slugChapterNumber&status=$status&msg=" . urlencode($msg));
             exit();
         }
 
@@ -64,7 +65,7 @@
         $status = $hasError ? 'partial' : 'success';
         $msg = $hasError ? 'Some pages may not have uploaded properly.' : '';
 
-        header("Location: ../controller/editChapter_controller.php?ChapterID=$chapterID&status=$status&msg=" . urlencode($msg));
+        header("Location: /admin/edit-chapter/$slug/$slugChapterNumber&status=$status&msg=" . urlencode($msg));
         exit;
     }
 ?>  

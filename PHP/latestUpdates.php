@@ -39,6 +39,7 @@
                 $mangaSlug = $manga[0]['Slug'];
                 $mangaCover =  $manga[0]['CoverLink'];
                 $mangaName = $manga[0]['MangaNameOG'];
+                $mangaLanguage = $manga[0]['OriginalLanguage'];
         ?>
 
             <div class="manga-card">
@@ -52,7 +53,7 @@
                 <!-- Right: Details -->
                 <div class="manga-details">
                     <div class="manga-header">
-                        <img class="flag" src="https://mangadex.org/img/flags/jp.svg">
+                        <?=getFlag($mangaLanguage)?>
                         <a href="/manga/<?=$mangaSlug?>" class="manga-title"><strong><?=$mangaName?></strong></a>
                     </div>
                     <hr>
@@ -76,7 +77,7 @@
                             <div class="chapter-info">
                                 <div class="info-left">
                                     <div class="chapter-title">
-                                            <img class="flag" src="https://mangadex.org/img/flags/gb.svg">
+                                            <?=getFlag($chapter["Language"])?>
                                             <strong>Ch. <?=$chapterNumber?> - <?=$chapterName?></strong>
                                     </div>
                                     <div  class="scan-group">

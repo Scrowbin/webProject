@@ -20,9 +20,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     $mangaID = trim($_POST['MangaID']);
     $chapterIDs = $_POST['chapterIds'];  // Ensure 'chapterIds' is sent properly from form
+    $slug = getSlugFromMangaID($mangaID);
+
     $hasError = false;
     if (empty($mangaID) || !is_array($chapterIDs) || empty($chapterIDs)) {
-        header("Location: delete_controller.php?MangaID=" . urlencode($mangaID) . "&status=fail");
+        header("Location: /admin/delete-chapter/$slug" . "&status=fail");
         exit;
     }
     foreach ($chapterIDs as $chapterID) {
@@ -41,9 +43,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // If there was an error
     if ($hasError) {
-        header("Location: delete_controller.php?MangaID=" . urlencode($mangaID) . "&status=fail");
+        header("Location: /admin/delete-chapter/$slug" . "&status=fail");
     } else {
-        header("Location: delete_controller.php?MangaID=" . urlencode($mangaID) . "&status=success");
+        header("Location: /admin/delete-chapter/$slug" .  "&status=success");
     }
 
     exit; 

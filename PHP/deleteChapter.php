@@ -117,7 +117,7 @@ $mangaAuthors = combineAuthorsAndArtists($authorsRaw,$artistsRaw)
                 <div class="form-text">Hold Ctrl (Windows) or Command (Mac) to select multiple chapters.</div>
 
                 <div class="d-flex justify-content-between mt-3">
-                    <a href="/controller/mangaInfo_Controller.php?MangaID=<?=$mangaID?>" class="btn btn-secondary">
+                    <a href="/manga/<?=$slug?>" class="btn btn-secondary">
                         <i class="bi bi-arrow-left"></i> Back to Manga
                     </a>
                     <button type="submit" class="btn btn-danger">
