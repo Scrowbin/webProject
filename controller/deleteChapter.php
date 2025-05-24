@@ -2,6 +2,7 @@
 // Ensure no output or extra whitespace before this line
 require_once('../db/delete_model.php');
 require_once('../db/account_db.php');
+require_once('../db/upload_model.php'); // For getSlugFromMangaID function
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -17,12 +18,13 @@ if (!$isLoggedIn||$role !== "admin"){
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve data from POST
-    
+
     $mangaID = trim($_POST['MangaID']);
     $chapterIDs = $_POST['chapterIds'];  // Ensure 'chapterIds' is sent properly from form
     $hasError = false;
     if (empty($mangaID) || !is_array($chapterIDs) || empty($chapterIDs)) {
-        header("Location: delete_controller.php?MangaID=" . urlencode($mangaID) . "&status=fail");
+        $slug = getSlugFromMangaID($mangaID);
+        header("Location: /admin/delete-chapter/" . urlencode($slug) . "?status=fail");
         exit;
     }
     foreach ($chapterIDs as $chapterID) {
@@ -40,12 +42,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // If there was an error
+    $slug = getSlugFromMangaID($mangaID);
     if ($hasError) {
-        header("Location: delete_controller.php?MangaID=" . urlencode($mangaID) . "&status=fail");
+        header("Location: /admin/delete-chapter/" . urlencode($slug) . "?status=fail");
     } else {
-        header("Location: delete_controller.php?MangaID=" . urlencode($mangaID) . "&status=success");
+        header("Location: /admin/delete-chapter/" . urlencode($slug) . "?status=success");
     }
 
-    exit; 
+    exit;
 }
 ?>

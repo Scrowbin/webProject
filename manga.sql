@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 20, 2025 lúc 04:40 PM
+-- Thời gian đã tạo: Th5 21, 2025 lúc 01:04 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -20,6 +20,63 @@ SET time_zone = "+00:00";
 --
 -- Cơ sở dữ liệu: `manga`
 --
+
+DELIMITER $$
+--
+-- Thủ tục
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetChaptersWithCommentCount` (IN `manga_id` INT)   BEGIN
+    SELECT 
+        c.ChapterID,
+        c.MangaID,
+        c.Volume,
+        c.ScangroupName,
+        c.UploaderName,
+        c.UploadTime,
+        c.ChapterName,
+        c.ChapterNumber,
+        c.Language,
+        COUNT(cm.CommentID) AS NumOfComments
+    FROM chapter c
+    LEFT JOIN commentsection cs ON c.ChapterID = cs.ChapterID
+    LEFT JOIN comment cm ON cm.CommentSectionID = cs.CommentSectionID
+    WHERE c.MangaID = manga_id
+    GROUP BY c.ChapterID
+    ORDER BY c.ChapterNumber DESC;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetMangaDetails` (IN `manga_id` INT)   BEGIN
+    SELECT 
+        m.MangaID,
+        m.MangaNameOG,
+        m.MangaNameEN,
+        m.MangaDiscription,
+        m.CoverLink,
+        m.OriginalLanguage,
+        m.ContentRating,
+        m.MagazineDemographic,
+        m.PublicationYear,
+        m.PublicationStatus,
+        m.Slug,
+        GROUP_CONCAT(DISTINCT a.AuthorName) as Authors,
+        GROUP_CONCAT(DISTINCT ar.ArtistName) as Artists,
+        GROUP_CONCAT(DISTINCT t.TagName) as Tags,
+        AVG(CAST(r.Rating AS DECIMAL(3,1))) as AverageRating,
+        COUNT(DISTINCT b.UserID) as BookmarkCount
+    FROM manga m
+    LEFT JOIN manga_author ma ON m.MangaID = ma.MangaID
+    LEFT JOIN author a ON ma.AuthorID = a.AuthorID
+    LEFT JOIN manga_artist mar ON m.MangaID = mar.MangaID
+    LEFT JOIN artist ar ON mar.ArtistID = ar.ArtistID
+    LEFT JOIN manga_tag mt ON m.MangaID = mt.MangaID
+    LEFT JOIN tag t ON mt.TagID = t.TagID
+    LEFT JOIN rating r ON m.MangaID = r.MangaID
+    LEFT JOIN bookmark b ON m.MangaID = b.MangaID
+    WHERE m.MangaID = manga_id
+    GROUP BY m.MangaID;
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -59,16 +116,16 @@ CREATE TABLE `announcement` (
   `announcementID` int(11) NOT NULL,
   `content` text NOT NULL,
   `expirteAt` datetime DEFAULT NULL,
-  `isActive` tinyint(1) NOT NULL DEFAULT 1
+  `isActive` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Đang đổ dữ liệu cho bảng `announcement`
 --
 
-INSERT INTO `announcement` (`announcementID`, `content`, `expirteAt`, `isActive`) VALUES
-(9, '<p>abc</p>', NULL, 0),
-(10, '<p>hẻ</p>', NULL, 1);
+INSERT INTO `announcement` (`announcementID`, `content`, `expirteAt`, `isActive`, `created_at`) VALUES
+(12, '<p>NTBHH</p>', '2025-05-21 15:15:00', 1, '2025-05-21 14:14:07');
 
 -- --------------------------------------------------------
 
@@ -100,7 +157,8 @@ INSERT INTO `artist` (`ArtistID`, `ArtistName`) VALUES
 (18, 'Fuji Ryousuke'),
 (19, 'Oda Eiichiro'),
 (20, 'Sako Toshio'),
-(21, 'Kentaro Miura');
+(21, 'Kentaro Miura'),
+(22, 'Uoto');
 
 -- --------------------------------------------------------
 
@@ -133,7 +191,8 @@ INSERT INTO `author` (`AuthorID`, `AuthorName`) VALUES
 (20, 'katarina'),
 (21, 'Oda Eiichiro'),
 (22, 'Sako Toshio'),
-(23, 'Kentaro Miura');
+(23, 'Kentaro Miura'),
+(24, 'Uoto');
 
 -- --------------------------------------------------------
 
@@ -205,7 +264,9 @@ INSERT INTO `chapter` (`ChapterID`, `MangaID`, `Volume`, `ScangroupName`, `Uploa
 (48, 22, 1.0, '', 'Nguvlra123', '2025-05-08 08:05:31', 'A Unique Chain Reaction', 4.0, 'en'),
 (49, 2, 1.0, '', 'Nguvlra123', '2025-05-08 08:08:03', 'Rintaro and Kaoruko', 1.0, 'en'),
 (50, 23, 1.0, '', 'Nguvlra123', '2025-05-08 08:12:38', 'Romance Dawn', 1.0, 'en'),
-(51, 1, 9.0, '', 'Nguvlra123', '2025-05-10 12:18:53', 'Vol. 9 Extras', 70.5, 'en');
+(51, 1, 9.0, '', 'Nguvlra123', '2025-05-10 12:18:53', 'Vol. 9 Extras', 70.5, 'en'),
+(52, 26, 1.0, '', 'Nguvlra123', '2025-05-21 13:31:02', '', 1.0, 'en'),
+(53, 26, 1.0, 'Mangatheoyeucau', 'Nguvlra123', '2025-05-21 13:48:56', '', 1.0, 'vn');
 
 -- --------------------------------------------------------
 
@@ -465,7 +526,17 @@ INSERT INTO `chapter_pages` (`ChapterID`, `PageNumber`, `PageLink`) VALUES
 (51, 3, '3.png'),
 (51, 4, '4.png'),
 (51, 5, '5.png'),
-(51, 6, '6.png');
+(51, 6, '6.png'),
+(52, 1, '1.jfif'),
+(52, 2, '2.png'),
+(52, 3, '3.png'),
+(52, 4, '4.png'),
+(52, 5, '5.png'),
+(53, 1, '1.jfif'),
+(53, 2, '2.jfif'),
+(53, 3, '3.jfif'),
+(53, 4, '4.jfif'),
+(53, 5, '5.jfif');
 
 -- --------------------------------------------------------
 
@@ -539,7 +610,9 @@ INSERT INTO `commentsection` (`CommentSectionID`, `ChapterID`) VALUES
 (39, 48),
 (40, 49),
 (41, 50),
-(42, 51);
+(42, 51),
+(43, 52),
+(44, 53);
 
 -- --------------------------------------------------------
 
@@ -577,7 +650,8 @@ INSERT INTO `manga` (`MangaID`, `MangaNameOG`, `MangaNameEN`, `MangaDiscription`
 (22, 'Shangri-La Frontier ~Kusoge Hunter, Kamige ni Idoman to su~', 'Shangri-La Frontier: From Trash Game Hunter to God-Tier Gamer!', '<p style=\"text-align: justify;\">Second-year high school student Rakuro Hizutome loves nothing more than finding so-called \"trash games\" and beating the crap out of them. When he decides to change things up by playing a new, \"god-tier\" VR game known as Shangri-La Frontier (aka. SLF), he does what he does best: min-maxes, skips the prologue, and jumps straight into action! Rakuro may be a seasoned gamer, but a meeting with an old rival will change the fate of every SLF player forever.</p>\r\n<p style=\"text-align: justify;\">Clad in nothing but shorts and a bird mask, Rakuro (player name: Sunraku) launches into the world of SLF. Things are going well at first as he takes down a goblin, a bunny, and even a python. But then Sunraku comes up against a huge, hard-hitting wolf known as Lycagon the Nightslayer. Will Sunraku\'s years of \"trash game\" experience be enough, or is he about to suffer a rude awakening just a few hours into his SLF adventure?</p>', 'm22.webp', 'Japanese', 'Safe', 'Shounen', 2020, 'Ongoing', 'shangri-la-frontier-kusoge-hunter-kamige-ni-idoman-to-su'),
 (23, 'ワンピース', 'One Piece', '<p style=\"text-align: justify;\">Gol D. Roger, a man referred to as the \"Pirate King,\" is set to be executed by the World Government. But just before his demise, he confirms the existence of a great treasure, One Piece, located somewhere within the vast ocean known as the Grand Line. Announcing that One Piece can be claimed by anyone worthy enough to reach it, the Pirate King is executed and the Great Age of Pirates begins.</p>\r\n<p style=\"text-align: justify;\">Twenty-two years later, a young man by the name of Monkey D. Luffy is ready to embark on his own adventure, searching for One Piece and striving to become the new Pirate King. Armed with just a straw hat, a small boat, and an elastic body, he sets out on a fantastic journey to gather his own crew and a worthy ship that will take them across the Grand Line to claim the greatest status on the high seas.</p>', 'm23.jpg', 'Japanese', 'Suggestive', 'Shounen', 1997, 'Ongoing', 'one-piece'),
 (24, 'Usogui', 'Lie Eater', '<p>There are gamblers out there who even bet their lives as ante. But to secure the integrity of these life-threatening gambles, a violent and powerful organization by the name of &ldquo;Kakerou&rdquo; referees these games as a neutral party. Follow Baku Madarame a.k.a. Usogui (The Lie Eater) as he gambles against maniacal opponents at games &ndash; such as Escape the Abandoned Building, Old Maid, and Hangman &ndash; to ultimately &ldquo;out-gamble&rdquo; and control the neutral organization of Kakerou itself.</p>', 'm24.jpg', 'Japanese', 'Suggestive', 'Seinen', 2008, 'Completed', 'usogui'),
-(25, 'ベルセルク', 'Berserk', '<p>Guts, known as the Black Swordsman, seeks sanctuary from the demonic forces attracted to him and his woman because of a demonic mark on their necks, and also vengeance against the man who branded him as an unholy sacrifice.</p>\r\n<p>Aided only by his titanic strength gained from a harsh childhood lived with mercenaries, a gigantic sword, and an iron prosthetic left hand, Guts must struggle against his bleak destiny, all the while fighting with a rage that might strip him of his humanity.</p>\r\n<p><em><strong>Won the 6th Osamu Tezuka Cultural Prize Excellence Award in 2002.</strong></em></p>', 'm25.jpg', 'Japanese', 'Erotica', 'Shounen', 1989, 'Ongoing', 'berserk');
+(25, 'ベルセルク', 'Berserk', '<p>Guts, known as the Black Swordsman, seeks sanctuary from the demonic forces attracted to him and his woman because of a demonic mark on their necks, and also vengeance against the man who branded him as an unholy sacrifice.</p>\r\n<p>Aided only by his titanic strength gained from a harsh childhood lived with mercenaries, a gigantic sword, and an iron prosthetic left hand, Guts must struggle against his bleak destiny, all the while fighting with a rage that might strip him of his humanity.</p>\r\n<p><em><strong>Won the 6th Osamu Tezuka Cultural Prize Excellence Award in 2002.</strong></em></p>', 'm25.jpg', 'Japanese', 'Erotica', 'Shounen', 1989, 'Ongoing', 'berserk'),
+(26, 'Chi.: Chikyuu no Undou ni Tsuite', 'Orb: On the Movements of the Earth', '<p>The setting is 15th century Poland. It was a time when heretical ideas lead those to who possessed such a mindset to being burned at the stake for their beliefs. Rafal, a child prodigy, is expected to major in theology, the most important subject at the time, at the university. One day, however, he comes across a mysterious man, and is now studying a possible \"truth\" in the midst of heretical thought!</p>', 'm26.jpg', 'Japanese', 'Safe', 'Shounen', 2020, 'Completed', 'chi-chikyuu-no-undou-ni-tsuite');
 
 -- --------------------------------------------------------
 
@@ -605,7 +679,8 @@ INSERT INTO `manga_artist` (`MangaID`, `ArtistID`) VALUES
 (22, 18),
 (23, 19),
 (24, 20),
-(25, 21);
+(25, 21),
+(26, 22);
 
 -- --------------------------------------------------------
 
@@ -634,7 +709,8 @@ INSERT INTO `manga_author` (`MangaID`, `AuthorID`) VALUES
 (22, 20),
 (23, 21),
 (24, 22),
-(25, 23);
+(25, 23),
+(26, 24);
 
 -- --------------------------------------------------------
 
@@ -713,7 +789,9 @@ INSERT INTO `manga_tag` (`MangaID`, `TagID`) VALUES
 (24, 49),
 (24, 51),
 (24, 74),
-(25, 4);
+(25, 4),
+(26, 18),
+(26, 74);
 
 -- --------------------------------------------------------
 
@@ -782,7 +860,8 @@ INSERT INTO `report_chapter` (`ReportID`, `UserID`, `ChapterID`, `ReportType`, `
 (23, 3, 2, 'Watermarked', '', 1),
 (24, 3, 2, 'Released before raws', '', 1),
 (25, 3, 2, 'Released before raws', '', 1),
-(26, 3, 2, 'Wrong manga', '', 1);
+(26, 3, 2, 'Wrong manga', '', 1),
+(27, 3, 51, 'Other', 'hahahaha biên hoà', 1);
 
 -- --------------------------------------------------------
 
@@ -805,7 +884,9 @@ CREATE TABLE `report_manga` (
 
 INSERT INTO `report_manga` (`ReportID`, `UserID`, `MangaID`, `ReportType`, `Description`, `Resolved`) VALUES
 (2, 3, 1, 'missing_cover', '', 1),
-(3, 3, 19, 'duplicate', '', 0);
+(3, 3, 19, 'duplicate', '', 1),
+(4, 3, 25, 'other', 'khốn kiện', 1),
+(5, 3, 1, 'duplicate', '', 1);
 
 -- --------------------------------------------------------
 
@@ -836,7 +917,7 @@ INSERT INTO `staff_picks` (`PickID`, `MangaID`, `AdminID`, `Note`, `AddedDate`) 
 (10, 2, 3, '', '2025-05-16 16:46:27'),
 (11, 5, 3, '', '2025-05-16 16:46:29'),
 (12, 19, 3, '', '2025-05-16 16:46:32'),
-(13, 24, 3, '', '2025-05-16 16:46:35');
+(14, 26, 3, '', '2025-05-21 13:50:20');
 
 -- --------------------------------------------------------
 
@@ -957,7 +1038,7 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`UserID`, `Username`, `Joined`, `Avatar`, `Role`, `banner`, `DateOfBirth`, `Location`, `AboutField`) VALUES
 (1, 'Nguvlra', '2025-04-09 15:58:19', 'avatar_default.png', 'user', '', NULL, '', ''),
 (2, 'Bababoey', '2025-04-10 07:28:54', 'avatar_default.png', 'user', '', NULL, '', ''),
-(3, 'Nguvlra123', '2025-04-15 16:35:13', 'avatars_3_1747238101.png', 'admin', 'banners_3_1747227599.png', '2002-08-08 00:00:00', '', ''),
+(3, 'Nguvlra123', '2025-04-15 16:35:13', 'avatars_3_1747238101.png', 'admin', 'banners_3_1747811556.png', '2002-08-08 00:00:00', '', '<p>hello worldddddddddddddddddddddddddd</p>\r\n<p>kono dio da!!!!!</p>'),
 (5, 'damian123', '2025-05-16 17:21:18', 'avatar_default.png', 'user', '', NULL, '', ''),
 (13, 'engraver123', '2025-05-17 20:54:34', 'avatar_default.png', 'user', '', NULL, '', ''),
 (16, 'lacrimosa123', '2025-05-17 21:46:16', 'avatar_default.png', 'user', '', NULL, '', '');
@@ -1103,25 +1184,25 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT cho bảng `announcement`
 --
 ALTER TABLE `announcement`
-  MODIFY `announcementID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `announcementID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT cho bảng `artist`
 --
 ALTER TABLE `artist`
-  MODIFY `ArtistID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `ArtistID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT cho bảng `author`
 --
 ALTER TABLE `author`
-  MODIFY `AuthorID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `AuthorID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT cho bảng `chapter`
 --
 ALTER TABLE `chapter`
-  MODIFY `ChapterID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `ChapterID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT cho bảng `comment`
@@ -1133,31 +1214,31 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT cho bảng `commentsection`
 --
 ALTER TABLE `commentsection`
-  MODIFY `CommentSectionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `CommentSectionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT cho bảng `manga`
 --
 ALTER TABLE `manga`
-  MODIFY `MangaID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `MangaID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT cho bảng `report_chapter`
 --
 ALTER TABLE `report_chapter`
-  MODIFY `ReportID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `ReportID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT cho bảng `report_manga`
 --
 ALTER TABLE `report_manga`
-  MODIFY `ReportID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ReportID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT cho bảng `staff_picks`
 --
 ALTER TABLE `staff_picks`
-  MODIFY `PickID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `PickID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT cho bảng `tag`
@@ -1260,64 +1341,6 @@ ALTER TABLE `staff_picks`
 --
 ALTER TABLE `user`
   ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`Username`) REFERENCES `account` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
-
-DELIMITER //
-
-CREATE PROCEDURE GetMangaDetails(IN manga_id INT)
-BEGIN
-    SELECT 
-        m.MangaID,
-        m.MangaNameOG,
-        m.MangaNameEN,
-        m.MangaDiscription,
-        m.CoverLink,
-        m.OriginalLanguage,
-        m.ContentRating,
-        m.MagazineDemographic,
-        m.PublicationYear,
-        m.PublicationStatus,
-        m.Slug,
-        GROUP_CONCAT(DISTINCT a.AuthorName) as Authors,
-        GROUP_CONCAT(DISTINCT ar.ArtistName) as Artists,
-        GROUP_CONCAT(DISTINCT t.TagName) as Tags,
-        AVG(CAST(r.Rating AS DECIMAL(3,1))) as AverageRating,
-        COUNT(DISTINCT b.UserID) as BookmarkCount
-    FROM manga m
-    LEFT JOIN manga_author ma ON m.MangaID = ma.MangaID
-    LEFT JOIN author a ON ma.AuthorID = a.AuthorID
-    LEFT JOIN manga_artist mar ON m.MangaID = mar.MangaID
-    LEFT JOIN artist ar ON mar.ArtistID = ar.ArtistID
-    LEFT JOIN manga_tag mt ON m.MangaID = mt.MangaID
-    LEFT JOIN tag t ON mt.TagID = t.TagID
-    LEFT JOIN rating r ON m.MangaID = r.MangaID
-    LEFT JOIN bookmark b ON m.MangaID = b.MangaID
-    WHERE m.MangaID = manga_id
-    GROUP BY m.MangaID;
-END //
-
-CREATE PROCEDURE GetChaptersWithCommentCount(IN manga_id INT)
-BEGIN
-    SELECT 
-        c.ChapterID,
-        c.MangaID,
-        c.Volume,
-        c.ScangroupName,
-        c.UploaderName,
-        c.UploadTime,
-        c.ChapterName,
-        c.ChapterNumber,
-        c.Language,
-        COUNT(cm.CommentID) AS NumOfComments
-    FROM chapter c
-    LEFT JOIN commentsection cs ON c.ChapterID = cs.ChapterID
-    LEFT JOIN comment cm ON cm.CommentSectionID = cs.CommentSectionID
-    WHERE c.MangaID = manga_id
-    GROUP BY c.ChapterID
-    ORDER BY c.ChapterNumber DESC;
-END //
-
-DELIMITER ;
-
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
