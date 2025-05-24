@@ -59,13 +59,13 @@
         <?php foreach ($results as $manga): ?>
           <div class="search-result-card">
             <div class="result-cover">
-              <a href="<?= $pathPrefix ?>controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>">
+              <a href="<?= $pathPrefix ?>manga/<?= $manga['Slug'] ?>">
                 <img src="<?= $pathPrefix ?>IMG/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?>">
               </a>
             </div>
             <div class="result-details">
               <h3 class="result-title">
-                <a href="<?= $pathPrefix ?>controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>">
+                <a href="<?= $pathPrefix ?>manga/<?= $manga['Slug'] ?>">
                   <?= htmlspecialchars($manga['MangaNameOG']) ?>
                 </a>
               </h3>

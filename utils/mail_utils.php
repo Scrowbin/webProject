@@ -7,6 +7,87 @@ use PHPMailer\PHPMailer\Exception;
 // Load Composer's autoloader
 require_once __DIR__ . '/../vendor/autoload.php';
 
+// Global SMTP connection for reuse
+$GLOBALS['smtp_connection'] = null;
+
+/**
+ * Get or create a reusable SMTP connection
+ *
+ * @return PHPMailer|null
+ */
+function get_smtp_connection(): ?PHPMailer
+{
+    if ($GLOBALS['smtp_connection'] === null) {
+        $mail = new PHPMailer(true);
+        configure_smtp_settings($mail);
+        $GLOBALS['smtp_connection'] = $mail;
+    }
+    return $GLOBALS['smtp_connection'];
+}
+
+/**
+ * Close the SMTP connection
+ *
+ * @return void
+ */
+function close_smtp_connection(): void
+{
+    if ($GLOBALS['smtp_connection'] !== null) {
+        try {
+            $GLOBALS['smtp_connection']->smtpClose();
+        } catch (Exception $e) {
+            error_log("Error closing SMTP connection: " . $e->getMessage());
+        }
+        $GLOBALS['smtp_connection'] = null;
+    }
+}
+
+/**
+ * Configure common SMTP settings for PHPMailer
+ *
+ * @param PHPMailer $mail The PHPMailer instance to configure
+ * @return void
+ */
+function configure_smtp_settings(PHPMailer $mail): void
+{
+    // Server settings
+    $mail->isSMTP();
+    $mail->Host = 'smtp.gmail.com';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'snouzen951@gmail.com';
+    $mail->Password = 'tmsh kyew warv hndj'; // App password
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->Port = 587;
+
+    // Performance optimizations
+    $mail->Timeout = 15; // Reduce timeout from default 300 seconds to 15 seconds
+    $mail->SMTPKeepAlive = true; // Keep connection alive for multiple emails
+    $mail->SMTPOptions = array(
+        'ssl' => array(
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+            'allow_self_signed' => true,
+            'stream_context_create' => array(
+                'ssl' => array(
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                )
+            )
+        )
+    );
+
+    // Enable debug mode for troubleshooting (set to 0 for production)
+    $mail->SMTPDebug = 1; // 0 = off, 1 = client messages, 2 = client and server messages
+    $mail->Debugoutput = 'error_log'; // Send debug output to error log
+
+    // Additional performance settings
+    $mail->SMTPAutoTLS = false; // Disable automatic TLS encryption
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Use explicit STARTTLS
+
+    // Recipients
+    $mail->setFrom('snouzen951@gmail.com', 'MangaDax');
+}
+
 /**
  * Sends an account activation email to the user.
  *
@@ -17,21 +98,24 @@ require_once __DIR__ . '/../vendor/autoload.php';
  */
 function send_activation_email(string $to_email, string $to_name, string $activation_link): bool
 {
-    // Create a new PHPMailer instance
-    $mail = new PHPMailer(true);
+    error_log("Starting activation email process for: $to_email");
+    $start_time = microtime(true);
+
+    // Get reusable SMTP connection
+    $mail = get_smtp_connection();
+    if (!$mail) {
+        error_log("Failed to get SMTP connection for activation email");
+        return false;
+    }
 
     try {
-        // Server settings
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'snouzen951@gmail.com';
-        $mail->Password = 'tmsh kyew warv hndj'; // App password
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
+        error_log("Configuring email for activation...");
 
-        // Recipients
-        $mail->setFrom('snouzen951@gmail.com', 'MangaDax');
+        // Clear any previous recipients
+        $mail->clearAddresses();
+        $mail->clearAttachments();
+        $mail->clearCustomHeaders();
+
         $mail->addAddress($to_email, $to_name);
 
         // Content
@@ -117,10 +201,18 @@ function send_activation_email(string $to_email, string $to_name, string $activa
             . "If you did not register for an account, please ignore this email.";
 
         // Send the email
+        error_log("Attempting to send activation email...");
         $mail->send();
+
+        $end_time = microtime(true);
+        $duration = round(($end_time - $start_time) * 1000, 2);
+        error_log("Activation email sent successfully in {$duration}ms to: $to_email");
+
         return true;
     } catch (Exception $e) {
-        error_log("Email sending failed: " . $mail->ErrorInfo);
+        $end_time = microtime(true);
+        $duration = round(($end_time - $start_time) * 1000, 2);
+        error_log("Activation email sending failed after {$duration}ms: " . $mail->ErrorInfo . " | Exception: " . $e->getMessage());
         return false;
     }
 }
@@ -135,21 +227,24 @@ function send_activation_email(string $to_email, string $to_name, string $activa
  */
 function send_password_reset_email(string $to_email, string $to_name, string $reset_link): bool
 {
-    // Create a new PHPMailer instance
-    $mail = new PHPMailer(true);
+    error_log("Starting password reset email process for: $to_email");
+    $start_time = microtime(true);
+
+    // Get reusable SMTP connection
+    $mail = get_smtp_connection();
+    if (!$mail) {
+        error_log("Failed to get SMTP connection for password reset email");
+        return false;
+    }
 
     try {
-        // Server settings
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'snouzen951@gmail.com';
-        $mail->Password = 'tmsh kyew warv hndj'; // App password
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
+        error_log("Configuring email for password reset...");
 
-        // Recipients
-        $mail->setFrom('snouzen951@gmail.com', 'MangaDax');
+        // Clear any previous recipients
+        $mail->clearAddresses();
+        $mail->clearAttachments();
+        $mail->clearCustomHeaders();
+
         $mail->addAddress($to_email, $to_name);
 
         // Content
@@ -236,10 +331,18 @@ function send_password_reset_email(string $to_email, string $to_name, string $re
             . "If you did not request a password reset, please ignore this email and your password will remain unchanged.";
 
         // Send the email
+        error_log("Attempting to send password reset email...");
         $mail->send();
+
+        $end_time = microtime(true);
+        $duration = round(($end_time - $start_time) * 1000, 2);
+        error_log("Password reset email sent successfully in {$duration}ms to: $to_email");
+
         return true;
     } catch (Exception $e) {
-        error_log("Password reset email sending failed: " . $mail->ErrorInfo);
+        $end_time = microtime(true);
+        $duration = round(($end_time - $start_time) * 1000, 2);
+        error_log("Password reset email sending failed after {$duration}ms: " . $mail->ErrorInfo . " | Exception: " . $e->getMessage());
         return false;
     }
 }

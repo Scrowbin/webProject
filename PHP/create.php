@@ -24,7 +24,7 @@
   <link rel="stylesheet" href="/CSS/navbar.css">
   <link rel="stylesheet" href="/CSS/create.css">
   <!-- TinyMCE CDN with API Key -->
-  <script src="https://cdn.tiny.cloud/1/wx4008qjjx7niu643lrzyglnb9byz72numg3c3jss5gk1noi/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+  <script src="https://cdn.tiny.cloud/1/j3bxzxkw8tsf9dq25jltesds0bwhorgiy845j6jmm5fjlsdb/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 </head>
 <body>
   <?php include 'includes/navbar_minimal.php'; ?>
@@ -167,7 +167,7 @@
   <!-- Description with Rich Text Editor -->
   <div class="col-12 mb-3">
   <label class="form-label">Manga Description</label>
-  <textarea class="form-control" name="description" id="description" rows="8" placeholder="Write the manga synopsis here (max 200 words)"></textarea>
+  <textarea class="form-control" name="description" id="description" rows="8" placeholder="Write the manga synopsis here (max 200 words)"><?php if ($mode === "edit") echo htmlspecialchars($manga['MangaDiscription']); ?></textarea>
   <small id="wordCount" class="form-text text-muted">0 / 200 words</small>
   </div>
 
@@ -314,6 +314,28 @@
           // Update word count when content changes
           updateWordCount();
         });
+
+        <?php if ($mode === "edit"): ?>
+        // Load content for edit mode when editor is ready
+        editor.on('init', function() {
+          // TinyMCE should automatically pick up the textarea content
+          // But let's ensure it's loaded properly
+          setTimeout(function() {
+            const mangaDescription = <?= json_encode($manga['MangaDiscription']) ?>;
+            if (mangaDescription && (!editor.getContent() || editor.getContent().trim() === '' || editor.getContent() === '<p><br data-mce-bogus="1"></p>')) {
+              editor.setContent(mangaDescription);
+            }
+            updateWordCount();
+          }, 200);
+        });
+
+        // Additional fallback for loading content
+        editor.on('LoadContent', function() {
+          setTimeout(function() {
+            updateWordCount();
+          }, 100);
+        });
+        <?php endif; ?>
       },
       content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 16px; }'
     });
@@ -418,17 +440,7 @@
     document.querySelector('input[name="year"]').value = <?= json_encode($manga['PublicationYear']) ?>;
     document.querySelector('select[name="status"]').value = <?= json_encode($manga['PublicationStatus']) ?>;
 
-    // Set TinyMCE content after it's initialized
-    const mangaDescription = <?= json_encode($manga['MangaDiscription']) ?>;
-
-    // Wait for TinyMCE to initialize
-    setTimeout(function() {
-      if (tinymce.get('description')) {
-        tinymce.get('description').setContent(mangaDescription);
-        // Trigger word count update
-        updateWordCount();
-      }
-    }, 500);
+    // TinyMCE content is now loaded in the setup function above
     const selected = <?= json_encode($selectedTags) ?>;
     const tagSelect = document.getElementById("tagSelect");
     const selectedTagsDisplay = document.getElementById("selectedTags");

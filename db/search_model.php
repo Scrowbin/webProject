@@ -15,7 +15,7 @@ function searchManga($query, $limit = 10) {
     $startsTerm = $query . '%';
 
     // Search in manga names with priority for Japanese names (MangaNameOG)
-    $sql = "SELECT DISTINCT m.*,
+    $sql = "SELECT DISTINCT m.*, m.Slug,
                   (SELECT COUNT(*) FROM rating WHERE MangaID = m.MangaID) as RatingCount,
                   (SELECT AVG(CAST(Rating AS DECIMAL(3,2))) FROM rating WHERE MangaID = m.MangaID) as AvgRating,
                   (SELECT COUNT(*) FROM bookmark WHERE MangaID = m.MangaID) as BookmarkCount,
@@ -138,7 +138,7 @@ function advancedSearchManga(
         "offset=$offset");
 
     // Simplified approach - build a basic query first
-    $sql = "SELECT DISTINCT m.* FROM manga m";
+    $sql = "SELECT DISTINCT m.*, m.Slug FROM manga m";
     $whereConditions = [];
     $params = [];
 
@@ -258,7 +258,7 @@ function advancedSearchManga(
             break;
         case 'highest_rating':
             // For rating-based sorting, we need to join with the rating table
-            $sql = "SELECT m.*, IFNULL(AVG(r.Rating), 0) as AvgRating
+            $sql = "SELECT m.*, m.Slug, IFNULL(AVG(r.Rating), 0) as AvgRating
                    FROM manga m
                    LEFT JOIN rating r ON m.MangaID = r.MangaID";
 
@@ -280,7 +280,7 @@ function advancedSearchManga(
             break;
         case 'lowest_rating':
             // For rating-based sorting, we need to join with the rating table
-            $sql = "SELECT m.*, IFNULL(AVG(r.Rating), 0) as AvgRating
+            $sql = "SELECT m.*, m.Slug, IFNULL(AVG(r.Rating), 0) as AvgRating
                    FROM manga m
                    LEFT JOIN rating r ON m.MangaID = r.MangaID";
 
@@ -418,6 +418,6 @@ function getSimplifiedStatus($status) {
  * @return array Array of all manga
  */
 function getAllMangaTest($limit = 10) {
-    $sql = 'SELECT * FROM manga LIMIT ' . (int)$limit;
+    $sql = 'SELECT *, Slug FROM manga LIMIT ' . (int)$limit;
     return pdo_query($sql);
 }

@@ -24,7 +24,7 @@ if (isset($_SESSION['profile_update_message'])) {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
     <!-- TinyMCE CDN -->
-    <script src="https://cdn.tiny.cloud/1/wx4008qjjx7niu643lrzyglnb9byz72numg3c3jss5gk1noi/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/j3bxzxkw8tsf9dq25jltesds0bwhorgiy845j6jmm5fjlsdb/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 
     <title>Profile Settings - <?php echo htmlspecialchars($user_data['username']); ?></title>
 </head>

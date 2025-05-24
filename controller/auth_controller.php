@@ -209,14 +209,20 @@ function handleForgotPassword(): void
     global $errors, $post_data;
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
+        error_log("Forgot password request started");
+        $start_time = microtime(true);
+
         $usernameOrEmail = trim($_POST['usernameOrEmail'] ?? '');
         $post_data = $_POST;
 
         if (empty($usernameOrEmail)) {
             $errors['credentials'] = 'Please enter your username or email.';
         } else {
+            error_log("Looking up user: $usernameOrEmail");
             $user = account_find_by_username_or_email($usernameOrEmail);
             if ($user) {
+                error_log("User found: " . $user['username']);
+
                 // Generate a reset token
                 $reset_token = generate_token();
                 $expires_at = time() + 3600; // Token expires in 1 hour
@@ -226,24 +232,35 @@ function handleForgotPassword(): void
                     ? $usernameOrEmail
                     : account_find_by_username($usernameOrEmail)['email'];
 
+                error_log("Email to send to: $email");
+
                 // Create reset link
                 $scheme = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
                 $host = $_SERVER['HTTP_HOST'];
                 $reset_link = "{$scheme}://{$host}/reset-password/{$reset_token}";
 
+                error_log("Reset link: $reset_link");
+
                 // Store the token in the database
+                error_log("Storing reset token in database...");
                 if (account_store_reset_token($user['username'], $reset_token, $expires_at)) {
+                    error_log("Reset token stored successfully, sending email...");
+
                     // Send the reset email
                     $email_sent = send_password_reset_email($email, $user['username'], $reset_link);
 
+                    $end_time = microtime(true);
+                    $duration = round(($end_time - $start_time) * 1000, 2);
+
                     if ($email_sent) {
-                        error_log("Password reset email sent to {$email} for user {$user['username']}");
+                        error_log("Password reset email sent to {$email} for user {$user['username']} in {$duration}ms");
                     } else {
-                        error_log("Failed to send password reset email to {$email} for user {$user['username']}");
+                        error_log("Failed to send password reset email to {$email} for user {$user['username']} after {$duration}ms");
                     }
 
                     // Always show the same message whether email was sent or not for security
                     $_SESSION['forgot_password_message'] = "If an account with that username or email exists, password reset instructions have been sent.";
+                    error_log("Forgot password process completed in {$duration}ms, redirecting to login");
                     header("Location: ../login");
                     exit;
                 } else {
@@ -368,7 +385,7 @@ function handleUpdateProfile(): void {
 
                     // Refresh user data after successful update
                     $user_data = account_find_by_userID($_SESSION['userID']);
-                    
+
                     // Redirect to SEO-friendly URL
                     header("Location: /profile");
                     exit;

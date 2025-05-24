@@ -684,14 +684,14 @@ require("helper.php");
                     </div>
                     <div class="overlay-actions">
                       <div class="overlay-buttons">
-                        <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                        <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                        <a href="manga/<?= $manga['Slug'] ?>" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                        <a href="manga/<?= $manga['Slug'] ?>" class="more-button"><i class="bi bi-arrow-right"></i></a>
                       </div>
                     </div>
                   </div>
                 </div>
               </a>
-              <a href="controller/mangaInfo_Controller.php?MangaID=<?= $manga['MangaID'] ?>" class="item-title-link">
+              <a href="manga/<?= $manga['Slug'] ?>" class="item-title-link">
                 <h3 class="item-title"><?= htmlspecialchars($manga['MangaNameOG']) ?></h3>
               </a>
             </div>
