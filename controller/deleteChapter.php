@@ -2,7 +2,6 @@
 // Ensure no output or extra whitespace before this line
 require_once('../db/delete_model.php');
 require_once('../db/account_db.php');
-require_once('../db/upload_model.php'); // For getSlugFromMangaID function
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -21,6 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $mangaID = trim($_POST['MangaID']);
     $chapterIDs = $_POST['chapterIds'];  // Ensure 'chapterIds' is sent properly from form
+    $slug = getSlugFromMangaID($mangaID);
+
     $hasError = false;
     if (empty($mangaID) || !is_array($chapterIDs) || empty($chapterIDs)) {
         $slug = getSlugFromMangaID($mangaID);

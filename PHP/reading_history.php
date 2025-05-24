@@ -18,9 +18,9 @@
     <?php include('includes/navbar.php'); ?>
     <?php include('includes/sidebar.php'); ?>
 
-    <div class="page-wrapper">
+    <div class="container-xxl mt-5">
+        <h1 class="mb-4 ms-5">Reading History</h1>
         <style>
-
             .page-btn {
                 margin: 0 5px;
                 padding: 8px 13px;
@@ -35,7 +35,7 @@
             }
         </style>
 
-        <div class="container-xxl pt-5 mt-4" id="manga-container">
+        <div class="" id="manga-container">
             <!-- Content will be loaded by JavaScript -->
         </div>
 

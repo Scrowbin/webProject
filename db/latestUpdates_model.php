@@ -9,7 +9,8 @@
                 c.*,
                 m.MangaNameOG,
                 m.CoverLink,
-                m.Slug
+                m.Slug,
+                m.OriginalLanguage
             FROM chapter c
             JOIN (
                 SELECT
@@ -49,7 +50,8 @@
                 c.*,
                 m.MangaNameOG,
                 m.CoverLink,
-                m.Slug
+                m.Slug,
+                m.OriginalLanguage
             FROM chapter c
             JOIN (
                 SELECT

@@ -6,8 +6,19 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
-<body class="bg-light">
+<?php
+$pathPrefix = '/';
+include 'includes/navbar_minimal.php';
+?>
 
+<body>
+<style>
+body {
+  background-color: #1f1f1f !important;
+  color: #e0e0e0;
+}
+
+</style>
 <div class="container my-5">
     <h2 class="mb-4">Reported Manga Issues</h2>
 
