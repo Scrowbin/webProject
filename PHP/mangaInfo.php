@@ -342,7 +342,7 @@ $mangaAuthors = array_unique(array_merge($authors, $artists));
         </div>
     </div>
     <!-- jhidden form for delete -->
-    <form id="deleteForm" action="handle_delete_manga.php" method="POST" style="display: none;">
+    <form id="deleteForm" action="<?= $pathPrefix ?>controller/handle_delete_manga.php" method="POST" style="display: none;">
         <input type="hidden" name="MangaID" id="hiddenMangaID">
     </form>
 
@@ -350,7 +350,7 @@ $mangaAuthors = array_unique(array_merge($authors, $artists));
     <div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content rounded-4 shadow">
-                <form id="reportForm" method="POST" action="handle_report.php">
+                <form id="reportForm" method="POST" action="<?= $pathPrefix ?>controller/handle_report.php">
                     <div class="modal-header bg-danger text-white rounded-top-4">
                         <h5 class="modal-title" id="reportModalLabel">Report Manga</h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
