@@ -14,7 +14,7 @@ $normalTags = [];
 $cover = "/IMG/$mangaID/$image";
 
 // Split tags from comma-separated string
-$tags = explode(',', $mangaInfo['Tags']);
+// $tags = explode(',', $mangaInfo['Tags']);
 foreach ($tags as $tagName) {
     if (in_array(strtolower($tagName), ['gore', 'sexual violence'])) {
         $priorityTags[] = $tagName;
@@ -23,10 +23,6 @@ foreach ($tags as $tagName) {
     }
 }
 
-// Split authors and artists from comma-separated strings
-$authors = explode(',', $mangaInfo['Authors']);
-$artists = explode(',', $mangaInfo['Artists']);
-$mangaAuthors = array_unique(array_merge($authors, $artists));
 ?>
 <!DOCTYPE html>
 <html lang="en">

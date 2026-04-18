@@ -36,6 +36,10 @@ if (!$mangaInfo) {
 
 $authorsRaw = getMangaAuthors($mangaID);
 $artistsRaw = getMangaArtists($mangaID);
+$authors = array_column($authorsRaw, 'AuthorName');
+$artists = array_column($artistsRaw, 'ArtistName');
+
+$mangaAuthors = array_unique(array_merge($authors, $artists));
 $tags = getTags($mangaID);
 $chapters = getChapters($mangaID);
 

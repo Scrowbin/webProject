@@ -11,8 +11,7 @@
         return pdo_query_value($sql,$slug);
     }
     function getMangaInfo($mangaID){
-        $sql = 'CALL GetMangaDetails(?)';
-        $mangaInfo = pdo_query_one($sql, $mangaID);
+        $mangaInfo= pdo_query_one('select * from manga where mangaID = ?',$mangaID);
         return $mangaInfo;
     }
     function getMangaAuthors($mangaID) {
@@ -36,8 +35,7 @@
         return $tagNames;
     }
     function getChapters($mangaID){
-        $sql = 'CALL GetChaptersWithCommentCount(?)';
-        $chapters = pdo_query($sql, $mangaID);
+        $chapters = pdo_query('SELECT * FROM chapter Where MangaID =? ORDER BY ChapterNumber DESC',$mangaID);
         return $chapters;
     }
     function getRating($userID,$mangaID){
