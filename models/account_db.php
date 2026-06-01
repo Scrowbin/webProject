@@ -107,9 +107,16 @@ function getUserID($username){
     return $userID['UserID'];
 }
 
-function get_role(string $userID){
-    $sql = "SELECT Role FROM user WHERE UserID = ?";
-    return pdo_query_value($sql, $userID);
+function get_role($userID = null)
+{
+    if ($userID === null || $userID === '' || $userID === 0 || $userID === '0') {
+        return 'user';
+    }
+
+    $sql = 'SELECT Role FROM user WHERE UserID = ?';
+    $role = pdo_query_value($sql, (string) $userID);
+
+    return ($role !== false && $role !== null && $role !== '') ? (string) $role : 'user';
 }
 
 /**

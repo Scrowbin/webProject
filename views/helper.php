@@ -135,7 +135,10 @@ function getFlagFeature($language) {
     //Trả về value là int nếu là int hoặc float nếu là float
     // ex: 6.00 -> 6, 3.5 -> 3.5 
 function truncateNumber($number){
-    return ($number == floor($number)) ? intval($number) : $number;
+    if ($number === null || $number === '') {
+        return 0;
+    }
+    return ($number == floor($number)) ? (int) $number : $number;
 }
 function displayNameOrChapter($name,$number){
     if ($name === '' || $name === null){

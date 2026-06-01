@@ -223,7 +223,7 @@ require_once __DIR__ . '/helper.php';
     <section class="section-container latest-updates-section">
       <div class="section-heading">
         <h2 class="text-white fw-bold">Latest Updates</h2>
-        <a href="/latest-updates" class="see-all see-all-arrow">
+        <a href="<?= htmlspecialchars(page_url('latest-updates')) ?>" class="see-all see-all-arrow">
           <i class="bi bi-arrow-right"></i>
         </a>
       </div>
@@ -587,8 +587,8 @@ require_once __DIR__ . '/helper.php';
     <!-- Recently Added Section -->
     <section class="section-container recently-added-section">
       <div class="section-heading">
-        <a href="/recently-added" class="text-white text-decoration-none"><h2 class="text-white fw-bold mb-0">Recently Added</h2></a>
-        <a href="/recently-added" class="see-all see-all-arrow recently-added-next"> <!-- Changed class for Swiper navigation -->
+        <a href="<?= htmlspecialchars(page_url('recently-added')) ?>" class="text-white text-decoration-none"><h2 class="text-white fw-bold mb-0">Recently Added</h2></a>
+        <a href="<?= htmlspecialchars(page_url('recently-added')) ?>" class="see-all see-all-arrow recently-added-next"> <!-- Changed class for Swiper navigation -->
           <i class="bi bi-arrow-right"></i>
         </a>
       </div>
@@ -599,7 +599,7 @@ require_once __DIR__ . '/helper.php';
           <?php foreach ($recentlyAddedManga as $manga): ?>
           <!-- Manga Item -->
           <div class="swiper-slide item">
-            <a href="/manga/<?=$manga['Slug'] ?>">
+            <a href="<?= manga_url($manga['Slug']) ?>">
               <div class="image-container">
                 <img src="/manga/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?> Cover">
                 <?php
@@ -611,14 +611,14 @@ require_once __DIR__ . '/helper.php';
                   </div>
                   <div class="overlay-actions">
                     <div class="overlay-buttons">
-                      <a href="/manga/<?=$manga['Slug'] ?>" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                      <a href="/manga/<?=$manga['Slug'] ?>" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                      <a href="<?= manga_url($manga['Slug']) ?>" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                      <a href="<?= manga_url($manga['Slug']) ?>" class="more-button"><i class="bi bi-arrow-right"></i></a>
                     </div>
                   </div>
                 </div>
               </div>
             </a>
-            <a href="/manga/<?=$manga['Slug'] ?>" class="item-title-link">
+            <a href="<?= manga_url($manga['Slug']) ?>" class="item-title-link">
               <h3 class="item-title"><?= htmlspecialchars($manga['MangaNameOG']) ?></h3>
             </a>
           </div>
@@ -666,7 +666,7 @@ require_once __DIR__ . '/helper.php';
             <?php foreach ($staffPicksManga as $manga): ?>
             <!-- Manga Item -->
             <div class="swiper-slide item">
-              <a href="/manga/<?=$manga['Slug'] ?>">
+              <a href="<?= manga_url($manga['Slug']) ?>">
                 <div class="image-container">
                   <img src="/manga/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?> Cover">
                   <?php

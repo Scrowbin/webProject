@@ -1,7 +1,15 @@
 <?php
-    require_once __DIR__ . '/helper.php';
-    //Chapter info
-    $chapterName = $chapterInfo['ChapterName'];
+if (!function_exists('comments_url')) {
+    require_once __DIR__ . '/../config/bootstrap.php';
+}
+require_once __DIR__ . '/helper.php';
+
+if (empty($chapterInfo) || empty($mangaInfo) || empty($pages)) {
+    http_response_code(404);
+    exit('Chapter data is not available.');
+}
+
+    $chapterName = $chapterInfo['ChapterName'] ?? '';
     $chapterVolume = truncateNumber($chapterInfo['Volume']);
     $chapterNumber = truncateNumber($chapterInfo['ChapterNumber']);
     $chapterScangroup = $chapterInfo['ScangroupName'];
@@ -11,7 +19,7 @@
     $mangaSlug = $mangaInfo['Slug'];
 
 
-    $lastPageNumber = $pages[count($pages)-1]["PageNumber"];
+    $lastPageNumber = !empty($pages) ? $pages[count($pages) - 1]['PageNumber'] : 0;
 
     $chapterDropdownValues = [];
     foreach($chapters as $chapter){
@@ -186,7 +194,7 @@
 
                 <!-- Comments -->
                 <?php
-                    $commmentSlug ="/comments/" . $mangaSlug . '/chapter-'.$chapterNumber;
+                    $commmentSlug = comments_url($mangaSlug, $chapterInfo['ChapterNumber']);
                 ?>
                 <a href = "<?=$commmentSlug?>">
                     <button class="btn" id = "comment-btn">
@@ -349,8 +357,8 @@
     const userID = <?=json_encode($userID) ?>;
     const chapterID = <?=json_encode($chapterID) ?>;
     const mangaID = <?= json_encode($mangaID) ?>;
-    const prevChapterSlug = <?= ($prevChapterNumber === null) ? 'null' : json_encode(chapter_read_url($mangaSlug, $prevChapterNumber)) ?>;
-    const nextChapterSlug = <?= ($nextChapterNumber === null) ? 'null' : json_encode(chapter_read_url($mangaSlug, $nextChapterNumber)) ?>;
+    const prevChapterSlug = <?= ($prevChapterNumber === null || $prevChapterNumber === '') ? 'null' : json_encode(chapter_read_url($mangaSlug, $prevChapterNumber)) ?>;
+    const nextChapterSlug = <?= ($nextChapterNumber === null || $nextChapterNumber === '') ? 'null' : json_encode(chapter_read_url($mangaSlug, $nextChapterNumber)) ?>;
     const mangaSlug = <?= json_encode("/manga/$mangaSlug") ?>;
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

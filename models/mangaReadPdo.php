@@ -8,12 +8,13 @@
     
     function getChapterID($mangaSlug, $chapterNumber){
         $chapterNumber = str_replace('-', '.', (string) $chapterNumber);
-        $sql = 'SELECT ChapterID
+        $sql = 'SELECT c.ChapterID
                 FROM chapter c
-                JOIN manga m ON c.MangaID = m.MangaID
-                WHERE m.Slug = ? AND CAST(c.ChapterNumber AS DECIMAL(10,2)) = CAST(? AS DECIMAL(10,2))
+                INNER JOIN manga m ON c.MangaID = m.MangaID
+                WHERE m.Slug = ?
+                AND (c.ChapterNumber = ? OR ABS(c.ChapterNumber - ?) < 0.001)
                 LIMIT 1';
-        return pdo_query_value($sql, $mangaSlug, $chapterNumber);
+        return pdo_query_value($sql, $mangaSlug, $chapterNumber, (float) $chapterNumber);
     }
 
     function getMangaInfo($chapterID){

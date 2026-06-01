@@ -8,18 +8,36 @@
         return Number.isInteger(n) ? String(Math.trunc(n)) : String(n);
     }
 
-    function chapterSlugPart(chapterNumber) {
+    function chapterQueryValue(chapterNumber) {
         const n = parseFloat(chapterNumber);
-        const part = Number.isInteger(n) ? String(Math.trunc(n)) : String(n);
-        return part.replace('.', '-');
+        return Number.isInteger(n) ? String(Math.trunc(n)) : String(n);
+    }
+
+    function chapterSlugPart(chapterNumber) {
+        return chapterQueryValue(chapterNumber).replace('.', '-');
+    }
+
+    function mangaInfoUrl(slug) {
+        if (window.MANGA_URL_MODE === 'pretty') {
+            return '/manga/' + slug;
+        }
+        return '/controllers/mangaInfo_Controller.php?slug=' + encodeURIComponent(slug);
     }
 
     function chapterReadUrl(slug, chapterNumber) {
-        return '/read/' + slug + '/chapter-' + chapterSlugPart(chapterNumber);
+        if (window.MANGA_URL_MODE === 'pretty') {
+            return '/read/' + slug + '/chapter-' + chapterSlugPart(chapterNumber);
+        }
+        return '/controllers/mangaRead_Controller.php?slug=' + encodeURIComponent(slug)
+            + '&chapter=' + encodeURIComponent(chapterQueryValue(chapterNumber));
     }
 
     function commentsUrl(slug, chapterNumber) {
-        return '/comments/' + slug + '/chapter-' + chapterSlugPart(chapterNumber);
+        if (window.MANGA_URL_MODE === 'pretty') {
+            return '/comments/' + slug + '/chapter-' + chapterSlugPart(chapterNumber);
+        }
+        return '/controllers/comments_controller.php?slug=' + encodeURIComponent(slug)
+            + '&chapter=' + encodeURIComponent(chapterQueryValue(chapterNumber));
     }
 
     function timeAgo(dateStr) {
@@ -66,14 +84,14 @@
             const mangaHTML = `
                 <div class="manga-card">
                     <div class="manga-cover">
-                        <a href="/manga/${manga.Slug}">
+                        <a href="${mangaInfoUrl(manga.Slug)}">
                             <img src="/manga/${manga.MangaID}/${manga.CoverLink}" alt="Manga Cover">
                         </a>
                     </div>
                     <div class="manga-details">
                         <div class="manga-header">
                             ${getFlag(manga.OriginalLanguage)}
-                            <a href="/manga/${manga.Slug}" class="manga-title"><strong>${manga.MangaNameOG}</strong></a>
+                            <a href="${mangaInfoUrl(manga.Slug)}" class="manga-title"><strong>${manga.MangaNameOG}</strong></a>
                         </div>
                         <hr>
                         ${mangaGroup.map(chapter => {

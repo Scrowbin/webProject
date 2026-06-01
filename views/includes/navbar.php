@@ -61,7 +61,7 @@ if ($is_logged_in && isset($_SESSION['userID'])) {
       <?php include __DIR__ . '/search_modal.php'; ?>
     </div>
 
-    <a href="<?= htmlspecialchars(app_url('/about')) ?>" class="text-white text-decoration-none small d-none d-md-inline me-3">About</a>
+    <a href="<?= htmlspecialchars(page_url('about')) ?>" class="text-white text-decoration-none small d-none d-md-inline me-3">About</a>
 
     <!-- Announcement Indicator - Always visible -->
     <div id="navbar-announcement-indicator" class="announcement-indicator me-3">
