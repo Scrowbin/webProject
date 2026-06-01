@@ -6,8 +6,43 @@ RewriteCond %{HTTPS} off
 RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-# Existing files and directories (manga images, assets, etc.) are served as-is.
-# Everything else goes to the front controller (index.php + config/router.php).
+# Chapter reader & comments — call controllers directly (no ?route= with slashes)
+RewriteRule ^read/([^/]+)/chapter-([0-9\-]+)$ controllers/mangaRead_Controller.php?slug=$1&chapter=$2 [QSA,L]
+RewriteRule ^comments/([^/]+)/chapter-([0-9\-]+)$ controllers/comments_controller.php?slug=$1&chapter=$2 [QSA,L]
+RewriteRule ^upload/([^/]+)$ controllers/upload_controller.php?slug=$1 [QSA,L]
+
+# Manga info by slug (only when request does not hit the manga/ image directory first)
+RewriteRule ^manga/([a-zA-Z][a-zA-Z0-9\-]*)$ controllers/mangaInfo_Controller.php?slug=$1 [QSA,L]
+
+# Simple pages → front controller (route name has no slashes)
+RewriteRule ^library$ index.php?route=library [QSA,L]
+RewriteRule ^reading-history$ index.php?route=reading-history [QSA,L]
+RewriteRule ^latest-updates$ index.php?route=latest-updates [QSA,L]
+RewriteRule ^recently-added$ index.php?route=recently-added [QSA,L]
+RewriteRule ^advanced-search$ index.php?route=advanced-search [QSA,L]
+RewriteRule ^search$ index.php?route=search [QSA,L]
+RewriteRule ^my-follows$ index.php?route=my-follows [QSA,L]
+RewriteRule ^random$ index.php?route=random [QSA,L]
+RewriteRule ^about$ index.php?route=about [QSA,L]
+RewriteRule ^login$ index.php?route=login [QSA,L]
+RewriteRule ^register$ index.php?route=register [QSA,L]
+RewriteRule ^logout$ index.php?route=logout [QSA,L]
+RewriteRule ^profile$ index.php?route=profile [QSA,L]
+RewriteRule ^user-profile$ index.php?route=user-profile [QSA,L]
+RewriteRule ^forgot-password$ index.php?route=forgot-password [QSA,L]
+RewriteRule ^reset-password$ index.php?route=reset-password [QSA,L]
+RewriteRule ^reset-password/([^/]+)$ index.php?route=reset-password/$1 [QSA,L]
+RewriteRule ^activate$ index.php?route=activate [QSA,L]
+RewriteRule ^activate/([^/]+)$ index.php?route=activate/$1 [QSA,L]
+RewriteRule ^admin/create-announcements$ index.php?route=admin/create-announcements [QSA,L]
+RewriteRule ^admin/view-reports$ index.php?route=admin/view-reports [QSA,L]
+RewriteRule ^admin/add-manga$ index.php?route=admin/add-manga [QSA,L]
+RewriteRule ^admin/staff-pick$ index.php?route=admin/staff-pick [QSA,L]
+RewriteRule ^admin/edit-manga/([a-zA-Z0-9\-]+)$ index.php?route=admin/edit-manga/$1 [QSA,L]
+RewriteRule ^admin/edit-chapter/([^/]+)/chapter-([0-9\-]+)$ index.php?route=admin/edit-chapter/$1/chapter-$2 [QSA,L]
+RewriteRule ^admin/delete-chapter/([^/]+)$ index.php?route=admin/delete-chapter/$1 [QSA,L]
+
+# Anything else that is not a real file → index.php (router reads REQUEST_URI)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php?route=$1 [QSA,L]
+RewriteRule ^ index.php [QSA,L]

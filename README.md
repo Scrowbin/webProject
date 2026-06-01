@@ -35,7 +35,7 @@ All pretty URLs (`/login`, `/read/{slug}/chapter-3`, `/library`, …) are handle
 
 Root `.htaccess` sends any path that is not a real file or folder to `index.php?route=...`. The physical `manga/` folder (covers and pages) also has `manga/.htaccess` so slugs like `/manga/one-piece` reach the router when Apache looks inside that directory.
 
-**InfinityFree:** upload the root `.htaccess` and `config/router.php`. Without `.htaccess`, only direct `/controllers/...` URLs will work.
+**InfinityFree:** upload the root `.htaccess` and `manga/.htaccess` only. All routes live in the root file; `manga/.htaccess` exists because cover/chapter images are stored in that folder. Do not add `.htaccess` under `library/`, `read/`, etc.
 
 ## Documentation
 

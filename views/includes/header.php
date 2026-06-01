@@ -4,7 +4,7 @@
     <button class="btn text-white ps-0 me-2" type="button" id="hamburger-btn">
       <i class="bi bi-list fs-3"></i>
     </button>
-    <a class="navbar-brand text-white fw-bold d-flex align-items-center" href="/views/homepage.php"> <!-- Updated link -->
+    <a class="navbar-brand text-white fw-bold d-flex align-items-center" href="/">
        MangaDax
     </a>
     

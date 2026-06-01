@@ -26,7 +26,7 @@ $chapterNumber = truncateNumber($chapterNumber);
 <div class="container" id="comment-section">
     <div class = "manga-container">
         <?php
-            $chapterSlug = "/read/" . $mangaSlug . "/chapter-" . str_replace(".","-",$chapterNumber);
+            $chapterSlug = chapter_read_url($mangaSlug, $chapterNumber);
         ?>
         <a href = "<?=$chapterSlug?>">
             <div class="bg-image">

@@ -6,18 +6,19 @@
  */
 function app_request_path(): string
 {
+    // Prefer the real URL path (InfinityFree often breaks ?route=foo/bar because of "/" in query strings).
+    $uriPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
+    $uriPath = trim($uriPath ?? '', '/');
+
+    if ($uriPath !== '' && $uriPath !== 'index.php') {
+        return $uriPath;
+    }
+
     if (isset($_GET['route']) && $_GET['route'] !== '') {
         return trim((string) $_GET['route'], '/');
     }
 
-    $path = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
-    $path = trim($path ?? '', '/');
-
-    if ($path === 'index.php') {
-        return '';
-    }
-
-    return $path;
+    return '';
 }
 
 function route_dispatch(string $path): bool

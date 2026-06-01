@@ -4,7 +4,22 @@
     let groupedData = [];
 
     function truncateNumber(num) {
-        return parseFloat(num).toString();
+        const n = parseFloat(num);
+        return Number.isInteger(n) ? String(Math.trunc(n)) : String(n);
+    }
+
+    function chapterSlugPart(chapterNumber) {
+        const n = parseFloat(chapterNumber);
+        const part = Number.isInteger(n) ? String(Math.trunc(n)) : String(n);
+        return part.replace('.', '-');
+    }
+
+    function chapterReadUrl(slug, chapterNumber) {
+        return '/read/' + slug + '/chapter-' + chapterSlugPart(chapterNumber);
+    }
+
+    function commentsUrl(slug, chapterNumber) {
+        return '/comments/' + slug + '/chapter-' + chapterSlugPart(chapterNumber);
     }
 
     function timeAgo(dateStr) {
@@ -63,9 +78,8 @@
                         <hr>
                         ${mangaGroup.map(chapter => {
                             const chapterNum = truncateNumber(chapter.ChapterNumber);
-                            const chapterNumber = chapterNum.replace('.', '-');
-                            const chapterSlug = '/read/' + manga.Slug + '/chapter-' + chapterNumber;
-                            const CommentSectionSlug = '/comments/' + manga.Slug + '/chapter-' + chapterNumber;
+                            const chapterSlug = chapterReadUrl(manga.Slug, chapter.ChapterNumber);
+                            const CommentSectionSlug = commentsUrl(manga.Slug, chapter.ChapterNumber);
                             return `
                                 <div class="chapter-container mb-1" onclick="window.location.href='${chapterSlug}'">
                                     <div class="chapter-info">

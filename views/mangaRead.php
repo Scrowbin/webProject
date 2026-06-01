@@ -98,7 +98,7 @@
             </nav>
             <?php
                 if ($nextChapterNumber) {
-                    $nextChapterSlug = "/read/" . $mangaSlug . "/chapter-" . str_replace(".","-",truncateNumber($nextChapterNumber));
+                    $nextChapterSlug = chapter_read_url($mangaSlug, $nextChapterNumber);
                     echo "<button id='next-chapter' onclick=\"location.href='$nextChapterSlug'\">Next Chapter</button>";
                 } else {
                     echo "<button id='next-chapter' onclick=\"location.href='/manga/$mangaSlug'\">Back to Info</button>";
@@ -165,11 +165,10 @@
                             <?php
                             foreach ($chapters as $chapter) {
                                 $display = truncateNumber($chapter['ChapterNumber']);
-                                $chapterNumberSlug = str_replace('.', '-', $display); // Slug-friendly
-                                $chapterSlugDropdown = "/read/{$mangaSlug}/chapter-{$chapterNumberSlug}";
+                                $chapterSlugDropdown = chapter_read_url($mangaSlug, $chapter['ChapterNumber']);
                                 $selected = ($display == $chapterNumber) ? 'selected' : '';
 
-                                echo "<option value=\"$chapterSlugDropdown\" $selected>Chapter $display</option>";
+                                echo '<option value="' . htmlspecialchars($chapterSlugDropdown) . "\" $selected>Chapter $display</option>";
                             }
                             ?>
                         </select>
@@ -350,8 +349,8 @@
     const userID = <?=json_encode($userID) ?>;
     const chapterID = <?=json_encode($chapterID) ?>;
     const mangaID = <?= json_encode($mangaID) ?>;
-    const prevChapterSlug = <?= ($prevChapterNumber === null) ? json_encode(null) : json_encode("/read/" . $mangaSlug . "/chapter-" . str_replace(".","-",truncateNumber($prevChapterNumber)))?>;
-    const nextChapterSlug = <?= ($nextChapterNumber === null) ? json_encode(null) : json_encode("/read/" . $mangaSlug . "/chapter-" . str_replace(".","-",truncateNumber($nextChapterNumber))) ?>;
+    const prevChapterSlug = <?= ($prevChapterNumber === null) ? 'null' : json_encode(chapter_read_url($mangaSlug, $prevChapterNumber)) ?>;
+    const nextChapterSlug = <?= ($nextChapterNumber === null) ? 'null' : json_encode(chapter_read_url($mangaSlug, $nextChapterNumber)) ?>;
     const mangaSlug = <?= json_encode("/manga/$mangaSlug") ?>;
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

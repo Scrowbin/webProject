@@ -67,9 +67,8 @@
                             $uploader = $chapter['UploaderName'];
                             $commentsID = $chapter['CommentSectionID'];
                             $NumOfComments = $chapter['NumOfComments'];
-                            $chapterNumberSlug = str_replace('.', '-', $chapterNumber);
-                            $chapterSlug = '/read/'.$mangaSlug.'/chapter-'.$chapterNumberSlug;
-                            $commmentSlug ="/comments/" . $mangaSlug . '/chapter-'.$chapterNumberSlug;
+                            $chapterSlug = chapter_read_url($mangaSlug, $chapter['ChapterNumber']);
+                            $commmentSlug = comments_url($mangaSlug, $chapter['ChapterNumber']);
 
                     ?>
                         <div class="chapter-container mb-1"  onclick="window.location.href='<?=$chapterSlug?>'">

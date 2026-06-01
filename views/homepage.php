@@ -237,10 +237,9 @@ require_once __DIR__ . '/helper.php';
           foreach ($latestUpdates as $index => $manga):
             if ($count >= 6) break; // Limit to 6 items in first column
             $count++;
+            $slug = $manga['MangaSlug'];
+            $chapterSlug = chapter_read_url($slug, $manga['Chapter']['ChapterNumber']);
             $chapterNum = htmlspecialchars(truncateNumber($manga['Chapter']['ChapterNumber']));
-            $chapterNumber = str_replace('.', '-', $chapterNum);
-            $slug = $manga["MangaSlug"];
-            $chapterSlug = '/read/'.$slug.'/chapter-'.$chapterNumber;
           ?>
               <a href="<?=$chapterSlug?>" class="latest-item">
                 <img src="/manga/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?> Cover" class="latest-cover">
@@ -328,10 +327,9 @@ require_once __DIR__ . '/helper.php';
             if ($index < 6) continue; // Skip first 6 items (shown in first column)
             if ($count >= 6) break; // Limit to 6 items in second column
             $count++;
+            $slug = $manga['MangaSlug'];
+            $chapterSlug = chapter_read_url($slug, $manga['Chapter']['ChapterNumber']);
             $chapterNum = htmlspecialchars(truncateNumber($manga['Chapter']['ChapterNumber']));
-            $chapterNumber = str_replace('.', '-', $chapterNum);
-            $slug = $manga["MangaSlug"];
-            $chapterSlug = '/read/'.$slug.'/chapter-'.$chapterNumber;
           ?>
               <a href="<?= $chapterSlug ?>" class="latest-item">
                 <img src="/manga/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?> Cover" class="latest-cover">
@@ -416,10 +414,9 @@ require_once __DIR__ . '/helper.php';
             if ($index < 12) continue; // Skip first 12 items (shown in first and second columns)
             if ($count >= 6) break; // Limit to 6 items in third column
             $count++;
+            $slug = $manga['MangaSlug'];
+            $chapterSlug = chapter_read_url($slug, $manga['Chapter']['ChapterNumber']);
             $chapterNum = htmlspecialchars(truncateNumber($manga['Chapter']['ChapterNumber']));
-            $chapterNumber = str_replace('.', '-', $chapterNum);
-            $slug = $manga["MangaSlug"];
-            $chapterSlug = '/read/'.$slug.'/chapter-'.$chapterNumber;
           ?>
               <a href="<?=$chapterSlug?>" class="latest-item">
                 <img src="/manga/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?> Cover" class="latest-cover">
@@ -504,10 +501,9 @@ require_once __DIR__ . '/helper.php';
             if ($index < 18) continue; // Skip first 18 items (shown in first, second, and third columns)
             if ($count >= 6) break; // Limit to 6 items in fourth column
             $count++;
+            $slug = $manga['MangaSlug'];
+            $chapterSlug = chapter_read_url($slug, $manga['Chapter']['ChapterNumber']);
             $chapterNum = htmlspecialchars(truncateNumber($manga['Chapter']['ChapterNumber']));
-            $chapterNumber = str_replace('.', '-', $chapterNum);
-            $slug = $manga["MangaSlug"];
-            $chapterSlug = '/read/'.$slug.'/chapter-'.$chapterNumber;
           ?>
               <a href="<?= $chapterSlug ?>" class="latest-item">
                 <img src="/manga/<?= $manga['MangaID'] ?>/<?= htmlspecialchars($manga['CoverLink']) ?>" alt="<?= htmlspecialchars($manga['MangaNameOG']) ?> Cover" class="latest-cover">
@@ -685,14 +681,14 @@ require_once __DIR__ . '/helper.php';
                     </div>
                     <div class="overlay-actions">
                       <div class="overlay-buttons">
-                        <a href="manga/<?= $manga['Slug'] ?>" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
-                        <a href="manga/<?= $manga['Slug'] ?>" class="more-button"><i class="bi bi-arrow-right"></i></a>
+                        <a href="<?= manga_url($manga['Slug']) ?>" class="read-button"><i class="bi bi-book-fill"></i> Read</a>
+                        <a href="<?= manga_url($manga['Slug']) ?>" class="more-button"><i class="bi bi-arrow-right"></i></a>
                       </div>
                     </div>
                   </div>
                 </div>
               </a>
-              <a href="manga/<?= $manga['Slug'] ?>" class="item-title-link">
+              <a href="<?= manga_url($manga['Slug']) ?>" class="item-title-link">
                 <h3 class="item-title"><?= htmlspecialchars($manga['MangaNameOG']) ?></h3>
               </a>
             </div>

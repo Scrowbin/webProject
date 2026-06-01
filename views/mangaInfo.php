@@ -249,8 +249,7 @@ foreach ($tags as $tagName) {
             ';
             foreach($group as $chapters){
                 $chapterNum = truncateNumber($chapters['ChapterNumber']);
-                $chapterNumber = str_replace('.', '-', $chapterNum) ;
-                $chapterSlug = '/read/'.$slug.'/chapter-'.$chapterNumber;
+                $chapterSlug = chapter_read_url($slug, $chapters['ChapterNumber']);
                 ?>
                 <div class="chapter-container mt-1 "onclick="window.location.href='<?=$chapterSlug?>'">
                     <div class="chapter-info p-2">

@@ -10,12 +10,13 @@ function getSlugFromChapterID($chapterID){
     return $result;
 }
 function getChapterID($mangaSlug, $chapterNumber){
+        $chapterNumber = str_replace('-', '.', (string) $chapterNumber);
         $sql = 'SELECT ChapterID
                 FROM chapter c
-                JOIN manga m
-                ON c.MangaID = m.MangaID
-                WHERE m.Slug = ? AND c.ChapterNumber = ?';
-        return pdo_query_value($sql,$mangaSlug,$chapterNumber);
+                JOIN manga m ON c.MangaID = m.MangaID
+                WHERE m.Slug = ? AND CAST(c.ChapterNumber AS DECIMAL(10,2)) = CAST(? AS DECIMAL(10,2))
+                LIMIT 1';
+        return pdo_query_value($sql, $mangaSlug, $chapterNumber);
     }
 function getChapterPages($chapterID){
     $sql = "SELECT PageLink FROM chapter_pages WHERE ChapterID = ? ORDER BY PageNumber";

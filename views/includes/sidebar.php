@@ -2,6 +2,14 @@
 if (!function_exists('site_title')) {
     require_once __DIR__ . '/../../config/bootstrap.php';
 }
+
+$currentPath = trim(parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?? '', '/');
+$navActive = static function (string $route) use ($currentPath): string {
+    if ($route === '' || $route === '/') {
+        return ($currentPath === '' || $currentPath === 'index.php') ? ' active' : '';
+    }
+    return ($currentPath === trim($route, '/') || str_starts_with($currentPath, trim($route, '/') . '/')) ? ' active' : '';
+};
 ?>
 <!-- Sidebar -->
 <aside id="nav-sidebar">
@@ -14,53 +22,36 @@ if (!function_exists('site_title')) {
     </button>
   </div>
   <nav class="sidebar-nav">
-      <a href="/" class="nav-link active"><i class="bi bi-house-door-fill"></i> Home</a>
-      <a href="#" class="nav-link"><i class="bi bi-bookmark-fill"></i> Follows</a>
-      <a href="/views/latestUpdates.php" class="nav-link"><i class="bi bi-arrow-repeat"></i> Updates</a> <!-- Updated link -->
-      <a href="#" class="nav-link"><i class="bi bi-collection-fill"></i> Library</a>
-      <a href="#" class="nav-link"><i class="bi bi-list-ul"></i> MDLists</a>
-      <a href="#" class="nav-link"><i class="bi bi-people-fill"></i> My Groups</a>
-      <a href="#" class="nav-link"><i class="bi bi-clock-history"></i> Reading History</a>
-      
+      <a href="/" class="nav-link<?= $navActive('') ?>"><i class="bi bi-house-door-fill"></i> Home</a>
+      <a href="/my-follows" class="nav-link<?= $navActive('my-follows') ?>"><i class="bi bi-bookmark-fill"></i> Follows</a>
+      <a href="/latest-updates" class="nav-link<?= $navActive('latest-updates') ?>"><i class="bi bi-arrow-repeat"></i> Updates</a>
+      <a href="/library" class="nav-link<?= $navActive('library') ?>"><i class="bi bi-collection-fill"></i> Library</a>
+      <a href="/reading-history" class="nav-link<?= $navActive('reading-history') ?>"><i class="bi bi-clock-history"></i> Reading History</a>
+
       <div class="sidebar-section">
           <a href="#" class="nav-link section-title"><i class="bi bi-book-fill"></i> Titles <i class="bi bi-plus-lg float-end"></i></a>
           <div class="sub-links">
-              <a href="#" class="nav-link">Advanced Search</a>
-              <a href="#" class="nav-link">Recently Added</a>
-              <a href="/views/latestUpdates.php" class="nav-link">Latest Updates</a> <!-- Updated link -->
-              <a href="#" class="nav-link">Random</a>
-          </div>
-      </div>
-
-      <div class="sidebar-section">
-          <a href="#" class="nav-link section-title"><i class="bi bi-chat-dots-fill"></i> Community <i class="bi bi-plus-lg float-end"></i></a>
-           <div class="sub-links">
-              <a href="#" class="nav-link">Forums</a>
-              <a href="#" class="nav-link">Groups</a>
-              <a href="#" class="nav-link">Users</a>
+              <a href="/advanced-search" class="nav-link<?= $navActive('advanced-search') ?>">Advanced Search</a>
+              <a href="/recently-added" class="nav-link<?= $navActive('recently-added') ?>">Recently Added</a>
+              <a href="/latest-updates" class="nav-link<?= $navActive('latest-updates') ?>">Latest Updates</a>
+              <a href="/random" class="nav-link<?= $navActive('random') ?>">Random</a>
           </div>
       </div>
 
        <div class="sidebar-section">
           <a href="#" class="nav-link section-title"><i class="bi bi-info-circle"></i> Project</a>
            <div class="sub-links">
-              <a href="/about" class="nav-link">About this site</a>
-              <a href="/login" class="nav-link">Sign in</a>
-              <a href="/register" class="nav-link">Register</a>
+              <a href="/about" class="nav-link<?= $navActive('about') ?>">About this site</a>
+              <a href="/login" class="nav-link<?= $navActive('login') ?>">Sign in</a>
+              <a href="/register" class="nav-link<?= $navActive('register') ?>">Register</a>
            </div>
       </div>
   </nav>
   <div class="sidebar-footer">
        <div class="support-placeholder my-3 text-center">
       </div>
-      <div class="social-icons text-center mb-2">
-          <a href="#"><i class="bi bi-discord"></i></a>
-          <a href="#"><i class="bi bi-twitter-x"></i></a>
-          <a href="#"><i class="bi bi-reddit"></i></a>
-          <a href="#"><i class="bi bi-activity"></i></a>
-      </div>
       <div class="text-center text-muted small">
           © <?= date('Y') ?> <?= htmlspecialchars(site_name()) ?> · Student project
       </div>
   </div>
-</aside> 
+</aside>

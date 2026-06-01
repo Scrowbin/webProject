@@ -1,15 +1,16 @@
 <?php
     require_once __DIR__ . '/pdo.php';
 
-    function getCommentSectionIDBySlug($slug,$chapterNumber){
+    function getCommentSectionIDBySlug($slug, $chapterNumber){
+        $chapterNumber = str_replace('-', '.', (string) $chapterNumber);
         $sql = 'SELECT CommentSectionID
-                FROM commentsection cs JOIN chapter c
-                ON cs.ChapterID = c.ChapterID 
-                JOIN manga m 
-                ON m.MangaID = c.MangaID
+                FROM commentsection cs
+                JOIN chapter c ON cs.ChapterID = c.ChapterID
+                JOIN manga m ON m.MangaID = c.MangaID
                 WHERE m.Slug = ?
-                AND c.ChapterNumber = ?';
-        return pdo_query_value($sql,$slug,$chapterNumber);
+                AND CAST(c.ChapterNumber AS DECIMAL(10,2)) = CAST(? AS DECIMAL(10,2))
+                LIMIT 1';
+        return pdo_query_value($sql, $slug, $chapterNumber);
     }
     function getMangaDetails($commentsID){
         $sql = 'SELECT m.MangaID, m.MangaNameOG, m.MangaNameEN, m.CoverLink from manga m JOIN chapter c ON
