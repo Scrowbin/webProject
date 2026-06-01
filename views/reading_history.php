@@ -10,8 +10,9 @@
     <title>Reading History - MangaDax</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
-    <link rel="stylesheet" href="../assets/css/navbar.css">
-    <link rel="stylesheet" href = "../assets/css/latestUpdates.css">
+    <link rel="stylesheet" href="/assets/css/navbar.css">
+    <link rel="stylesheet" href="/assets/css/latestUpdates.css">
+    <link rel="stylesheet" href="/assets/css/site-identity.css">
 
 </head>
 <body>
@@ -43,8 +44,8 @@
     </div> <!-- Close page-wrapper -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets/js/navbar.js"></script>
-    <script src="../assets/js/sidebar.js"></script>
-    <script src="../assets/js/reading_history.js"></script>
+    <script src="/assets/js/navbar.js"></script>
+    <script src="/assets/js/sidebar.js"></script>
+    <script src="/assets/js/reading_history.js"></script>
 </body>
 </html>

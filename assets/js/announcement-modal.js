@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
       positionAnnouncementListModal();
 
       // Fetch recent announcements
-      fetch('controllers/get_recent_announcements.php')
+      fetch('/controllers/get_recent_announcements.php')
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Function to check for new announcements
   function checkForNewAnnouncements() {
-    fetch('controllers/get_latest_announcement.php')
+    fetch('/controllers/get_latest_announcement.php')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

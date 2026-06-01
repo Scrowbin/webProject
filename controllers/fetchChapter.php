@@ -3,11 +3,15 @@
 require_once __DIR__ . '/../config/bootstrap.php';
 require_once __DIR__ . '/../models/fetchChapter.php';
 
-// Get JSON input from JavaScript
-$data = json_decode(file_get_contents('php://input'), true);
+header('Content-Type: application/json');
 
-// Extract chapterIDs from the request data
-$chapterIDs =  array_reverse($data['chapterIDs']) ?? [];
+$data = json_decode(file_get_contents('php://input'), true);
+if (!is_array($data)) {
+    echo json_encode([]);
+    exit;
+}
+
+$chapterIDs = array_reverse($data['chapterIDs'] ?? []);
 
 // Prepare an array to hold the chapter info
 $chapters = getChapterInfo($chapterIDs);
@@ -28,8 +32,6 @@ foreach ($chapters as $index => $chapter) {
     $grouped[$currentGroupIndex][] = $chapter;
 }
 
-// Return the chapter information as JSON
-header('Content-Type: application/json');
 echo json_encode($grouped);
 
 ?>

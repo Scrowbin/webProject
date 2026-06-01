@@ -223,7 +223,7 @@ require_once __DIR__ . '/helper.php';
     <section class="section-container latest-updates-section">
       <div class="section-heading">
         <h2 class="text-white fw-bold">Latest Updates</h2>
-        <a href="controllers/latestUpdates_controller.php" class="see-all see-all-arrow">
+        <a href="/latest-updates" class="see-all see-all-arrow">
           <i class="bi bi-arrow-right"></i>
         </a>
       </div>
@@ -591,8 +591,8 @@ require_once __DIR__ . '/helper.php';
     <!-- Recently Added Section -->
     <section class="section-container recently-added-section">
       <div class="section-heading">
-        <a href="controllers/recently_added_controller.php" class="text-white text-decoration-none"><h2 class="text-white fw-bold mb-0">Recently Added</h2></a>
-        <a href="controllers/recently_added_controller.php" class="see-all see-all-arrow recently-added-next"> <!-- Changed class for Swiper navigation -->
+        <a href="/recently-added" class="text-white text-decoration-none"><h2 class="text-white fw-bold mb-0">Recently Added</h2></a>
+        <a href="/recently-added" class="see-all see-all-arrow recently-added-next"> <!-- Changed class for Swiper navigation -->
           <i class="bi bi-arrow-right"></i>
         </a>
       </div>

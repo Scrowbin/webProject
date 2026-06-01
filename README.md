@@ -24,9 +24,18 @@ webProject/
 ├── scripts/          # One-off dev/maintenance scripts
 ├── _archive/         # Legacy prototypes (not used in production)
 ├── vendor/           # Composer dependencies (PHPMailer)
-├── index.php         # Homepage entry point
-└── .htaccess         # URL rewriting
+├── config/router.php # All pretty URLs (single front controller)
+├── index.php         # Front controller → router or homepage
+└── .htaccess         # Sends non-file requests to index.php
 ```
+
+### URL routing
+
+All pretty URLs (`/login`, `/read/{slug}/chapter-3`, `/library`, …) are handled by **one** `index.php` and `config/router.php`. You do not need `index.php` files inside route folders.
+
+Root `.htaccess` sends any path that is not a real file or folder to `index.php?route=...`. The physical `manga/` folder (covers and pages) also has `manga/.htaccess` so slugs like `/manga/one-piece` reach the router when Apache looks inside that directory.
+
+**InfinityFree:** upload the root `.htaccess` and `config/router.php`. Without `.htaccess`, only direct `/controllers/...` URLs will work.
 
 ## Documentation
 

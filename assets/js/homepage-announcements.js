@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
 
-    fetch('controllers/get_latest_announcement.php')
+    fetch('/controllers/get_latest_announcement.php')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

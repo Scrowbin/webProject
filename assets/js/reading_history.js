@@ -140,8 +140,16 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ chapterIDs: JSON.parse(localStorage.getItem('viewedChapters') || '[]') })
     })
-    .then(res => res.json())
+    .then(res => {
+        if (!res.ok) {
+            throw new Error('HTTP ' + res.status);
+        }
+        return res.json();
+    })
     .then(grouped => {
+        if (!Array.isArray(grouped)) {
+            throw new Error('Invalid response');
+        }
         groupedData = grouped;
 
         // Check if there's any reading history
@@ -159,5 +167,15 @@
             renderPage(currentPage);
         }
     })
-    .catch(err => console.error('Failed to load viewed chapters:', err));
+    .catch(err => {
+        console.error('Failed to load viewed chapters:', err);
+        const container = document.getElementById('manga-container');
+        if (container) {
+            container.innerHTML = `
+                <div class="alert alert-warning ms-5 me-5">
+                    <i class="bi bi-exclamation-triangle me-2"></i>
+                    Could not load reading history. Try refreshing the page.
+                </div>`;
+        }
+    });
 });
