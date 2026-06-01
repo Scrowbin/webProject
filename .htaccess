@@ -1,42 +1,52 @@
-RewriteEngine On
+﻿RewriteEngine On
 RewriteBase /
 
+# Force HTTPS
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-RewriteRule ^manga/([a-zA-Z0-9\-]+)$ controller/mangaInfo_Controller.php?slug=$1 [QSA,L]
-RewriteRule ^read/([^/]+)/chapter-([0-9\-]+)$ /controller/mangaRead_controller.php?slug=$1&chapter=$2 [L,QSA]
-RewriteRule ^upload/([^/]+)$ /controller/upload_controller.php?slug=$1 [L,QSA]
-RewriteRule ^my-follows$ controller/follows_controller.php [QSA,L]
-RewriteRule ^library$ controller/library_controller.php [QSA,L]
-RewriteRule ^reading-history$ controller/readingHistory_controller.php [QSA,L]
-RewriteRule ^search$ controller/advanced_search_controller.php [QSA,L]
-RewriteRule ^advanced-search$ controller/advanced_search_controller.php [QSA,L]
-RewriteRule ^recently\-added$ controller/recently_added_controller.php [QSA,L]
-RewriteRule ^latest\-updates$ controller/latestUpdates_controller.php [QSA,L]
-RewriteRule ^random$ controller/random_manga_controller.php [QSA,L]
-RewriteRule ^comments/([^/]+)/chapter-([0-9\-]+)$ /controller/comments_controller.php?slug=$1&chapter=$2 [L,QSA]
+RewriteRule ^about$ controllers/about_controller.php [QSA,L]
+
+# Manga info by slug (letter-first slugs; numeric paths are files in manga/ folder)
+RewriteRule ^manga/([a-zA-Z][a-zA-Z0-9\-]*)$ controllers/mangaInfo_Controller.php?slug=$1 [QSA,L]
+
+# Chapter reader
+RewriteRule ^read/([^/]+)/chapter-([0-9\-]+)$ controllers/mangaRead_Controller.php?slug=$1&chapter=$2 [QSA,L]
+
+RewriteRule ^upload/([^/]+)$ controllers/upload_controller.php?slug=$1 [QSA,L]
+RewriteRule ^my-follows$ controllers/follows_controller.php [QSA,L]
+RewriteRule ^library$ controllers/library_controller.php [QSA,L]
+RewriteRule ^reading-history$ controllers/readingHistory_controller.php [QSA,L]
+RewriteRule ^search$ controllers/advanced_search_controller.php [QSA,L]
+RewriteRule ^advanced-search$ controllers/advanced_search_controller.php [QSA,L]
+RewriteRule ^recently\-added$ controllers/recently_added_controller.php [QSA,L]
+RewriteRule ^latest\-updates$ controllers/latestUpdates_controller.php [QSA,L]
+RewriteRule ^random$ controllers/random_manga_controller.php [QSA,L]
+RewriteRule ^comments/([^/]+)/chapter-([0-9\-]+)$ controllers/comments_controller.php?slug=$1&chapter=$2 [QSA,L]
 
 # User profile routes
-RewriteRule ^profile$ controller/auth_controller.php?action=profile [QSA,L]
-RewriteRule ^user-profile$ controller/auth_controller.php?action=user_profile [QSA,L]
+RewriteRule ^profile$ controllers/auth_controller.php?action=profile [QSA,L]
+RewriteRule ^user-profile$ controllers/auth_controller.php?action=user_profile [QSA,L]
 
 # Authentication routes
-RewriteRule ^login$ controller/auth_controller.php?action=login [QSA,L]
-RewriteRule ^register$ controller/auth_controller.php?action=register [QSA,L]
-RewriteRule ^forgot-password$ controller/auth_controller.php?action=forgotPassword [QSA,L]
-RewriteRule ^reset-password$ controller/auth_controller.php?action=resetPassword [QSA,L]
-RewriteRule ^reset-password/([^/]+)$ controller/auth_controller.php?action=resetPassword&token=$1 [QSA,L]
-RewriteRule ^activate$ controller/auth_controller.php?action=activate [QSA,L]
-RewriteRule ^activate/([^/]+)$ controller/auth_controller.php?action=activate&token=$1 [QSA,L]
-RewriteRule ^logout$ controller/auth_controller.php?action=logout [QSA,L]
+RewriteRule ^login$ controllers/auth_controller.php?action=login [QSA,L]
+RewriteRule ^register$ controllers/auth_controller.php?action=register [QSA,L]
+RewriteRule ^forgot-password$ controllers/auth_controller.php?action=forgotPassword [QSA,L]
+RewriteRule ^reset-password$ controllers/auth_controller.php?action=resetPassword [QSA,L]
+RewriteRule ^reset-password/([^/]+)$ controllers/auth_controller.php?action=resetPassword&token=$1 [QSA,L]
+RewriteRule ^activate$ controllers/auth_controller.php?action=activate [QSA,L]
+RewriteRule ^activate/([^/]+)$ controllers/auth_controller.php?action=activate&token=$1 [QSA,L]
+RewriteRule ^logout$ controllers/auth_controller.php?action=logout [QSA,L]
 
 # Admin routes
-RewriteRule ^admin/create-announcements$ controller/announcement_controller.php [QSA,L]
-RewriteRule ^admin/view-reports$ controller/report_controller.php [QSA,L]
-RewriteRule ^admin/add-manga$ controller/create_controller.php [QSA,L]
-RewriteRule ^admin/staff-pick$ controller/staff_pick_controller.php [QSA,L]
-RewriteRule ^admin/edit-manga/([a-zA-Z0-9\-]+)$ controller/edit_manga.php?slug=$1 [QSA,L]
-RewriteRule ^admin/edit-chapter/([^/]+)/chapter-([0-9\-]+)$ /controller/editChapter_controller.php?slug=$1&chapter=$2 [L,QSA]
-RewriteRule ^admin/delete-chapter/([^/]+)$ /controller/delete_chapter_controller.php?slug=$1 [L,QSA]
+RewriteRule ^admin/create-announcements$ controllers/announcement_controller.php [QSA,L]
+RewriteRule ^admin/view-reports$ controllers/report_controller.php [QSA,L]
+RewriteRule ^admin/add-manga$ controllers/create_controller.php [QSA,L]
+RewriteRule ^admin/staff-pick$ controllers/staff_pick_controller.php [QSA,L]
+RewriteRule ^admin/edit-manga/([a-zA-Z0-9\-]+)$ controllers/edit_manga.php?slug=$1 [QSA,L]
+RewriteRule ^admin/edit-chapter/([^/]+)/chapter-([0-9\-]+)$ controllers/editChapter_controller.php?slug=$1&chapter=$2 [QSA,L]
+RewriteRule ^admin/delete-chapter/([^/]+)$ controllers/delete_chapter_controller.php?slug=$1 [L,QSA]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

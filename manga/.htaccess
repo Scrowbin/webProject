@@ -1,0 +1,12 @@
+# The manga/ folder stores cover & chapter images at /manga/{id}/...
+# Slug URLs like /manga/one-piece must go to the PHP controller, not 404 here.
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /manga/
+
+# Only rewrite when the slug is not an existing file or folder (e.g. not "22" or "22/3")
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([a-zA-Z][a-zA-Z0-9\-]*)$ /controllers/mangaInfo_Controller.php?slug=$1 [L,QSA]
+</IfModule>

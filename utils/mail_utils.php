@@ -1,10 +1,11 @@
 <?php
-// Include PHPMailer classes
+
+require_once __DIR__ . '/../config/bootstrap.php';
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-// Load Composer's autoloader
 require_once __DIR__ . '/../vendor/autoload.php';
 
 // Global SMTP connection for reuse
@@ -50,14 +51,13 @@ function close_smtp_connection(): void
  */
 function configure_smtp_settings(PHPMailer $mail): void
 {
-    // Server settings
     $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com';
+    $mail->Host = env('SMTP_HOST', 'smtp.gmail.com');
     $mail->SMTPAuth = true;
-    $mail->Username = 'snouzen951@gmail.com';
-    $mail->Password = 'tmsh kyew warv hndj'; // App password
+    $mail->Username = env('SMTP_USER', '');
+    $mail->Password = env('SMTP_PASS', '');
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-    $mail->Port = 587;
+    $mail->Port = (int) env('SMTP_PORT', '587');
 
     // Performance optimizations
     $mail->Timeout = 15; // Reduce timeout from default 300 seconds to 15 seconds
@@ -76,16 +76,18 @@ function configure_smtp_settings(PHPMailer $mail): void
         )
     );
 
-    // Enable debug mode for troubleshooting (set to 0 for production)
-    $mail->SMTPDebug = 1; // 0 = off, 1 = client messages, 2 = client and server messages
+    $mail->SMTPDebug = (int) env('SMTP_DEBUG', '0');
     $mail->Debugoutput = 'error_log'; // Send debug output to error log
 
     // Additional performance settings
     $mail->SMTPAutoTLS = false; // Disable automatic TLS encryption
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Use explicit STARTTLS
 
-    // Recipients
-    $mail->setFrom('snouzen951@gmail.com', 'MangaDax');
+    $fromEmail = env('SMTP_FROM', env('SMTP_USER', ''));
+    $fromName = env('SMTP_FROM_NAME', 'MangaDax');
+    if ($fromEmail !== '') {
+        $mail->setFrom($fromEmail, $fromName);
+    }
 }
 
 /**

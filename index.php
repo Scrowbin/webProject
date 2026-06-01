@@ -1,17 +1,13 @@
-<?php
+﻿<?php
 // webProject/index.php - Homepage Controller
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-// Include necessary base files
-require_once __DIR__ . '/db/pdo.php';
-require_once __DIR__ . '/db/mangaInfoPdo.php'; // Contains getMangaInfo, getTags, getMangaAuthors, getMangaArtists
-require_once __DIR__ . '/db/latestUpdates_model.php'; // Contains getUpdates for latest manga chapters
-require_once __DIR__ . '/db/announcement_model.php'; // Contains announcement functions
-require_once __DIR__ . '/db/staff_picks_model.php'; // Contains staff picks functions
-require_once __DIR__ . '/db/account_db.php'; // For user role functions
+require_once __DIR__ . '/config/bootstrap.php';
+require_once __DIR__ . '/models/pdo.php';
+require_once __DIR__ . '/models/mangaInfoPdo.php'; // Contains getMangaInfo, getTags, getMangaAuthors, getMangaArtists
+require_once __DIR__ . '/models/latestUpdates_model.php'; // Contains getUpdates for latest manga chapters
+require_once __DIR__ . '/models/announcement_model.php'; // Contains announcement functions
+require_once __DIR__ . '/models/staff_picks_model.php'; // Contains staff picks functions
+require_once __DIR__ . '/models/account_db.php'; // For user role functions
 
 // --- Data Fetching for Homepage ---
 
@@ -144,4 +140,4 @@ if ($isLoggedIn) {
 $pathPrefix = ''; // Define path prefix for includes relative to root
 
 // --- Include the Homepage View ---
-include __DIR__ . '/PHP/homepage.php';
+include __DIR__ . '/views/homepage.php';
