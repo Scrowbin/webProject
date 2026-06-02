@@ -2,6 +2,9 @@
 
 Done in PHP, with Bootstrap.
 
+Deployed at: https://mangadax.infinityfree.io/
+
+
 ## Project structure
 
 ```
