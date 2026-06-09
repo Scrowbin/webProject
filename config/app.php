@@ -108,6 +108,10 @@ function page_url(string $page): string
         'about' => '/controllers/about_controller.php',
         'login' => '/controllers/auth_controller.php?action=login',
         'register' => '/controllers/auth_controller.php?action=register',
+        'logout' => '/controllers/auth_controller.php?action=logout',
+        'profile' => '/controllers/auth_controller.php?action=profile',
+        'user-profile' => '/controllers/auth_controller.php?action=user_profile',
+        'forgot-password' => '/controllers/auth_controller.php?action=forgotPassword',
     ];
 
     if (use_pretty_urls()) {
